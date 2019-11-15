@@ -1,13 +1,13 @@
 {
-  "id": "elastos.trinity.friendslist",
+  "id": "elastos.trinity.friendsdapp",
   "version": "0.0.1",
   "version_code": 1,
-  "name": "Friends List Dapp",
-  "short_name": "Friends List Dapp",
-  "short_description": "Friends List dAPP",
-  "description": "Elastos Trinity Friends List Dapp",
-  "start_url": "index.html",
-  "type": "app",
+  "name": "Friends DApp",
+  "short_name": "Friends DApp",
+  "short_description": "Friends DApp",
+  "description": "Elastos Trinity Friends DApp",
+  "start_url": "http://192.168.1.133:8100",
+  "type": "url",
   "category": "finance",
   "icons": [
     {
@@ -33,9 +33,11 @@
     "NetworkStatus"
   ],
   "urls": [
+    "http://*",
+    "https://*",
     "http://www.baidu.com/*",
     "https://www.google.com",
-    "http://192.168.31.103:21636/*"
+    "http://192.168.31.103:21636/*",
   ],
   "background_color": "#4e8ef7",
   "theme_display": "show",

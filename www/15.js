@@ -1,393 +1,392 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[15],{
 
-/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-alert-ios.entry.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-alert-ios.entry.js ***!
-  \**********************************************************************/
-/*! exports provided: ion_alert */
+/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-button_2-ios.entry.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-button_2-ios.entry.js ***!
+  \*************************************************************************/
+/*! exports provided: ion_button, ion_icon */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_alert", function() { return Alert; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_button", function() { return Button; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_icon", function() { return Icon; });
 /* harmony import */ var _core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core-ca0488fc.js */ "./node_modules/@ionic/core/dist/esm-es5/core-ca0488fc.js");
 /* harmony import */ var _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./config-3c7f3790.js */ "./node_modules/@ionic/core/dist/esm-es5/config-3c7f3790.js");
 /* harmony import */ var _helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-46f4a262.js */ "./node_modules/@ionic/core/dist/esm-es5/helpers-46f4a262.js");
-/* harmony import */ var _animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./animation-7ed5bc6a.js */ "./node_modules/@ionic/core/dist/esm-es5/animation-7ed5bc6a.js");
-/* harmony import */ var _overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./overlays-10640d86.js */ "./node_modules/@ionic/core/dist/esm-es5/overlays-10640d86.js");
-/* harmony import */ var _theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./theme-18cbe2cc.js */ "./node_modules/@ionic/core/dist/esm-es5/theme-18cbe2cc.js");
-/* harmony import */ var _index_3476b023_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./index-3476b023.js */ "./node_modules/@ionic/core/dist/esm-es5/index-3476b023.js");
+/* harmony import */ var _theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./theme-18cbe2cc.js */ "./node_modules/@ionic/core/dist/esm-es5/theme-18cbe2cc.js");
 
 
 
 
-
-
-
-/**
- * iOS Alert Enter Animation
- */
-var iosEnterAnimation = function (baseEl) {
-    var baseAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    var backdropAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    var wrapperAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    backdropAnimation
-        .addElement(baseEl.querySelector('ion-backdrop'))
-        .fromTo('opacity', 0.01, 0.3);
-    wrapperAnimation
-        .addElement(baseEl.querySelector('.alert-wrapper'))
-        .keyframes([
-        { offset: 0, opacity: '0.01', transform: 'scale(1.1)' },
-        { offset: 1, opacity: '1', transform: 'scale(1)' }
-    ]);
-    return baseAnimation
-        .addElement(baseEl)
-        .easing('ease-in-out')
-        .duration(200)
-        .addAnimation([backdropAnimation, wrapperAnimation]);
-};
-/**
- * iOS Alert Leave Animation
- */
-var iosLeaveAnimation = function (baseEl) {
-    var baseAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    var backdropAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    var wrapperAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    backdropAnimation
-        .addElement(baseEl.querySelector('ion-backdrop'))
-        .fromTo('opacity', 0.3, 0);
-    wrapperAnimation
-        .addElement(baseEl.querySelector('.alert-wrapper'))
-        .keyframes([
-        { offset: 0, opacity: 0.99, transform: 'scale(1)' },
-        { offset: 1, opacity: 0, transform: 'scale(0.9)' }
-    ]);
-    return baseAnimation
-        .addElement(baseEl)
-        .easing('ease-in-out')
-        .duration(200)
-        .addAnimation([backdropAnimation, wrapperAnimation]);
-};
-/**
- * Md Alert Enter Animation
- */
-var mdEnterAnimation = function (baseEl) {
-    var baseAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    var backdropAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    var wrapperAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    backdropAnimation
-        .addElement(baseEl.querySelector('ion-backdrop'))
-        .fromTo('opacity', 0.01, 0.32);
-    wrapperAnimation
-        .addElement(baseEl.querySelector('.alert-wrapper'))
-        .keyframes([
-        { offset: 0, opacity: '0.01', transform: 'scale(0.9)' },
-        { offset: 1, opacity: '1', transform: 'scale(1)' }
-    ]);
-    return baseAnimation
-        .addElement(baseEl)
-        .easing('ease-in-out')
-        .duration(150)
-        .addAnimation([backdropAnimation, wrapperAnimation]);
-};
-/**
- * Md Alert Leave Animation
- */
-var mdLeaveAnimation = function (baseEl) {
-    var baseAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    var backdropAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    var wrapperAnimation = Object(_animation_7ed5bc6a_js__WEBPACK_IMPORTED_MODULE_3__["c"])();
-    backdropAnimation
-        .addElement(baseEl.querySelector('ion-backdrop'))
-        .fromTo('opacity', 0.32, 0);
-    wrapperAnimation
-        .addElement(baseEl.querySelector('.alert-wrapper'))
-        .fromTo('opacity', 0.99, 0);
-    return baseAnimation
-        .addElement(baseEl)
-        .easing('ease-in-out')
-        .duration(150)
-        .addAnimation([backdropAnimation, wrapperAnimation]);
-};
-var Alert = /** @class */ (function () {
-    function Alert(hostRef) {
+var Button = /** @class */ (function () {
+    function Button(hostRef) {
         var _this = this;
         Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["r"])(this, hostRef);
-        this.processedInputs = [];
-        this.processedButtons = [];
-        this.presented = false;
-        this.mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["d"])(this);
+        this.inToolbar = false;
+        this.inItem = false;
         /**
-         * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
+         * The type of button.
          */
-        this.keyboardClose = true;
+        this.buttonType = 'button';
         /**
-         * Array of buttons to be added to the alert.
+         * If `true`, the user cannot interact with the button.
          */
-        this.buttons = [];
+        this.disabled = false;
         /**
-         * Array of input to show in the alert.
+         * When using a router, it specifies the transition direction when navigating to
+         * another page using `href`.
          */
-        this.inputs = [];
+        this.routerDirection = 'forward';
         /**
-         * If `true`, the alert will be dismissed when the backdrop is clicked.
+         * If `true`, activates a button with a heavier font weight.
          */
-        this.backdropDismiss = true;
+        this.strong = false;
         /**
-         * If `true`, the alert will be translucent.
-         * Only applies when the mode is `"ios"` and the device supports
-         * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+         * The type of the button.
          */
-        this.translucent = false;
-        /**
-         * If `true`, the alert will animate.
-         */
-        this.animated = true;
-        this.onBackdropTap = function () {
-            _this.dismiss(undefined, _overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["B"]);
-        };
-        this.dispatchCancelHandler = function (ev) {
-            var role = ev.detail.role;
-            if (Object(_overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["i"])(role)) {
-                var cancelButton = _this.processedButtons.find(function (b) { return b.role === 'cancel'; });
-                _this.callButtonHandler(cancelButton);
+        this.type = 'button';
+        this.handleClick = function (ev) {
+            if (_this.type === 'button') {
+                Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_3__["o"])(_this.href, ev, _this.routerDirection);
+            }
+            else if (Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_2__["h"])(_this.el)) {
+                // this button wants to specifically submit a form
+                // climb up the dom to see if we're in a <form>
+                // and if so, then use JS to submit it
+                var form = _this.el.closest('form');
+                if (form) {
+                    ev.preventDefault();
+                    var fakeButton = document.createElement('button');
+                    fakeButton.type = _this.type;
+                    fakeButton.style.display = 'none';
+                    form.appendChild(fakeButton);
+                    fakeButton.click();
+                    fakeButton.remove();
+                }
             }
         };
-        Object(_overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["d"])(this.el);
-        this.didPresent = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionAlertDidPresent", 7);
-        this.willPresent = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionAlertWillPresent", 7);
-        this.willDismiss = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionAlertWillDismiss", 7);
-        this.didDismiss = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionAlertDidDismiss", 7);
+        this.onFocus = function () {
+            _this.ionFocus.emit();
+        };
+        this.onBlur = function () {
+            _this.ionBlur.emit();
+        };
+        this.ionFocus = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionFocus", 7);
+        this.ionBlur = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionBlur", 7);
     }
-    Alert.prototype.buttonsChanged = function () {
-        var buttons = this.buttons;
-        this.processedButtons = buttons.map(function (btn) {
-            return (typeof btn === 'string')
-                ? { text: btn, role: btn.toLowerCase() === 'cancel' ? 'cancel' : undefined }
-                : btn;
-        });
+    Button.prototype.componentWillLoad = function () {
+        this.inToolbar = !!this.el.closest('ion-buttons');
+        this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
     };
-    Alert.prototype.inputsChanged = function () {
-        var _this = this;
-        var inputs = this.inputs;
-        // An alert can be created with several different inputs. Radios,
-        // checkboxes and inputs are all accepted, but they cannot be mixed.
-        var inputTypes = new Set(inputs.map(function (i) { return i.type; }));
-        if (inputTypes.has('checkbox') && inputTypes.has('radio')) {
-            console.warn("Alert cannot mix input types: " + (Array.from(inputTypes.values()).join('/')) + ". Please see alert docs for more info.");
-        }
-        this.inputType = inputTypes.values().next().value;
-        this.processedInputs = inputs.map(function (i, index) { return ({
-            type: i.type || 'text',
-            name: i.name || "" + index,
-            placeholder: i.placeholder || '',
-            value: i.value,
-            label: i.label,
-            checked: !!i.checked,
-            disabled: !!i.disabled,
-            id: i.id || "alert-input-" + _this.overlayIndex + "-" + index,
-            handler: i.handler,
-            min: i.min,
-            max: i.max
-        }); });
-    };
-    Alert.prototype.componentWillLoad = function () {
-        this.inputsChanged();
-        this.buttonsChanged();
-    };
-    /**
-     * Present the alert overlay after it has been created.
-     */
-    Alert.prototype.present = function () {
-        return Object(_overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["e"])(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
-    };
-    /**
-     * Dismiss the alert overlay after it has been presented.
-     *
-     * @param data Any data to emit in the dismiss events.
-     * @param role The role of the element that is dismissing the alert.
-     * This can be useful in a button handler for determining which button was
-     * clicked to dismiss the alert.
-     * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-     */
-    Alert.prototype.dismiss = function (data, role) {
-        return Object(_overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["f"])(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
-    };
-    /**
-     * Returns a promise that resolves when the alert did dismiss.
-     */
-    Alert.prototype.onDidDismiss = function () {
-        return Object(_overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["g"])(this.el, 'ionAlertDidDismiss');
-    };
-    /**
-     * Returns a promise that resolves when the alert will dismiss.
-     */
-    Alert.prototype.onWillDismiss = function () {
-        return Object(_overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["g"])(this.el, 'ionAlertWillDismiss');
-    };
-    Alert.prototype.rbClick = function (selectedInput) {
-        for (var _i = 0, _a = this.processedInputs; _i < _a.length; _i++) {
-            var input = _a[_i];
-            input.checked = input === selectedInput;
-        }
-        this.activeId = selectedInput.id;
-        Object(_overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["s"])(selectedInput.handler, selectedInput);
-        this.el.forceUpdate();
-    };
-    Alert.prototype.cbClick = function (selectedInput) {
-        selectedInput.checked = !selectedInput.checked;
-        Object(_overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["s"])(selectedInput.handler, selectedInput);
-        this.el.forceUpdate();
-    };
-    Alert.prototype.buttonClick = function (button) {
-        var role = button.role;
-        var values = this.getValues();
-        if (Object(_overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["i"])(role)) {
-            return this.dismiss({ values: values }, role);
-        }
-        var returnData = this.callButtonHandler(button, values);
-        if (returnData !== false) {
-            return this.dismiss(Object.assign({ values: values }, returnData), button.role);
-        }
-        return Promise.resolve(false);
-    };
-    Alert.prototype.callButtonHandler = function (button, data) {
-        if (button && button.handler) {
-            // a handler has been provided, execute it
-            // pass the handler the values from the inputs
-            var returnData = Object(_overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["s"])(button.handler, data);
-            if (returnData === false) {
-                // if the return value of the handler is false then do not dismiss
-                return false;
+    Object.defineProperty(Button.prototype, "hasIconOnly", {
+        get: function () {
+            return !!this.el.querySelector('ion-icon[slot="icon-only"]');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Button.prototype, "rippleType", {
+        get: function () {
+            var hasClearFill = this.fill === undefined || this.fill === 'clear';
+            // If the button is in a toolbar, has a clear fill (which is the default)
+            // and only has an icon we use the unbounded "circular" ripple effect
+            if (hasClearFill && this.hasIconOnly && this.inToolbar) {
+                return 'unbounded';
             }
-            if (typeof returnData === 'object') {
-                return returnData;
-            }
-        }
-        return {};
-    };
-    Alert.prototype.getValues = function () {
-        if (this.processedInputs.length === 0) {
-            // this is an alert without any options/inputs at all
-            return undefined;
-        }
-        if (this.inputType === 'radio') {
-            // this is an alert with radio buttons (single value select)
-            // return the one value which is checked, otherwise undefined
-            var checkedInput = this.processedInputs.find(function (i) { return !!i.checked; });
-            return checkedInput ? checkedInput.value : undefined;
-        }
-        if (this.inputType === 'checkbox') {
-            // this is an alert with checkboxes (multiple value select)
-            // return an array of all the checked values
-            return this.processedInputs.filter(function (i) { return i.checked; }).map(function (i) { return i.value; });
-        }
-        // this is an alert with text inputs
-        // return an object of all the values with the input name as the key
-        var values = {};
-        this.processedInputs.forEach(function (i) {
-            values[i.name] = i.value || '';
-        });
-        return values;
-    };
-    Alert.prototype.renderAlertInputs = function (labelledBy) {
-        switch (this.inputType) {
-            case 'checkbox': return this.renderCheckbox(labelledBy);
-            case 'radio': return this.renderRadio(labelledBy);
-            default: return this.renderInput(labelledBy);
-        }
-    };
-    Alert.prototype.renderCheckbox = function (labelledby) {
-        var _this = this;
-        var inputs = this.processedInputs;
-        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["d"])(this);
-        if (inputs.length === 0) {
-            return null;
-        }
-        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-checkbox-group", "aria-labelledby": labelledby }, inputs.map(function (i) { return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("button", { type: "button", onClick: function () { return _this.cbClick(i); }, "aria-checked": "" + i.checked, id: i.id, disabled: i.disabled, tabIndex: 0, role: "checkbox", class: {
-                'alert-tappable': true,
-                'alert-checkbox': true,
-                'alert-checkbox-button': true,
-                'ion-focusable': true,
-                'alert-checkbox-button-disabled': i.disabled || false
-            } }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-button-inner" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-checkbox-icon" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-checkbox-inner" })), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-checkbox-label" }, i.label)), mode === 'md' && Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("ion-ripple-effect", null))); })));
-    };
-    Alert.prototype.renderRadio = function (labelledby) {
-        var _this = this;
-        var inputs = this.processedInputs;
-        if (inputs.length === 0) {
-            return null;
-        }
-        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-radio-group", role: "radiogroup", "aria-labelledby": labelledby, "aria-activedescendant": this.activeId }, inputs.map(function (i) { return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("button", { type: "button", onClick: function () { return _this.rbClick(i); }, "aria-checked": "" + i.checked, disabled: i.disabled, id: i.id, tabIndex: 0, class: {
-                'alert-radio-button': true,
-                'alert-tappable': true,
-                'alert-radio': true,
-                'ion-focusable': true,
-                'alert-radio-button-disabled': i.disabled || false
-            }, role: "radio" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-button-inner" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-radio-icon" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-radio-inner" })), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-radio-label" }, i.label)))); })));
-    };
-    Alert.prototype.renderInput = function (labelledby) {
-        var inputs = this.processedInputs;
-        if (inputs.length === 0) {
-            return null;
-        }
-        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-input-group", "aria-labelledby": labelledby }, inputs.map(function (i) { return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-input-wrapper" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("input", { placeholder: i.placeholder, value: i.value, type: i.type, min: i.min, max: i.max, onInput: function (e) { return i.value = e.target.value; }, id: i.id, disabled: i.disabled, tabIndex: 0, class: {
-                'alert-input': true,
-                'alert-input-disabled': i.disabled || false
-            } }))); })));
-    };
-    Alert.prototype.renderAlertButtons = function () {
-        var _this = this;
-        var buttons = this.processedButtons;
-        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["d"])(this);
-        var alertButtonGroupClass = {
-            'alert-button-group': true,
-            'alert-button-group-vertical': buttons.length > 2
-        };
-        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: alertButtonGroupClass }, buttons.map(function (button) { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("button", { type: "button", class: buttonClass(button), tabIndex: 0, onClick: function () { return _this.buttonClick(button); } }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { class: "alert-button-inner" }, button.text), mode === 'md' && Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("ion-ripple-effect", null)); })));
-    };
-    Alert.prototype.render = function () {
+            return 'bounded';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Button.prototype.render = function () {
         var _a;
-        var _b = this, overlayIndex = _b.overlayIndex, header = _b.header, subHeader = _b.subHeader;
         var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["d"])(this);
-        var hdrId = "alert-" + overlayIndex + "-hdr";
-        var subHdrId = "alert-" + overlayIndex + "-sub-hdr";
-        var msgId = "alert-" + overlayIndex + "-msg";
-        var labelledById;
-        if (header !== undefined) {
-            labelledById = hdrId;
+        var _b = this, buttonType = _b.buttonType, type = _b.type, disabled = _b.disabled, rel = _b.rel, target = _b.target, size = _b.size, href = _b.href, color = _b.color, expand = _b.expand, hasIconOnly = _b.hasIconOnly, shape = _b.shape, strong = _b.strong;
+        var finalSize = size === undefined && this.inItem ? 'small' : size;
+        var TagType = href === undefined ? 'button' : 'a';
+        var attrs = (TagType === 'button')
+            ? { type: type }
+            : {
+                download: this.download,
+                href: href,
+                rel: rel,
+                target: target
+            };
+        var fill = this.fill;
+        if (fill === undefined) {
+            fill = this.inToolbar ? 'clear' : 'solid';
         }
-        else if (subHeader !== undefined) {
-            labelledById = subHdrId;
-        }
-        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["H"], { role: "dialog", "aria-modal": "true", style: {
-                zIndex: "" + (20000 + overlayIndex),
-            }, class: Object.assign(Object.assign({}, Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_5__["g"])(this.cssClass)), (_a = {}, _a[mode] = true, _a['alert-translucent'] = this.translucent, _a)), onIonAlertWillDismiss: this.dispatchCancelHandler, onIonBackdropTap: this.onBackdropTap }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("ion-backdrop", { tappable: this.backdropDismiss }), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-wrapper" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "alert-head" }, header && Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("h2", { id: hdrId, class: "alert-title" }, header), subHeader && Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("h2", { id: subHdrId, class: "alert-sub-title" }, subHeader)), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { id: msgId, class: "alert-message", innerHTML: Object(_index_3476b023_js__WEBPACK_IMPORTED_MODULE_6__["s"])(this.message) }), this.renderAlertInputs(labelledById), this.renderAlertButtons())));
+        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["H"], { onClick: this.handleClick, "aria-disabled": disabled ? 'true' : null, class: Object.assign(Object.assign({}, Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_3__["c"])(color)), (_a = {}, _a[mode] = true, _a[buttonType] = true, _a[buttonType + "-" + expand] = expand !== undefined, _a[buttonType + "-" + finalSize] = finalSize !== undefined, _a[buttonType + "-" + shape] = shape !== undefined, _a[buttonType + "-" + fill] = true, _a[buttonType + "-strong"] = strong, _a['button-has-icon-only'] = hasIconOnly, _a['button-disabled'] = disabled, _a['ion-activatable'] = true, _a['ion-focusable'] = true, _a)) }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])(TagType, Object.assign({}, attrs, { class: "button-native", disabled: disabled, onFocus: this.onFocus, onBlur: this.onBlur }), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { class: "button-inner" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("slot", { name: "icon-only" }), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("slot", { name: "start" }), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("slot", null), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("slot", { name: "end" })), mode === 'md' && Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("ion-ripple-effect", { type: this.rippleType }))));
     };
-    Object.defineProperty(Alert.prototype, "el", {
+    Object.defineProperty(Button.prototype, "el", {
         get: function () { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["e"])(this); },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Alert, "watchers", {
+    Object.defineProperty(Button, "style", {
+        get: function () { return ":host{--overflow:hidden;--ripple-color:currentColor;--border-width:initial;--border-color:initial;--border-style:initial;--color-hover:initial;--box-shadow:none;display:inline-block;width:auto;color:var(--color);font-family:var(--ion-font-family,inherit);text-align:center;text-decoration:none;text-overflow:ellipsis;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;vertical-align:top;vertical-align:-webkit-baseline-middle;pointer-events:auto;-webkit-font-kerning:none;font-kerning:none}:host(.button-disabled){--opacity:.5;pointer-events:none}:host(.button-disabled) .button-native{cursor:default;pointer-events:none}:host(.button-solid){--background:var(--ion-color-primary,#3880ff);--background-focused:var(--ion-color-primary-shade,#3171e0);--background-hover:var(--ion-color-primary-tint,#4c8dff);--color:var(--ion-color-primary-contrast,#fff);--color-activated:var(--ion-color-primary-contrast,#fff);--color-focused:var(--ion-color-primary-contrast,#fff)}:host(.button-solid.ion-color) .button-native{background:var(--ion-color-base);color:var(--ion-color-contrast)}:host(.button-solid.ion-color.ion-focused) .button-native{background:var(--ion-color-shade)}:host(.button-outline){--border-color:var(--ion-color-primary,#3880ff);--background:transparent;--color:var(--ion-color-primary,#3880ff);--color-focused:var(--ion-color-primary,#3880ff)}:host(.button-outline.ion-color) .button-native{border-color:var(--ion-color-base);background:transparent;color:var(--ion-color-base)}:host(.button-outline.ion-focused.ion-color) .button-native{background:rgba(var(--ion-color-base-rgb),.1);color:var(--ion-color-base)}:host(.button-clear){--border-width:0;--background:transparent;--color:var(--ion-color-primary,#3880ff)}:host(.button-clear.ion-color) .button-native{background:transparent;color:var(--ion-color-base)}:host(.button-clear.ion-focused.ion-color) .button-native{background:rgba(var(--ion-color-base-rgb),.1);color:var(--ion-color-base)}:host(.button-clear.activated.ion-color) .button-native{background:transparent}:host(.button-block){display:block}:host(.button-block) .button-native{margin-left:0;margin-right:0;display:block;width:100%;clear:both;contain:content}:host(.button-block) .button-native:after{clear:both}:host(.button-full){display:block}:host(.button-full) .button-native{margin-left:0;margin-right:0;display:block;width:100%;contain:content}:host(.button-full:not(.button-round)) .button-native{border-radius:0;border-right-width:0;border-left-width:0}.button-native{border-radius:var(--border-radius);-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;margin-left:0;margin-right:0;margin-top:0;margin-bottom:0;padding-left:var(--padding-start);padding-right:var(--padding-end);padding-top:var(--padding-top);padding-bottom:var(--padding-bottom);font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;letter-spacing:inherit;text-decoration:inherit;text-overflow:inherit;text-transform:inherit;text-align:inherit;white-space:inherit;color:inherit;display:block;position:relative;width:100%;height:100%;-webkit-transition:var(--transition);transition:var(--transition);border-width:var(--border-width);border-style:var(--border-style);border-color:var(--border-color);outline:none;background:var(--background);line-height:1;-webkit-box-shadow:var(--box-shadow);box-shadow:var(--box-shadow);contain:layout style;cursor:pointer;opacity:var(--opacity);overflow:var(--overflow);z-index:0;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-appearance:none;-moz-appearance:none;appearance:none}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.button-native{padding-left:unset;padding-right:unset;-webkit-padding-start:var(--padding-start);padding-inline-start:var(--padding-start);-webkit-padding-end:var(--padding-end);padding-inline-end:var(--padding-end)}}.button-native::-moz-focus-inner{border:0}.button-inner{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-negative:0;flex-shrink:0;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;width:100%;height:100%}::slotted(ion-icon){font-size:1.4em;pointer-events:none}::slotted(ion-icon[slot=start]){margin-left:-.3em;margin-right:.3em;margin-top:0;margin-bottom:0}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){::slotted(ion-icon[slot=start]){margin-left:unset;margin-right:unset;-webkit-margin-start:-.3em;margin-inline-start:-.3em;-webkit-margin-end:.3em;margin-inline-end:.3em}}::slotted(ion-icon[slot=end]){margin-left:.3em;margin-right:-.2em;margin-top:0;margin-bottom:0}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){::slotted(ion-icon[slot=end]){margin-left:unset;margin-right:unset;-webkit-margin-start:.3em;margin-inline-start:.3em;-webkit-margin-end:-.2em;margin-inline-end:-.2em}}::slotted(ion-icon[slot=icon-only]){font-size:1.8em}ion-ripple-effect{color:var(--ripple-color)}:host(.ion-focused) .button-native{background:var(--background-focused);color:var(--color-focused)}:host(.activated) .button-native{background:var(--background-activated);color:var(--color-activated)}\@media (any-hover:hover){:host(:hover) .button-native{background:var(--background-hover);color:var(--color-hover)}}:host{--border-radius:10px;--padding-top:0;--padding-bottom:0;--padding-start:1em;--padding-end:1em;--transition:background-color,opacity 100ms linear;margin-left:2px;margin-right:2px;margin-top:4px;margin-bottom:4px;height:2.8em;font-size:16px;font-weight:500;letter-spacing:-.03em}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){:host{margin-left:unset;margin-right:unset;-webkit-margin-start:2px;margin-inline-start:2px;-webkit-margin-end:2px;margin-inline-end:2px}}:host(.button-solid){--background-activated:var(--ion-color-primary-shade,#3171e0)}:host(.button-solid.activated){--opacity:1}:host(.button-solid.activated.ion-color) .button-native{background:var(--ion-color-shade)}:host(.button-outline){--border-radius:10px;--border-width:1px;--border-style:solid;--background-activated:var(--ion-color-primary,#3880ff);--background-focused:rgba(var(--ion-color-primary-rgb,56,128,255),0.1);--color-activated:var(--ion-color-primary-contrast,#fff)}:host(.button-outline.activated.ion-color) .button-native{background:var(--ion-color-base);color:var(--ion-color-contrast)}:host(.button-clear.activated){--opacity:0.4}:host(.button-clear){--background-activated:transparent;--background-focused:rgba(var(--ion-color-primary-rgb,56,128,255),0.1);--color-activated:var(--ion-color-primary,#3880ff);--color-focused:var(--ion-color-primary,#3880ff)}:host(.button-large){--border-radius:12px;--padding-top:0;--padding-start:1em;--padding-end:1em;--padding-bottom:0;height:2.8em;font-size:20px}:host(.button-small){--border-radius:6px;--padding-top:0;--padding-start:0.9em;--padding-end:0.9em;--padding-bottom:0;height:2.1em;font-size:13px}:host(.button-round){--border-radius:64px;--padding-top:0;--padding-start:26px;--padding-end:26px;--padding-bottom:0}:host(.button-strong){font-weight:600}\@media (any-hover:hover){:host(.button-solid:hover){--opacity:0.8}:host(.button-clear:hover),:host(.button-outline:hover){--opacity:0.6}:host(.ion-focused:hover){--background-hover:var(--background-focused);--color-hover:var(--color-focused)}:host(.activated:hover){--background-hover:var(--background-activated);--color-hover:var(--color-activated)}}"; },
+        enumerable: true,
+        configurable: true
+    });
+    return Button;
+}());
+var CACHED_MAP;
+var getIconMap = function () {
+    if (!CACHED_MAP) {
+        var win = window;
+        win.Ionicons = win.Ionicons || {};
+        CACHED_MAP = win.Ionicons.map = win.Ionicons.map || new Map();
+    }
+    return CACHED_MAP;
+};
+var getUrl = function (i) {
+    var url = getSrc(i.src);
+    if (url) {
+        return url;
+    }
+    url = getName(i.name, i.icon, i.mode, i.ios, i.md);
+    if (url) {
+        return getNamedUrl(url);
+    }
+    if (i.icon) {
+        url = getSrc(i.icon);
+        if (url) {
+            return url;
+        }
+        url = getSrc(i.icon[i.mode]);
+        if (url) {
+            return url;
+        }
+    }
+    return null;
+};
+var getNamedUrl = function (name) {
+    var url = getIconMap().get(name);
+    if (url) {
+        return url;
+    }
+    return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["i"])("svg/" + name + ".svg");
+};
+var getName = function (name, icon, mode, ios, md) {
+    // default to "md" if somehow the mode wasn't set
+    mode = (mode && mode.toLowerCase()) === 'ios' ? 'ios' : 'md';
+    // if an icon was passed in using the ios or md attributes
+    // set the iconName to whatever was passed in
+    if (ios && mode === 'ios') {
+        name = ios.toLowerCase();
+    }
+    else if (md && mode === 'md') {
+        name = md.toLowerCase();
+    }
+    else {
+        if (!name && icon && !isSrc(icon)) {
+            name = icon;
+        }
+        if (isStr(name)) {
+            name = name.toLowerCase();
+            if (!/^md-|^ios-|^logo-/.test(name)) {
+                // this does not have one of the defaults
+                // so lets auto add in the mode prefix for them
+                name = mode + '-' + name;
+            }
+        }
+    }
+    if (!isStr(name) || name.trim() === '') {
+        return null;
+    }
+    // only allow alpha characters and dash
+    var invalidChars = name.replace(/[a-z]|-|\d/gi, '');
+    if (invalidChars !== '') {
+        return null;
+    }
+    return name;
+};
+var getSrc = function (src) {
+    if (isStr(src)) {
+        src = src.trim();
+        if (isSrc(src)) {
+            return src;
+        }
+    }
+    return null;
+};
+var isSrc = function (str) {
+    return str.length > 0 && /(\/|\.)/.test(str);
+};
+var isStr = function (val) { return typeof val === 'string'; };
+var validateContent = function (svgContent) {
+    if (svgContent) {
+        var div = document.createElement('div');
+        div.innerHTML = svgContent;
+        // setup this way to ensure it works on our buddy IE
+        for (var i = div.childNodes.length - 1; i >= 0; i--) {
+            if (div.childNodes[i].nodeName.toLowerCase() !== 'svg') {
+                div.removeChild(div.childNodes[i]);
+            }
+        }
+        // must only have 1 root element
+        var svgElm = div.firstElementChild;
+        if (svgElm && svgElm.nodeName.toLowerCase() === 'svg') {
+            svgElm.setAttribute('class', 's-ion-icon');
+            // root element must be an svg
+            // lets double check we've got valid elements
+            // do not allow scripts
+            if (isValid(svgElm)) {
+                return div.innerHTML;
+            }
+        }
+    }
+    return '';
+};
+var isValid = function (elm) {
+    if (elm.nodeType === 1) {
+        if (elm.nodeName.toLowerCase() === 'script') {
+            return false;
+        }
+        for (var i = 0; i < elm.attributes.length; i++) {
+            var val = elm.attributes[i].value;
+            if (isStr(val) && val.toLowerCase().indexOf('on') === 0) {
+                return false;
+            }
+        }
+        for (var i = 0; i < elm.childNodes.length; i++) {
+            if (!isValid(elm.childNodes[i])) {
+                return false;
+            }
+        }
+    }
+    return true;
+};
+var requests = new Map();
+var getSvgContent = function (url) {
+    // see if we already have a request for this url
+    var req = requests.get(url);
+    if (!req) {
+        // we don't already have a request
+        req = fetch(url).then(function (rsp) {
+            if (rsp.status <= 299) {
+                return rsp.text();
+            }
+            return Promise.resolve(null);
+        }).then(function (svgContent) { return validateContent(svgContent); });
+        // cache for the same requests
+        requests.set(url, req);
+    }
+    return req;
+};
+var Icon = /** @class */ (function () {
+    function Icon(hostRef) {
+        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["r"])(this, hostRef);
+        this.mode = getIonMode(this);
+        this.isVisible = false;
+        /**
+         * If enabled, ion-icon will be loaded lazily when it's visible in the viewport.
+         * Default, `false`.
+         */
+        this.lazy = false;
+    }
+    Icon.prototype.connectedCallback = function () {
+        var _this = this;
+        // purposely do not return the promise here because loading
+        // the svg file should not hold up loading the app
+        // only load the svg if it's visible
+        this.waitUntilVisible(this.el, '50px', function () {
+            _this.isVisible = true;
+            _this.loadIcon();
+        });
+    };
+    Icon.prototype.disconnectedCallback = function () {
+        if (this.io) {
+            this.io.disconnect();
+            this.io = undefined;
+        }
+    };
+    Icon.prototype.waitUntilVisible = function (el, rootMargin, cb) {
+        var _this = this;
+        if (this.lazy && typeof window !== 'undefined' && window.IntersectionObserver) {
+            var io_1 = this.io = new window.IntersectionObserver(function (data) {
+                if (data[0].isIntersecting) {
+                    io_1.disconnect();
+                    _this.io = undefined;
+                    cb();
+                }
+            }, { rootMargin: rootMargin });
+            io_1.observe(el);
+        }
+        else {
+            // browser doesn't support IntersectionObserver
+            // so just fallback to always show it
+            cb();
+        }
+    };
+    Icon.prototype.loadIcon = function () {
+        var _this = this;
+        if (this.isVisible) {
+            var url = getUrl(this);
+            if (url) {
+                getSvgContent(url)
+                    .then(function (svgContent) { return _this.svgContent = svgContent; });
+            }
+        }
+        if (!this.ariaLabel) {
+            var label = getName(this.name, this.icon, this.mode, this.ios, this.md);
+            // user did not provide a label
+            // come up with the label based on the icon name
+            if (label) {
+                this.ariaLabel = label
+                    .replace('ios-', '')
+                    .replace('md-', '')
+                    .replace(/\-/g, ' ');
+            }
+        }
+    };
+    Icon.prototype.render = function () {
+        var _a, _b;
+        var mode = this.mode || 'md';
+        var flipRtl = this.flipRtl || (this.ariaLabel && this.ariaLabel.indexOf('arrow') > -1 && this.flipRtl !== false);
+        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["H"], { role: "img", class: Object.assign((_a = {}, _a[mode] = true, _a), createColorClasses(this.color), (_b = {}, _b["icon-" + this.size] = !!this.size, _b['flip-rtl'] = !!flipRtl && this.el.ownerDocument.dir === 'rtl', _b)) }, ((this.svgContent)
+            ? Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "icon-inner", innerHTML: this.svgContent })
+            : Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "icon-inner" }))));
+    };
+    Object.defineProperty(Icon, "assetsDirs", {
+        get: function () { return ["svg"]; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Icon.prototype, "el", {
+        get: function () { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["e"])(this); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Icon, "watchers", {
         get: function () {
             return {
-                "buttons": ["buttonsChanged"],
-                "inputs": ["inputsChanged"]
+                "name": ["loadIcon"],
+                "src": ["loadIcon"],
+                "icon": ["loadIcon"]
             };
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Alert, "style", {
-        get: function () { return ".sc-ion-alert-ios-h{--min-width:250px;--width:auto;--min-height:auto;--height:auto;--max-height:90%;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;left:0;right:0;top:0;bottom:0;display:-ms-flexbox;display:flex;position:fixed;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;font-family:var(--ion-font-family,inherit);contain:strict;-ms-touch-action:none;touch-action:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;z-index:1001}.overlay-hidden.sc-ion-alert-ios-h{display:none}.alert-top.sc-ion-alert-ios-h{padding-top:50px;-ms-flex-align:start;align-items:flex-start}.alert-wrapper.sc-ion-alert-ios{display:-ms-flexbox;display:flex;-ms-flex-direction:column;flex-direction:column;width:var(--width);min-width:var(--min-width);max-width:var(--max-width);height:var(--height);min-height:var(--min-height);max-height:var(--max-height);background:var(--background);contain:content;opacity:0;z-index:10}.alert-title.sc-ion-alert-ios{margin-top:0}.alert-sub-title.sc-ion-alert-ios, .alert-title.sc-ion-alert-ios{margin-left:0;margin-right:0;margin-bottom:0;padding-left:0;padding-right:0;padding-top:0;padding-bottom:0}.alert-sub-title.sc-ion-alert-ios{margin-top:5px;font-weight:400}.alert-message.sc-ion-alert-ios{-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-overflow-scrolling:touch;overflow-y:auto;overscroll-behavior-y:contain}.alert-checkbox-group.sc-ion-alert-ios::-webkit-scrollbar, .alert-message.sc-ion-alert-ios::-webkit-scrollbar, .alert-radio-group.sc-ion-alert-ios::-webkit-scrollbar{display:none}.alert-input.sc-ion-alert-ios{padding-left:0;padding-right:0;padding-top:10px;padding-bottom:10px;width:100%;border:0;background:inherit;font:inherit;-webkit-box-sizing:border-box;box-sizing:border-box}.alert-button-group.sc-ion-alert-ios{display:-ms-flexbox;display:flex;-ms-flex-direction:row;flex-direction:row;width:100%}.alert-button-group-vertical.sc-ion-alert-ios{-ms-flex-direction:column;flex-direction:column;-ms-flex-wrap:nowrap;flex-wrap:nowrap}.alert-button.sc-ion-alert-ios{display:block;border:0;font-size:14px;line-height:20px;z-index:0}.alert-button.ion-focused.sc-ion-alert-ios, .alert-tappable.ion-focused.sc-ion-alert-ios{background:var(--ion-color-step-100,#e6e6e6)}.alert-button-inner.sc-ion-alert-ios{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-negative:0;flex-shrink:0;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;width:100%;height:100%}.alert-checkbox-button-disabled.sc-ion-alert-ios .alert-button-inner.sc-ion-alert-ios, .alert-input-disabled.sc-ion-alert-ios, .alert-radio-button-disabled.sc-ion-alert-ios .alert-button-inner.sc-ion-alert-ios{cursor:default;opacity:.5;pointer-events:none}.alert-tappable.sc-ion-alert-ios{margin-left:0;margin-right:0;margin-top:0;margin-bottom:0;padding-left:0;padding-right:0;padding-top:0;padding-bottom:0;display:-ms-flexbox;display:flex;width:100%;border:0;background:transparent;font-size:inherit;line-height:normal;text-align:start;-webkit-appearance:none;-moz-appearance:none;appearance:none;contain:strict}.alert-button.sc-ion-alert-ios, .alert-checkbox.sc-ion-alert-ios, .alert-input.sc-ion-alert-ios, .alert-radio.sc-ion-alert-ios{outline:none}.alert-checkbox-icon.sc-ion-alert-ios, .alert-checkbox-inner.sc-ion-alert-ios, .alert-radio-icon.sc-ion-alert-ios{-webkit-box-sizing:border-box;box-sizing:border-box}.sc-ion-alert-ios-h{--background:var(--ion-overlay-background-color,var(--ion-color-step-100,#f9f9f9));--max-width:270px;font-size:14px}.alert-wrapper.sc-ion-alert-ios{border-radius:13px;-webkit-box-shadow:none;box-shadow:none;overflow:hidden}\@supports ((-webkit-backdrop-filter:blur(0)) or (backdrop-filter:blur(0))){.alert-translucent.sc-ion-alert-ios-h .alert-wrapper.sc-ion-alert-ios{background:rgba(var(--ion-background-color-rgb,255,255,255),.9);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}}.alert-head.sc-ion-alert-ios{padding-left:16px;padding-right:16px;padding-top:12px;padding-bottom:7px;text-align:center}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.alert-head.sc-ion-alert-ios{padding-left:unset;padding-right:unset;-webkit-padding-start:16px;padding-inline-start:16px;-webkit-padding-end:16px;padding-inline-end:16px}}.alert-title.sc-ion-alert-ios{margin-top:8px;color:var(--ion-text-color,#000);font-size:17px;font-weight:600}.alert-sub-title.sc-ion-alert-ios{color:var(--ion-color-step-600,#666);font-size:14px}.alert-input-group.sc-ion-alert-ios, .alert-message.sc-ion-alert-ios{padding-left:16px;padding-right:16px;padding-top:0;padding-bottom:21px;color:var(--ion-text-color,#000);font-size:13px;text-align:center}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.alert-input-group.sc-ion-alert-ios, .alert-message.sc-ion-alert-ios{padding-left:unset;padding-right:unset;-webkit-padding-start:16px;padding-inline-start:16px;-webkit-padding-end:16px;padding-inline-end:16px}}.alert-message.sc-ion-alert-ios{max-height:240px}.alert-message.sc-ion-alert-ios:empty{padding-left:0;padding-right:0;padding-top:0;padding-bottom:12px}.alert-input.sc-ion-alert-ios{border-radius:4px;margin-top:10px;padding-left:6px;padding-right:6px;padding-top:6px;padding-bottom:6px;border:.55px solid var(--ion-color-step-250,#bfbfbf);background-color:var(--ion-background-color,#fff);-webkit-appearance:none;-moz-appearance:none;appearance:none}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.alert-input.sc-ion-alert-ios{padding-left:unset;padding-right:unset;-webkit-padding-start:6px;padding-inline-start:6px;-webkit-padding-end:6px;padding-inline-end:6px}}.alert-input.sc-ion-alert-ios::-webkit-input-placeholder{color:var(--ion-placeholder-color,var(--ion-color-step-400,#999));font-family:inherit;font-weight:inherit}.alert-input.sc-ion-alert-ios::-moz-placeholder{color:var(--ion-placeholder-color,var(--ion-color-step-400,#999));font-family:inherit;font-weight:inherit}.alert-input.sc-ion-alert-ios:-ms-input-placeholder{color:var(--ion-placeholder-color,var(--ion-color-step-400,#999));font-family:inherit;font-weight:inherit}.alert-input.sc-ion-alert-ios::-ms-input-placeholder{color:var(--ion-placeholder-color,var(--ion-color-step-400,#999));font-family:inherit;font-weight:inherit}.alert-input.sc-ion-alert-ios::placeholder{color:var(--ion-placeholder-color,var(--ion-color-step-400,#999));font-family:inherit;font-weight:inherit}.alert-input.sc-ion-alert-ios::-ms-clear{display:none}.alert-checkbox-group.sc-ion-alert-ios, .alert-radio-group.sc-ion-alert-ios{-ms-scroll-chaining:none;overscroll-behavior:contain;max-height:240px;border-top:.55px solid rgba(var(--ion-text-color-rgb,0,0,0),.2);overflow-y:auto;-webkit-overflow-scrolling:touch}.alert-tappable.sc-ion-alert-ios{height:44px}.alert-radio-label.sc-ion-alert-ios{padding-left:13px;padding-right:13px;padding-top:13px;padding-bottom:13px;-ms-flex:1;flex:1;-ms-flex-order:0;order:0;color:var(--ion-text-color,#000);text-overflow:ellipsis;white-space:nowrap;overflow:hidden}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.alert-radio-label.sc-ion-alert-ios{padding-left:unset;padding-right:unset;-webkit-padding-start:13px;padding-inline-start:13px;-webkit-padding-end:13px;padding-inline-end:13px}}[aria-checked=true].sc-ion-alert-ios .alert-radio-label.sc-ion-alert-ios{color:var(--ion-color-primary,#3880ff)}.alert-radio-icon.sc-ion-alert-ios{position:relative;-ms-flex-order:1;order:1;min-width:30px}[aria-checked=true].sc-ion-alert-ios .alert-radio-inner.sc-ion-alert-ios{left:7px;top:-7px;position:absolute;width:6px;height:12px;-webkit-transform:rotate(45deg);transform:rotate(45deg);border-width:2px;border-top-width:0;border-left-width:0;border-style:solid;border-color:var(--ion-color-primary,#3880ff)}[dir=rtl].sc-ion-alert-ios-h [aria-checked=true].sc-ion-alert-ios .alert-radio-inner.sc-ion-alert-ios, [dir=rtl] .sc-ion-alert-ios-h [aria-checked=true].sc-ion-alert-ios .alert-radio-inner.sc-ion-alert-ios, [dir=rtl].sc-ion-alert-ios [aria-checked=true].sc-ion-alert-ios .alert-radio-inner.sc-ion-alert-ios{left:unset;right:unset;right:7px}.alert-checkbox-label.sc-ion-alert-ios{padding-left:13px;padding-right:13px;padding-top:13px;padding-bottom:13px;-ms-flex:1;flex:1;color:var(--ion-text-color,#000);text-overflow:ellipsis;white-space:nowrap;overflow:hidden}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.alert-checkbox-label.sc-ion-alert-ios{padding-left:unset;padding-right:unset;-webkit-padding-start:13px;padding-inline-start:13px;-webkit-padding-end:13px;padding-inline-end:13px}}.alert-checkbox-icon.sc-ion-alert-ios{border-radius:50%;margin-left:16px;margin-right:6px;margin-top:10px;margin-bottom:10px;position:relative;width:24px;height:24px;border-width:1px;border-style:solid;border-color:var(--ion-item-border-color,var(--ion-border-color,var(--ion-color-step-250,#c8c7cc)));background-color:var(--ion-item-background,var(--ion-background-color,#fff));contain:strict}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.alert-checkbox-icon.sc-ion-alert-ios{margin-left:unset;margin-right:unset;-webkit-margin-start:16px;margin-inline-start:16px;-webkit-margin-end:6px;margin-inline-end:6px}}[aria-checked=true].sc-ion-alert-ios .alert-checkbox-icon.sc-ion-alert-ios{border-color:var(--ion-color-primary,#3880ff);background-color:var(--ion-color-primary,#3880ff)}[aria-checked=true].sc-ion-alert-ios .alert-checkbox-inner.sc-ion-alert-ios{left:9px;top:4px;position:absolute;width:5px;height:12px;-webkit-transform:rotate(45deg);transform:rotate(45deg);border-width:1px;border-top-width:0;border-left-width:0;border-style:solid;border-color:var(--ion-background-color,#fff)}[dir=rtl].sc-ion-alert-ios-h [aria-checked=true].sc-ion-alert-ios .alert-checkbox-inner.sc-ion-alert-ios, [dir=rtl] .sc-ion-alert-ios-h [aria-checked=true].sc-ion-alert-ios .alert-checkbox-inner.sc-ion-alert-ios, [dir=rtl].sc-ion-alert-ios [aria-checked=true].sc-ion-alert-ios .alert-checkbox-inner.sc-ion-alert-ios{left:unset;right:unset;right:9px}.alert-button-group.sc-ion-alert-ios{margin-right:-.55px;-ms-flex-wrap:wrap;flex-wrap:wrap}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.alert-button-group.sc-ion-alert-ios{margin-right:unset;-webkit-margin-end:-.55px;margin-inline-end:-.55px}}.alert-button.sc-ion-alert-ios{margin-left:0;margin-right:0;margin-top:0;margin-bottom:0;border-radius:0;-ms-flex:1 1 auto;flex:1 1 auto;min-width:50%;height:44px;border-top:.55px solid rgba(var(--ion-text-color-rgb,0,0,0),.2);border-right:.55px solid rgba(var(--ion-text-color-rgb,0,0,0),.2);background-color:transparent;color:var(--ion-color-primary,#3880ff);font-size:17px;overflow:hidden}[dir=rtl].sc-ion-alert-ios-h .alert-button.sc-ion-alert-ios:first-child, [dir=rtl] .sc-ion-alert-ios-h .alert-button.sc-ion-alert-ios:first-child, [dir=rtl].sc-ion-alert-ios .alert-button.sc-ion-alert-ios:first-child{border-right:0}.alert-button.sc-ion-alert-ios:last-child{border-right:0;font-weight:700}[dir=rtl].sc-ion-alert-ios-h .alert-button.sc-ion-alert-ios:last-child, [dir=rtl] .sc-ion-alert-ios-h .alert-button.sc-ion-alert-ios:last-child, [dir=rtl].sc-ion-alert-ios .alert-button.sc-ion-alert-ios:last-child{border-right:.55px solid rgba(var(--ion-text-color-rgb,0,0,0),.2)}.alert-button.activated.sc-ion-alert-ios{background-color:rgba(var(--ion-text-color-rgb,0,0,0),.1)}"; },
+    Object.defineProperty(Icon, "style", {
+        get: function () { return ":host{display:inline-block;width:1em;height:1em;contain:strict;fill:currentColor;-webkit-box-sizing:content-box!important;box-sizing:content-box!important}.icon-inner,svg{display:block;height:100%;width:100%}:host(.flip-rtl) .icon-inner{-webkit-transform:scaleX(-1);transform:scaleX(-1)}:host(.icon-small){font-size:18px!important}:host(.icon-large){font-size:32px!important}:host(.ion-color){color:var(--ion-color-base)!important}:host(.ion-color-primary){--ion-color-base:var(--ion-color-primary,#3880ff)}:host(.ion-color-secondary){--ion-color-base:var(--ion-color-secondary,#0cd1e8)}:host(.ion-color-tertiary){--ion-color-base:var(--ion-color-tertiary,#f4a942)}:host(.ion-color-success){--ion-color-base:var(--ion-color-success,#10dc60)}:host(.ion-color-warning){--ion-color-base:var(--ion-color-warning,#ffce00)}:host(.ion-color-danger){--ion-color-base:var(--ion-color-danger,#f14141)}:host(.ion-color-light){--ion-color-base:var(--ion-color-light,#f4f5f8)}:host(.ion-color-medium){--ion-color-base:var(--ion-color-medium,#989aa2)}:host(.ion-color-dark){--ion-color-base:var(--ion-color-dark,#222428)}"; },
         enumerable: true,
         configurable: true
     });
-    return Alert;
+    return Icon;
 }());
-var buttonClass = function (button) {
-    return Object.assign({ 'alert-button': true, 'ion-focusable': true, 'ion-activatable': true }, Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_5__["g"])(button.cssClass));
+var getIonMode = function (ref) {
+    return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["j"])(ref) || document.documentElement.getAttribute('mode') || 'md';
+};
+var createColorClasses = function (color) {
+    var _a;
+    return (color) ? (_a = {
+            'ion-color': true
+        },
+        _a["ion-color-" + color] = true,
+        _a) : null;
 };
 
 

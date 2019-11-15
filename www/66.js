@@ -1,122 +1,182 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[66],{
 
-/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-ripple-effect.entry.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-ripple-effect.entry.js ***!
-  \**************************************************************************/
-/*! exports provided: ion_ripple_effect */
+/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-spinner.entry.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-spinner.entry.js ***!
+  \********************************************************************/
+/*! exports provided: ion_spinner */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_ripple_effect", function() { return RippleEffect; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core-ca0488fc.js */ "./node_modules/@ionic/core/dist/esm-es5/core-ca0488fc.js");
-/* harmony import */ var _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./config-3c7f3790.js */ "./node_modules/@ionic/core/dist/esm-es5/config-3c7f3790.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_spinner", function() { return Spinner; });
+/* harmony import */ var _core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core-ca0488fc.js */ "./node_modules/@ionic/core/dist/esm-es5/core-ca0488fc.js");
+/* harmony import */ var _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./config-3c7f3790.js */ "./node_modules/@ionic/core/dist/esm-es5/config-3c7f3790.js");
+/* harmony import */ var _theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./theme-18cbe2cc.js */ "./node_modules/@ionic/core/dist/esm-es5/theme-18cbe2cc.js");
 
 
 
-var RippleEffect = /** @class */ (function () {
-    function class_1(hostRef) {
-        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["r"])(this, hostRef);
-        /**
-         * Sets the type of ripple-effect:
-         *
-         * - `bounded`: the ripple effect expands from the user's click position
-         * - `unbounded`: the ripple effect expands from the center of the button and overflows the container.
-         *
-         * NOTE: Surfaces for bounded ripples should have the overflow property set to hidden,
-         * while surfaces for unbounded ripples should have it set to visible.
-         */
-        this.type = 'bounded';
+var spinners = {
+    'bubbles': {
+        dur: 1000,
+        circles: 9,
+        fn: function (dur, index, total) {
+            var animationDelay = (dur * index / total) - dur + "ms";
+            var angle = 2 * Math.PI * index / total;
+            return {
+                r: 5,
+                style: {
+                    'top': 9 * Math.sin(angle) + "px",
+                    'left': 9 * Math.cos(angle) + "px",
+                    'animation-delay': animationDelay,
+                }
+            };
+        }
+    },
+    'circles': {
+        dur: 1000,
+        circles: 8,
+        fn: function (dur, index, total) {
+            var step = index / total;
+            var animationDelay = (dur * step) - dur + "ms";
+            var angle = 2 * Math.PI * step;
+            return {
+                r: 5,
+                style: {
+                    'top': 9 * Math.sin(angle) + "px",
+                    'left': 9 * Math.cos(angle) + "px",
+                    'animation-delay': animationDelay,
+                }
+            };
+        }
+    },
+    'circular': {
+        dur: 1400,
+        elmDuration: true,
+        circles: 1,
+        fn: function () {
+            return {
+                r: 20,
+                cx: 44,
+                cy: 44,
+                fill: 'none',
+                viewBox: '22 22 44 44',
+                transform: 'translate(0,0)',
+                style: {}
+            };
+        }
+    },
+    'crescent': {
+        dur: 750,
+        circles: 1,
+        fn: function () {
+            return {
+                r: 26,
+                style: {}
+            };
+        }
+    },
+    'dots': {
+        dur: 750,
+        circles: 3,
+        fn: function (_, index) {
+            var animationDelay = -(110 * index) + 'ms';
+            return {
+                r: 6,
+                style: {
+                    'left': 9 - (9 * index) + "px",
+                    'animation-delay': animationDelay,
+                }
+            };
+        }
+    },
+    'lines': {
+        dur: 1000,
+        lines: 12,
+        fn: function (dur, index, total) {
+            var transform = "rotate(" + (30 * index + (index < 6 ? 180 : -180)) + "deg)";
+            var animationDelay = (dur * index / total) - dur + "ms";
+            return {
+                y1: 17,
+                y2: 29,
+                style: {
+                    'transform': transform,
+                    'animation-delay': animationDelay,
+                }
+            };
+        }
+    },
+    'lines-small': {
+        dur: 1000,
+        lines: 12,
+        fn: function (dur, index, total) {
+            var transform = "rotate(" + (30 * index + (index < 6 ? 180 : -180)) + "deg)";
+            var animationDelay = (dur * index / total) - dur + "ms";
+            return {
+                y1: 12,
+                y2: 20,
+                style: {
+                    'transform': transform,
+                    'animation-delay': animationDelay,
+                }
+            };
+        }
     }
-    /**
-     * Adds the ripple effect to the parent element.
-     *
-     * @param x The horizontal coordinate of where the ripple should start.
-     * @param y The vertical coordinate of where the ripple should start.
-     */
-    class_1.prototype.addRipple = function (x, y) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-            var _this = this;
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
-                return [2 /*return*/, new Promise(function (resolve) {
-                        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["f"])(function () {
-                            var rect = _this.el.getBoundingClientRect();
-                            var width = rect.width;
-                            var height = rect.height;
-                            var hypotenuse = Math.sqrt(width * width + height * height);
-                            var maxDim = Math.max(height, width);
-                            var maxRadius = _this.unbounded ? maxDim : hypotenuse + PADDING;
-                            var initialSize = Math.floor(maxDim * INITIAL_ORIGIN_SCALE);
-                            var finalScale = maxRadius / initialSize;
-                            var posX = x - rect.left;
-                            var posY = y - rect.top;
-                            if (_this.unbounded) {
-                                posX = width * 0.5;
-                                posY = height * 0.5;
-                            }
-                            var styleX = posX - initialSize * 0.5;
-                            var styleY = posY - initialSize * 0.5;
-                            var moveX = width * 0.5 - posX;
-                            var moveY = height * 0.5 - posY;
-                            Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["w"])(function () {
-                                var div = document.createElement('div');
-                                div.classList.add('ripple-effect');
-                                var style = div.style;
-                                style.top = styleY + 'px';
-                                style.left = styleX + 'px';
-                                style.width = style.height = initialSize + 'px';
-                                style.setProperty('--final-scale', "" + finalScale);
-                                style.setProperty('--translate-end', moveX + "px, " + moveY + "px");
-                                var container = _this.el.shadowRoot || _this.el;
-                                container.appendChild(div);
-                                setTimeout(function () {
-                                    resolve(function () {
-                                        removeRipple(div);
-                                    });
-                                }, 225 + 100);
-                            });
-                        });
-                    })];
-            });
-        });
-    };
-    Object.defineProperty(class_1.prototype, "unbounded", {
-        get: function () {
-            return this.type === 'unbounded';
-        },
-        enumerable: true,
-        configurable: true
-    });
-    class_1.prototype.render = function () {
-        var _a;
-        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this);
-        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["H"], { role: "presentation", class: (_a = {},
-                _a[mode] = true,
-                _a['unbounded'] = this.unbounded,
-                _a) }));
-    };
-    Object.defineProperty(class_1.prototype, "el", {
-        get: function () { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["e"])(this); },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(class_1, "style", {
-        get: function () { return ":host{left:0;right:0;top:0;bottom:0;position:absolute;contain:strict;pointer-events:none}:host(.unbounded){contain:layout size style}.ripple-effect{border-radius:50%;position:absolute;background-color:currentColor;color:inherit;contain:strict;opacity:0;-webkit-animation:rippleAnimation 225ms forwards,fadeInAnimation 75ms forwards;animation:rippleAnimation 225ms forwards,fadeInAnimation 75ms forwards;will-change:transform,opacity;pointer-events:none}.fade-out{-webkit-transform:translate(var(--translate-end)) scale(var(--final-scale,1));transform:translate(var(--translate-end)) scale(var(--final-scale,1));-webkit-animation:fadeOutAnimation .15s forwards;animation:fadeOutAnimation .15s forwards}\@-webkit-keyframes rippleAnimation{0%{-webkit-animation-timing-function:cubic-bezier(.4,0,.2,1);animation-timing-function:cubic-bezier(.4,0,.2,1);-webkit-transform:scale(1);transform:scale(1)}to{-webkit-transform:translate(var(--translate-end)) scale(var(--final-scale,1));transform:translate(var(--translate-end)) scale(var(--final-scale,1))}}\@keyframes rippleAnimation{0%{-webkit-animation-timing-function:cubic-bezier(.4,0,.2,1);animation-timing-function:cubic-bezier(.4,0,.2,1);-webkit-transform:scale(1);transform:scale(1)}to{-webkit-transform:translate(var(--translate-end)) scale(var(--final-scale,1));transform:translate(var(--translate-end)) scale(var(--final-scale,1))}}\@-webkit-keyframes fadeInAnimation{0%{-webkit-animation-timing-function:linear;animation-timing-function:linear;opacity:0}to{opacity:.16}}\@keyframes fadeInAnimation{0%{-webkit-animation-timing-function:linear;animation-timing-function:linear;opacity:0}to{opacity:.16}}\@-webkit-keyframes fadeOutAnimation{0%{-webkit-animation-timing-function:linear;animation-timing-function:linear;opacity:.16}to{opacity:0}}\@keyframes fadeOutAnimation{0%{-webkit-animation-timing-function:linear;animation-timing-function:linear;opacity:.16}to{opacity:0}}"; },
-        enumerable: true,
-        configurable: true
-    });
-    return class_1;
-}());
-var removeRipple = function (ripple) {
-    ripple.classList.add('fade-out');
-    setTimeout(function () {
-        ripple.remove();
-    }, 200);
 };
-var PADDING = 10;
-var INITIAL_ORIGIN_SCALE = 0.5;
+var SPINNERS = spinners;
+var Spinner = /** @class */ (function () {
+    function Spinner(hostRef) {
+        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["r"])(this, hostRef);
+        /**
+         * If `true`, the spinner's animation will be paused.
+         */
+        this.paused = false;
+    }
+    Spinner.prototype.getName = function () {
+        var spinnerName = this.name || _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_1__["b"].get('spinner');
+        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["d"])(this);
+        if (spinnerName) {
+            return spinnerName;
+        }
+        return (mode === 'ios') ? 'lines' : 'circular';
+    };
+    Spinner.prototype.render = function () {
+        var _a;
+        var self = this;
+        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["d"])(self);
+        var spinnerName = self.getName();
+        var spinner = SPINNERS[spinnerName] || SPINNERS['lines'];
+        var duration = (typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur);
+        var svgs = [];
+        if (spinner.circles !== undefined) {
+            for (var i = 0; i < spinner.circles; i++) {
+                svgs.push(buildCircle(spinner, duration, i, spinner.circles));
+            }
+        }
+        else if (spinner.lines !== undefined) {
+            for (var i = 0; i < spinner.lines; i++) {
+                svgs.push(buildLine(spinner, duration, i, spinner.lines));
+            }
+        }
+        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["H"], { class: Object.assign(Object.assign({}, Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_2__["c"])(self.color)), (_a = {}, _a[mode] = true, _a["spinner-" + spinnerName] = true, _a['spinner-paused'] = !!self.paused || _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_1__["b"].getBoolean('_testing'), _a)), role: "progressbar", style: spinner.elmDuration ? { animationDuration: duration + 'ms' } : {} }, svgs));
+    };
+    Object.defineProperty(Spinner, "style", {
+        get: function () { return ":host{display:inline-block;position:relative;width:28px;height:28px;color:var(--color);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}:host(.ion-color){color:var(--ion-color-base)}svg{left:0;top:0;-webkit-transform-origin:center;transform-origin:center;position:absolute;width:100%;height:100%;-webkit-transform:translateZ(0);transform:translateZ(0)}:host-context([dir=rtl]) svg,[dir=rtl] svg{left:unset;right:unset;right:0;-webkit-transform-origin:calc(100% - center);transform-origin:calc(100% - center)}:host(.spinner-lines) line,:host(.spinner-lines-small) line{stroke-width:4px;stroke-linecap:round;stroke:currentColor}:host(.spinner-lines) svg,:host(.spinner-lines-small) svg{-webkit-animation:spinner-fade-out 1s linear infinite;animation:spinner-fade-out 1s linear infinite}:host(.spinner-bubbles) svg{-webkit-animation:spinner-scale-out 1s linear infinite;animation:spinner-scale-out 1s linear infinite;fill:currentColor}:host(.spinner-circles) svg{-webkit-animation:spinner-fade-out 1s linear infinite;animation:spinner-fade-out 1s linear infinite;fill:currentColor}:host(.spinner-crescent) circle{fill:transparent;stroke-width:4px;stroke-dasharray:128px;stroke-dashoffset:82px;stroke:currentColor}:host(.spinner-crescent) svg{-webkit-animation:spinner-rotate 1s linear infinite;animation:spinner-rotate 1s linear infinite}:host(.spinner-dots) circle{stroke-width:0;fill:currentColor}:host(.spinner-dots) svg{-webkit-animation:spinner-dots 1s linear infinite;animation:spinner-dots 1s linear infinite}:host(.spinner-circular){-webkit-animation:spinner-circular linear infinite;animation:spinner-circular linear infinite}:host(.spinner-circular) circle{-webkit-animation:spinner-circular-inner ease-in-out infinite;animation:spinner-circular-inner ease-in-out infinite;stroke:currentColor;stroke-dasharray:80px,200px;stroke-dashoffset:0px;stroke-width:3.6;fill:none}:host(.spinner-paused),:host(.spinner-paused) circle,:host(.spinner-paused) svg{-webkit-animation-play-state:paused;animation-play-state:paused}\@-webkit-keyframes spinner-fade-out{0%{opacity:1}to{opacity:0}}\@keyframes spinner-fade-out{0%{opacity:1}to{opacity:0}}\@-webkit-keyframes spinner-scale-out{0%{-webkit-transform:scale(1);transform:scale(1)}to{-webkit-transform:scale(0);transform:scale(0)}}\@keyframes spinner-scale-out{0%{-webkit-transform:scale(1);transform:scale(1)}to{-webkit-transform:scale(0);transform:scale(0)}}\@-webkit-keyframes spinner-rotate{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}\@keyframes spinner-rotate{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}\@-webkit-keyframes spinner-dots{0%{-webkit-transform:scale(1);transform:scale(1);opacity:.9}50%{-webkit-transform:scale(.4);transform:scale(.4);opacity:.3}to{-webkit-transform:scale(1);transform:scale(1);opacity:.9}}\@keyframes spinner-dots{0%{-webkit-transform:scale(1);transform:scale(1);opacity:.9}50%{-webkit-transform:scale(.4);transform:scale(.4);opacity:.3}to{-webkit-transform:scale(1);transform:scale(1);opacity:.9}}\@-webkit-keyframes spinner-circular{to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}\@keyframes spinner-circular{to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}\@-webkit-keyframes spinner-circular-inner{0%{stroke-dasharray:1px,200px;stroke-dashoffset:0px}50%{stroke-dasharray:100px,200px;stroke-dashoffset:-15px}to{stroke-dasharray:100px,200px;stroke-dashoffset:-125px}}\@keyframes spinner-circular-inner{0%{stroke-dasharray:1px,200px;stroke-dashoffset:0px}50%{stroke-dasharray:100px,200px;stroke-dashoffset:-15px}to{stroke-dasharray:100px,200px;stroke-dashoffset:-125px}}"; },
+        enumerable: true,
+        configurable: true
+    });
+    return Spinner;
+}());
+var buildCircle = function (spinner, duration, index, total) {
+    var data = spinner.fn(duration, index, total);
+    data.style['animation-duration'] = duration + 'ms';
+    return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("svg", { viewBox: data.viewBox || '0 0 64 64', style: data.style }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("circle", { transform: data.transform || 'translate(32,32)', cx: data.cx, cy: data.cy, r: data.r, style: spinner.elmDuration ? { animationDuration: duration + 'ms' } : {} })));
+};
+var buildLine = function (spinner, duration, index, total) {
+    var data = spinner.fn(duration, index, total);
+    data.style['animation-duration'] = duration + 'ms';
+    return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("svg", { viewBox: data.viewBox || '0 0 64 64', style: data.style }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("line", { transform: "translate(32,32)", y1: data.y1, y2: data.y2 })));
+};
 
 
 

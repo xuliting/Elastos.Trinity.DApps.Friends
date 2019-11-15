@@ -1,182 +1,195 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[76],{
 
-/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-spinner.entry.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-spinner.entry.js ***!
-  \********************************************************************/
-/*! exports provided: ion_spinner */
+/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-toggle-ios.entry.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-toggle-ios.entry.js ***!
+  \***********************************************************************/
+/*! exports provided: ion_toggle */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_spinner", function() { return Spinner; });
-/* harmony import */ var _core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core-ca0488fc.js */ "./node_modules/@ionic/core/dist/esm-es5/core-ca0488fc.js");
-/* harmony import */ var _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./config-3c7f3790.js */ "./node_modules/@ionic/core/dist/esm-es5/config-3c7f3790.js");
-/* harmony import */ var _theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./theme-18cbe2cc.js */ "./node_modules/@ionic/core/dist/esm-es5/theme-18cbe2cc.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_toggle", function() { return Toggle; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core-ca0488fc.js */ "./node_modules/@ionic/core/dist/esm-es5/core-ca0488fc.js");
+/* harmony import */ var _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./config-3c7f3790.js */ "./node_modules/@ionic/core/dist/esm-es5/config-3c7f3790.js");
+/* harmony import */ var _helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers-46f4a262.js */ "./node_modules/@ionic/core/dist/esm-es5/helpers-46f4a262.js");
+/* harmony import */ var _theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./theme-18cbe2cc.js */ "./node_modules/@ionic/core/dist/esm-es5/theme-18cbe2cc.js");
+/* harmony import */ var _haptic_c8f1473e_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./haptic-c8f1473e.js */ "./node_modules/@ionic/core/dist/esm-es5/haptic-c8f1473e.js");
 
 
 
-var spinners = {
-    'bubbles': {
-        dur: 1000,
-        circles: 9,
-        fn: function (dur, index, total) {
-            var animationDelay = (dur * index / total) - dur + "ms";
-            var angle = 2 * Math.PI * index / total;
-            return {
-                r: 5,
-                style: {
-                    'top': 9 * Math.sin(angle) + "px",
-                    'left': 9 * Math.cos(angle) + "px",
-                    'animation-delay': animationDelay,
-                }
-            };
-        }
-    },
-    'circles': {
-        dur: 1000,
-        circles: 8,
-        fn: function (dur, index, total) {
-            var step = index / total;
-            var animationDelay = (dur * step) - dur + "ms";
-            var angle = 2 * Math.PI * step;
-            return {
-                r: 5,
-                style: {
-                    'top': 9 * Math.sin(angle) + "px",
-                    'left': 9 * Math.cos(angle) + "px",
-                    'animation-delay': animationDelay,
-                }
-            };
-        }
-    },
-    'circular': {
-        dur: 1400,
-        elmDuration: true,
-        circles: 1,
-        fn: function () {
-            return {
-                r: 20,
-                cx: 44,
-                cy: 44,
-                fill: 'none',
-                viewBox: '22 22 44 44',
-                transform: 'translate(0,0)',
-                style: {}
-            };
-        }
-    },
-    'crescent': {
-        dur: 750,
-        circles: 1,
-        fn: function () {
-            return {
-                r: 26,
-                style: {}
-            };
-        }
-    },
-    'dots': {
-        dur: 750,
-        circles: 3,
-        fn: function (_, index) {
-            var animationDelay = -(110 * index) + 'ms';
-            return {
-                r: 6,
-                style: {
-                    'left': 9 - (9 * index) + "px",
-                    'animation-delay': animationDelay,
-                }
-            };
-        }
-    },
-    'lines': {
-        dur: 1000,
-        lines: 12,
-        fn: function (dur, index, total) {
-            var transform = "rotate(" + (30 * index + (index < 6 ? 180 : -180)) + "deg)";
-            var animationDelay = (dur * index / total) - dur + "ms";
-            return {
-                y1: 17,
-                y2: 29,
-                style: {
-                    'transform': transform,
-                    'animation-delay': animationDelay,
-                }
-            };
-        }
-    },
-    'lines-small': {
-        dur: 1000,
-        lines: 12,
-        fn: function (dur, index, total) {
-            var transform = "rotate(" + (30 * index + (index < 6 ? 180 : -180)) + "deg)";
-            var animationDelay = (dur * index / total) - dur + "ms";
-            return {
-                y1: 12,
-                y2: 20,
-                style: {
-                    'transform': transform,
-                    'animation-delay': animationDelay,
-                }
-            };
-        }
-    }
-};
-var SPINNERS = spinners;
-var Spinner = /** @class */ (function () {
-    function Spinner(hostRef) {
-        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["r"])(this, hostRef);
+
+
+
+var Toggle = /** @class */ (function () {
+    function class_1(hostRef) {
+        var _this = this;
+        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["r"])(this, hostRef);
+        this.inputId = "ion-tg-" + toggleIds++;
+        this.lastDrag = 0;
+        this.activated = false;
         /**
-         * If `true`, the spinner's animation will be paused.
+         * The name of the control, which is submitted with the form data.
          */
-        this.paused = false;
+        this.name = this.inputId;
+        /**
+         * If `true`, the toggle is selected.
+         */
+        this.checked = false;
+        /**
+         * If `true`, the user cannot interact with the toggle.
+         */
+        this.disabled = false;
+        /**
+         * The value of the toggle does not mean if it's checked or not, use the `checked`
+         * property for that.
+         *
+         * The value of a toggle is analogous to the value of a `<input type="checkbox">`,
+         * it's only used when the toggle participates in a native `<form>`.
+         */
+        this.value = 'on';
+        this.onClick = function () {
+            if (_this.lastDrag + 300 < Date.now()) {
+                _this.checked = !_this.checked;
+            }
+        };
+        this.onFocus = function () {
+            _this.ionFocus.emit();
+        };
+        this.onBlur = function () {
+            _this.ionBlur.emit();
+        };
+        this.ionChange = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionChange", 7);
+        this.ionFocus = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionFocus", 7);
+        this.ionBlur = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionBlur", 7);
+        this.ionStyle = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionStyle", 7);
     }
-    Spinner.prototype.getName = function () {
-        var spinnerName = this.name || _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_1__["b"].get('spinner');
-        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["d"])(this);
-        if (spinnerName) {
-            return spinnerName;
-        }
-        return (mode === 'ios') ? 'lines' : 'circular';
+    class_1.prototype.checkedChanged = function (isChecked) {
+        this.ionChange.emit({
+            checked: isChecked,
+            value: this.value
+        });
     };
-    Spinner.prototype.render = function () {
+    class_1.prototype.disabledChanged = function () {
+        this.emitStyle();
+        if (this.gesture) {
+            this.gesture.setDisabled(this.disabled);
+        }
+    };
+    class_1.prototype.connectedCallback = function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+            var _a;
+            var _this = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = this;
+                        return [4 /*yield*/, Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./index-624eea58.js */ "./node_modules/@ionic/core/dist/esm-es5/index-624eea58.js"))];
+                    case 1:
+                        _a.gesture = (_b.sent()).createGesture({
+                            el: this.el,
+                            gestureName: 'toggle',
+                            gesturePriority: 100,
+                            threshold: 5,
+                            passive: false,
+                            onStart: function () { return _this.onStart(); },
+                            onMove: function (ev) { return _this.onMove(ev); },
+                            onEnd: function (ev) { return _this.onEnd(ev); },
+                        });
+                        this.disabledChanged();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    class_1.prototype.disconnectedCallback = function () {
+        if (this.gesture) {
+            this.gesture.destroy();
+            this.gesture = undefined;
+        }
+    };
+    class_1.prototype.componentWillLoad = function () {
+        this.emitStyle();
+    };
+    class_1.prototype.emitStyle = function () {
+        this.ionStyle.emit({
+            'interactive-disabled': this.disabled,
+        });
+    };
+    class_1.prototype.onStart = function () {
+        this.activated = true;
+        // touch-action does not work in iOS
+        this.setFocus();
+    };
+    class_1.prototype.onMove = function (detail) {
+        if (shouldToggle(document, this.checked, detail.deltaX, -10)) {
+            this.checked = !this.checked;
+            Object(_haptic_c8f1473e_js__WEBPACK_IMPORTED_MODULE_5__["h"])();
+        }
+    };
+    class_1.prototype.onEnd = function (ev) {
+        this.activated = false;
+        this.lastDrag = Date.now();
+        ev.event.preventDefault();
+        ev.event.stopImmediatePropagation();
+    };
+    class_1.prototype.getValue = function () {
+        return this.value || '';
+    };
+    class_1.prototype.setFocus = function () {
+        if (this.buttonEl) {
+            this.buttonEl.focus();
+        }
+    };
+    class_1.prototype.render = function () {
         var _a;
-        var self = this;
-        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["d"])(self);
-        var spinnerName = self.getName();
-        var spinner = SPINNERS[spinnerName] || SPINNERS['lines'];
-        var duration = (typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur);
-        var svgs = [];
-        if (spinner.circles !== undefined) {
-            for (var i = 0; i < spinner.circles; i++) {
-                svgs.push(buildCircle(spinner, duration, i, spinner.circles));
-            }
+        var _this = this;
+        var _b = this, inputId = _b.inputId, disabled = _b.disabled, checked = _b.checked, activated = _b.activated, color = _b.color, el = _b.el;
+        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this);
+        var labelId = inputId + '-lbl';
+        var label = Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["f"])(el);
+        var value = this.getValue();
+        if (label) {
+            label.id = labelId;
         }
-        else if (spinner.lines !== undefined) {
-            for (var i = 0; i < spinner.lines; i++) {
-                svgs.push(buildLine(spinner, duration, i, spinner.lines));
-            }
-        }
-        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["H"], { class: Object.assign(Object.assign({}, Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_2__["c"])(self.color)), (_a = {}, _a[mode] = true, _a["spinner-" + spinnerName] = true, _a['spinner-paused'] = !!self.paused || _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_1__["b"].getBoolean('_testing'), _a)), role: "progressbar", style: spinner.elmDuration ? { animationDuration: duration + 'ms' } : {} }, svgs));
+        Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["a"])(true, el, this.name, (checked ? value : ''), disabled);
+        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["H"], { onClick: this.onClick, role: "checkbox", "aria-disabled": disabled ? 'true' : null, "aria-checked": "" + checked, "aria-labelledby": labelId, class: Object.assign(Object.assign({}, Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_4__["c"])(color)), (_a = {}, _a[mode] = true, _a['in-item'] = Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_4__["h"])('ion-item', el), _a['toggle-activated'] = activated, _a['toggle-checked'] = checked, _a['toggle-disabled'] = disabled, _a['interactive'] = true, _a)) }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "toggle-icon" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "toggle-inner" })), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("button", { type: "button", onFocus: this.onFocus, onBlur: this.onBlur, disabled: disabled, ref: function (btnEl) { return _this.buttonEl = btnEl; } })));
     };
-    Object.defineProperty(Spinner, "style", {
-        get: function () { return ":host{display:inline-block;position:relative;width:28px;height:28px;color:var(--color);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}:host(.ion-color){color:var(--ion-color-base)}svg{left:0;top:0;-webkit-transform-origin:center;transform-origin:center;position:absolute;width:100%;height:100%;-webkit-transform:translateZ(0);transform:translateZ(0)}:host-context([dir=rtl]) svg,[dir=rtl] svg{left:unset;right:unset;right:0;-webkit-transform-origin:calc(100% - center);transform-origin:calc(100% - center)}:host(.spinner-lines) line,:host(.spinner-lines-small) line{stroke-width:4px;stroke-linecap:round;stroke:currentColor}:host(.spinner-lines) svg,:host(.spinner-lines-small) svg{-webkit-animation:spinner-fade-out 1s linear infinite;animation:spinner-fade-out 1s linear infinite}:host(.spinner-bubbles) svg{-webkit-animation:spinner-scale-out 1s linear infinite;animation:spinner-scale-out 1s linear infinite;fill:currentColor}:host(.spinner-circles) svg{-webkit-animation:spinner-fade-out 1s linear infinite;animation:spinner-fade-out 1s linear infinite;fill:currentColor}:host(.spinner-crescent) circle{fill:transparent;stroke-width:4px;stroke-dasharray:128px;stroke-dashoffset:82px;stroke:currentColor}:host(.spinner-crescent) svg{-webkit-animation:spinner-rotate 1s linear infinite;animation:spinner-rotate 1s linear infinite}:host(.spinner-dots) circle{stroke-width:0;fill:currentColor}:host(.spinner-dots) svg{-webkit-animation:spinner-dots 1s linear infinite;animation:spinner-dots 1s linear infinite}:host(.spinner-circular){-webkit-animation:spinner-circular linear infinite;animation:spinner-circular linear infinite}:host(.spinner-circular) circle{-webkit-animation:spinner-circular-inner ease-in-out infinite;animation:spinner-circular-inner ease-in-out infinite;stroke:currentColor;stroke-dasharray:80px,200px;stroke-dashoffset:0px;stroke-width:3.6;fill:none}:host(.spinner-paused),:host(.spinner-paused) circle,:host(.spinner-paused) svg{-webkit-animation-play-state:paused;animation-play-state:paused}\@-webkit-keyframes spinner-fade-out{0%{opacity:1}to{opacity:0}}\@keyframes spinner-fade-out{0%{opacity:1}to{opacity:0}}\@-webkit-keyframes spinner-scale-out{0%{-webkit-transform:scale(1);transform:scale(1)}to{-webkit-transform:scale(0);transform:scale(0)}}\@keyframes spinner-scale-out{0%{-webkit-transform:scale(1);transform:scale(1)}to{-webkit-transform:scale(0);transform:scale(0)}}\@-webkit-keyframes spinner-rotate{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}\@keyframes spinner-rotate{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}\@-webkit-keyframes spinner-dots{0%{-webkit-transform:scale(1);transform:scale(1);opacity:.9}50%{-webkit-transform:scale(.4);transform:scale(.4);opacity:.3}to{-webkit-transform:scale(1);transform:scale(1);opacity:.9}}\@keyframes spinner-dots{0%{-webkit-transform:scale(1);transform:scale(1);opacity:.9}50%{-webkit-transform:scale(.4);transform:scale(.4);opacity:.3}to{-webkit-transform:scale(1);transform:scale(1);opacity:.9}}\@-webkit-keyframes spinner-circular{to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}\@keyframes spinner-circular{to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}\@-webkit-keyframes spinner-circular-inner{0%{stroke-dasharray:1px,200px;stroke-dashoffset:0px}50%{stroke-dasharray:100px,200px;stroke-dashoffset:-15px}to{stroke-dasharray:100px,200px;stroke-dashoffset:-125px}}\@keyframes spinner-circular-inner{0%{stroke-dasharray:1px,200px;stroke-dashoffset:0px}50%{stroke-dasharray:100px,200px;stroke-dashoffset:-15px}to{stroke-dasharray:100px,200px;stroke-dashoffset:-125px}}"; },
+    Object.defineProperty(class_1.prototype, "el", {
+        get: function () { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["e"])(this); },
         enumerable: true,
         configurable: true
     });
-    return Spinner;
+    Object.defineProperty(class_1, "watchers", {
+        get: function () {
+            return {
+                "checked": ["checkedChanged"],
+                "disabled": ["disabledChanged"]
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(class_1, "style", {
+        get: function () { return ":host{-webkit-box-sizing:content-box!important;box-sizing:content-box!important;display:inline-block;outline:none;contain:content;cursor:pointer;-ms-touch-action:none;touch-action:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;z-index:2}:host(.ion-focused) input{border:2px solid #5e9ed6}:host(.toggle-disabled){pointer-events:none}button{left:0;top:0;margin-left:0;margin-right:0;margin-top:0;margin-bottom:0;position:absolute;width:100%;height:100%;border:0;background:transparent;cursor:pointer;-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none}:host-context([dir=rtl]) button,[dir=rtl] button{left:unset;right:unset;right:0}button::-moz-focus-inner{border:0}:host{--background:rgba(var(--ion-text-color-rgb,0,0,0),0.088);--background-checked:var(--ion-color-primary,#3880ff);--handle-background:#fff;--handle-background-checked:#fff;-webkit-box-sizing:content-box;box-sizing:content-box;position:relative;width:51px;height:32px;contain:strict}:host(.ion-color.toggle-checked) .toggle-icon{background:var(--ion-color-base)}.toggle-icon{border-radius:16px;display:block;position:relative;width:100%;height:100%;-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-transition:background-color .3s;transition:background-color .3s;background:var(--background);overflow:hidden;pointer-events:none}.toggle-inner{left:2px;top:2px;border-radius:14px;position:absolute;width:28px;height:28px;-webkit-transition:width .12s ease-in-out 80ms,left .11s ease-in-out 80ms,right .11s ease-in-out 80ms,-webkit-transform .3s;transition:width .12s ease-in-out 80ms,left .11s ease-in-out 80ms,right .11s ease-in-out 80ms,-webkit-transform .3s;transition:transform .3s,width .12s ease-in-out 80ms,left .11s ease-in-out 80ms,right .11s ease-in-out 80ms;transition:transform .3s,width .12s ease-in-out 80ms,left .11s ease-in-out 80ms,right .11s ease-in-out 80ms,-webkit-transform .3s;background:var(--handle-background);-webkit-box-shadow:0 3px 12px rgba(0,0,0,.16),0 3px 1px rgba(0,0,0,.1);box-shadow:0 3px 12px rgba(0,0,0,.16),0 3px 1px rgba(0,0,0,.1);will-change:transform;contain:strict}:host-context([dir=rtl]) .toggle-inner,[dir=rtl] .toggle-inner{left:unset;right:unset;right:2px}:host(.toggle-checked) .toggle-icon{background:var(--background-checked)}:host(.toggle-activated) .toggle-icon:before,:host(.toggle-checked) .toggle-icon:before{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0)}:host(.toggle-checked) .toggle-inner{-webkit-transform:translate3d(19px,0,0);transform:translate3d(19px,0,0);background:var(--handle-background-checked)}:host-context([dir=rtl]).toggle-checked .toggle-inner,:host-context([dir=rtl]):host(.toggle-checked) .toggle-inner{-webkit-transform:translate3d(calc(-1 * 19px),0,0);transform:translate3d(calc(-1 * 19px),0,0)}:host(.toggle-activated.toggle-checked) .toggle-inner:before{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0)}:host(.toggle-activated) .toggle-inner{width:34px}:host(.toggle-activated.toggle-checked) .toggle-inner{left:-4px}:host-context([dir=rtl]).toggle-activated.toggle-checked .toggle-inner,:host-context([dir=rtl]):host(.toggle-activated.toggle-checked) .toggle-inner{left:unset;right:unset;right:-4px}:host(.toggle-disabled){opacity:.3}:host(.in-item[slot]){margin-left:0;margin-right:0;margin-top:0;margin-bottom:0;padding-left:16px;padding-right:8px;padding-top:6px;padding-bottom:5px}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){:host(.in-item[slot]){padding-left:unset;padding-right:unset;-webkit-padding-start:16px;padding-inline-start:16px;-webkit-padding-end:8px;padding-inline-end:8px}}:host(.in-item[slot=start]){padding-left:0;padding-right:16px;padding-top:6px;padding-bottom:5px}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){:host(.in-item[slot=start]){padding-left:unset;padding-right:unset;-webkit-padding-start:0;padding-inline-start:0;-webkit-padding-end:16px;padding-inline-end:16px}}"; },
+        enumerable: true,
+        configurable: true
+    });
+    return class_1;
 }());
-var buildCircle = function (spinner, duration, index, total) {
-    var data = spinner.fn(duration, index, total);
-    data.style['animation-duration'] = duration + 'ms';
-    return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("svg", { viewBox: data.viewBox || '0 0 64 64', style: data.style }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("circle", { transform: data.transform || 'translate(32,32)', cx: data.cx, cy: data.cy, r: data.r, style: spinner.elmDuration ? { animationDuration: duration + 'ms' } : {} })));
+var shouldToggle = function (doc, checked, deltaX, margin) {
+    var isRTL = doc.dir === 'rtl';
+    if (checked) {
+        return (!isRTL && (margin > deltaX)) ||
+            (isRTL && (-margin < deltaX));
+    }
+    else {
+        return (!isRTL && (-margin < deltaX)) ||
+            (isRTL && (margin > deltaX));
+    }
 };
-var buildLine = function (spinner, duration, index, total) {
-    var data = spinner.fn(duration, index, total);
-    data.style['animation-duration'] = duration + 'ms';
-    return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("svg", { viewBox: data.viewBox || '0 0 64 64', style: data.style }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("line", { transform: "translate(32,32)", y1: data.y1, y2: data.y2 })));
-};
+var toggleIds = 0;
 
 
 

@@ -1,345 +1,405 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[62],{
 
-/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-refresher_2-ios.entry.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-refresher_2-ios.entry.js ***!
-  \****************************************************************************/
-/*! exports provided: ion_refresher, ion_refresher_content */
+/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-select_3-ios.entry.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-select_3-ios.entry.js ***!
+  \*************************************************************************/
+/*! exports provided: ion_select, ion_select_option, ion_select_popover */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_refresher", function() { return Refresher; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_refresher_content", function() { return RefresherContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_select", function() { return Select; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_select_option", function() { return SelectOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_select_popover", function() { return SelectPopover; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core-ca0488fc.js */ "./node_modules/@ionic/core/dist/esm-es5/core-ca0488fc.js");
 /* harmony import */ var _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./config-3c7f3790.js */ "./node_modules/@ionic/core/dist/esm-es5/config-3c7f3790.js");
-/* harmony import */ var _index_3476b023_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-3476b023.js */ "./node_modules/@ionic/core/dist/esm-es5/index-3476b023.js");
+/* harmony import */ var _helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers-46f4a262.js */ "./node_modules/@ionic/core/dist/esm-es5/helpers-46f4a262.js");
+/* harmony import */ var _overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./overlays-10640d86.js */ "./node_modules/@ionic/core/dist/esm-es5/overlays-10640d86.js");
+/* harmony import */ var _theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./theme-18cbe2cc.js */ "./node_modules/@ionic/core/dist/esm-es5/theme-18cbe2cc.js");
+/* harmony import */ var _watch_options_2af96011_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./watch-options-2af96011.js */ "./node_modules/@ionic/core/dist/esm-es5/watch-options-2af96011.js");
 
 
 
 
-var Refresher = /** @class */ (function () {
+
+
+
+var Select = /** @class */ (function () {
     function class_1(hostRef) {
+        var _this = this;
         Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["r"])(this, hostRef);
-        this.appliedStyles = false;
-        this.didStart = false;
-        this.progress = 0;
+        this.inputId = "ion-sel-" + selectIds++;
+        this.didInit = false;
+        this.isExpanded = false;
         /**
-         * The current state which the refresher is in. The refresher's states include:
-         *
-         * - `inactive` - The refresher is not being pulled down or refreshing and is currently hidden.
-         * - `pulling` - The user is actively pulling down the refresher, but has not reached the point yet that if the user lets go, it'll refresh.
-         * - `cancelling` - The user pulled down the refresher and let go, but did not pull down far enough to kick off the `refreshing` state. After letting go, the refresher is in the `cancelling` state while it is closing, and will go back to the `inactive` state once closed.
-         * - `ready` - The user has pulled down the refresher far enough that if they let go, it'll begin the `refreshing` state.
-         * - `refreshing` - The refresher is actively waiting on the async operation to end. Once the refresh handler calls `complete()` it will begin the `completing` state.
-         * - `completing` - The `refreshing` state has finished and the refresher is in the way of closing itself. Once closed, the refresher will go back to the `inactive` state.
-         */
-        this.state = 1 /* Inactive */;
-        /**
-         * The minimum distance the user must pull down until the
-         * refresher will go into the `refreshing` state.
-         */
-        this.pullMin = 60;
-        /**
-         * The maximum distance of the pull until the refresher
-         * will automatically go into the `refreshing` state.
-         * Defaults to the result of `pullMin + 60`.
-         */
-        this.pullMax = this.pullMin + 60;
-        /**
-         * Time it takes to close the refresher.
-         */
-        this.closeDuration = '280ms';
-        /**
-         * Time it takes the refresher to to snap back to the `refreshing` state.
-         */
-        this.snapbackDuration = '280ms';
-        /**
-         * How much to multiply the pull speed by. To slow the pull animation down,
-         * pass a number less than `1`. To speed up the pull, pass a number greater
-         * than `1`. The default value is `1` which is equal to the speed of the cursor.
-         * If a negative value is passed in, the factor will be `1` instead.
-         *
-         * For example: If the value passed is `1.2` and the content is dragged by
-         * `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels
-         * (an increase of 20 percent). If the value passed is `0.8`, the dragged amount
-         * will be `8` pixels, less than the amount the cursor has moved.
-         */
-        this.pullFactor = 1;
-        /**
-         * If `true`, the refresher will be hidden.
+         * If `true`, the user cannot interact with the select.
          */
         this.disabled = false;
-        this.ionRefresh = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionRefresh", 7);
-        this.ionPull = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionPull", 7);
-        this.ionStart = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionStart", 7);
+        /**
+         * The text to display on the cancel button.
+         */
+        this.cancelText = 'Cancel';
+        /**
+         * The text to display on the ok button.
+         */
+        this.okText = 'OK';
+        /**
+         * The name of the control, which is submitted with the form data.
+         */
+        this.name = this.inputId;
+        /**
+         * If `true`, the select can accept multiple values.
+         */
+        this.multiple = false;
+        /**
+         * The interface the select should use: `action-sheet`, `popover` or `alert`.
+         */
+        this.interface = 'alert';
+        /**
+         * Any additional options that the `alert`, `action-sheet` or `popover` interface
+         * can take. See the [AlertController API docs](../../alert/AlertController/#create), the
+         * [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the
+         * [PopoverController API docs](../../popover/PopoverController/#create) for the
+         * create options for each interface.
+         */
+        this.interfaceOptions = {};
+        this.onClick = function (ev) {
+            _this.setFocus();
+            _this.open(ev);
+        };
+        this.onFocus = function () {
+            _this.ionFocus.emit();
+        };
+        this.onBlur = function () {
+            _this.ionBlur.emit();
+        };
+        this.ionChange = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionChange", 7);
+        this.ionCancel = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionCancel", 7);
+        this.ionFocus = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionFocus", 7);
+        this.ionBlur = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionBlur", 7);
+        this.ionStyle = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionStyle", 7);
     }
     class_1.prototype.disabledChanged = function () {
-        if (this.gesture) {
-            this.gesture.setDisabled(this.disabled);
+        this.emitStyle();
+    };
+    class_1.prototype.valueChanged = function () {
+        this.updateOptions();
+        this.emitStyle();
+        if (this.didInit) {
+            this.ionChange.emit({
+                value: this.value,
+            });
         }
     };
     class_1.prototype.connectedCallback = function () {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-            var contentEl, _a, _b;
+            var checked, checked;
             var _this = this;
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        if (this.el.getAttribute('slot') !== 'fixed') {
-                            console.error('Make sure you use: <ion-refresher slot="fixed">');
-                            return [2 /*return*/];
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+                if (this.value === undefined) {
+                    if (this.multiple) {
+                        checked = this.childOpts.filter(function (o) { return o.selected; });
+                        this.value = checked.map(function (o) { return getOptionValue(o); });
+                    }
+                    else {
+                        checked = this.childOpts.find(function (o) { return o.selected; });
+                        if (checked) {
+                            this.value = getOptionValue(checked);
                         }
-                        contentEl = this.el.closest('ion-content');
-                        if (!contentEl) {
-                            console.error('<ion-refresher> must be used inside an <ion-content>');
-                            return [2 /*return*/];
-                        }
-                        _a = this;
-                        return [4 /*yield*/, contentEl.getScrollElement()];
-                    case 1:
-                        _a.scrollEl = _c.sent();
-                        _b = this;
-                        return [4 /*yield*/, Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./index-624eea58.js */ "./node_modules/@ionic/core/dist/esm-es5/index-624eea58.js"))];
-                    case 2:
-                        _b.gesture = (_c.sent()).createGesture({
-                            el: contentEl,
-                            gestureName: 'refresher',
-                            gesturePriority: 10,
-                            direction: 'y',
-                            threshold: 20,
-                            passive: false,
-                            canStart: function () { return _this.canStart(); },
-                            onStart: function () { return _this.onStart(); },
-                            onMove: function (ev) { return _this.onMove(ev); },
-                            onEnd: function () { return _this.onEnd(); },
-                        });
-                        this.disabledChanged();
-                        return [2 /*return*/];
+                    }
                 }
+                this.updateOptions();
+                this.updateOverlayOptions();
+                this.emitStyle();
+                this.mutationO = Object(_watch_options_2af96011_js__WEBPACK_IMPORTED_MODULE_6__["w"])(this.el, 'ion-select-option', function () { return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this, void 0, void 0, function () {
+                    return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+                        this.updateOptions();
+                        this.updateOverlayOptions();
+                        return [2 /*return*/];
+                    });
+                }); });
+                return [2 /*return*/];
             });
         });
     };
     class_1.prototype.disconnectedCallback = function () {
-        this.scrollEl = undefined;
-        if (this.gesture) {
-            this.gesture.destroy();
-            this.gesture = undefined;
+        if (this.mutationO) {
+            this.mutationO.disconnect();
+            this.mutationO = undefined;
         }
     };
+    class_1.prototype.componentDidLoad = function () {
+        this.didInit = true;
+    };
     /**
-     * Call `complete()` when your async operation has completed.
-     * For example, the `refreshing` state is while the app is performing
-     * an asynchronous operation, such as receiving more data from an
-     * AJAX request. Once the data has been received, you then call this
-     * method to signify that the refreshing has completed and to close
-     * the refresher. This method also changes the refresher's state from
-     * `refreshing` to `completing`.
+     * Open the select overlay. The overlay is either an alert, action sheet, or popover,
+     * depending on the `interface` property on the `ion-select`.
+     *
+     * @param event The user interface event that called the open.
      */
-    class_1.prototype.complete = function () {
+    class_1.prototype.open = function (event) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+            var overlay, _a;
+            var _this = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        if (this.disabled || this.isExpanded) {
+                            return [2 /*return*/, undefined];
+                        }
+                        _a = this;
+                        return [4 /*yield*/, this.createOverlay(event)];
+                    case 1:
+                        overlay = _a.overlay = _b.sent();
+                        this.isExpanded = true;
+                        overlay.onDidDismiss().then(function () {
+                            _this.overlay = undefined;
+                            _this.isExpanded = false;
+                            _this.setFocus();
+                        });
+                        return [4 /*yield*/, overlay.present()];
+                    case 2:
+                        _b.sent();
+                        return [2 /*return*/, overlay];
+                }
+            });
+        });
+    };
+    class_1.prototype.createOverlay = function (ev) {
+        var selectInterface = this.interface;
+        if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
+            console.warn("Select interface cannot be \"" + selectInterface + "\" with a multi-value select. Using the \"alert\" interface instead.");
+            selectInterface = 'alert';
+        }
+        if (selectInterface === 'popover' && !ev) {
+            console.warn('Select interface cannot be a "popover" without passing an event. Using the "alert" interface instead.');
+            selectInterface = 'alert';
+        }
+        if (selectInterface === 'popover') {
+            return this.openPopover(ev);
+        }
+        if (selectInterface === 'action-sheet') {
+            return this.openActionSheet();
+        }
+        return this.openAlert();
+    };
+    class_1.prototype.updateOverlayOptions = function () {
+        var overlay = this.overlay;
+        if (!overlay) {
+            return;
+        }
+        var childOpts = this.childOpts;
+        switch (this.interface) {
+            case 'action-sheet':
+                overlay.buttons = this.createActionSheetButtons(childOpts);
+                break;
+            case 'popover':
+                var popover = overlay.querySelector('ion-select-popover');
+                if (popover) {
+                    popover.options = this.createPopoverOptions(childOpts);
+                }
+                break;
+            case 'alert':
+                var inputType = (this.multiple ? 'checkbox' : 'radio');
+                overlay.inputs = this.createAlertInputs(childOpts, inputType);
+                break;
+        }
+    };
+    class_1.prototype.createActionSheetButtons = function (data) {
+        var _this = this;
+        var actionSheetButtons = data.map(function (option) {
+            return {
+                role: (option.selected ? 'selected' : ''),
+                text: option.textContent,
+                handler: function () {
+                    _this.value = getOptionValue(option);
+                }
+            };
+        });
+        // Add "cancel" button
+        actionSheetButtons.push({
+            text: this.cancelText,
+            role: 'cancel',
+            handler: function () {
+                _this.ionCancel.emit();
+            }
+        });
+        return actionSheetButtons;
+    };
+    class_1.prototype.createAlertInputs = function (data, inputType) {
+        return data.map(function (o) {
+            return {
+                type: inputType,
+                label: o.textContent,
+                value: getOptionValue(o),
+                checked: o.selected,
+                disabled: o.disabled
+            };
+        });
+    };
+    class_1.prototype.createPopoverOptions = function (data) {
+        var _this = this;
+        return data.map(function (o) {
+            var value = getOptionValue(o);
+            return {
+                text: o.textContent,
+                value: value,
+                checked: o.selected,
+                disabled: o.disabled,
+                handler: function () {
+                    _this.value = value;
+                    _this.close();
+                }
+            };
+        });
+    };
+    class_1.prototype.openPopover = function (ev) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+            var interfaceOptions, mode, popoverOpts;
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
-                this.close(32 /* Completing */, '120ms');
-                return [2 /*return*/];
+                interfaceOptions = this.interfaceOptions;
+                mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this);
+                popoverOpts = Object.assign(Object.assign({ mode: mode }, interfaceOptions), { component: 'ion-select-popover', cssClass: ['select-popover', interfaceOptions.cssClass], event: ev, componentProps: {
+                        header: interfaceOptions.header,
+                        subHeader: interfaceOptions.subHeader,
+                        message: interfaceOptions.message,
+                        value: this.value,
+                        options: this.createPopoverOptions(this.childOpts)
+                    } });
+                return [2 /*return*/, _overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["c"].create(popoverOpts)];
+            });
+        });
+    };
+    class_1.prototype.openActionSheet = function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+            var mode, interfaceOptions, actionSheetOpts;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+                mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this);
+                interfaceOptions = this.interfaceOptions;
+                actionSheetOpts = Object.assign(Object.assign({ mode: mode }, interfaceOptions), { buttons: this.createActionSheetButtons(this.childOpts), cssClass: ['select-action-sheet', interfaceOptions.cssClass] });
+                return [2 /*return*/, _overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["b"].create(actionSheetOpts)];
+            });
+        });
+    };
+    class_1.prototype.openAlert = function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+            var label, labelText, interfaceOptions, inputType, mode, alertOpts;
+            var _this = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+                label = this.getLabel();
+                labelText = (label) ? label.textContent : null;
+                interfaceOptions = this.interfaceOptions;
+                inputType = (this.multiple ? 'checkbox' : 'radio');
+                mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this);
+                alertOpts = Object.assign(Object.assign({ mode: mode }, interfaceOptions), { header: interfaceOptions.header ? interfaceOptions.header : labelText, inputs: this.createAlertInputs(this.childOpts, inputType), buttons: [
+                        {
+                            text: this.cancelText,
+                            role: 'cancel',
+                            handler: function () {
+                                _this.ionCancel.emit();
+                            }
+                        },
+                        {
+                            text: this.okText,
+                            handler: function (selectedValues) {
+                                _this.value = selectedValues;
+                            }
+                        }
+                    ], cssClass: ['select-alert', interfaceOptions.cssClass,
+                        (this.multiple ? 'multiple-select-alert' : 'single-select-alert')] });
+                return [2 /*return*/, _overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["a"].create(alertOpts)];
             });
         });
     };
     /**
-     * Changes the refresher's state from `refreshing` to `cancelling`.
+     * Close the select interface.
      */
-    class_1.prototype.cancel = function () {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
-                this.close(16 /* Cancelling */, '');
-                return [2 /*return*/];
-            });
-        });
+    class_1.prototype.close = function () {
+        // TODO check !this.overlay || !this.isFocus()
+        if (!this.overlay) {
+            return Promise.resolve(false);
+        }
+        return this.overlay.dismiss();
     };
-    /**
-     * A number representing how far down the user has pulled.
-     * The number `0` represents the user hasn't pulled down at all. The
-     * number `1`, and anything greater than `1`, represents that the user
-     * has pulled far enough down that when they let go then the refresh will
-     * happen. If they let go and the number is less than `1`, then the
-     * refresh will not happen, and the content will return to it's original
-     * position.
-     */
-    class_1.prototype.getProgress = function () {
-        return Promise.resolve(this.progress);
-    };
-    class_1.prototype.canStart = function () {
-        if (!this.scrollEl) {
-            return false;
-        }
-        if (this.state !== 1 /* Inactive */) {
-            return false;
-        }
-        // if the scrollTop is greater than zero then it's
-        // not possible to pull the content down yet
-        if (this.scrollEl.scrollTop > 0) {
-            return false;
-        }
-        return true;
-    };
-    class_1.prototype.onStart = function () {
-        this.progress = 0;
-        this.state = 1 /* Inactive */;
-    };
-    class_1.prototype.onMove = function (detail) {
-        if (!this.scrollEl) {
-            return;
-        }
-        // this method can get called like a bazillion times per second,
-        // so it's built to be as efficient as possible, and does its
-        // best to do any DOM read/writes only when absolutely necessary
-        // if multi-touch then get out immediately
-        var ev = detail.event;
-        if (ev.touches && ev.touches.length > 1) {
-            return;
-        }
-        // do nothing if it's actively refreshing
-        // or it's in the way of closing
-        // or this was never a startY
-        if ((this.state & 56 /* _BUSY_ */) !== 0) {
-            return;
-        }
-        var pullFactor = (Number.isNaN(this.pullFactor) || this.pullFactor < 0) ? 1 : this.pullFactor;
-        var deltaY = detail.deltaY * pullFactor;
-        // don't bother if they're scrolling up
-        // and have not already started dragging
-        if (deltaY <= 0) {
-            // the current Y is higher than the starting Y
-            // so they scrolled up enough to be ignored
-            this.progress = 0;
-            this.state = 1 /* Inactive */;
-            if (this.appliedStyles) {
-                // reset the styles only if they were applied
-                this.setCss(0, '', false, '');
-                return;
+    class_1.prototype.updateOptions = function () {
+        // iterate all options, updating the selected prop
+        var canSelect = true;
+        var _a = this, value = _a.value, childOpts = _a.childOpts, compareWith = _a.compareWith, multiple = _a.multiple;
+        for (var _i = 0, childOpts_1 = childOpts; _i < childOpts_1.length; _i++) {
+            var selectOption = childOpts_1[_i];
+            var optValue = getOptionValue(selectOption);
+            var selected = canSelect && isOptionSelected(value, optValue, compareWith);
+            selectOption.selected = selected;
+            // if current option is selected and select is single-option, we can't select
+            // any option more
+            if (selected && !multiple) {
+                canSelect = false;
             }
-            return;
-        }
-        if (this.state === 1 /* Inactive */) {
-            // this refresh is not already actively pulling down
-            // get the content's scrollTop
-            var scrollHostScrollTop = this.scrollEl.scrollTop;
-            // if the scrollTop is greater than zero then it's
-            // not possible to pull the content down yet
-            if (scrollHostScrollTop > 0) {
-                this.progress = 0;
-                return;
-            }
-            // content scrolled all the way to the top, and dragging down
-            this.state = 2 /* Pulling */;
-        }
-        // prevent native scroll events
-        if (ev.cancelable) {
-            ev.preventDefault();
-        }
-        // the refresher is actively pulling at this point
-        // move the scroll element within the content element
-        this.setCss(deltaY, '0ms', true, '');
-        if (deltaY === 0) {
-            // don't continue if there's no delta yet
-            this.progress = 0;
-            return;
-        }
-        var pullMin = this.pullMin;
-        // set pull progress
-        this.progress = deltaY / pullMin;
-        // emit "start" if it hasn't started yet
-        if (!this.didStart) {
-            this.didStart = true;
-            this.ionStart.emit();
-        }
-        // emit "pulling" on every move
-        this.ionPull.emit();
-        // do nothing if the delta is less than the pull threshold
-        if (deltaY < pullMin) {
-            // ensure it stays in the pulling state, cuz its not ready yet
-            this.state = 2 /* Pulling */;
-            return;
-        }
-        if (deltaY > this.pullMax) {
-            // they pulled farther than the max, so kick off the refresh
-            this.beginRefresh();
-            return;
-        }
-        // pulled farther than the pull min!!
-        // it is now in the `ready` state!!
-        // if they let go then it'll refresh, kerpow!!
-        this.state = 4 /* Ready */;
-        return;
-    };
-    class_1.prototype.onEnd = function () {
-        // only run in a zone when absolutely necessary
-        if (this.state === 4 /* Ready */) {
-            // they pulled down far enough, so it's ready to refresh
-            this.beginRefresh();
-        }
-        else if (this.state === 2 /* Pulling */) {
-            // they were pulling down, but didn't pull down far enough
-            // set the content back to it's original location
-            // and close the refresher
-            // set that the refresh is actively cancelling
-            this.cancel();
         }
     };
-    class_1.prototype.beginRefresh = function () {
-        // assumes we're already back in a zone
-        // they pulled down far enough, so it's ready to refresh
-        this.state = 8 /* Refreshing */;
-        // place the content in a hangout position while it thinks
-        this.setCss(this.pullMin, this.snapbackDuration, true, '');
-        // emit "refresh" because it was pulled down far enough
-        // and they let go to begin refreshing
-        this.ionRefresh.emit({
-            complete: this.complete.bind(this)
-        });
+    class_1.prototype.getLabel = function () {
+        return Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["f"])(this.el);
     };
-    class_1.prototype.close = function (state, delay) {
-        var _this = this;
-        // create fallback timer incase something goes wrong with transitionEnd event
-        setTimeout(function () {
-            _this.state = 1 /* Inactive */;
-            _this.progress = 0;
-            _this.didStart = false;
-            _this.setCss(0, '0ms', false, '');
-        }, 600);
-        // reset set the styles on the scroll element
-        // set that the refresh is actively cancelling/completing
-        this.state = state;
-        this.setCss(0, this.closeDuration, true, delay);
-        // TODO: stop gesture
+    class_1.prototype.hasValue = function () {
+        return this.getText() !== '';
     };
-    class_1.prototype.setCss = function (y, duration, overflowVisible, delay) {
-        var _this = this;
-        this.appliedStyles = (y > 0);
-        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["w"])(function () {
-            if (_this.scrollEl) {
-                var style = _this.scrollEl.style;
-                style.transform = ((y > 0) ? "translateY(" + y + "px) translateZ(0px)" : 'translateZ(0px)');
-                style.transitionDuration = duration;
-                style.transitionDelay = delay;
-                style.overflow = (overflowVisible ? 'hidden' : '');
-            }
+    Object.defineProperty(class_1.prototype, "childOpts", {
+        get: function () {
+            return Array.from(this.el.querySelectorAll('ion-select-option'));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    class_1.prototype.getText = function () {
+        var selectedText = this.selectedText;
+        if (selectedText != null && selectedText !== '') {
+            return selectedText;
+        }
+        return generateText(this.childOpts, this.value, this.compareWith);
+    };
+    class_1.prototype.setFocus = function () {
+        if (this.buttonEl) {
+            this.buttonEl.focus();
+        }
+    };
+    class_1.prototype.emitStyle = function () {
+        this.ionStyle.emit({
+            'interactive': true,
+            'select': true,
+            'has-placeholder': this.placeholder != null,
+            'has-value': this.hasValue(),
+            'interactive-disabled': this.disabled,
+            'select-disabled': this.disabled
         });
     };
     class_1.prototype.render = function () {
         var _a;
+        var _this = this;
+        var _b = this, placeholder = _b.placeholder, name = _b.name, disabled = _b.disabled, isExpanded = _b.isExpanded, value = _b.value, el = _b.el;
         var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this);
-        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["H"], { slot: "fixed", class: (_a = {},
+        var labelId = this.inputId + '-lbl';
+        var label = Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["f"])(el);
+        if (label) {
+            label.id = labelId;
+        }
+        var addPlaceholderClass = false;
+        var selectText = this.getText();
+        if (selectText === '' && placeholder != null) {
+            selectText = placeholder;
+            addPlaceholderClass = true;
+        }
+        Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["a"])(true, el, name, parseValue(value), disabled);
+        var selectTextClasses = {
+            'select-text': true,
+            'select-placeholder': addPlaceholderClass
+        };
+        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["H"], { onClick: this.onClick, role: "combobox", "aria-haspopup": "dialog", "aria-disabled": disabled ? 'true' : null, "aria-expanded": "" + isExpanded, "aria-labelledby": labelId, class: (_a = {},
                 _a[mode] = true,
-                // Used internally for styling
-                _a["refresher-" + mode] = true,
-                _a['refresher-active'] = this.state !== 1 /* Inactive */,
-                _a['refresher-pulling'] = this.state === 2 /* Pulling */,
-                _a['refresher-ready'] = this.state === 4 /* Ready */,
-                _a['refresher-refreshing'] = this.state === 8 /* Refreshing */,
-                _a['refresher-cancelling'] = this.state === 16 /* Cancelling */,
-                _a['refresher-completing'] = this.state === 32 /* Completing */,
-                _a) }));
+                _a['in-item'] = Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_5__["h"])('ion-item', el),
+                _a['select-disabled'] = disabled,
+                _a) }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: selectTextClasses }, selectText), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "select-icon", role: "presentation" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "select-icon-inner" })), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("button", { type: "button", onFocus: this.onFocus, onBlur: this.onBlur, disabled: disabled, ref: (function (btnEl) { return _this.buttonEl = btnEl; }) })));
     };
     Object.defineProperty(class_1.prototype, "el", {
         get: function () { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["e"])(this); },
@@ -349,40 +409,132 @@ var Refresher = /** @class */ (function () {
     Object.defineProperty(class_1, "watchers", {
         get: function () {
             return {
-                "disabled": ["disabledChanged"]
+                "disabled": ["disabledChanged"],
+                "placeholder": ["disabledChanged"],
+                "value": ["valueChanged"]
             };
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(class_1, "style", {
-        get: function () { return "ion-refresher{left:0;top:0;display:none;position:absolute;width:100%;height:60px;z-index:-1}:host-context([dir=rtl]) ion-refresher,[dir=rtl] ion-refresher{left:unset;right:unset;right:0}ion-refresher.refresher-active{display:block}ion-refresher-content{display:-ms-flexbox;display:flex;-ms-flex-direction:column;flex-direction:column;-ms-flex-pack:center;justify-content:center;height:100%}.refresher-pulling,.refresher-refreshing{display:none;width:100%}.refresher-pulling-icon,.refresher-refreshing-icon{-webkit-transform-origin:center;transform-origin:center;-webkit-transition:.2s;transition:.2s;font-size:30px;text-align:center}:host-context([dir=rtl]) .refresher-pulling-icon,:host-context([dir=rtl]) .refresher-refreshing-icon,[dir=rtl] .refresher-pulling-icon,[dir=rtl] .refresher-refreshing-icon{-webkit-transform-origin:calc(100% - center);transform-origin:calc(100% - center)}.refresher-pulling-text,.refresher-refreshing-text{font-size:16px;text-align:center}.refresher-pulling ion-refresher-content .refresher-pulling,.refresher-ready ion-refresher-content .refresher-pulling{display:block}.refresher-ready ion-refresher-content .refresher-pulling-icon{-webkit-transform:rotate(180deg);transform:rotate(180deg)}.refresher-cancelling ion-refresher-content .refresher-pulling,.refresher-refreshing ion-refresher-content .refresher-refreshing{display:block}.refresher-cancelling ion-refresher-content .refresher-pulling-icon{-webkit-transform:scale(0);transform:scale(0)}.refresher-completing ion-refresher-content .refresher-refreshing{display:block}.refresher-completing ion-refresher-content .refresher-refreshing-icon{-webkit-transform:scale(0);transform:scale(0)}.refresher-ios .refresher-pulling-icon,.refresher-ios .refresher-pulling-text,.refresher-ios .refresher-refreshing-icon,.refresher-ios .refresher-refreshing-text{color:var(--ion-text-color,#000)}.refresher-ios .refresher-refreshing .spinner-crescent circle,.refresher-ios .refresher-refreshing .spinner-lines-ios line,.refresher-ios .refresher-refreshing .spinner-lines-small-ios line{stroke:var(--ion-text-color,#000)}.refresher-ios .refresher-refreshing .spinner-bubbles circle,.refresher-ios .refresher-refreshing .spinner-circles circle,.refresher-ios .refresher-refreshing .spinner-dots circle{fill:var(--ion-text-color,#000)}"; },
+        get: function () { return ":host{padding-left:var(--padding-start);padding-right:var(--padding-end);padding-top:var(--padding-top);padding-bottom:var(--padding-bottom);display:-ms-flexbox;display:flex;position:relative;font-family:var(--ion-font-family,inherit);overflow:hidden;z-index:2}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){:host{padding-left:unset;padding-right:unset;-webkit-padding-start:var(--padding-start);padding-inline-start:var(--padding-start);-webkit-padding-end:var(--padding-end);padding-inline-end:var(--padding-end)}}:host(.in-item){position:static;max-width:45%}:host(.select-disabled){opacity:.4;pointer-events:none}:host(.ion-focused) button{border:2px solid #5e9ed6}.select-placeholder{color:currentColor;opacity:.33}button{left:0;top:0;margin-left:0;margin-right:0;margin-top:0;margin-bottom:0;position:absolute;width:100%;height:100%;border:0;background:transparent;cursor:pointer;-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none}:host-context([dir=rtl]) button,[dir=rtl] button{left:unset;right:unset;right:0}button::-moz-focus-inner{border:0}.select-icon{position:relative}.select-text{-ms-flex:1;flex:1;min-width:16px;font-size:inherit;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.select-icon-inner{left:5px;top:50%;margin-top:-3px;position:absolute;width:0;height:0;border-top:5px solid;border-right:5px solid transparent;border-left:5px solid transparent;color:currentColor;opacity:.33;pointer-events:none}:host-context([dir=rtl]) .select-icon-inner,[dir=rtl] .select-icon-inner{left:unset;right:unset;right:5px}:host{--padding-top:10px;--padding-end:8px;--padding-bottom:10px;--padding-start:16px}.select-icon{width:12px;height:18px}"; },
         enumerable: true,
         configurable: true
     });
     return class_1;
 }());
-var RefresherContent = /** @class */ (function () {
-    function RefresherContent(hostRef) {
-        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["r"])(this, hostRef);
+var getOptionValue = function (el) {
+    var value = el.value;
+    return (value === undefined)
+        ? el.textContent || ''
+        : value;
+};
+var parseValue = function (value) {
+    if (value == null) {
+        return undefined;
     }
-    RefresherContent.prototype.componentWillLoad = function () {
-        if (this.pullingIcon === undefined) {
-            this.pullingIcon = _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_2__["b"].get('refreshingIcon', 'arrow-down');
-        }
-        if (this.refreshingSpinner === undefined) {
-            var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this);
-            this.refreshingSpinner = _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_2__["b"].get('refreshingSpinner', _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_2__["b"].get('spinner', mode === 'ios' ? 'lines' : 'crescent'));
+    if (Array.isArray(value)) {
+        return value.join(',');
+    }
+    return value.toString();
+};
+var isOptionSelected = function (currentValue, compareValue, compareWith) {
+    if (currentValue === undefined) {
+        return false;
+    }
+    if (Array.isArray(currentValue)) {
+        return currentValue.some(function (val) { return compareOptions(val, compareValue, compareWith); });
+    }
+    else {
+        return compareOptions(currentValue, compareValue, compareWith);
+    }
+};
+var compareOptions = function (currentValue, compareValue, compareWith) {
+    if (typeof compareWith === 'function') {
+        return compareWith(currentValue, compareValue);
+    }
+    else if (typeof compareWith === 'string') {
+        return currentValue[compareWith] === compareValue[compareWith];
+    }
+    else {
+        return currentValue === compareValue;
+    }
+};
+var generateText = function (opts, value, compareWith) {
+    if (value === undefined) {
+        return '';
+    }
+    if (Array.isArray(value)) {
+        return value
+            .map(function (v) { return textForValue(opts, v, compareWith); })
+            .filter(function (opt) { return opt !== null; })
+            .join(', ');
+    }
+    else {
+        return textForValue(opts, value, compareWith) || '';
+    }
+};
+var textForValue = function (opts, value, compareWith) {
+    var selectOpt = opts.find(function (opt) {
+        return compareOptions(getOptionValue(opt), value, compareWith);
+    });
+    return selectOpt
+        ? selectOpt.textContent
+        : null;
+};
+var selectIds = 0;
+var SelectOption = /** @class */ (function () {
+    function SelectOption(hostRef) {
+        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["r"])(this, hostRef);
+        this.inputId = "ion-selopt-" + selectOptionIds++;
+        /**
+         * If `true`, the user cannot interact with the select option.
+         */
+        this.disabled = false;
+        /**
+         * If `true`, the element is selected.
+         */
+        this.selected = false;
+    }
+    SelectOption.prototype.render = function () {
+        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["H"], { role: "option", id: this.inputId, class: Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this) }));
+    };
+    Object.defineProperty(SelectOption.prototype, "el", {
+        get: function () { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["e"])(this); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SelectOption, "style", {
+        get: function () { return ":host{display:none}"; },
+        enumerable: true,
+        configurable: true
+    });
+    return SelectOption;
+}());
+var selectOptionIds = 0;
+var SelectPopover = /** @class */ (function () {
+    function SelectPopover(hostRef) {
+        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["r"])(this, hostRef);
+        /** Array of options for the popover */
+        this.options = [];
+    }
+    SelectPopover.prototype.onSelect = function (ev) {
+        var option = this.options.find(function (o) { return o.value === ev.target.value; });
+        if (option) {
+            Object(_overlays_10640d86_js__WEBPACK_IMPORTED_MODULE_4__["s"])(option.handler);
         }
     };
-    RefresherContent.prototype.render = function () {
-        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["H"], { class: Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this) }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "refresher-pulling" }, this.pullingIcon &&
-            Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "refresher-pulling-icon" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("ion-icon", { icon: this.pullingIcon, lazy: false })), this.pullingText &&
-            Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "refresher-pulling-text", innerHTML: Object(_index_3476b023_js__WEBPACK_IMPORTED_MODULE_3__["s"])(this.pullingText) })), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "refresher-refreshing" }, this.refreshingSpinner &&
-            Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "refresher-refreshing-icon" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("ion-spinner", { name: this.refreshingSpinner })), this.refreshingText &&
-            Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "refresher-refreshing-text", innerHTML: Object(_index_3476b023_js__WEBPACK_IMPORTED_MODULE_3__["s"])(this.refreshingText) }))));
+    SelectPopover.prototype.render = function () {
+        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["H"], { class: Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this) }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("ion-list", null, this.header !== undefined && Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("ion-list-header", null, this.header), (this.subHeader !== undefined || this.message !== undefined) &&
+            Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("ion-item", null, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("ion-label", { class: "ion-text-wrap" }, this.subHeader !== undefined && Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("h3", null, this.subHeader), this.message !== undefined && Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("p", null, this.message))), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("ion-radio-group", null, this.options.map(function (option) { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("ion-item", null, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("ion-label", null, option.text), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("ion-radio", { checked: option.checked, value: option.value, disabled: option.disabled })); })))));
     };
-    return RefresherContent;
+    Object.defineProperty(SelectPopover, "style", {
+        get: function () { return ".sc-ion-select-popover-h ion-list.sc-ion-select-popover{margin-left:0;margin-right:0;margin-top:-1px;margin-bottom:-1px}.sc-ion-select-popover-h ion-label.sc-ion-select-popover, .sc-ion-select-popover-h ion-list-header.sc-ion-select-popover{margin-left:0;margin-right:0;margin-top:0;margin-bottom:0}"; },
+        enumerable: true,
+        configurable: true
+    });
+    return SelectPopover;
 }());
 
 

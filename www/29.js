@@ -1,136 +1,280 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[29],{
 
-/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-checkbox-ios.entry.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-checkbox-ios.entry.js ***!
-  \*************************************************************************/
-/*! exports provided: ion_checkbox */
+/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-infinite-scroll_2-ios.entry.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-infinite-scroll_2-ios.entry.js ***!
+  \**********************************************************************************/
+/*! exports provided: ion_infinite_scroll, ion_infinite_scroll_content */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_checkbox", function() { return Checkbox; });
-/* harmony import */ var _core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core-ca0488fc.js */ "./node_modules/@ionic/core/dist/esm-es5/core-ca0488fc.js");
-/* harmony import */ var _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./config-3c7f3790.js */ "./node_modules/@ionic/core/dist/esm-es5/config-3c7f3790.js");
-/* harmony import */ var _helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-46f4a262.js */ "./node_modules/@ionic/core/dist/esm-es5/helpers-46f4a262.js");
-/* harmony import */ var _theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./theme-18cbe2cc.js */ "./node_modules/@ionic/core/dist/esm-es5/theme-18cbe2cc.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_infinite_scroll", function() { return InfiniteScroll; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_infinite_scroll_content", function() { return InfiniteScrollContent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core-ca0488fc.js */ "./node_modules/@ionic/core/dist/esm-es5/core-ca0488fc.js");
+/* harmony import */ var _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./config-3c7f3790.js */ "./node_modules/@ionic/core/dist/esm-es5/config-3c7f3790.js");
+/* harmony import */ var _index_3476b023_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-3476b023.js */ "./node_modules/@ionic/core/dist/esm-es5/index-3476b023.js");
 
 
 
 
-var Checkbox = /** @class */ (function () {
-    function Checkbox(hostRef) {
+var InfiniteScroll = /** @class */ (function () {
+    function class_1(hostRef) {
         var _this = this;
-        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["r"])(this, hostRef);
-        this.inputId = "ion-cb-" + checkboxIds++;
+        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["r"])(this, hostRef);
+        this.thrPx = 0;
+        this.thrPc = 0;
+        this.didFire = false;
+        this.isBusy = false;
+        this.isLoading = false;
         /**
-         * The name of the control, which is submitted with the form data.
+         * The threshold distance from the bottom
+         * of the content to call the `infinite` output event when scrolled.
+         * The threshold value can be either a percent, or
+         * in pixels. For example, use the value of `10%` for the `infinite`
+         * output event to get called when the user has scrolled 10%
+         * from the bottom of the page. Use the value `100px` when the
+         * scroll is within 100 pixels from the bottom of the page.
          */
-        this.name = this.inputId;
+        this.threshold = '15%';
         /**
-         * If `true`, the checkbox is selected.
-         */
-        this.checked = false;
-        /**
-         * If `true`, the checkbox will visually appear as indeterminate.
-         */
-        this.indeterminate = false;
-        /**
-         * If `true`, the user cannot interact with the checkbox.
+         * If `true`, the infinite scroll will be hidden and scroll event listeners
+         * will be removed.
+         *
+         * Set this to true to disable the infinite scroll from actively
+         * trying to receive new data while scrolling. This is useful
+         * when it is known that there is no more data that can be added, and
+         * the infinite scroll is no longer needed.
          */
         this.disabled = false;
         /**
-         * The value of the toggle does not mean if it's checked or not, use the `checked`
-         * property for that.
-         *
-         * The value of a toggle is analogous to the value of a `<input type="checkbox">`,
-         * it's only used when the toggle participates in a native `<form>`.
+         * The position of the infinite scroll element.
+         * The value can be either `top` or `bottom`.
          */
-        this.value = 'on';
-        this.onClick = function () {
-            _this.setFocus();
-            _this.checked = !_this.checked;
-            _this.indeterminate = false;
+        this.position = 'bottom';
+        this.onScroll = function () {
+            var scrollEl = _this.scrollEl;
+            if (!scrollEl || !_this.canStart()) {
+                return 1;
+            }
+            var infiniteHeight = _this.el.offsetHeight;
+            if (infiniteHeight === 0) {
+                // if there is no height of this element then do nothing
+                return 2;
+            }
+            var scrollTop = scrollEl.scrollTop;
+            var scrollHeight = scrollEl.scrollHeight;
+            var height = scrollEl.offsetHeight;
+            var threshold = _this.thrPc !== 0 ? (height * _this.thrPc) : _this.thrPx;
+            var distanceFromInfinite = (_this.position === 'bottom')
+                ? scrollHeight - infiniteHeight - scrollTop - threshold - height
+                : scrollTop - infiniteHeight - threshold;
+            if (distanceFromInfinite < 0) {
+                if (!_this.didFire) {
+                    _this.isLoading = true;
+                    _this.didFire = true;
+                    _this.ionInfinite.emit();
+                    return 3;
+                }
+            }
+            else {
+                _this.didFire = false;
+            }
+            return 4;
         };
-        this.onFocus = function () {
-            _this.ionFocus.emit();
-        };
-        this.onBlur = function () {
-            _this.ionBlur.emit();
-        };
-        this.ionChange = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionChange", 7);
-        this.ionFocus = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionFocus", 7);
-        this.ionBlur = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionBlur", 7);
-        this.ionStyle = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionStyle", 7);
+        this.ionInfinite = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionInfinite", 7);
     }
-    Checkbox.prototype.componentWillLoad = function () {
-        this.emitStyle();
-    };
-    Checkbox.prototype.checkedChanged = function (isChecked) {
-        this.ionChange.emit({
-            checked: isChecked,
-            value: this.value
-        });
-        this.emitStyle();
-    };
-    Checkbox.prototype.disabledChanged = function () {
-        this.emitStyle();
-    };
-    Checkbox.prototype.emitStyle = function () {
-        this.ionStyle.emit({
-            'checkbox-checked': this.checked,
-            'interactive-disabled': this.disabled,
-        });
-    };
-    Checkbox.prototype.setFocus = function () {
-        if (this.buttonEl) {
-            this.buttonEl.focus();
+    class_1.prototype.thresholdChanged = function () {
+        var val = this.threshold;
+        if (val.lastIndexOf('%') > -1) {
+            this.thrPx = 0;
+            this.thrPc = (parseFloat(val) / 100);
+        }
+        else {
+            this.thrPx = parseFloat(val);
+            this.thrPc = 0;
         }
     };
-    Checkbox.prototype.render = function () {
+    class_1.prototype.disabledChanged = function () {
+        var disabled = this.disabled;
+        if (disabled) {
+            this.isLoading = false;
+            this.isBusy = false;
+        }
+        this.enableScrollEvents(!disabled);
+    };
+    class_1.prototype.connectedCallback = function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+            var contentEl, _a;
+            var _this = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        contentEl = this.el.closest('ion-content');
+                        if (!contentEl) {
+                            console.error('<ion-infinite-scroll> must be used inside an <ion-content>');
+                            return [2 /*return*/];
+                        }
+                        _a = this;
+                        return [4 /*yield*/, contentEl.getScrollElement()];
+                    case 1:
+                        _a.scrollEl = _b.sent();
+                        this.thresholdChanged();
+                        this.disabledChanged();
+                        if (this.position === 'top') {
+                            Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["w"])(function () {
+                                if (_this.scrollEl) {
+                                    _this.scrollEl.scrollTop = _this.scrollEl.scrollHeight - _this.scrollEl.clientHeight;
+                                }
+                            });
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    class_1.prototype.disconnectedCallback = function () {
+        this.enableScrollEvents(false);
+        this.scrollEl = undefined;
+    };
+    /**
+     * Call `complete()` within the `ionInfinite` output event handler when
+     * your async operation has completed. For example, the `loading`
+     * state is while the app is performing an asynchronous operation,
+     * such as receiving more data from an AJAX request to add more items
+     * to a data list. Once the data has been received and UI updated, you
+     * then call this method to signify that the loading has completed.
+     * This method will change the infinite scroll's state from `loading`
+     * to `enabled`.
+     */
+    class_1.prototype.complete = function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+            var scrollEl, prev_1;
+            var _this = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+                scrollEl = this.scrollEl;
+                if (!this.isLoading || !scrollEl) {
+                    return [2 /*return*/];
+                }
+                this.isLoading = false;
+                if (this.position === 'top') {
+                    /**
+                     * New content is being added at the top, but the scrollTop position stays the same,
+                     * which causes a scroll jump visually. This algorithm makes sure to prevent this.
+                     * (Frame 1)
+                     *    - complete() is called, but the UI hasn't had time to update yet.
+                     *    - Save the current content dimensions.
+                     *    - Wait for the next frame using _dom.read, so the UI will be updated.
+                     * (Frame 2)
+                     *    - Read the new content dimensions.
+                     *    - Calculate the height difference and the new scroll position.
+                     *    - Delay the scroll position change until other possible dom reads are done using _dom.write to be performant.
+                     * (Still frame 2, if I'm correct)
+                     *    - Change the scroll position (= visually maintain the scroll position).
+                     *    - Change the state to re-enable the InfiniteScroll.
+                     *    - This should be after changing the scroll position, or it could
+                     *    cause the InfiniteScroll to be triggered again immediately.
+                     * (Frame 3)
+                     *    Done.
+                     */
+                    this.isBusy = true;
+                    prev_1 = scrollEl.scrollHeight - scrollEl.scrollTop;
+                    // ******** DOM READ ****************
+                    requestAnimationFrame(function () {
+                        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["f"])(function () {
+                            // UI has updated, save the new content dimensions
+                            var scrollHeight = scrollEl.scrollHeight;
+                            // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
+                            var newScrollTop = scrollHeight - prev_1;
+                            // ******** DOM WRITE ****************
+                            requestAnimationFrame(function () {
+                                Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["w"])(function () {
+                                    scrollEl.scrollTop = newScrollTop;
+                                    _this.isBusy = false;
+                                });
+                            });
+                        });
+                    });
+                }
+                return [2 /*return*/];
+            });
+        });
+    };
+    class_1.prototype.canStart = function () {
+        return (!this.disabled &&
+            !this.isBusy &&
+            !!this.scrollEl &&
+            !this.isLoading);
+    };
+    class_1.prototype.enableScrollEvents = function (shouldListen) {
+        if (this.scrollEl) {
+            if (shouldListen) {
+                this.scrollEl.addEventListener('scroll', this.onScroll);
+            }
+            else {
+                this.scrollEl.removeEventListener('scroll', this.onScroll);
+            }
+        }
+    };
+    class_1.prototype.render = function () {
         var _a;
-        var _this = this;
-        var _b = this, inputId = _b.inputId, indeterminate = _b.indeterminate, disabled = _b.disabled, checked = _b.checked, value = _b.value, color = _b.color, el = _b.el;
-        var labelId = inputId + '-lbl';
-        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["d"])(this);
-        var label = Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_2__["f"])(el);
-        if (label) {
-            label.id = labelId;
-        }
-        Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_2__["a"])(true, el, this.name, (checked ? value : ''), disabled);
-        var path = indeterminate
-            ? Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { d: "M6 12L18 12" })
-            : Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { d: "M5.9,12.5l3.8,3.8l8.8-8.8" });
-        if (mode === 'md') {
-            path = indeterminate
-                ? Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { d: "M2 12H22" })
-                : Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { d: "M1.73,12.91 8.1,19.28 22.79,4.59" });
-        }
-        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["H"], { onClick: this.onClick, role: "checkbox", "aria-disabled": disabled ? 'true' : null, "aria-checked": "" + checked, "aria-labelledby": labelId, class: Object.assign(Object.assign({}, Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_3__["c"])(color)), (_a = {}, _a[mode] = true, _a['in-item'] = Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_3__["h"])('ion-item', el), _a['checkbox-checked'] = checked, _a['checkbox-disabled'] = disabled, _a['checkbox-indeterminate'] = indeterminate, _a['interactive'] = true, _a)) }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("svg", { class: "checkbox-icon", viewBox: "0 0 24 24" }, path), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("button", { type: "button", onFocus: this.onFocus, onBlur: this.onBlur, disabled: this.disabled, ref: function (btnEl) { return _this.buttonEl = btnEl; } })));
+        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this);
+        var disabled = this.disabled;
+        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["H"], { class: (_a = {},
+                _a[mode] = true,
+                _a['infinite-scroll-loading'] = this.isLoading,
+                _a['infinite-scroll-enabled'] = !disabled,
+                _a) }));
     };
-    Object.defineProperty(Checkbox.prototype, "el", {
-        get: function () { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["e"])(this); },
+    Object.defineProperty(class_1.prototype, "el", {
+        get: function () { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["e"])(this); },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Checkbox, "watchers", {
+    Object.defineProperty(class_1, "watchers", {
         get: function () {
             return {
-                "checked": ["checkedChanged"],
+                "threshold": ["thresholdChanged"],
                 "disabled": ["disabledChanged"]
             };
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Checkbox, "style", {
-        get: function () { return ":host{--background-checked:var(--ion-color-primary,#3880ff);--border-color-checked:var(--ion-color-primary,#3880ff);--checkmark-color:var(--ion-color-primary-contrast,#fff);--transition:none;display:inline-block;position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;z-index:2}:host(.ion-color){--background-checked:var(--ion-color-base);--border-color-checked:var(--ion-color-base);--checkmark-color:var(--ion-color-contrast)}button{left:0;top:0;margin-left:0;margin-right:0;margin-top:0;margin-bottom:0;position:absolute;width:100%;height:100%;border:0;background:transparent;cursor:pointer;-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none}:host-context([dir=rtl]) button,[dir=rtl] button{left:unset;right:unset;right:0}button::-moz-focus-inner{border:0}.checkbox-icon{border-radius:var(--border-radius);display:block;position:relative;width:100%;height:100%;-webkit-transition:var(--transition);transition:var(--transition);border-width:var(--border-width);border-style:var(--border-style);border-color:var(--border-color);background:var(--background);-webkit-box-sizing:border-box;box-sizing:border-box}.checkbox-icon path{fill:none;stroke:var(--checkmark-color);stroke-width:1;opacity:0}:host(.checkbox-checked) .checkbox-icon,:host(.checkbox-indeterminate) .checkbox-icon{border-color:var(--border-color-checked);background:var(--background-checked)}:host(.checkbox-checked) .checkbox-icon path,:host(.checkbox-indeterminate) .checkbox-icon path{opacity:1}:host(.checkbox-disabled){pointer-events:none}:host{--border-radius:50%;--border-width:1px;--border-style:solid;--border-color:rgba(var(--ion-text-color-rgb,0,0,0),0.23);--background:var(--ion-item-background,var(--ion-background-color,#fff));--size:26px;width:var(--size);height:var(--size)}:host(.checkbox-disabled){opacity:.3}:host(.in-item){margin-left:0;margin-right:8px;margin-top:10px;margin-bottom:9px;display:block;position:static}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){:host(.in-item){margin-left:unset;margin-right:unset;-webkit-margin-start:0;margin-inline-start:0;-webkit-margin-end:8px;margin-inline-end:8px}}:host(.in-item[slot=start]){margin-left:2px;margin-right:16px;margin-top:8px;margin-bottom:8px}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){:host(.in-item[slot=start]){margin-left:unset;margin-right:unset;-webkit-margin-start:2px;margin-inline-start:2px;-webkit-margin-end:16px;margin-inline-end:16px}}"; },
+    Object.defineProperty(class_1, "style", {
+        get: function () { return "ion-infinite-scroll{display:none;width:100%}.infinite-scroll-enabled{display:block}"; },
         enumerable: true,
         configurable: true
     });
-    return Checkbox;
+    return class_1;
 }());
-var checkboxIds = 0;
+var InfiniteScrollContent = /** @class */ (function () {
+    function InfiniteScrollContent(hostRef) {
+        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["r"])(this, hostRef);
+    }
+    InfiniteScrollContent.prototype.componentDidLoad = function () {
+        if (this.loadingSpinner === undefined) {
+            var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this);
+            this.loadingSpinner = _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_2__["b"].get('infiniteLoadingSpinner', _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_2__["b"].get('spinner', mode === 'ios' ? 'lines' : 'crescent'));
+        }
+    };
+    InfiniteScrollContent.prototype.render = function () {
+        var _a;
+        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this);
+        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["H"], { class: (_a = {},
+                _a[mode] = true,
+                // Used internally for styling
+                _a["infinite-scroll-content-" + mode] = true,
+                _a) }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "infinite-loading" }, this.loadingSpinner && (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "infinite-loading-spinner" }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("ion-spinner", { name: this.loadingSpinner }))), this.loadingText && (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "infinite-loading-text", innerHTML: Object(_index_3476b023_js__WEBPACK_IMPORTED_MODULE_3__["s"])(this.loadingText) })))));
+    };
+    Object.defineProperty(InfiniteScrollContent, "style", {
+        get: function () { return "ion-infinite-scroll-content{display:-ms-flexbox;display:flex;-ms-flex-direction:column;flex-direction:column;-ms-flex-pack:center;justify-content:center;min-height:84px;text-align:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.infinite-loading{margin-left:0;margin-right:0;margin-top:0;margin-bottom:32px;display:none;width:100%}.infinite-loading-text{margin-left:32px;margin-right:32px;margin-top:4px;margin-bottom:0}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.infinite-loading-text{margin-left:unset;margin-right:unset;-webkit-margin-start:32px;margin-inline-start:32px;-webkit-margin-end:32px;margin-inline-end:32px}}.infinite-scroll-loading ion-infinite-scroll-content>.infinite-loading{display:block}.infinite-scroll-content-ios .infinite-loading-text{color:var(--ion-color-step-600,#666)}.infinite-scroll-content-ios .infinite-loading-spinner .spinner-crescent circle,.infinite-scroll-content-ios .infinite-loading-spinner .spinner-lines-ios line,.infinite-scroll-content-ios .infinite-loading-spinner .spinner-lines-small-ios line{stroke:var(--ion-color-step-600,#666)}.infinite-scroll-content-ios .infinite-loading-spinner .spinner-bubbles circle,.infinite-scroll-content-ios .infinite-loading-spinner .spinner-circles circle,.infinite-scroll-content-ios .infinite-loading-spinner .spinner-dots circle{fill:var(--ion-color-step-600,#666)}"; },
+        enumerable: true,
+        configurable: true
+    });
+    return InfiniteScrollContent;
+}());
 
 
 

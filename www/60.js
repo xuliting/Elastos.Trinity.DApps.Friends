@@ -1,451 +1,188 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[60],{
 
-/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-range-ios.entry.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-range-ios.entry.js ***!
-  \**********************************************************************/
-/*! exports provided: ion_range */
+/***/ "./node_modules/@ionic/core/dist/esm-es5/ion-segment_2-ios.entry.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm-es5/ion-segment_2-ios.entry.js ***!
+  \**************************************************************************/
+/*! exports provided: ion_segment, ion_segment_button */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_range", function() { return Range; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core-ca0488fc.js */ "./node_modules/@ionic/core/dist/esm-es5/core-ca0488fc.js");
-/* harmony import */ var _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./config-3c7f3790.js */ "./node_modules/@ionic/core/dist/esm-es5/config-3c7f3790.js");
-/* harmony import */ var _helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers-46f4a262.js */ "./node_modules/@ionic/core/dist/esm-es5/helpers-46f4a262.js");
-/* harmony import */ var _theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./theme-18cbe2cc.js */ "./node_modules/@ionic/core/dist/esm-es5/theme-18cbe2cc.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_segment", function() { return Segment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ion_segment_button", function() { return SegmentButton; });
+/* harmony import */ var _core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core-ca0488fc.js */ "./node_modules/@ionic/core/dist/esm-es5/core-ca0488fc.js");
+/* harmony import */ var _config_3c7f3790_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./config-3c7f3790.js */ "./node_modules/@ionic/core/dist/esm-es5/config-3c7f3790.js");
+/* harmony import */ var _theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./theme-18cbe2cc.js */ "./node_modules/@ionic/core/dist/esm-es5/theme-18cbe2cc.js");
 
 
 
-
-
-var Range = /** @class */ (function () {
-    function class_1(hostRef) {
-        var _this = this;
-        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["r"])(this, hostRef);
-        this.noUpdate = false;
-        this.hasFocus = false;
-        this.ratioA = 0;
-        this.ratioB = 0;
+var Segment = /** @class */ (function () {
+    function Segment(hostRef) {
+        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["r"])(this, hostRef);
+        this.didInit = false;
         /**
-         * How long, in milliseconds, to wait to trigger the
-         * `ionChange` event after each change in the range value.
-         */
-        this.debounce = 0;
-        /**
-         * The name of the control, which is submitted with the form data.
-         */
-        this.name = '';
-        /**
-         * Show two knobs.
-         */
-        this.dualKnobs = false;
-        /**
-         * Minimum integer value of the range.
-         */
-        this.min = 0;
-        /**
-         * Maximum integer value of the range.
-         */
-        this.max = 100;
-        /**
-         * If `true`, a pin with integer value is shown when the knob
-         * is pressed.
-         */
-        this.pin = false;
-        /**
-         * If `true`, the knob snaps to tick marks evenly spaced based
-         * on the step property value.
-         */
-        this.snaps = false;
-        /**
-         * Specifies the value granularity.
-         */
-        this.step = 1;
-        /**
-         * If `true`, tick marks are displayed based on the step value.
-         * Only applies when `snaps` is `true`.
-         */
-        this.ticks = true;
-        /**
-         * If `true`, the user cannot interact with the range.
+         * If `true`, the user cannot interact with the segment.
          */
         this.disabled = false;
         /**
-         * the value of the range.
+         * If `true`, the segment buttons will overflow and the user can swipe to see them.
          */
-        this.value = 0;
-        this.clampBounds = function (value) {
-            return Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["c"])(_this.min, value, _this.max);
-        };
-        this.ensureValueInBounds = function (value) {
-            if (_this.dualKnobs) {
-                return {
-                    lower: _this.clampBounds(value.lower),
-                    upper: _this.clampBounds(value.upper)
-                };
-            }
-            else {
-                return _this.clampBounds(value);
-            }
-        };
-        this.handleKeyboard = function (knob, isIncrease) {
-            var step = _this.step;
-            step = step > 0 ? step : 1;
-            step = step / (_this.max - _this.min);
-            if (!isIncrease) {
-                step *= -1;
-            }
-            if (knob === 'A') {
-                _this.ratioA = Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["c"])(0, _this.ratioA + step, 1);
-            }
-            else {
-                _this.ratioB = Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["c"])(0, _this.ratioB + step, 1);
-            }
-            _this.updateValue();
-        };
-        this.onBlur = function () {
-            if (_this.hasFocus) {
-                _this.hasFocus = false;
-                _this.ionBlur.emit();
-                _this.emitStyle();
-            }
-        };
-        this.onFocus = function () {
-            if (!_this.hasFocus) {
-                _this.hasFocus = true;
-                _this.ionFocus.emit();
-                _this.emitStyle();
-            }
-        };
-        this.ionChange = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionChange", 7);
-        this.ionStyle = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionStyle", 7);
-        this.ionFocus = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionFocus", 7);
-        this.ionBlur = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["c"])(this, "ionBlur", 7);
+        this.scrollable = false;
+        this.ionChange = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionChange", 7);
+        this.ionStyle = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionStyle", 7);
     }
-    class_1.prototype.debounceChanged = function () {
-        this.ionChange = Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["d"])(this.ionChange, this.debounce);
-    };
-    class_1.prototype.minChanged = function () {
-        if (!this.noUpdate) {
-            this.updateRatio();
+    Segment.prototype.valueChanged = function (value) {
+        if (this.didInit) {
+            this.updateButtons();
+            this.ionChange.emit({ value: value });
         }
     };
-    class_1.prototype.maxChanged = function () {
-        if (!this.noUpdate) {
-            this.updateRatio();
-        }
+    Segment.prototype.segmentClick = function (ev) {
+        var selectedButton = ev.target;
+        this.value = selectedButton.value;
     };
-    class_1.prototype.disabledChanged = function () {
-        if (this.gesture) {
-            this.gesture.setDisabled(this.disabled);
+    Segment.prototype.connectedCallback = function () {
+        if (this.value === undefined) {
+            var checked = this.getButtons().find(function (b) { return b.checked; });
+            if (checked) {
+                this.value = checked.value;
+            }
         }
         this.emitStyle();
     };
-    class_1.prototype.valueChanged = function (value) {
-        if (!this.noUpdate) {
-            this.updateRatio();
-        }
-        value = this.ensureValueInBounds(value);
-        this.ionChange.emit({ value: value });
+    Segment.prototype.componentDidLoad = function () {
+        this.updateButtons();
+        this.didInit = true;
     };
-    class_1.prototype.connectedCallback = function () {
-        this.updateRatio();
-        this.debounceChanged();
-        this.disabledChanged();
-    };
-    class_1.prototype.disconnectedCallback = function () {
-        if (this.gesture) {
-            this.gesture.destroy();
-            this.gesture = undefined;
-        }
-    };
-    class_1.prototype.componentDidLoad = function () {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-            var rangeSlider, _a;
-            var _this = this;
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        rangeSlider = this.rangeSlider;
-                        if (!rangeSlider) return [3 /*break*/, 2];
-                        _a = this;
-                        return [4 /*yield*/, Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./index-624eea58.js */ "./node_modules/@ionic/core/dist/esm-es5/index-624eea58.js"))];
-                    case 1:
-                        _a.gesture = (_b.sent()).createGesture({
-                            el: rangeSlider,
-                            gestureName: 'range',
-                            gesturePriority: 100,
-                            threshold: 0,
-                            onStart: function (ev) { return _this.onStart(ev); },
-                            onMove: function (ev) { return _this.onMove(ev); },
-                            onEnd: function (ev) { return _this.onEnd(ev); },
-                        });
-                        this.gesture.setDisabled(this.disabled);
-                        _b.label = 2;
-                    case 2: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    class_1.prototype.getValue = function () {
-        var value = this.value || 0;
-        if (this.dualKnobs) {
-            if (typeof value === 'object') {
-                return value;
-            }
-            return {
-                lower: 0,
-                upper: value
-            };
-        }
-        else {
-            if (typeof value === 'object') {
-                return value.upper;
-            }
-            return value;
-        }
-    };
-    class_1.prototype.emitStyle = function () {
+    Segment.prototype.emitStyle = function () {
         this.ionStyle.emit({
-            'interactive': true,
-            'interactive-disabled': this.disabled
+            'segment': true
         });
     };
-    class_1.prototype.onStart = function (detail) {
-        var rect = this.rect = this.rangeSlider.getBoundingClientRect();
-        var currentX = detail.currentX;
-        // figure out which knob they started closer to
-        var ratio = Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["c"])(0, (currentX - rect.left) / rect.width, 1);
-        if (document.dir === 'rtl') {
-            ratio = 1 - ratio;
+    Segment.prototype.updateButtons = function () {
+        var value = this.value;
+        for (var _i = 0, _a = this.getButtons(); _i < _a.length; _i++) {
+            var button = _a[_i];
+            button.checked = (button.value === value);
         }
-        this.pressedKnob =
-            !this.dualKnobs ||
-                Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
-                ? 'A'
-                : 'B';
-        this.setFocus(this.pressedKnob);
-        // update the active knob's position
-        this.update(currentX);
     };
-    class_1.prototype.onMove = function (detail) {
-        this.update(detail.currentX);
+    Segment.prototype.getButtons = function () {
+        return Array.from(this.el.querySelectorAll('ion-segment-button'));
     };
-    class_1.prototype.onEnd = function (detail) {
-        this.update(detail.currentX);
-        this.pressedKnob = undefined;
+    Segment.prototype.render = function () {
+        var _a;
+        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["d"])(this);
+        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["H"], { class: Object.assign(Object.assign({}, Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_2__["c"])(this.color)), (_a = {}, _a[mode] = true, _a['segment-disabled'] = this.disabled, _a['segment-scrollable'] = this.scrollable, _a)) }));
     };
-    class_1.prototype.update = function (currentX) {
-        // figure out where the pointer is currently at
-        // update the knob being interacted with
-        var rect = this.rect;
-        var ratio = Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["c"])(0, (currentX - rect.left) / rect.width, 1);
-        if (document.dir === 'rtl') {
-            ratio = 1 - ratio;
-        }
-        if (this.snaps) {
-            // snaps the ratio to the current value
-            ratio = valueToRatio(ratioToValue(ratio, this.min, this.max, this.step), this.min, this.max);
-        }
-        // update which knob is pressed
-        if (this.pressedKnob === 'A') {
-            this.ratioA = ratio;
-        }
-        else {
-            this.ratioB = ratio;
-        }
-        // Update input value
-        this.updateValue();
-    };
-    Object.defineProperty(class_1.prototype, "valA", {
-        get: function () {
-            return ratioToValue(this.ratioA, this.min, this.max, this.step);
-        },
+    Object.defineProperty(Segment.prototype, "el", {
+        get: function () { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["e"])(this); },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(class_1.prototype, "valB", {
-        get: function () {
-            return ratioToValue(this.ratioB, this.min, this.max, this.step);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(class_1.prototype, "ratioLower", {
-        get: function () {
-            if (this.dualKnobs) {
-                return Math.min(this.ratioA, this.ratioB);
-            }
-            return 0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(class_1.prototype, "ratioUpper", {
-        get: function () {
-            if (this.dualKnobs) {
-                return Math.max(this.ratioA, this.ratioB);
-            }
-            return this.ratioA;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    class_1.prototype.updateRatio = function () {
-        var value = this.getValue();
-        var _a = this, min = _a.min, max = _a.max;
-        if (this.dualKnobs) {
-            this.ratioA = valueToRatio(value.lower, min, max);
-            this.ratioB = valueToRatio(value.upper, min, max);
-        }
-        else {
-            this.ratioA = valueToRatio(value, min, max);
-        }
-    };
-    class_1.prototype.updateValue = function () {
-        this.noUpdate = true;
-        var _a = this, valA = _a.valA, valB = _a.valB;
-        this.value = !this.dualKnobs
-            ? valA
-            : {
-                lower: Math.min(valA, valB),
-                upper: Math.max(valA, valB)
-            };
-        this.noUpdate = false;
-    };
-    class_1.prototype.setFocus = function (knob) {
-        if (this.el.shadowRoot) {
-            var knobEl = this.el.shadowRoot.querySelector(knob === 'A' ? '.range-knob-a' : '.range-knob-b');
-            if (knobEl) {
-                knobEl.focus();
-            }
-        }
-    };
-    class_1.prototype.render = function () {
-        var _a, _b;
-        var _this = this;
-        var _c = this, min = _c.min, max = _c.max, step = _c.step, el = _c.el, handleKeyboard = _c.handleKeyboard, pressedKnob = _c.pressedKnob, disabled = _c.disabled, pin = _c.pin, ratioLower = _c.ratioLower, ratioUpper = _c.ratioUpper;
-        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["d"])(this);
-        var barStart = ratioLower * 100 + "%";
-        var barEnd = 100 - ratioUpper * 100 + "%";
-        var doc = document;
-        var isRTL = doc.dir === 'rtl';
-        var start = isRTL ? 'right' : 'left';
-        var end = isRTL ? 'left' : 'right';
-        var tickStyle = function (tick) {
-            var _a;
-            return _a = {},
-                _a[start] = tick[start],
-                _a;
-        };
-        var barStyle = (_a = {},
-            _a[start] = barStart,
-            _a[end] = barEnd,
-            _a);
-        var ticks = [];
-        if (this.snaps && this.ticks) {
-            for (var value = min; value <= max; value += step) {
-                var ratio = valueToRatio(value, min, max);
-                var tick = {
-                    ratio: ratio,
-                    active: ratio >= ratioLower && ratio <= ratioUpper,
-                };
-                tick[start] = ratio * 100 + "%";
-                ticks.push(tick);
-            }
-        }
-        Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["a"])(true, el, this.name, JSON.stringify(this.getValue()), disabled);
-        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["H"], { onFocusin: this.onFocus, onFocusout: this.onBlur, class: Object.assign(Object.assign({}, Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_4__["c"])(this.color)), (_b = {}, _b[mode] = true, _b['in-item'] = Object(_theme_18cbe2cc_js__WEBPACK_IMPORTED_MODULE_4__["h"])('ion-item', el), _b['range-disabled'] = disabled, _b['range-pressed'] = pressedKnob !== undefined, _b['range-has-pin'] = pin, _b)) }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("slot", { name: "start" }), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "range-slider", ref: function (rangeEl) { return _this.rangeSlider = rangeEl; } }, ticks.map(function (tick) { return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { style: tickStyle(tick), role: "presentation", class: {
-                'range-tick': true,
-                'range-tick-active': tick.active
-            } })); }), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "range-bar", role: "presentation" }), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "range-bar range-bar-active", role: "presentation", style: barStyle }), renderKnob(isRTL, {
-            knob: 'A',
-            pressed: pressedKnob === 'A',
-            value: this.valA,
-            ratio: this.ratioA,
-            pin: pin,
-            disabled: disabled,
-            handleKeyboard: handleKeyboard,
-            min: min,
-            max: max
-        }), this.dualKnobs && renderKnob(isRTL, {
-            knob: 'B',
-            pressed: pressedKnob === 'B',
-            value: this.valB,
-            ratio: this.ratioB,
-            pin: pin,
-            disabled: disabled,
-            handleKeyboard: handleKeyboard,
-            min: min,
-            max: max
-        })), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("slot", { name: "end" })));
-    };
-    Object.defineProperty(class_1.prototype, "el", {
-        get: function () { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["e"])(this); },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(class_1, "watchers", {
+    Object.defineProperty(Segment, "watchers", {
         get: function () {
             return {
-                "debounce": ["debounceChanged"],
-                "min": ["minChanged"],
-                "max": ["maxChanged"],
-                "disabled": ["disabledChanged"],
                 "value": ["valueChanged"]
             };
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(class_1, "style", {
-        get: function () { return ":host{--knob-handle-size:calc(var(--knob-size) * 2);display:-ms-flexbox;display:flex;position:relative;-ms-flex:3;flex:3;-ms-flex-align:center;align-items:center;font-family:var(--ion-font-family,inherit);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;z-index:2}:host(.range-disabled){pointer-events:none}::slotted(ion-label){-ms-flex:initial;flex:initial}::slotted(ion-icon[slot]){font-size:24px}.range-slider{position:relative;-ms-flex:1;flex:1;width:100%;height:var(--height);contain:size layout style;cursor:-webkit-grab;cursor:grab;-ms-touch-action:pan-y;touch-action:pan-y}:host(.range-pressed) .range-slider{cursor:-webkit-grabbing;cursor:grabbing}.range-pin{position:absolute;background:var(--ion-color-base);color:var(--ion-color-contrast);-webkit-box-sizing:border-box;box-sizing:border-box}.range-knob-handle{left:0;top:calc((var(--height) - var(--knob-handle-size)) / 2);margin-left:calc(0px - var(--knob-handle-size) / 2);position:absolute;width:var(--knob-handle-size);height:var(--knob-handle-size);text-align:center}:host-context([dir=rtl]) .range-knob-handle,[dir=rtl] .range-knob-handle{right:unset;right:0}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.range-knob-handle{margin-left:unset;-webkit-margin-start:calc(0px - var(--knob-handle-size) / 2);margin-inline-start:calc(0px - var(--knob-handle-size) / 2)}}:host-context([dir=rtl]) .range-knob-handle,[dir=rtl] .range-knob-handle{left:unset}.range-knob-handle:active,.range-knob-handle:focus{outline:none}.range-bar{border-radius:var(--bar-border-radius);left:0;top:calc((var(--height) - var(--bar-height)) / 2);position:absolute;width:100%;height:var(--bar-height);background:var(--bar-background);pointer-events:none}:host-context([dir=rtl]) .range-bar,[dir=rtl] .range-bar{right:unset;right:0;left:unset}.range-knob{border-radius:var(--knob-border-radius);left:calc(50% - var(--knob-size) / 2);top:calc(50% - var(--knob-size) / 2);position:absolute;width:var(--knob-size);height:var(--knob-size);background:var(--knob-background);-webkit-box-shadow:var(--knob-box-shadow);box-shadow:var(--knob-box-shadow);z-index:2;pointer-events:none}:host-context([dir=rtl]) .range-knob,[dir=rtl] .range-knob{right:unset;right:calc(50% - var(--knob-size) / 2);left:unset}:host(.range-pressed) .range-bar-active{will-change:left,right}:host(.in-item){width:100%}:host(.in-item) ::slotted(ion-label){-ms-flex-item-align:center;align-self:center}:host{--knob-border-radius:50%;--knob-background:#fff;--knob-box-shadow:0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02);--knob-size:28px;--bar-height:2px;--bar-background:rgba(var(--ion-text-color-rgb,0,0,0),0.1);--bar-background-active:var(--ion-color-primary,#3880ff);--bar-border-radius:0;--height:42px;padding-left:16px;padding-right:16px;padding-top:8px;padding-bottom:8px}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){:host{padding-left:unset;padding-right:unset;-webkit-padding-start:16px;padding-inline-start:16px;-webkit-padding-end:16px;padding-inline-end:16px}}:host(.ion-color) .range-bar-active,:host(.ion-color) .range-tick-active{background:var(--ion-color-base)}::slotted([slot=start]){margin-left:0;margin-right:16px;margin-top:0;margin-bottom:0}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){::slotted([slot=start]){margin-left:unset;margin-right:unset;-webkit-margin-start:0;margin-inline-start:0;-webkit-margin-end:16px;margin-inline-end:16px}}::slotted([slot=end]){margin-left:16px;margin-right:0;margin-top:0;margin-bottom:0}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){::slotted([slot=end]){margin-left:unset;margin-right:unset;-webkit-margin-start:16px;margin-inline-start:16px;-webkit-margin-end:0;margin-inline-end:0}}:host(.range-has-pin){padding-top:20px}.range-bar-active{bottom:0;width:auto;background:var(--bar-background-active)}.range-tick{margin-left:-1px;border-radius:0;position:absolute;top:18px;width:2px;height:8px;background:rgba(var(--ion-text-color-rgb,0,0,0),.1);pointer-events:none}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.range-tick{margin-left:unset;-webkit-margin-start:-1px;margin-inline-start:-1px}}.range-tick-active{background:var(--bar-background-active)}.range-pin{-webkit-transform:translate3d(0,28px,0) scale(.01);transform:translate3d(0,28px,0) scale(.01);padding-left:8px;padding-right:8px;padding-top:8px;padding-bottom:8px;display:inline-block;position:relative;top:-20px;min-width:28px;-webkit-transition:-webkit-transform .12s ease;transition:-webkit-transform .12s ease;transition:transform .12s ease;transition:transform .12s ease,-webkit-transform .12s ease;background:transparent;color:var(--ion-text-color,#000);font-size:12px;text-align:center}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.range-pin{padding-left:unset;padding-right:unset;-webkit-padding-start:8px;padding-inline-start:8px;-webkit-padding-end:8px;padding-inline-end:8px}}.range-knob-pressed .range-pin{-webkit-transform:translateZ(0) scale(1);transform:translateZ(0) scale(1)}:host(.range-disabled){opacity:.5}"; },
+    Object.defineProperty(Segment, "style", {
+        get: function () { return ".sc-ion-segment-ios-h{--indicator-color-checked:initial;--ripple-color:currentColor;--color-activated:initial;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:-ms-flexbox;display:flex;-ms-flex-align:stretch;align-items:stretch;-ms-flex-pack:center;justify-content:center;width:100%;font-family:var(--ion-font-family,inherit);text-align:center}.sc-ion-segment-ios-s > .segment-button-disabled, .segment-disabled.sc-ion-segment-ios-h{pointer-events:none}.segment-scrollable.sc-ion-segment-ios-h{-ms-flex-pack:start;justify-content:start;width:auto;overflow-x:scroll}.segment-scrollable.sc-ion-segment-ios-h::-webkit-scrollbar{display:none}.sc-ion-segment-ios-h{--background:transparent;--background-hover:rgba(var(--ion-color-primary-rgb,56,128,255),0.1);--background-activated:rgba(var(--ion-color-primary-rgb,56,128,255),0.16);--background-checked:var(--ion-color-primary,#3880ff);--color:var(--ion-color-primary,#3880ff);--color-checked:var(--ion-color-primary-contrast,#fff);--color-disabled:rgba(var(--ion-color-primary-rgb,56,128,255),0.3);--color-checked-disabled:rgba(var(--ion-color-primary-contrast-rgb,255,255,255),0.3);--border-color:var(--ion-color-primary,#3880ff);--indicator-color:transparent}.segment-disabled.sc-ion-segment-ios-h{opacity:.3}.sc-ion-segment-ios-h.ion-color.sc-ion-segment-ios-s > ion-segment-button{--border-color:var(--ion-color-base);background:transparent;color:var(--ion-color-base)}.sc-ion-segment-ios-h.ion-color.sc-ion-segment-ios-s > .activated{background:rgba(var(--ion-color-base-rgb),.16);color:var(--ion-color-base)}.sc-ion-segment-ios-h.ion-color.sc-ion-segment-ios-s > .segment-button-checked, .sc-ion-segment-ios-h.ion-color.sc-ion-segment-ios-s > .segment-button-checked.activated{background:var(--ion-color-base);color:var(--ion-color-contrast)}.sc-ion-segment-ios-h.ion-color.sc-ion-segment-ios-s > .segment-button-disabled{color:rgba(var(--ion-color-base-rgb),.3)}.sc-ion-segment-ios-h.ion-color.sc-ion-segment-ios-s > .segment-button-checked.segment-button-disabled{color:rgba(var(--ion-color-contrast-rgb),.3)}\@media (any-hover:hover){.sc-ion-segment-ios-h.ion-color.sc-ion-segment-ios-s > ion-segment-button:hover:not(.segment-button-checked){background:rgba(var(--ion-color-base-rgb),.1)}}.sc-ion-segment-ios-hion-toolbar.sc-ion-segment-ios-s > ion-segment-button, ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button{max-width:100px;font-size:12px;line-height:22px}.sc-ion-segment-ios-hion-toolbar:not(.ion-color):not(.ion-color).sc-ion-segment-ios-s > ion-segment-button, ion-toolbar:not(.ion-color) .sc-ion-segment-ios-h:not(.ion-color).sc-ion-segment-ios-s > ion-segment-button{border-color:var(--ion-toolbar-color-checked,var(--border-color));color:var(--ion-toolbar-color-unchecked,var(--color))}.sc-ion-segment-ios-hion-toolbar:not(.ion-color):not(.ion-color).sc-ion-segment-ios-s > .segment-button-checked, ion-toolbar:not(.ion-color) .sc-ion-segment-ios-h:not(.ion-color).sc-ion-segment-ios-s > .segment-button-checked{background:var(--ion-toolbar-color-checked,var(--background-checked));color:var(--ion-toolbar-background,var(--color-checked))}.sc-ion-segment-ios-hion-toolbar.ion-color:not(.ion-color).sc-ion-segment-ios-s > ion-segment-button, ion-toolbar.ion-color .sc-ion-segment-ios-h:not(.ion-color).sc-ion-segment-ios-s > ion-segment-button{--color:var(--ion-color-contrast);--color-disabled:rgba(var(--ion-color-contrast-rgb),0.3);--color-checked:var(--ion-color-base);--color-checked-disabled:rgba(var(--ion-color-contrast-rgb),0.3);--background-hover:rgba(var(--ion-color-contrast-rgb),0.1);--background-activated:rgba(var(--ion-color-contrast-rgb),0.16);--background-checked:var(--ion-color-contrast);--border-color:var(--ion-color-contrast)}"; },
         enumerable: true,
         configurable: true
     });
-    return class_1;
+    return Segment;
 }());
-var renderKnob = function (isRTL, _a) {
-    var knob = _a.knob, value = _a.value, ratio = _a.ratio, min = _a.min, max = _a.max, disabled = _a.disabled, pressed = _a.pressed, pin = _a.pin, handleKeyboard = _a.handleKeyboard;
-    var start = isRTL ? 'right' : 'left';
-    var knobStyle = function () {
-        var style = {};
-        style[start] = ratio * 100 + "%";
-        return style;
-    };
-    return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { onKeyDown: function (ev) {
-            var key = ev.key;
-            if (key === 'ArrowLeft' || key === 'ArrowDown') {
-                handleKeyboard(knob, false);
-                ev.preventDefault();
-                ev.stopPropagation();
-            }
-            else if (key === 'ArrowRight' || key === 'ArrowUp') {
-                handleKeyboard(knob, true);
-                ev.preventDefault();
-                ev.stopPropagation();
-            }
-        }, class: {
-            'range-knob-handle': true,
-            'range-knob-a': knob === 'A',
-            'range-knob-b': knob === 'B',
-            'range-knob-pressed': pressed,
-            'range-knob-min': value === min,
-            'range-knob-max': value === max
-        }, style: knobStyle(), role: "slider", tabindex: disabled ? -1 : 0, "aria-valuemin": min, "aria-valuemax": max, "aria-disabled": disabled ? 'true' : null, "aria-valuenow": value }, pin && Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "range-pin", role: "presentation" }, Math.round(value)), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { class: "range-knob", role: "presentation" })));
-};
-var ratioToValue = function (ratio, min, max, step) {
-    var value = (max - min) * ratio;
-    if (step > 0) {
-        value = Math.round(value / step) * step + min;
+var ids = 0;
+var SegmentButton = /** @class */ (function () {
+    function SegmentButton(hostRef) {
+        var _this = this;
+        Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["r"])(this, hostRef);
+        /**
+         * If `true`, the segment button is selected.
+         */
+        this.checked = false;
+        /**
+         * If `true`, the user cannot interact with the segment button.
+         */
+        this.disabled = false;
+        /**
+         * Set the layout of the text and icon in the segment.
+         */
+        this.layout = 'icon-top';
+        /**
+         * The type of the button.
+         */
+        this.type = 'button';
+        /**
+         * The value of the segment button.
+         */
+        this.value = 'ion-sb-' + (ids++);
+        this.onClick = function () {
+            _this.checked = true;
+        };
+        this.ionSelect = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["c"])(this, "ionSelect", 7);
     }
-    return Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["c"])(min, value, max);
-};
-var valueToRatio = function (value, min, max) {
-    return Object(_helpers_46f4a262_js__WEBPACK_IMPORTED_MODULE_3__["c"])(0, (value - min) / (max - min), 1);
-};
+    SegmentButton.prototype.checkedChanged = function (checked, prev) {
+        if (checked && !prev) {
+            this.ionSelect.emit();
+        }
+    };
+    Object.defineProperty(SegmentButton.prototype, "hasLabel", {
+        get: function () {
+            return !!this.el.querySelector('ion-label');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SegmentButton.prototype, "hasIcon", {
+        get: function () {
+            return !!this.el.querySelector('ion-icon');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    SegmentButton.prototype.render = function () {
+        var _a;
+        var _b = this, checked = _b.checked, type = _b.type, disabled = _b.disabled, hasIcon = _b.hasIcon, hasLabel = _b.hasLabel, layout = _b.layout;
+        var mode = Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["d"])(this);
+        return (Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["H"], { onClick: this.onClick, "aria-disabled": disabled ? 'true' : null, class: (_a = {},
+                _a[mode] = true,
+                _a['segment-button-has-label'] = hasLabel,
+                _a['segment-button-has-icon'] = hasIcon,
+                _a['segment-button-has-label-only'] = hasLabel && !hasIcon,
+                _a['segment-button-has-icon-only'] = hasIcon && !hasLabel,
+                _a['segment-button-disabled'] = disabled,
+                _a['segment-button-checked'] = checked,
+                _a["segment-button-layout-" + layout] = true,
+                _a['ion-activatable'] = true,
+                _a['ion-activatable-instant'] = true,
+                _a) }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("button", { type: type, "aria-pressed": checked ? 'true' : null, class: "button-native", disabled: disabled }, Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("slot", null), mode === 'md' && Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("ion-ripple-effect", null)), Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { class: "segment-button-indicator" })));
+    };
+    Object.defineProperty(SegmentButton.prototype, "el", {
+        get: function () { return Object(_core_ca0488fc_js__WEBPACK_IMPORTED_MODULE_0__["e"])(this); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SegmentButton, "watchers", {
+        get: function () {
+            return {
+                "checked": ["checkedChanged"]
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SegmentButton, "style", {
+        get: function () { return ":host{--padding-start:0;--padding-end:0;--padding-top:0;--padding-bottom:0;display:-ms-flexbox;display:flex;-ms-flex:1 0 auto;flex:1 0 auto;-ms-flex-direction:column;flex-direction:column;height:auto;border-width:var(--border-width);border-style:var(--border-style);border-color:var(--border-color);background:var(--background);color:var(--color);text-decoration:none;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;-webkit-font-kerning:none;font-kerning:none}:host(:first-of-type){border-top-left-radius:var(--border-radius);border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:var(--border-radius)}:host-context([dir=rtl]):first-of-type,:host-context([dir=rtl]):host(:first-of-type){border-top-left-radius:0;border-top-right-radius:var(--border-radius);border-bottom-right-radius:var(--border-radius);border-bottom-left-radius:0}:host(:not(:first-of-type)){border-left-width:0}:host-context([dir=rtl]):host(:not(:first-of-type)),:host-context([dir=rtl]):not(:first-of-type){border-right-width:0;border-left-width:var(--border-width)}:host(:last-of-type){border-top-left-radius:0;border-top-right-radius:var(--border-radius);border-bottom-right-radius:var(--border-radius);border-bottom-left-radius:0}:host-context([dir=rtl]):host(:last-of-type),:host-context([dir=rtl]):last-of-type{border-top-left-radius:var(--border-radius);border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:var(--border-radius)}.button-native{border-radius:inherit;font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;letter-spacing:inherit;text-decoration:inherit;text-overflow:inherit;text-transform:inherit;text-align:inherit;white-space:inherit;color:inherit;margin-left:var(--margin-start);margin-right:var(--margin-end);margin-top:var(--margin-top);margin-bottom:var(--margin-bottom);padding-left:var(--padding-start);padding-right:var(--padding-end);padding-top:var(--padding-top);padding-bottom:var(--padding-bottom);display:-ms-flexbox;display:flex;position:relative;-ms-flex-direction:inherit;flex-direction:inherit;-ms-flex-positive:1;flex-grow:1;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;width:100%;min-width:inherit;max-width:inherit;height:auto;min-height:inherit;max-height:inherit;-webkit-transition:var(--transition);transition:var(--transition);border:none;outline:none;background:transparent;contain:content;cursor:pointer}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){.button-native{margin-left:unset;margin-right:unset;-webkit-margin-start:var(--margin-start);margin-inline-start:var(--margin-start);-webkit-margin-end:var(--margin-end);margin-inline-end:var(--margin-end);padding-left:unset;padding-right:unset;-webkit-padding-start:var(--padding-start);padding-inline-start:var(--padding-start);-webkit-padding-end:var(--padding-end);padding-inline-end:var(--padding-end)}}.segment-button-indicator{-ms-flex-item-align:end;align-self:flex-end;width:100%;height:2px;background-color:var(--indicator-color);opacity:1}:host(.segment-button-checked){background:var(--background-checked);color:var(--color-checked)}:host(.segment-button-checked) .segment-button-indicator{background-color:var(--indicator-color-checked,var(--color-checked))}:host(.activated){color:var(--color-activated,var(--color))}:host(.segment-button-disabled){color:var(--color-disabled)}:host(.segment-button-disabled.segment-button-checked){color:var(--color-checked-disabled)}::slotted(ion-icon){-ms-flex-order:-1;order:-1}::slotted(ion-label){display:block;-ms-flex-item-align:center;align-self:center;line-height:22px;text-overflow:ellipsis;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box}:host(.segment-button-layout-icon-start) .button-native{-ms-flex-direction:row;flex-direction:row}:host(.segment-button-layout-icon-end) .button-native{-ms-flex-direction:row-reverse;flex-direction:row-reverse}:host(.segment-button-layout-icon-bottom) .button-native{-ms-flex-direction:column-reverse;flex-direction:column-reverse}:host(.segment-button-layout-icon-hide) ::slotted(ion-icon),:host(.segment-button-layout-label-hide) ::slotted(ion-label){display:none}ion-ripple-effect{color:var(--ripple-color,var(--color-checked))}:host{--border-radius:4px;--border-width:1px;--border-style:solid;--transition:100ms all linear;min-height:24px;font-size:13px;line-height:37px}.segment-button-indicator{display:none}::slotted(ion-icon){font-size:24px}:host(.segment-button-layout-icon-start) ::slotted(ion-label){margin-left:2px;margin-right:0}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){:host(.segment-button-layout-icon-start) ::slotted(ion-label){margin-left:unset;margin-right:unset;-webkit-margin-start:2px;margin-inline-start:2px;-webkit-margin-end:0;margin-inline-end:0}}:host(.segment-button-layout-icon-end) ::slotted(ion-label){margin-left:0;margin-right:2px}\@supports ((-webkit-margin-start:0) or (margin-inline-start:0)) or (-webkit-margin-start:0){:host(.segment-button-layout-icon-end) ::slotted(ion-label){margin-left:unset;margin-right:unset;-webkit-margin-start:0;margin-inline-start:0;-webkit-margin-end:2px;margin-inline-end:2px}}\@media (any-hover:hover){:host(:hover:not(.segment-button-checked)){background:var(--background-hover)}}:host(.activated){background:var(--background-activated)}:host(.segment-button-checked.activated){background:var(--background-checked);color:var(--color-checked)}"; },
+        enumerable: true,
+        configurable: true
+    });
+    return SegmentButton;
+}());
 
 
 
