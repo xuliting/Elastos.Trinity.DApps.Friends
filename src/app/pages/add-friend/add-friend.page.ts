@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AppManager } from '@elastosfoundation/trinity-types';
 
-declare let appService: any;
+declare let appManager: AppManager;
 
 @Component({
   selector: 'app-add-friend',
@@ -15,7 +16,7 @@ export class AddFriendPage implements OnInit {
   }
 
   closeApp() {
-    appService.close();
+    appManager.close();
   }
 
 }

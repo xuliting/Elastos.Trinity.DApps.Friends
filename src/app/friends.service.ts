@@ -1,8 +1,9 @@
 
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { AppManager } from '@elastosfoundation/trinity-types';
 
-declare let appManager: any;
+declare let appManager: AppManager;
 let managerService = null;
 
 @Injectable({

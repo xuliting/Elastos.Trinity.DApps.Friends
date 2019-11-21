@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { FriendsService } from 'src/app/friends.service';
+import { AppManager } from '@elastosfoundation/trinity-types';
 
-declare let appService: any;
+declare let appManager: AppManager;
 
 @Component({
   selector: 'app-friend-details',
@@ -32,7 +33,7 @@ export class FriendDetailsPage implements OnInit {
   }
 
   closeApp() {
-    appService.close();
+    appManager.close();
   }
 
 }
