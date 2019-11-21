@@ -6,45 +6,46 @@ ion-grid {
     padding-top: 0;
     padding-bottom: 0;
     margin: 2.5px;
-    margin-top: 15px;
-    border-radius: 5px;
     background-image: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(128, 128, 128, 0.4) 0%, rgba(0,0,0,0.25) 200%);
     background-blend-mode: multiply;
-  
+
     h1 {
       font-weight: bold;
       margin-top: 0;
       margin-bottom: 0;
     }
-  
+
     ion-label {
       margin-left: 10px;
-  
+
       h4 {
         font-size: 16px;
         font-weight: bold;
       }
-  
+
       p {
         font-size: 12px !important;
       }
     }
   }
-  
+
   ion-footer {
     position: fixed;
     bottom: 0;
     left: 0;
-    padding: 5px;
+    height: 20%;
+    padding: 0;
     color: white;
     background-image: linear-gradient(120deg,rgb(0, 0, 0) 0%,  #292929 100%);
-  
+
     h5 {
       margin-top: 10px;
     }
-  
+
     ion-button {
       width: 100%;
+      margin: 0;
+      height: 50%;
     }
   }
 
@@ -52,7 +53,7 @@ ion-grid {
     padding: 0;
     color: white;
   }
-  
+
   span {
     font-size: 25px;
     padding-right: 15px;

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+declare let appService: any;
+
 @Component({
   selector: 'app-add-friend',
   templateUrl: './add-friend.page.html',
@@ -10,6 +12,10 @@ export class AddFriendPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  closeApp() {
+    appService.close();
   }
 
 }

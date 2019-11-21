@@ -1,9 +1,28 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-title>Add Friend</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeApp()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-card color="dark" text-center>
+      <ion-card-header>
+        <ion-img src="../assets/icon/ela-logo.jpg"></ion-img>
+        <ion-card-title text-align-center>Benjamin Piette</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Do You Want To Add This <br> User To Your Friend's List?
+      </ion-card-content>
+    </ion-card>
+    <ion-footer>
+      <ion-button class="footer1" color="primary">Add</ion-button>
+      <ion-button class="footer2" color="primary">Cancel</ion-button>
+    </ion-footer>
+  </ion-grid>
 </ion-content>

@@ -1,11 +1,16 @@
+
 import { Injectable } from '@angular/core';
+import { Platform } from '@ionic/angular';
+
+declare let appManager: any;
+let managerService = null;
 
 @Injectable({
   providedIn: 'root'
 })
 export class FriendsService {
 
-  _friends = [
+  _friends: any = [
     {
       id: '1',
       name: 'Chad Racelis',
@@ -76,5 +81,31 @@ export class FriendsService {
     return {...this._friends.find(friend => friend.id === id)};
   }
 
-  constructor() {}
+  constructor(
+    private platform: Platform,
+  ) {
+    managerService = this;
+  }
+
+  init() {
+    console.log("AppmanagerService init");
+
+    // Load app manager only on real device, not in desktop browser - beware: ionic 4 bug with "desktop" or "android"/"ios"
+    if (this.platform.platforms().indexOf("cordova") >= 0) {
+        console.log("Listening to intent events")
+        appManager.setIntentListener(
+            this.onReceiveIntent
+        );
+    }
+  }
+
+  onReceiveIntent(ret) {
+    console.log("Intent received", ret);
+    managerService.handledIntentId = ret.intentId;
+
+    switch (ret) {
+        case "handlescannedcontent_did":
+            console.log('Incoming friend requests', ret);
+    }
+  }
 }

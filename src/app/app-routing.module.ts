@@ -7,8 +7,8 @@ import { AddFriendPageModule } from './pages/add-friend/add-friend.module';
 const routes: Routes = [
   { path: '', redirectTo: 'friends', pathMatch: 'full'},
   { path: 'friends', loadChildren: () => FriendsPageModule },
+  { path: 'addFriend', loadChildren: () => AddFriendPageModule },
   { path: ':friendId', loadChildren: () => FriendDetailsPageModule },
-  { path: 'addFriend', loadChildren: () => AddFriendPageModule }
 ];
 
 @NgModule({

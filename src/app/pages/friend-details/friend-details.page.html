@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="friends">
       </ion-back-button>
@@ -36,11 +36,11 @@
     <ion-list-header color="dark">
       <h4>His Apps</h4>
     </ion-list-header>
-    <ion-item 
-      *ngFor="let apps of friend.appList" 
+    <ion-item
+      *ngFor="let apps of friend.appList"
       color="dark"
     >
-      <ion-avatar> 
+      <ion-avatar>
         <ion-img src="../assets/icon/ela-logo.jpg"></ion-img>
       </ion-avatar>
       <ion-label>

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-title>My Friends</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeApp()">
@@ -19,10 +19,10 @@
           <ion-icon name="search"></ion-icon>
         </span>
       </ion-list-header>
-  
+
       <ion-list-header class="searchContainer" *ngIf="searchOn">
-        <ion-searchbar 
-          color="secondary" 
+        <ion-searchbar
+          color="secondary"
           placeholder="Search Friend.."
           [(ngModel)]="friend"
           (ngModelChange)="filterFriends($event)"
@@ -32,40 +32,40 @@
           <ion-icon name="eye-off"></ion-icon>
         </span>
       </ion-list-header>
-      
+
       <ion-item *ngIf="!friendsLoaded" text-center color="dark">
         <ion-label>
           <ion-spinner name="bubbles"></ion-spinner>
         </ion-label>
       </ion-item>
-  
+
       <div *ngIf="friendsLoaded">
-        <ion-item 
-          *ngFor="let friend of filteredFriends" 
+        <ion-item
+          *ngFor="let friend of filteredFriends"
           color="dark"
           (click)="onClick(friend)"
         >
-          <ion-avatar> 
+          <ion-avatar>
             <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
             <ion-img *ngIf="!friend.imageUrl" src="../assets/icon/ela-logo.jpg"></ion-img>
           </ion-avatar>
           <ion-label>
             <h4>{{ friend.name }}</h4>
-            <p> 
+            <p>
               {{ friend.bio }}
             <p>
           </ion-label>
         </ion-item>
       </div>
-   
-  
+
+
     </ion-list>
-  
+
     <br><br><br><br><br>
-  
+
     <ion-footer>
-      <ion-button class="footer1" color="dark">View Profile</ion-button>
-      <ion-button class="footer2" color="dark">Delete Friend</ion-button>
+      <ion-button color="primary">View Profile</ion-button>
+      <ion-button color="primary">Delete Friend</ion-button>
     </ion-footer>
   </ion-grid>
 </ion-content>
