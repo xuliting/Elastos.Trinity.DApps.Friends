@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AppManager } from '@elastosfoundation/trinity-types';
 
-declare let appManager: AppManager;
+declare let appManager: any;
 
 @Component({
   selector: 'app-add-friend',

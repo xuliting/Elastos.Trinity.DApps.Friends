@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FriendsService } from 'src/app/friends.service';
-import { AppManager } from '@elastosfoundation/trinity-types';
 
-declare let appManager: AppManager;
+declare let appManager: any;
 
 @Component({
   selector: 'app-friends',

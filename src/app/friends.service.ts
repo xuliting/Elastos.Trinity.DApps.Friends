@@ -1,10 +1,10 @@
 
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { AppManager } from '@elastosfoundation/trinity-types';
 
-declare let appManager: AppManager;
+declare let appManager: any;
 let managerService = null;
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ let managerService = null;
 export class FriendsService {
 
   _friends: any = [
-    {
+     {
       id: '1',
       name: 'Chad Racelis',
       bio: 'Hi I\'m Chad, the DApp Dev',
@@ -95,7 +95,7 @@ export class FriendsService {
     if (this.platform.platforms().indexOf("cordova") >= 0) {
         console.log("Listening to intent events")
         appManager.setIntentListener(
-            this.onReceiveIntent
+          this.onReceiveIntent
         );
     }
   }
@@ -103,10 +103,14 @@ export class FriendsService {
   onReceiveIntent(ret) {
     console.log("Intent received", ret);
     managerService.handledIntentId = ret.intentId;
-
-    switch (ret) {
-        case "handlescannedcontent_did":
-            console.log('Incoming friend requests', ret);
+    switch (ret.action) {
+      case "handlescannedcontent_did":
+        console.log('Incoming friend requests', ret);
+        this.addFriend(ret.params.data);
     }
+  }
+
+  addFriend(friend) {
+    this._friends.push(friend);
   }
 }
