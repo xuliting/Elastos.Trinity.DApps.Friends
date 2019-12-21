@@ -1,6 +1,10 @@
 
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { PopoverController, ToastController } from '@ionic/angular';
+import { Router, NavigationExtras } from '@angular/router';
+
+import { AddFriendPage } from './pages/add-friend/add-friend.page';
 
 declare let appManager: AppManagerPlugin.AppManager;
 let managerService = null;
@@ -84,6 +88,9 @@ export class FriendsService {
 
   constructor(
     private platform: Platform,
+    private popover: PopoverController,
+    private router: Router,
+    public toastController: ToastController,
   ) {
     managerService = this;
   }
@@ -100,17 +107,60 @@ export class FriendsService {
     }
   }
 
-  onReceiveIntent(ret) {
+  onReceiveIntent = (ret) => {
     console.log("Intent received", ret);
     managerService.handledIntentId = ret.intentId;
     switch (ret.action) {
       case "handlescannedcontent_did":
         console.log('Incoming friend requests', ret);
-        this.addFriend(ret.params.data);
+        this.showAddPage(ret.params.data);
+        // this.showPopover(ret.params.data);
     }
   }
 
-  addFriend(friend) {
-    this._friends.push(friend);
+  showAddPage(did) {
+    let props: NavigationExtras = {
+      queryParams: {
+        did: did
+      }
+    }
+    this.router.navigate(['addFriend'], props);
   }
+
+  addFriend = (did) => {
+    this._friends.push(did);
+    console.log('Friends updated', this._friends);
+    this.friendAdded(did);
+  }
+
+  async friendAdded(did) {
+    const toast = await this.toastController.create({
+      message: did + ' was added',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async friendDenied(did) {
+    const toast = await this.toastController.create({
+      message: 'Denied friend ' + did,
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  /*
+  async showPopover(did) {
+    const _popover = await this.popover.create({
+      component: AddFriendPage,
+      componentProps: {
+        _did: did
+      },
+      translucent: true
+    });
+    return await _popover.present();
+  }
+  */
+
+
 }

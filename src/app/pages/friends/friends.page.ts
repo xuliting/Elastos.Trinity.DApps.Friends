@@ -12,10 +12,11 @@ declare let appManager: AppManagerPlugin.AppManager;
 })
 export class FriendsPage implements OnInit {
 
-  searchOn = false;
-  friendsLoaded = true;
   friends = [];
   filteredFriends = [];
+  friend: string = '';
+  searchOn = false;
+  friendsLoaded = true;
 
   constructor(
     private friendsService: FriendsService,
@@ -75,11 +76,12 @@ export class FriendsPage implements OnInit {
   }
 
   closeApp() {
+    console.log('Closing app');
     appManager.close();
   }
 
-  testScan() {
-    appManager.sendIntent("scanqrcode", {}, (response)=>{
+  scanDID() {
+    appManager.sendIntent("scanqrcode", {}, (response)=> {
       console.log("Got scan result:", response);
     }, (err: any)=>{
       console.error(err);

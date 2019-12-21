@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar mode="ios">
+    <ion-buttons>
+      <ion-button slot="start" (click)="scanDID()">
+        <ion-icon name="qr-scanner"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>My Friends</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeApp()">
@@ -10,7 +15,6 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="testScan()">Test scan request</ion-button>
   <ion-grid>
     <ion-list color="dark">
 
