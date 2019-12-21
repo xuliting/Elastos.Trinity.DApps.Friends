@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
-declare let appManager: any;
+declare let appManager: AppManagerPlugin.AppManager;
 let managerService = null;
 
 

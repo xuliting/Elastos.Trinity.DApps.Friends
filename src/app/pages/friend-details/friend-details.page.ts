@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { FriendsService } from 'src/app/friends.service';
 
-declare let appManager: any;
+declare let appManager: AppManagerPlugin.AppManager;
 
 @Component({
   selector: 'app-friend-details',

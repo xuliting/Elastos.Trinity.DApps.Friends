@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-declare let appManager: any;
+declare let appManager: AppManagerPlugin.AppManager;
 
 @Component({
   selector: 'app-add-friend',

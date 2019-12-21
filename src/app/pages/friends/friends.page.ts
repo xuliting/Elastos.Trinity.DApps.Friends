@@ -3,7 +3,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FriendsService } from 'src/app/friends.service';
 
-declare let appManager: any;
+declare let appManager: AppManagerPlugin.AppManager;
 
 @Component({
   selector: 'app-friends',
@@ -76,5 +76,13 @@ export class FriendsPage implements OnInit {
 
   closeApp() {
     appManager.close();
+  }
+
+  testScan() {
+    appManager.sendIntent("scanqrcode", {}, (response)=>{
+      console.log("Got scan result:", response);
+    }, (err: any)=>{
+      console.error(err);
+    })
   }
 }
