@@ -4,6 +4,7 @@
 
   ion-card {
     border-radius: 10px;
+    margin: 10px 20px;
 
     ion-card-header {
       h1 {
@@ -15,13 +16,12 @@
   ion-list {
     padding-top: 0;
     padding-bottom: 0;
-    margin: 5px;
+    margin: 10px;
     border-radius: 10px;
 
     ion-list-header {
       h4 {
         font-weight: 700;
-        margin: 0;
       }
     }
 

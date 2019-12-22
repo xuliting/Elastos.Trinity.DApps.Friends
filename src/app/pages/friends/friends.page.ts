@@ -57,7 +57,7 @@ export class FriendsPage implements OnInit {
           text: 'Delete Friend',
           cssClass: 'action',
           handler: () => {
-            this.deleteFriend(friend);
+            this.friendsService.deleteFriend(friend);
           }
         },
         {
@@ -75,16 +75,16 @@ export class FriendsPage implements OnInit {
     console.log('Deleting friend ->' + friend);
   }
 
-  closeApp() {
-    console.log('Closing app');
-    appManager.close();
-  }
-
   scanDID() {
     appManager.sendIntent("scanqrcode", {}, (response)=> {
       console.log("Got scan result:", response);
     }, (err: any)=>{
       console.error(err);
     })
+  }
+
+  closeApp() {
+    console.log('Closing app');
+    appManager.close();
   }
 }

@@ -15,7 +15,8 @@
 
 <ion-content>
   <ion-grid class="container">
-    <ion-card color="light" padding>
+
+    <ion-card color="light">
       <ion-grid>
         <ion-row align-items-center>
           <ion-col size="2.5">
@@ -32,9 +33,10 @@
         </ion-row>
       </ion-grid>
     </ion-card>
+
     <ion-list>
       <ion-list-header color="light" padding-top>
-        <h4>His Apps</h4>
+        <h4 no-margin>His Apps</h4>
       </ion-list-header>
         <ion-item
           *ngFor="let app of friend.appList"
@@ -42,12 +44,12 @@
         >
         <ion-grid no-padding>
           <ion-row align-items-center>
-            <ion-col size="2.5">
+            <ion-col size="2">
               <ion-avatar>
                 <ion-img src="../assets/icon/ela-logo.jpg"></ion-img>
               </ion-avatar>
             </ion-col>
-            <ion-col size="7.5">
+            <ion-col size="8">
               <ion-label>
                 <h4>{{ app.appName }}</h4>
               </ion-label>
@@ -59,5 +61,6 @@
         </ion-grid>
       </ion-item>
     </ion-list>
+
   </ion-grid>
 </ion-content>

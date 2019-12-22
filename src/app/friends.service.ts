@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
+import { StorageService } from 'src/app/storage.service';
+import { HttpClient } from '@angular/common/http';
 
 declare let appManager: AppManagerPlugin.AppManager;
 let managerService: any;
@@ -85,14 +87,18 @@ export class FriendsService {
 
   constructor(
     private platform: Platform,
-    private popover: PopoverController,
     private router: Router,
+    private http: HttpClient,
+    private popover: PopoverController,
     public toastController: ToastController,
+    private storageService: StorageService,
   ) {
     managerService = this;
   }
 
+  // Initial render //
   init() {
+    this.getStoredDIDs();
     console.log("AppmanagerService init");
 
     // Load app manager only on real device, not in desktop browser - beware: ionic 4 bug with "desktop" or "android"/"ios"
@@ -104,6 +110,7 @@ export class FriendsService {
     }
   }
 
+  // Listen to intent //
   onReceiveIntent = (ret) => {
     console.log("Intent received", ret);
     managerService.handledIntentId = ret.intentId;
@@ -115,6 +122,7 @@ export class FriendsService {
     }
   }
 
+  // Direct to friend-confirmation //
   showConfirm(did) {
     let props: NavigationExtras = {
       queryParams: {
@@ -124,12 +132,20 @@ export class FriendsService {
     this.router.navigate(['menu/friend-confirmation'], props);
   }
 
+  // Add DID if confirmed from friend-confirmation //
   addFriend = (did) => {
     this._friends.push(did);
+    this.storageService.setDID(did);
     console.log('Friends updated', this._friends);
     this.friendAdded(did);
   }
 
+  // Delete DID id deleted from friends list //
+  deleteFriend = (did) => {
+    console.log('Deleting friend', did);
+  }
+
+  // Confirmation alerts //
   async friendAdded(did) {
     const toast = await this.toastController.create({
       message: did + ' was added',
@@ -146,18 +162,88 @@ export class FriendsService {
     toast.present();
   }
 
-  /*
-  async showPopover(did) {
+  // Store Friend DID //
+  getStoredDIDs = () => {
+    this.storageService.getDID().then(data => {
+      console.log('Fetching stored DIDs', data);
+      this._friends = this._friends.concat(data);
+    });
+  }
+
+  // Call install app from friend-details //
+ /*  async installApp(dapp) {
+    // Download the file
+    const epkPath = await this.downloadDapp(dapp);
+    console.log("EPK file downloaded and saved to " + epkPath);
+
+    // Ask the app installer to install the DApp
+    return appManager.sendIntent(
+      'appinstall',
+      { url: epkPath, dappStoreServerAppId: dapp._id },
+      () => {
+        console.log('App installed');
+        return true;
+      }, (err) => {
+        console.log('App install failed', err)
+        return false;
+      }
+    );
+  }
+
+  downloadDapp(app) {
+    console.log("App download starting...");
+
+    return new Promise((resolve, reject) => {
+      // Download EPK file as blob
+      this.http.get('https://dapp-store.elastos.org/apps/'+app._id+'/download', {
+        responseType: 'arraybuffer'} ).subscribe(async response => {
+        console.log("Downloaded", response);
+        let blob = new Blob([response], { type: "application/octet-stream" });
+        console.log("Blob", blob);
+
+        // Save to a temporary location
+        let filePath = await this._savedDownloadedBlobToTempLocation(blob);
+
+        resolve(filePath);
+      });
+    });
+  }
+
+  _savedDownloadedBlobToTempLocation(blob) {
+    let fileName = "appinstall.epk"
+    console.log('Cordova file directory' + cordova.file.dataDirectory);
+
+    return new Promise((resolve, reject) => {
+      window.resolveLocalFileSystemURL(cordova.file.dataDirectory, (dirEntry: DirectoryEntry) => {
+          dirEntry.getFile(fileName, { create: true, exclusive: false }, (fileEntry) => {
+            console.log("Downloaded file entry", fileEntry);
+            fileEntry.createWriter((fileWriter) => {
+              fileWriter.write(blob);
+              resolve("trinity:///data/"+fileName);
+            }, (err) => {
+              console.error("createWriter ERROR - "+JSON.stringify(err));
+              reject(err);
+            });
+          }, (err) => {
+            console.error("getFile ERROR - "+JSON.stringify(err));
+            reject(err);
+          });
+      }, (err) => {
+        console.error("resolveLocalFileSystemURL ERROR - "+JSON.stringify(err));
+        reject(err);
+      });
+    });
+  } */
+
+    // Another option for friend-confirmation //
+   /* async showPopover(did) {
     const _popover = await this.popover.create({
-      component: AddFriendPage,
+      component: FriendConfirmationPage,
       componentProps: {
         _did: did
       },
       translucent: true
     });
     return await _popover.present();
-  }
-  */
-
-
+  } */
 }

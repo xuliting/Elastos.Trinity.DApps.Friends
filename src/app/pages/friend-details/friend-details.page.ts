@@ -33,6 +33,7 @@ export class FriendDetailsPage implements OnInit {
 
   installApp(app) {
     console.log('Installing..', app);
+    // this.friendsService.installApp(app);
   }
 
   closeApp() {

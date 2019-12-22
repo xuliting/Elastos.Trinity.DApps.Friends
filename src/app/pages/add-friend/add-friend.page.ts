@@ -19,11 +19,6 @@ export class AddFriendPage implements OnInit {
   ngOnInit() {
   }
 
-  closeApp() {
-    console.log('Closing app');
-    appManager.close();
-  }
-
   scanDID() {
     appManager.sendIntent("scanqrcode", {}, (res)=> {
       console.log("Got scan result:", res);
@@ -33,10 +28,17 @@ export class AddFriendPage implements OnInit {
   }
 
   addFriend() {
-    appManager.sendIntent("handlescannedcontent_did", this.didInput, (res) => {
-      console.log(res);
-    }, (err) => {
-      console.log(err);
-    });
+    if(this.didInput) {
+      appManager.sendIntent("handlescannedcontent_did", this.didInput, (res) => {
+        console.log(res);
+      }, (err) => {
+        console.log(err);
+      });
+      this.didInput = '';
+    }
+  }
+
+  closeApp() {
+    appManager.close();
   }
 }

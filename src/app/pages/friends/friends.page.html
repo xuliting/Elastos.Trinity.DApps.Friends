@@ -19,7 +19,7 @@
     <ion-list>
 
       <ion-list-header *ngIf="!searchOn" color="light" padding-top>
-        <h1>Friends</h1>
+        <h1 no-margin>Friends</h1>
         <span (click)="toggleSearch()">
           <ion-icon name="search"></ion-icon>
         </span>
@@ -27,6 +27,7 @@
 
       <ion-list-header *ngIf="searchOn" color="light" no-padding padding-top>
         <ion-searchbar
+          mode="ios"
           color="dark"
           placeholder="Search Friend.."
           [(ngModel)]="friend"
@@ -56,20 +57,11 @@
           </ion-avatar>
           <ion-label>
             <h4>{{ friend.name }}</h4>
-            <p>
-              {{ friend.bio }}
-            <p>
+            <p>{{ friend.bio }}<p>
           </ion-label>
         </ion-item>
       </div>
     </ion-list>
 
-    <!--
-    <br><br><br><br><br>
-    <ion-footer>
-      <ion-button color="primary">View Profile</ion-button>
-      <ion-button color="primary">Delete Friend</ion-button>
-    </ion-footer>
-   -->
   </ion-grid>
 </ion-content>

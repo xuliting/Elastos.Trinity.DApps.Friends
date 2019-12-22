@@ -31,10 +31,6 @@ export class FriendConfirmationPage implements OnInit {
     })
   }
 
-  closeApp() {
-    appManager.close();
-  }
-
   addFriend() {
     this.friendsService.addFriend(this.did);
     this.router.navigate(['friends']);
@@ -43,5 +39,9 @@ export class FriendConfirmationPage implements OnInit {
   denyFriend() {
     this.friendsService.friendDenied(this.did);
    this.router.navigate(['friends']);
+  }
+
+  closeApp() {
+    appManager.close();
   }
 }
