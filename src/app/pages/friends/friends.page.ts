@@ -50,7 +50,7 @@ export class FriendsPage implements OnInit {
           text: 'View Profile',
           cssClass: 'action',
           handler: () => {
-            this.router.navigateByUrl('/' + friend.id);
+            this.router.navigate(['/menu/' + friend.id]);
           }
         },
         {

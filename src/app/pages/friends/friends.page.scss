@@ -1,16 +1,15 @@
-ion-grid {
+.container {
   min-height: 100%;
   background-image: linear-gradient(to right, rgb(20, 20, 20) 0%, #1d1d1d 100%);
 
   ion-list {
     padding-top: 0;
     padding-bottom: 0;
-    margin: 2.5px;
-    background-image: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(128, 128, 128, 0.4) 0%, rgba(0,0,0,0.25) 200%);
-    background-blend-mode: multiply;
+    margin: 5px;
+    border-radius: 10px;
 
     h1 {
-      font-weight: bold;
+      font-weight: 700;
       margin-top: 0;
       margin-bottom: 0;
     }
@@ -20,7 +19,7 @@ ion-grid {
 
       h4 {
         font-size: 16px;
-        font-weight: bold;
+        font-weight: 700;
       }
 
       p {
@@ -29,39 +28,9 @@ ion-grid {
     }
   }
 
-  ion-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: 20%;
-    padding: 0;
-    color: white;
-    background-image: linear-gradient(120deg,rgb(0, 0, 0) 0%,  #292929 100%);
-
-    h5 {
-      margin-top: 10px;
-    }
-
-    ion-button {
-      width: 100%;
-      margin: 0;
-      height: 50%;
-    }
-  }
-
-  .searchContainer {
-    padding: 0;
-    color: white;
-  }
-
   span {
     font-size: 25px;
     padding-right: 15px;
     padding-top: 5px;
   }
-}
-
-.action {
-  text-align: center;
-  font-weight: bold;
 }

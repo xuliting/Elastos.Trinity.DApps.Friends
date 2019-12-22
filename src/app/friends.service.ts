@@ -4,11 +4,8 @@ import { Platform } from '@ionic/angular';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 
-import { AddFriendPage } from './pages/add-friend/add-friend.page';
-
 declare let appManager: AppManagerPlugin.AppManager;
-let managerService = null;
-
+let managerService: any;
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +17,7 @@ export class FriendsService {
       id: '1',
       name: 'Chad Racelis',
       bio: 'Hi I\'m Chad, the DApp Dev',
-      imageUrl: 'https://scontent.fzty1-2.fna.fbcdn.net/v/t1.0-9/36755312_10155874906223877_271971953546362880_n.jpg?_nc_cat=101&_nc_oc=AQnLF6QYXEJlb-5_cd3MjEoJ469zNDGkmS3xDp-S8NJ2RI9Lm8ruHr-eHd3-A_S75P6-OGLjUhYoSo_AQDnngtwU&_nc_ht=scontent.fzty1-2.fna&oh=b294667cc475647f68d0e2c507cf05af&oe=5E3FB7B0',
+      imageUrl: 'https://chadracelis.github.io/resume/img/profile.jpg',
       appList: [
         {
           appName: 'DefaceBook'
@@ -113,18 +110,18 @@ export class FriendsService {
     switch (ret.action) {
       case "handlescannedcontent_did":
         console.log('Incoming friend requests', ret);
-        this.showAddPage(ret.params.data);
+        this.showConfirm(ret.params.data);
         // this.showPopover(ret.params.data);
     }
   }
 
-  showAddPage(did) {
+  showConfirm(did) {
     let props: NavigationExtras = {
       queryParams: {
         did: did
       }
     }
-    this.router.navigate(['addFriend'], props);
+    this.router.navigate(['menu/friend-confirmation'], props);
   }
 
   addFriend = (did) => {

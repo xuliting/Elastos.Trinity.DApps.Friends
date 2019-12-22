@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button (click)="scanDID()">
+        <ion-icon name="qr-scanner"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Add Friend</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeApp()">
@@ -9,20 +14,24 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
-  <ion-grid>
-    <ion-card color="dark" text-center>
-      <ion-card-header>
-        <ion-img src="../assets/icon/ela-logo.jpg"></ion-img>
-        <ion-card-title text-align-center>Benjamin Piette</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        Do You Want To Add This <br> User To Your Friend's List?
-      </ion-card-content>
-    </ion-card>
-    <ion-footer>
-      <ion-button class="footer1" color="primary" (click)="addFriend()">Add</ion-button>
-      <ion-button class="footer2" color="primary" (click)="denyFriend()">Cancel</ion-button>
-    </ion-footer>
+<ion-content>
+  <ion-grid padding text-center align-items-center>
+    <h1 padding>Scan or Type in DID</h1>
+    <div (click)="scanDID()" class="scan-btn" padding>
+      <ion-icon color="light" name="qr-scanner"></ion-icon>
+    </div>
   </ion-grid>
 </ion-content>
+
+<ion-footer text-center padding>
+  <ion-row color="light">
+    <ion-col offset="0.5" size="11" class="text-area">
+      <ion-input autosize placeholder="Add DID.." [(ngModel)]="didInput"></ion-input>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col offset="0.5" size="11" no-padding>
+      <ion-button class="add-btn" color="medium" (click)="addFriend()">Send Friend Request</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

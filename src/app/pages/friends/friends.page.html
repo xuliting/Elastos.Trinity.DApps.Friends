@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar mode="ios">
-    <ion-buttons>
-      <ion-button slot="start" (click)="scanDID()">
+    <ion-buttons slot="start">
+      <ion-button (click)="scanDID()">
         <ion-icon name="qr-scanner"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -15,30 +15,30 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-list color="dark">
+  <ion-grid class="container">
+    <ion-list>
 
-      <ion-list-header *ngIf="!searchOn" color="dark">
+      <ion-list-header *ngIf="!searchOn" color="light" padding-top>
         <h1>Friends</h1>
         <span (click)="toggleSearch()">
           <ion-icon name="search"></ion-icon>
         </span>
       </ion-list-header>
 
-      <ion-list-header class="searchContainer" *ngIf="searchOn">
+      <ion-list-header *ngIf="searchOn" color="light" no-padding padding-top>
         <ion-searchbar
-          color="secondary"
+          color="dark"
           placeholder="Search Friend.."
           [(ngModel)]="friend"
           (ngModelChange)="filterFriends($event)"
         >
         </ion-searchbar>
         <span (click)="toggleSearch()">
-          <ion-icon name="eye-off"></ion-icon>
+          <ion-icon name="eye-off" color="dark"></ion-icon>
         </span>
       </ion-list-header>
 
-      <ion-item *ngIf="!friendsLoaded" text-center color="dark">
+      <ion-item *ngIf="!friendsLoaded" text-center color="light">
         <ion-label>
           <ion-spinner name="bubbles"></ion-spinner>
         </ion-label>
@@ -47,7 +47,7 @@
       <div *ngIf="friendsLoaded">
         <ion-item
           *ngFor="let friend of filteredFriends"
-          color="dark"
+          color="light"
           (click)="onClick(friend)"
         >
           <ion-avatar>
@@ -62,17 +62,14 @@
           </ion-label>
         </ion-item>
       </div>
-
-
     </ion-list>
 
+    <!--
     <br><br><br><br><br>
-
     <ion-footer>
       <ion-button color="primary">View Profile</ion-button>
       <ion-button color="primary">Delete Friend</ion-button>
     </ion-footer>
+   -->
   </ion-grid>
 </ion-content>
-
-<!-- -->

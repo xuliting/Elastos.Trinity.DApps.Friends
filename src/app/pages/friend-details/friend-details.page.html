@@ -14,10 +14,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-card color="dark">
+  <ion-grid class="container">
+    <ion-card color="light" padding>
       <ion-grid>
-        <ion-row>
+        <ion-row align-items-center>
           <ion-col size="2.5">
             <ion-avatar>
               <ion-img [src]="friend.imageUrl"></ion-img>
@@ -25,27 +25,39 @@
           </ion-col>
           <ion-col size="9.5">
             <ion-card-header>
-              <h1>{{ friend.name }}</h1>
-              <p>{{ friend.bio }}</p>
+              <h1 no-padding no-margin>{{ friend.name }}</h1>
+              <p no-padding no-margin>{{ friend.bio }}</p>
             </ion-card-header>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card>
-
-    <ion-list-header color="dark">
-      <h4>His Apps</h4>
-    </ion-list-header>
-    <ion-item
-      *ngFor="let apps of friend.appList"
-      color="dark"
-    >
-      <ion-avatar>
-        <ion-img src="../assets/icon/ela-logo.jpg"></ion-img>
-      </ion-avatar>
-      <ion-label>
-        <h4>{{ apps.appName }}</h4>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+    <ion-list>
+      <ion-list-header color="light" padding-top>
+        <h4>His Apps</h4>
+      </ion-list-header>
+        <ion-item
+          *ngFor="let app of friend.appList"
+          color="light"
+        >
+        <ion-grid no-padding>
+          <ion-row align-items-center>
+            <ion-col size="2.5">
+              <ion-avatar>
+                <ion-img src="../assets/icon/ela-logo.jpg"></ion-img>
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="7.5">
+              <ion-label>
+                <h4>{{ app.appName }}</h4>
+              </ion-label>
+            </ion-col>
+            <ion-col size="2">
+              <ion-button (click)="installApp(app)"><ion-icon name="download"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-grid>
 </ion-content>

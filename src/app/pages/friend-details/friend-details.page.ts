@@ -12,7 +12,7 @@ declare let appManager: AppManagerPlugin.AppManager;
 })
 export class FriendDetailsPage implements OnInit {
 
-  friend = null;
+  friend: any;
 
   constructor(
     private friendsService: FriendsService,
@@ -31,8 +31,11 @@ export class FriendDetailsPage implements OnInit {
     });
   }
 
+  installApp(app) {
+    console.log('Installing..', app);
+  }
+
   closeApp() {
     appManager.close();
   }
-
 }
