@@ -15,7 +15,7 @@ declare let appManager: AppManagerPlugin.AppManager;
 export class FriendsPage implements OnInit {
 
   friends: Friend[] = [];
-  filteredFriends = [];
+  filteredFriends: Friend[] = [];
   friend: string = '';
   searchOn = false;
   friendsLoaded = true;

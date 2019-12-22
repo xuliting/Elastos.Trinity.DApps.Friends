@@ -172,7 +172,9 @@ export class FriendsService {
   getStoredDIDs = () => {
     this.storageService.getDID().then(data => {
       console.log('Fetching stored DIDs', data);
-      this._friends = this._friends.concat(data);
+      if(data !== null) {
+        this._friends = this._friends.concat(data);
+      }
     });
   }
 
