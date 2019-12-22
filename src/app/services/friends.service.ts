@@ -1,12 +1,15 @@
-
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
-import { StorageService } from 'src/app/storage.service';
 import { HttpClient } from '@angular/common/http';
 
+import { StorageService } from 'src/app/services/storage.service';
+import { Friend } from '../models/friends.model';
+
 declare let appManager: AppManagerPlugin.AppManager;
+declare let didManager: DIDPlugin.DIDManager;
+
 let managerService: any;
 
 @Injectable({
@@ -14,13 +17,14 @@ let managerService: any;
 })
 export class FriendsService {
 
-  _friends: any = [
+  private _friends: Friend[] = [
      {
       id: '1',
       name: 'Chad Racelis',
+      email: 'chad@elastos.com',
       bio: 'Hi I\'m Chad, the DApp Dev',
       imageUrl: 'https://chadracelis.github.io/resume/img/profile.jpg',
-      appList: [
+      ApplicationProfileCredential: [
         {
           appName: 'DefaceBook'
         },
@@ -38,9 +42,10 @@ export class FriendsService {
     {
       id: '2',
       name: 'Benjamin Piette',
+      email: 'ben@elastos.com',
       bio: 'Hi I\'m Ben, the Tech Lead',
       imageUrl: 'https://avatars2.githubusercontent.com/u/7567594?s=400&v=4',
-      appList: [
+      ApplicationProfileCredential: [
         {
           appName: 'Dweeeter'
         },
@@ -58,9 +63,10 @@ export class FriendsService {
     {
       id: '3',
       name: 'Martin Knight',
+      email: 'martin@elastos.com',
       bio: 'Hi I\'m Martin, the Designer',
       imageUrl: 'https://cdn.pixabay.com/photo/2017/10/07/14/50/knight-2826704_1280.jpg',
-      appList: [
+      ApplicationProfileCredential: [
         {
           appName: 'SnapDapp'
         },

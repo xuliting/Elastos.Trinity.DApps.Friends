@@ -11,7 +11,7 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { FriendsService } from './friends.service';
+import { FriendsService } from './services/friends.service';
 
 @NgModule({
   declarations: [

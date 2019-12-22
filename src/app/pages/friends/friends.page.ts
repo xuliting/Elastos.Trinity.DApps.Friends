@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { FriendsService } from 'src/app/friends.service';
+
+import { FriendsService } from 'src/app/services/friends.service';
+import { Friend } from 'src/app/models/friends.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
 
@@ -12,7 +14,7 @@ declare let appManager: AppManagerPlugin.AppManager;
 })
 export class FriendsPage implements OnInit {
 
-  friends = [];
+  friends: Friend[] = [];
   filteredFriends = [];
   friend: string = '';
   searchOn = false;

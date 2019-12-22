@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { FriendsService } from 'src/app/friends.service';
+
+import { FriendsService } from 'src/app/services/friends.service';
+import { Friend } from 'src/app/models/friends.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
 
@@ -12,7 +14,7 @@ declare let appManager: AppManagerPlugin.AppManager;
 })
 export class FriendDetailsPage implements OnInit {
 
-  friend: any;
+  friend: Friend;
 
   constructor(
     private friendsService: FriendsService,

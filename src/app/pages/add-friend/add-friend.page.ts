@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FriendsService } from 'src/app/friends.service';
+import { FriendsService } from 'src/app/services/friends.service';
 
 declare let appManager: AppManagerPlugin.AppManager;
 

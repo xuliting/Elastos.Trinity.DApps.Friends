@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { FriendsService } from 'src/app/friends.service';
+import { FriendsService } from 'src/app/services/friends.service';
 
 declare let appManager: AppManagerPlugin.AppManager;
 
