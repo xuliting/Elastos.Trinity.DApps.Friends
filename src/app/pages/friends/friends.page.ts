@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { Friend } from 'src/app/models/friends.model';
+import { isObject } from 'util';
 
 declare let appManager: AppManagerPlugin.AppManager;
 
@@ -23,7 +24,8 @@ export class FriendsPage implements OnInit {
   constructor(
     private friendsService: FriendsService,
     private router: Router,
-    private actionSheetCtrl: ActionSheetController
+    private actionSheetCtrl: ActionSheetController,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -43,10 +45,25 @@ export class FriendsPage implements OnInit {
     this.searchOn = !this.searchOn;
   }
 
+  scanDID() {
+    appManager.sendIntent("scanqrcode", {}, (response)=> {
+      console.log("Got scan result:", response);
+      this.friendsService.friendScanned(response.result.scannedContent);
+    }, (err: any)=>{
+      console.error(err);
+    })
+  }
+
+  async deleteFriend(friend: Friend) {
+    this.friends = await this.friendsService.deleteFriend(friend)
+    console.log('Deleting friend ->' + friend);
+  }
+
   onClick(friend: Friend) {
     console.log(friend);
     this.actionSheetCtrl.create({
       cssClass: 'action',
+      mode: "ios",
       buttons: [
         {
           text: 'View Profile',
@@ -59,7 +76,7 @@ export class FriendsPage implements OnInit {
           text: 'Delete Friend',
           cssClass: 'action',
           handler: () => {
-            this.friendsService.deleteFriend(friend);
+            this.alertDelete(friend);
           }
         },
         {
@@ -73,17 +90,25 @@ export class FriendsPage implements OnInit {
     });
   }
 
-  deleteFriend(friend) {
-    console.log('Deleting friend ->' + friend);
-  }
+  async alertDelete(friend) {
+    const alert = await this.alertController.create({
+      mode: 'ios',
+      header: 'Are you sure you want to delete ' + friend.name + '?',
+      buttons: [
+        {
+          text: 'Delete',
+          handler: () => {
+            this.deleteFriend(friend);
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ]
+    });
 
-  scanDID() {
-    appManager.sendIntent("scanqrcode", {}, (response)=> {
-      console.log("Got scan result:", response);
-      this.friendsService.friendScanned(response.result.scannedContent);
-    }, (err: any)=>{
-      console.error(err);
-    })
+    await alert.present();
   }
 
   closeApp() {

@@ -18,20 +18,24 @@
   <ion-grid padding text-center align-items-center>
     <h1>Scan or Type in DID</h1>
     <div (click)="scanDID()" class="scan-btn" padding>
-      <ion-icon color="light" name="qr-scanner"></ion-icon>
+      <!-- <ion-icon name="qr-scanner"></ion-icon> -->
+      <ion-img src="../assets/icon/scan.svg"></ion-img>
     </div>
   </ion-grid>
 </ion-content>
 
-<ion-footer text-center padding>
+<ion-footer padding>
+  <!-- <ion-row>
+    <ion-label>Type in DID</ion-label>
+  </ion-row> -->
   <ion-row color="light">
     <ion-col offset="0.5" size="11" class="text-area">
-      <ion-input autosize placeholder="Add DID.." [(ngModel)]="didInput"></ion-input>
+      <ion-input autosize placeholder="Add did:elastos" [(ngModel)]="didInput"></ion-input>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col offset="0.5" size="11" no-padding>
-      <ion-button class="add-btn" color="medium" (click)="addFriend()">Send Friend Request</ion-button>
+      <ion-button class="add-btn" color="primary" (click)="addFriend()">Add DID</ion-button>
     </ion-col>
   </ion-row>
 </ion-footer>

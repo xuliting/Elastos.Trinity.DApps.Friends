@@ -150,36 +150,47 @@ export class FriendsService {
 
   // Add DID if confirmed from friend-confirmation //
   addFriend = () => {
-    this._friends = this.friends.concat(
-      this._DID.verifiableCredential = {
+    let fakeDID = this._DID = {
+      clazz: 11,
+      id: {
+        storeId: 'abc',
+        didString: 'did:elastos:fakeDID'
+      },
+      created: 'october',
+      updated: 'december',
+      verifiableCredential: {
         id: '123',
         name: 'Chad Racelis',
         email: 'chad@elastos.com',
         imageUrl: 'www.chad.com',
         ApplicationProfileCredential: [{appName: 'app1'}, {appName: 'app2'}, {appName: 'app3'}]
-      }
-    );
-    this.storageService.setDID(this._DID);
+      },
+      publicKey: 123,
+      authentication: 123,
+      authorization: 123,
+      expires: 123,
+      storeId: 'abc',
+    }
+    this._friends = this.friends.concat(fakeDID.verifiableCredential);
+    this.storageService.setDID(this._DIDs = this._DIDs.concat(fakeDID));
     console.log('Friends updated', this._friends);
     this.friendAdded(this._DID.verifiableCredential.name = 'Chad Racelis');
   }
 
-  // Delete DID id deleted from friends list //
-  deleteFriend = (friend: Friend) => {
+  // Delete DID matching profile credentials from friends list //
+  deleteFriend(friend: Friend) {
     console.log('Deleting friend', friend);
-    this._friends.filter(_friend => _friend !== friend);
-    this._DIDs.map(did => {
-      if (did.verifiableCredential === friend) {
-        this.storageService.removeDID(did);
-        console.log('Deleting', did);
-      }
-    });
+    this._DIDs = this._DIDs.filter(did => did.verifiableCredential !== friend);
+    this.storageService.setDID(this._DIDs);
+    this.friendDeleted(friend);
+    return this._friends = this._friends.filter(_friend => _friend !== friend);
   }
 
-  // Confirmation alerts //
+  // Alerts //
   async friendAdded(didName: string) {
     const toast = await this.toastController.create({
       message: didName + ' was added',
+      color: "primary",
       duration: 2000
     });
     toast.present();
@@ -188,6 +199,7 @@ export class FriendsService {
   async friendDenied(didName: string) {
     const toast = await this.toastController.create({
       message: 'Denied friend ' + didName,
+      color: "primary",
       duration: 2000
     });
     toast.present();
@@ -196,18 +208,31 @@ export class FriendsService {
   async didResolveErr(err: string) {
     const toast = await this.toastController.create({
       message: 'There was an error: ' + err,
-      duration: 8000.
+      color: "primary",
+      duration: 6000.
+    });
+    toast.present();
+  }
+
+  async friendDeleted(friend: Friend) {
+    const toast = await this.toastController.create({
+      message: friend.name + ' was deleted',
+      color: "primary",
+      duration: 2000
     });
     toast.present();
   }
 
   // Store Friend DID //
   getStoredDIDs = () => {
-    this.storageService.getDID().then(data => {
-      console.log('Fetching stored DIDs', data);
-      if(data !== null) {
-        this._DIDs = this._DIDs.concat(data);
-        this._friends = this._friends.concat(data.verifiableCredential);
+    this.storageService.getDID().then(res => {
+      console.log('Fetching stored DIDs', res);
+      if(res.length > 0) {
+        this._DIDs = this._DIDs.concat(res);
+        res.map(did => {
+          this._friends = this._friends.concat(did.verifiableCredential);
+        })
+        console.log('DIDs stored', this._DIDs, this._friends);
       }
     });
   }

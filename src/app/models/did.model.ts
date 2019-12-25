@@ -14,10 +14,10 @@ export class DID {
       imageUrl: string,
       ApplicationProfileCredential: any[]
     },
-    public publicKey: null,
-    public authentication: null,
-    public authorization: null,
-    public expires: null,
+    public publicKey: any,
+    public authentication: any,
+    public authorization: any,
+    public expires: any,
     public storeId: string,
   ) {}
 }

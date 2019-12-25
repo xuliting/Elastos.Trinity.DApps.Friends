@@ -1,12 +1,13 @@
 .container {
   min-height: 100%;
-  background-image: linear-gradient(to right, rgb(20, 20, 20) 0%, #1d1d1d 100%);
+  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
 
   ion-list {
     padding-top: 0;
     padding-bottom: 0;
     margin: 10px;
     border-radius: 10px;
+    opacity: 0.9;
 
     h1 {
       font-weight: 700;

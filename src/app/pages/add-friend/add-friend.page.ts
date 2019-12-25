@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { DID } from 'src/app/models/did.model';
+
 
 declare let appManager: AppManagerPlugin.AppManager;
 
@@ -14,7 +16,10 @@ export class AddFriendPage implements OnInit {
 
   didInput: string = '';
 
-  constructor(private friendsService: FriendsService) {
+  constructor(
+    private friendsService: FriendsService,
+    public toastController: ToastController,
+  ) {
   }
 
   ngOnInit() {
@@ -29,9 +34,12 @@ export class AddFriendPage implements OnInit {
     })
   }
 
-  // DID ex: "did:elastos:iWHTwXKeXdgZHFLZWS22e7itTatjmFAzkL
+  // DID ex: "did:elastos:iWHTwXKeXdgZHFLZWS22e7itTatjmFAzkL"
   async addFriend() {
-    if(this.didInput) {
+    if(this.didInput.slice(0,11) !== 'did:elastos') {
+      this.inputInvalid();
+      this.didInput = "";
+    } else {
       console.log("Resolving DID Document");
       // Test for resolving DID on TESTNET
       let didDocument = await this.friendsService.resolveDIDDocument(this.didInput);
@@ -39,6 +47,15 @@ export class AddFriendPage implements OnInit {
       this.friendsService.showConfirm(didDocument);
       this.didInput = "";
     }
+  }
+
+  async inputInvalid() {
+    const toast = await this.toastController.create({
+      message: "Please add a valid DID",
+      color: "primary",
+      duration: 2000
+    });
+    toast.present();
   }
 
   closeApp() {
