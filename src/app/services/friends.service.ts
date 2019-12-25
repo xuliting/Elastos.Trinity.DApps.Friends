@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { StorageService } from 'src/app/services/storage.service';
 import { Friend } from '../models/friends.model';
+import { DID } from '../models/did.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
@@ -17,12 +18,13 @@ let managerService: any;
 })
 export class FriendsService {
 
+  private _DID: DID;
+  private _DIDs: DID[] = [];
   private _friends: Friend[] = [
      {
       id: '1',
       name: 'Chad Racelis',
       email: 'chad@elastos.com',
-      bio: 'Hi I\'m Chad, the DApp Dev',
       imageUrl: 'https://chadracelis.github.io/resume/img/profile.jpg',
       ApplicationProfileCredential: [
         {
@@ -43,7 +45,6 @@ export class FriendsService {
       id: '2',
       name: 'Benjamin Piette',
       email: 'ben@elastos.com',
-      bio: 'Hi I\'m Ben, the Tech Lead',
       imageUrl: 'https://avatars2.githubusercontent.com/u/7567594?s=400&v=4',
       ApplicationProfileCredential: [
         {
@@ -64,7 +65,6 @@ export class FriendsService {
       id: '3',
       name: 'Martin Knight',
       email: 'martin@elastos.com',
-      bio: 'Hi I\'m Martin, the Designer',
       imageUrl: 'https://cdn.pixabay.com/photo/2017/10/07/14/50/knight-2826704_1280.jpg',
       ApplicationProfileCredential: [
         {
@@ -123,47 +123,80 @@ export class FriendsService {
     switch (ret.action) {
       case "handlescannedcontent_did":
         console.log('Incoming friend requests', ret);
-        this.showConfirm(ret.params.data);
+        this.friendScanned(ret.params.data);
         // this.showPopover(ret.params.data);
     }
   }
 
+  // Add friend by scanning
+  async friendScanned(did) {
+    console.log('Scanned', did);
+    let didDocument = await this.resolveDIDDocument(did);
+    console.log('DID document', didDocument);
+    this.showConfirm(didDocument);
+  }
+
   // Direct to friend-confirmation //
-  showConfirm(did) {
+  showConfirm = (did) => {
+    console.log('Confirm or deny?', did);
+    this._DID = did;
     let props: NavigationExtras = {
       queryParams: {
-        did: did
+        did: did.verifiableCredential.name = 'Chad Racelis'
       }
     }
     this.router.navigate(['menu/friend-confirmation'], props);
   }
 
   // Add DID if confirmed from friend-confirmation //
-  addFriend = (did) => {
-    this._friends.push(did);
-    this.storageService.setDID(did);
+  addFriend = () => {
+    this._friends = this.friends.concat(
+      this._DID.verifiableCredential = {
+        id: '123',
+        name: 'Chad Racelis',
+        email: 'chad@elastos.com',
+        imageUrl: 'www.chad.com',
+        ApplicationProfileCredential: [{appName: 'app1'}, {appName: 'app2'}, {appName: 'app3'}]
+      }
+    );
+    this.storageService.setDID(this._DID);
     console.log('Friends updated', this._friends);
-    this.friendAdded(did);
+    this.friendAdded(this._DID.verifiableCredential.name = 'Chad Racelis');
   }
 
   // Delete DID id deleted from friends list //
-  deleteFriend = (did) => {
-    console.log('Deleting friend', did);
+  deleteFriend = (friend: Friend) => {
+    console.log('Deleting friend', friend);
+    this._friends.filter(_friend => _friend !== friend);
+    this._DIDs.map(did => {
+      if (did.verifiableCredential === friend) {
+        this.storageService.removeDID(did);
+        console.log('Deleting', did);
+      }
+    });
   }
 
   // Confirmation alerts //
-  async friendAdded(did) {
+  async friendAdded(didName: string) {
     const toast = await this.toastController.create({
-      message: did + ' was added',
+      message: didName + ' was added',
       duration: 2000
     });
     toast.present();
   }
 
-  async friendDenied(did) {
+  async friendDenied(didName: string) {
     const toast = await this.toastController.create({
-      message: 'Denied friend ' + did,
+      message: 'Denied friend ' + didName,
       duration: 2000
+    });
+    toast.present();
+  }
+
+  async didResolveErr(err: string) {
+    const toast = await this.toastController.create({
+      message: 'There was an error: ' + err,
+      duration: 8000.
     });
     toast.present();
   }
@@ -173,12 +206,13 @@ export class FriendsService {
     this.storageService.getDID().then(data => {
       console.log('Fetching stored DIDs', data);
       if(data !== null) {
-        this._friends = this._friends.concat(data);
+        this._DIDs = this._DIDs.concat(data);
+        this._friends = this._friends.concat(data.verifiableCredential);
       }
     });
   }
 
-  /**
+  /*
    * From a DID string, tries to resolve the published DID document from the DID sidechain.
    * That DID document may or may not include BasicProfileCredential types credentials such as "name",
    * "email","telephone", and also ApplicationProfileCredential type credentials that have earlier been registered
@@ -186,12 +220,14 @@ export class FriendsService {
    * is where we can retrieve public app profile information for a "user" (DID).
    */
   resolveDIDDocument(didString: DIDPlugin.DIDString): Promise<DIDPlugin.DIDDocument> {
+    console.log('DID string', didString);
     return new Promise((resolve, reject)=>{
       didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument)=>{
         console.log("DIDDocument resolved for DID "+didString, didDocument);
         resolve(didDocument);
       }, (err: any)=>{
         console.error("DIDDocument resolving error", err);
+        this.didResolveErr(err.message);
         // TODO: handle this.
         reject();
       });

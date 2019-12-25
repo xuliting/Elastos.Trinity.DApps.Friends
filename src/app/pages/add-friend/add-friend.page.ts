@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FriendsService } from 'src/app/services/friends.service';
+import { DID } from 'src/app/models/did.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
 
@@ -22,31 +23,25 @@ export class AddFriendPage implements OnInit {
   scanDID() {
     appManager.sendIntent("scanqrcode", {}, (res)=> {
       console.log("Got scan result:", res);
+      this.friendsService.friendScanned(res.result.scannedContent);
     }, (err: any)=>{
       console.error(err);
     })
   }
 
-  addFriend() {
+  // DID ex: "did:elastos:iWHTwXKeXdgZHFLZWS22e7itTatjmFAzkL
+  async addFriend() {
     if(this.didInput) {
-      appManager.sendIntent("handlescannedcontent_did", this.didInput, (res) => {
-        console.log(res);
-      }, (err) => {
-        console.log(err);
-      });
-      this.didInput = '';
+      console.log("Resolving DID Document");
+      // Test for resolving DID on TESTNET
+      let didDocument = await this.friendsService.resolveDIDDocument(this.didInput);
+      console.log('DID document', didDocument);
+      this.friendsService.showConfirm(didDocument);
+      this.didInput = "";
     }
   }
 
   closeApp() {
     appManager.close();
-  }
-
-  async testResolve() {
-    console.log("Test resolve");
-    // Test for resolving DID on TESTNET
-    let didDocument = await this.friendsService.resolveDIDDocument("did:elastos:iWHTwXKeXdgZHFLZWS22e7itTatjmFAzkL");
-    console.log(didDocument);
-
   }
 }

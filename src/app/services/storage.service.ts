@@ -21,4 +21,10 @@ export class StorageService {
       return JSON.parse(data);
     });
   }
+
+  public removeDID(did: any) {
+    return this.storage.remove(did).then((data) => {
+      console.log('Deleting DID', data);
+    })
+  }
 }

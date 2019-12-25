@@ -43,7 +43,7 @@ export class FriendsPage implements OnInit {
     this.searchOn = !this.searchOn;
   }
 
-  onClick(friend) {
+  onClick(friend: Friend) {
     console.log(friend);
     this.actionSheetCtrl.create({
       cssClass: 'action',
@@ -80,6 +80,7 @@ export class FriendsPage implements OnInit {
   scanDID() {
     appManager.sendIntent("scanqrcode", {}, (response)=> {
       console.log("Got scan result:", response);
+      this.friendsService.friendScanned(response.result.scannedContent);
     }, (err: any)=>{
       console.error(err);
     })
