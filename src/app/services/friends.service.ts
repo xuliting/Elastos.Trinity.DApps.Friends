@@ -178,6 +178,26 @@ export class FriendsService {
     });
   }
 
+  /**
+   * From a DID string, tries to resolve the published DID document from the DID sidechain.
+   * That DID document may or may not include BasicProfileCredential types credentials such as "name",
+   * "email","telephone", and also ApplicationProfileCredential type credentials that have earlier been registered
+   * through "registerapplicationprofile" intents, by the DID app, on request from third party apps. This
+   * is where we can retrieve public app profile information for a "user" (DID).
+   */
+  resolveDIDDocument(didString: DIDPlugin.DIDString): Promise<DIDPlugin.DIDDocument> {
+    return new Promise((resolve, reject)=>{
+      didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument)=>{
+        console.log("DIDDocument resolved for DID "+didString, didDocument);
+        resolve(didDocument);
+      }, (err: any)=>{
+        console.error("DIDDocument resolving error", err);
+        // TODO: handle this.
+        reject();
+      });
+    });
+  }
+
   // Call install app from friend-details //
  /*  async installApp(dapp) {
     // Download the file

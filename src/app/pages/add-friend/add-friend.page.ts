@@ -41,4 +41,12 @@ export class AddFriendPage implements OnInit {
   closeApp() {
     appManager.close();
   }
+
+  async testResolve() {
+    console.log("Test resolve");
+    // Test for resolving DID on TESTNET
+    let didDocument = await this.friendsService.resolveDIDDocument("did:elastos:iWHTwXKeXdgZHFLZWS22e7itTatjmFAzkL");
+    console.log(didDocument);
+
+  }
 }

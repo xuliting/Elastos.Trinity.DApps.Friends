@@ -2,10 +2,10 @@
   "id": "elastos.trinity.friendsdapp",
   "version": "0.0.1",
   "version_code": 1,
-  "name": "Friends DApp",
-  "short_name": "Friends DApp",
+  "name": "Friends",
+  "short_name": "Friends",
   "short_description": "Friends DApp",
-  "description": "Elastos Trinity Friends DApp",
+  "description": "elastOS Friends DApp",
   "start_url": "http://192.168.1.133:8100",
   "type": "url",
   "category": "social",
@@ -30,7 +30,8 @@
   "plugins": [
     "Device",
     "SplashScreen",
-    "NetworkStatus"
+    "NetworkStatus",
+    "DIDPlugin"
   ],
   "urls": [
     "http://*",
