@@ -10,25 +10,26 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="container">
-    <ion-card color="light" text-center>
-      <ion-card-header text-align-center>
-        <ion-img src="../assets/icon/ela-logo.jpg"></ion-img>
-        <ion-card-title padding>{{ didName }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content margin-top>
-        Do You Want To Add This <br> User To Your Friend's List?
-      </ion-card-content>
-      <ion-grid no-padding>
-        <ion-row>
-          <ion-col size="6" no-padding no-margin>
-            <ion-button (click)="addFriend()">Add</ion-button>
-          </ion-col>
-          <ion-col size="6" no-padding no-margin>
-            <ion-button (click)="denyFriend()">Cancel</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
+  <ion-grid class="container" text-center>
+    <div class="header" text-align-center>
+      <ion-img src="../assets/icon/ela-logo.jpg"></ion-img>
+      <h4 padding>{{ didName }}</h4>
+    </div>
+    <p margin-top>
+      Do You Want To Add This <br> User To Your Friend's List?
+    </p>
   </ion-grid>
 </ion-content>
+
+<ion-footer>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col size="6" no-padding no-margin>
+        <ion-button (click)="addFriend()">Add</ion-button>
+      </ion-col>
+      <ion-col size="6" no-padding no-margin>
+        <ion-button (click)="denyFriend()">Cancel</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
