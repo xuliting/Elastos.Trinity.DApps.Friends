@@ -23,17 +23,25 @@
 }
 
 :root {
-  ion-tab-button.tab-selected {
+
+  ion-tab-button {
+    --color-selected: #43e97b;
+    --ripple-color: #43e97b;
+  }
+
+  ion-tab-button:focus {
     ion-icon, ion-label {
-      color: var(--ion-color-primary) !important;
-      --ion-color-base: var(--ion-color-primary) !important;
+      color: #43e97b !important;
+      --ion-color-base: #43e97b!important;
     }
   }
 }
 
 ion-header {
+
   ion-toolbar {
     padding: 20px 5px 10px !important;
+
     ion-title {
       font-size: 23px;
       font-weight: 700;

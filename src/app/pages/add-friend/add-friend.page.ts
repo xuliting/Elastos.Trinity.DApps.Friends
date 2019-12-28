@@ -34,7 +34,13 @@ export class AddFriendPage implements OnInit {
     })
   }
 
-  // DID ex: "did:elastos:iWHTwXKeXdgZHFLZWS22e7itTatjmFAzkL"
+  // DID ex:
+  // did:elastos:iWHTwXKeXdgZHFLZWS22e7itTatjmFAzkL
+  // did:elastos:inHbk1cSRdQ8BPHj3n44ebQoyTeN2uHv83
+  // did:elastos:imuTjwHco1AELt4R2aEwPghRb9kYobArwF
+  // did:elastos:iSrkbm14y1aLvJXps4UK6Hg1xeiCkns984
+  // did:elastos:ir1bSDao3sdLMYJBHWdK9LyUCbfV44DG1j
+  // did:elastos:iU46NjJoapvjgt1j6QYMX3d72DBHV8d4SW
   async addFriend() {
     if(this.didInput.slice(0,11) !== 'did:elastos') {
       this.inputInvalid();
