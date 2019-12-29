@@ -11,6 +11,7 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './modules/shared.module';
 import { FriendsService } from './services/friends.service';
 
 @NgModule({
@@ -22,11 +23,12 @@ import { FriendsService } from './services/friends.service';
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    SharedModule,
     IonicStorageModule.forRoot()
  ],
   bootstrap: [AppComponent],
   entryComponents: [
-    AppComponent
+    AppComponent,
   ],
   providers: [
     FriendsService,

@@ -9,27 +9,55 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-grid class="container" text-center>
-    <div class="header" text-align-center>
-      <ion-img src="../assets/icon/ela-logo.jpg"></ion-img>
-      <h4 padding>{{ didName }}</h4>
-    </div>
-    <p margin-top>
-      Do You Want To Add This <br> User To Your Friend's List?
-    </p>
-  </ion-grid>
-</ion-content>
+<ion-grid class="container" no-padding no-margin>
 
-<ion-footer>
-  <ion-grid no-padding>
-    <ion-row>
-      <ion-col size="6" no-padding no-margin>
-        <ion-button (click)="addFriend()">Add</ion-button>
-      </ion-col>
-      <ion-col size="6" no-padding no-margin>
-        <ion-button (click)="denyFriend()">Cancel</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-footer>
+  <div>
+    <div class="profile-container" padding-bottom>
+      <div class="profile-picture">
+        <img  src="assets/images/Guy_Face.svg">
+        <!-- <img src="assets/images/DefaultProfileWoman.svg"> -->
+      </div>
+
+      <ion-grid>
+        <ion-row>
+          <!-- <ion-col class="profile-name"><h1>{{ didName }}</h1></ion-col> -->
+          <ion-col class="profile-name"  no-padding><h1>Martin Knight</h1></ion-col>
+        </ion-row>
+
+        <ion-row padding>
+          <ion-col class="message">
+            <p>Do you want to add this <br> sser to your friend's list?</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid padding>
+        <ion-row>
+          <ion-col size="10" offset="1">
+            <did-button
+              title="Add Friend"
+              [bgcolor]="'#3880ff'"
+              [bordercolor]="'#3880ff'"
+              shadow="true"
+            >
+            </did-button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="last-btn">
+          <ion-col size="10" offset="1">
+            <did-button
+              title="Cancel Request"
+              textcolor="'black'"
+              [bgcolor]="'white'"
+              [bordercolor]="'black'"
+              shadow="true"
+            >
+            </did-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
+  </div>
+
+</ion-grid>

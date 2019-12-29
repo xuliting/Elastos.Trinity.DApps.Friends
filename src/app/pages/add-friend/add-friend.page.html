@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-button (click)="scanDID()">
-        <ion-icon name="qr-scanner"></ion-icon>
+      <ion-button [routerLink]="['/', 'friends']">
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Add Friend</ion-title>
@@ -13,6 +13,20 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+<!-- <ion-content>
+  <ion-grid class="container" no-padding no-margin>
+
+    <div>
+      <div class="img-container" padding-bottom>
+        <div class="logo">
+          <img src="../assets/icon/scan.svg">
+        </div>
+      </div>
+    </div>
+
+  </ion-grid>
+</ion-content> -->
 
 <ion-content>
   <ion-grid padding text-center align-items-center>

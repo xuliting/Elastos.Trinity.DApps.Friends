@@ -28,16 +28,20 @@ export class FriendsService {
       imageUrl: 'https://chadracelis.github.io/resume/img/profile.jpg',
       ApplicationProfileCredential: [
         {
-          appName: 'DefaceBook'
+          appName: 'DefaceBook',
+          appShortDescription: 'hello hello hello hello hello hello'
         },
         {
-          appName: 'DexiFi'
+          appName: 'DexiFi',
+          appShortDescription: 'hello hello hello hello hello hello'
         },
         {
-          appName: 'WhatsDApp'
+          appName: 'WhatsDApp',
+          appShortDescription: 'hello hello hello hello hello hello'
         },
         {
-          appName: 'Dalibaba'
+          appName: 'Dalibaba',
+          appShortDescription: 'hello hello hello hello hello hello'
         }
       ]
     },
@@ -48,16 +52,20 @@ export class FriendsService {
       imageUrl: 'https://avatars2.githubusercontent.com/u/7567594?s=400&v=4',
       ApplicationProfileCredential: [
         {
-          appName: 'Dweeeter'
+          appName: 'Dweeeter',
+          appShortDescription: 'hello hello hello hello hello hello'
         },
         {
-          appName: 'CashDApp'
+          appName: 'CashDApp',
+          appShortDescription: 'hello hello hello hello hello hello'
         },
         {
-          appName: 'DeChat'
+          appName: 'DeChat',
+          appShortDescription: 'hello hello hello hello hello hello'
         },
         {
-          appName: 'Damazon'
+          appName: 'Damazon',
+          appShortDescription: 'hello hello hello hello hello hello'
         }
       ]
     },
@@ -68,16 +76,20 @@ export class FriendsService {
       imageUrl: 'https://cdn.pixabay.com/photo/2017/10/07/14/50/knight-2826704_1280.jpg',
       ApplicationProfileCredential: [
         {
-          appName: 'SnapDapp'
+          appName: 'SnapDapp',
+          appShortDescription: 'hello hello hello hello hello hello'
         },
         {
-          appName: 'DeTube'
+          appName: 'DeTube',
+          appShortDescription: 'hello hello hello hello hello hello'
         },
         {
-          appName: 'DeMessage'
+          appName: 'DeMessage',
+          appShortDescription: 'hello hello hello hello hello hello'
         },
         {
-          appName: 'DeBay'
+          appName: 'DeBay',
+          appShortDescription: 'hello hello hello hello hello hello'
         }
       ]
     },
@@ -162,7 +174,7 @@ export class FriendsService {
         id: '123',
         name: 'Chad Racelis',
         email: 'chad@elastos.com',
-        imageUrl: 'www.chad.com',
+        imageUrl: '',
         ApplicationProfileCredential: [{appName: 'app1'}, {appName: 'app2'}, {appName: 'app3'}]
       },
       publicKey: 123,
@@ -177,13 +189,14 @@ export class FriendsService {
     this.friendAdded(this._DID.verifiableCredential.name = 'Chad Racelis');
   }
 
-  // Delete DID matching profile credentials from friends list //
+  // Delete DID matching profile credentials from friend-details //
   deleteFriend(friend: Friend) {
     console.log('Deleting friend', friend);
-    this._DIDs = this._DIDs.filter(did => did.verifiableCredential !== friend);
+    this._DIDs = this._DIDs.filter(did => did.verifiableCredential.id !== friend.id);
+    this._friends = this._friends.filter(_friend => _friend.id !== friend.id);
+    console.log('Updated friends', this._friends);
     this.storageService.setDID(this._DIDs);
     this.friendDeleted(friend);
-    return this._friends = this._friends.filter(_friend => _friend !== friend);
   }
 
   // Alerts //

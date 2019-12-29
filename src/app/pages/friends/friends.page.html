@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-button (click)="scanDID()">
-        <ion-icon name="qr-scanner"></ion-icon>
+      <ion-button [routerLink]="['/', 'addFriend']">
+        <ion-icon name="add"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>My Friends</ion-title>
+    <ion-title>My Friends List</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeApp()">
         <ion-icon name="close"></ion-icon>
@@ -18,27 +18,6 @@
   <ion-grid class="container">
     <ion-list>
 
-      <ion-list-header *ngIf="!searchOn" color="light" padding-top>
-        <h1 no-margin>Friends</h1>
-        <span (click)="toggleSearch()">
-          <ion-icon name="search"></ion-icon>
-        </span>
-      </ion-list-header>
-
-      <ion-list-header *ngIf="searchOn" color="light" no-padding padding-top>
-        <ion-searchbar
-          mode="ios"
-          color="dark"
-          placeholder="Search Friend.."
-          [(ngModel)]="friend"
-          (ngModelChange)="filterFriends($event)"
-        >
-        </ion-searchbar>
-        <span (click)="toggleSearch()">
-          <ion-icon name="eye-off" color="dark"></ion-icon>
-        </span>
-      </ion-list-header>
-
       <ion-item *ngIf="!friendsLoaded" text-center color="light">
         <ion-label>
           <ion-spinner name="bubbles"></ion-spinner>
@@ -49,16 +28,27 @@
         <ion-item
           *ngFor="let friend of filteredFriends"
           color="light"
-          (click)="onClick(friend)"
+          [routerLink]="['/', friend.id]"
         >
-          <ion-avatar>
-            <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
-            <ion-img *ngIf="!friend.imageUrl" src="../assets/icon/ela-logo.jpg"></ion-img>
-          </ion-avatar>
-          <ion-label>
-            <h4>{{ friend.name }}</h4>
-            <p>{{ friend.email }}<p>
-          </ion-label>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="2">
+                <ion-avatar>
+                  <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
+                  <ion-img *ngIf="!friend.imageUrl" src="../assets/icon/ela-logo.jpg"></ion-img>
+                </ion-avatar>
+              </ion-col>
+              <ion-col size="9">
+                <ion-label>
+                  <h4>{{ friend.name }}</h4>
+                  <p>{{ friend.email }}<p>
+                </ion-label>
+              </ion-col>
+              <ion-col size="1">
+                <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-item>
       </div>
     </ion-list>

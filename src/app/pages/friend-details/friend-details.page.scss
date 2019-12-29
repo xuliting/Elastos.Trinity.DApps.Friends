@@ -1,51 +1,109 @@
 .container {
+  background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
   min-height: 100%;
-  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
 
-  ion-card {
-    border-radius: 10px;
-    margin: 10px 20px;
-    opacity: 0.9;
+  div {
+    position: relative;
+    top: 40px;
 
-    .profile-img {
-      display: flex;
-      justify-content: flex-end;
+    .profile-container {
+      background: white;
+
+    .profile-picture {
+      position: absolute;
+      background: white;
+      top:0;
+      left:0;
+      right:0;
+      z-index: 10;
+      height:30vw;
+      width:30vw;
+      margin: 0 auto;
+      margin-top: -14vw;
+      border-radius: 50%;
+      box-shadow: 3px 3px 8px rgba(100,100,100,0.2);
+      align-content: center;
+      overflow:hidden;
     }
 
-    .profile-content {
-      display: flex;
-      justify-content: flex-start;
-    }
+      .profile-name {
+        margin-top: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-    ion-card-header {
-      h1 {
-        font-weight: 700;
+        h1 {
+          font-weight: 600;
+        }
+      }
+
+      .left-btn {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .right-btn {
+        display: flex;
+        justify-content: flex-start;
       }
     }
-  }
 
-  ion-list {
-    padding-top: 0;
-    padding-bottom: 0;
-    margin: 10px;
-    border-radius: 10px;
-    opacity: 0.9;
+    .app-container {
+      background: #FAFAFA;
 
-    ion-list-header {
-      h4 {
-        font-weight: 700;
+      .install-container {
+        padding-top: 24px;
+        padding-bottom: 24px;
+
+        h2 {
+          background: white;
+          padding-left: 24px;
+          margin: 0;
+          font-size: 16px;
+          font-weight: 600;
+          color: #3880ff;
+        }
       }
-    }
 
-    ion-avatar {
-      max-width: 45px;
-      max-height: 45px;
-    }
+      ion-list {
+        ion-thumbnail {
+          width: 55px;
+          height: 55px;
+          border-radius: 10px;
+          overflow: hidden;
+        }
 
-    ion-label {
-      h4 {
-        font-size: 16px;
-        font-weight: 600;
+        .app-info {
+          h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+          }
+
+          p {
+            font-size: 9px !important;
+            font-weight: 500;
+            color: #959595;
+            margin: 0;
+          }
+        }
+
+        .btn-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          ion-button {
+            --border-radius: 30px;
+            --box-shadow: none;
+
+            ion-label {
+              font-size: 9px;
+              font-weight: 600;
+              padding: 0;
+            }
+          }
+        }
       }
     }
   }

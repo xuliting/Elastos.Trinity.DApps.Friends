@@ -1,0 +1,36 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h1>Are you sure?</h1>
+      </ion-col>
+    </ion-row>
+
+    <ion-row padding-top>
+      <ion-col size="10" offset="1">
+        <did-button
+          title="Confirm"
+          textcolor="'white'"
+          [bgcolor]="'#f04141'"
+          [bordercolor]="'#f04141'"
+          shadow="false"
+          (click)="deleteFriend()"
+        >
+        </did-button>
+      </ion-col>
+    </ion-row>
+    <ion-row padding-bottom>
+      <ion-col size="10" offset="1">
+        <did-button
+          title="Go Back"
+          textcolor="'black'"
+          [bgcolor]="'white'"
+          [bordercolor]="'black'"
+          shadow="false"
+          (click)="goBack()"
+        >
+        </did-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

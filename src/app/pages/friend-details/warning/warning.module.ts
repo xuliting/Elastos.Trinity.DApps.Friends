@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FriendDetailsPage } from './friend-details.page';
-import { RoundedActionButtonComponent } from 'src/app/components/rounded-action-button/rounded-action-button.component';
+import { WarningPage } from './warning.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: FriendDetailsPage
+    component: WarningPage
   }
 ];
 
@@ -22,9 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [
-    FriendDetailsPage,
-    RoundedActionButtonComponent,
-  ]
+  declarations: [WarningPage]
 })
-export class FriendDetailsPageModule {}
+export class WarningPageModule {}

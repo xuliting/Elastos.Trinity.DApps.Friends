@@ -5,13 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FriendDetailsPage } from './friend-details.page';
-import { RoundedActionButtonComponent } from 'src/app/components/rounded-action-button/rounded-action-button.component';
+import { Warning2Page } from './warning2.page';
+import { DIDButtonComponent } from 'src/app/components/did-button/did-button.component';
+import { SharedModule } from 'src/app/modules/shared.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: FriendDetailsPage
+    component: Warning2Page
   }
 ];
 
@@ -20,11 +21,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
-    FriendDetailsPage,
-    RoundedActionButtonComponent,
+    Warning2Page,
   ]
 })
-export class FriendDetailsPageModule {}
+export class Warning2PageModule {}
