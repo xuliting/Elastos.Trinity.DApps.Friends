@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ToastController, IonInput } from '@ionic/angular';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { DID } from 'src/app/models/did.model';
@@ -14,6 +14,8 @@ declare let appManager: AppManagerPlugin.AppManager;
 })
 export class AddFriendPage implements OnInit {
 
+  @ViewChild('input', {static: false}) input: IonInput;
+
   didInput: string = '';
 
   constructor(
@@ -23,6 +25,12 @@ export class AddFriendPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ionViewDidEnter() {
+    setTimeout(() => {
+      this.input.setFocus();
+    }, 200);
   }
 
   scanDID() {
