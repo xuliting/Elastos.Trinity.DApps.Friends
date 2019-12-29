@@ -13,10 +13,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './modules/shared.module';
 import { FriendsService } from './services/friends.service';
+import { Warning2Page } from './pages/friend-details/warning2/warning2.page';
+import { WarningPage } from './pages/friend-details/warning/warning.page';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    WarningPage,
+    Warning2Page,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +33,8 @@ import { FriendsService } from './services/friends.service';
   bootstrap: [AppComponent],
   entryComponents: [
     AppComponent,
+    WarningPage,
+    Warning2Page,
   ],
   providers: [
     FriendsService,

@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { Warning2Page } from './warning2.page';
-import { DIDButtonComponent } from 'src/app/components/did-button/did-button.component';
 import { SharedModule } from 'src/app/modules/shared.module';
 
 const routes: Routes = [
