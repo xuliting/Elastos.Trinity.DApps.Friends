@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header no-border>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-button [routerLink]="['/', 'friends']">
@@ -29,10 +29,10 @@
         </ion-row>
         <ion-row>
           <ion-col size="6" class="left-btn">
-            <rounded-action-button title="Custom Name" image='assets/images/Edit_Simple_Icon.svg' color="#3880ff" imgcolor="#3880ff"></rounded-action-button>
+            <rounded-action-button title="Custom Name" image='assets/images/Edit_Simple_Icon.svg' color="#3ABAFB" imgcolor="#3ABAFB"></rounded-action-button>
           </ion-col>
           <ion-col size="6" class="right-btn" padding-start>
-            <rounded-action-button (click)="showWarning(friend)" title="Delete" image='assets/images/Delete_Warning_Simple_Icon.svg' color="#f04141" imgcolor="#f04141"></rounded-action-button>
+            <rounded-action-button (click)="showWarning(friend)" title="Delete" image='assets/images/Delete_Warning_Simple_Icon.svg' color="#FF4D4D" imgcolor="#f04141"></rounded-action-button>
           </ion-col>
         </ion-row>
       </div>
@@ -40,7 +40,7 @@
       <div class="app-container">
         <ion-row class="install-container">
           <ion-col no-padding no-margin>
-            <h2 padding>Install Applications</h2>
+            <h2 padding>Installed Applications</h2>
           </ion-col>
         </ion-row>
         <ion-list>
@@ -50,12 +50,12 @@
           >
             <ion-grid no-padding>
               <ion-row align-items-center>
-                <ion-col size="2.25">
+                <ion-col size="2.5">
                   <ion-thumbnail>
                     <ion-img src="../assets/icon/ela-logo.jpg"></ion-img>
                   </ion-thumbnail>
                 </ion-col>
-                <ion-col size="6.75" class="app-info">
+                <ion-col size="6.5" class="app-info">
                   <ion-label>
                     <h4>{{ app.appName }}</h4>
                     <p>{{ app.appShortDescription }}</p>

@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header no-border>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-button [routerLink]="['/', 'friends']">
@@ -14,42 +14,50 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- <ion-content>
+<ion-content>
   <ion-grid class="container" no-padding no-margin>
-
     <div>
-      <div class="img-container" padding-bottom>
+
+      <div class="img-container">
         <div class="logo">
           <img src="../assets/icon/scan.svg">
         </div>
       </div>
-    </div>
 
-  </ion-grid>
-</ion-content> -->
+      <ion-grid>
 
-<ion-content>
-  <ion-grid padding text-center align-items-center>
-    <h1>Scan or Type in DID</h1>
-    <div (click)="scanDID()" class="scan-btn" padding>
-      <!-- <ion-icon name="qr-scanner"></ion-icon> -->
-      <ion-img src="../assets/icon/scan.svg"></ion-img>
+        <div class="center" padding-bottom>
+          <ion-row no-margin>
+            <ion-col><h2 class="first-title">Open QR Scanner</h2></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col no-padding><h2 class="second-title">or enter a DID below</h2></ion-col>
+          </ion-row>
+        </div>
+
+        <div class="bottom" padding-top>
+          <ion-row color="light">
+            <ion-col size="9" class="text-area">
+              <ion-input autosize placeholder="   Enter DID" [(ngModel)]="didInput"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="9">
+              <did-button
+                (click)="addFriend()"
+                title="Add Friend"
+                textcolor="#ffffff"
+                [bgcolor]="'#3ABAFB'"
+                [bordercolor]="'#3ABAFB'"
+                [shadow]="false"
+              >
+              </did-button>
+            </ion-col>
+          </ion-row>
+        </div>
+
+      </ion-grid>
+
     </div>
   </ion-grid>
 </ion-content>
-
-<ion-footer padding>
-  <!-- <ion-row>
-    <ion-label>Type in DID</ion-label>
-  </ion-row> -->
-  <ion-row color="light">
-    <ion-col offset="0.5" size="11" class="text-area">
-      <ion-input autosize placeholder="Add did:elastos" [(ngModel)]="didInput"></ion-input>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col offset="0.5" size="11" no-padding>
-      <ion-button class="add-btn" color="primary" (click)="addFriend()">Add DID</ion-button>
-    </ion-col>
-  </ion-row>
-</ion-footer>

@@ -4,12 +4,16 @@ ion-col {
   align-items: center;
 
   h1 {
-    font-size: 22px;
+    font-size: 23px;
     font-weight: 700;
-    color: #f04141
+    color: #FF4D4D;
   }
 
   did-button {
     width: 50%;
   }
+}
+
+.first-button {
+  padding-bottom: 12px;
 }

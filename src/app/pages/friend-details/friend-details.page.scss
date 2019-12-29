@@ -1,10 +1,10 @@
 .container {
-  background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+  background: linear-gradient(to right, #BFFFD9 0%, #9BDEFF 100%);
   min-height: 100%;
 
   div {
     position: relative;
-    top: 40px;
+    top: 35px;
 
     .profile-container {
       background: white;
@@ -34,6 +34,7 @@
 
         h1 {
           font-weight: 600;
+          font-size: 28px;
         }
       }
 
@@ -57,11 +58,11 @@
 
         h2 {
           background: white;
-          padding-left: 24px;
+          padding: 8px 0 8px 24px;
           margin: 0;
-          font-size: 16px;
-          font-weight: 600;
-          color: #3880ff;
+          font-size: 15px;
+          font-weight: 700;
+          color: #3ABAFB;
         }
       }
 
@@ -74,6 +75,8 @@
         }
 
         .app-info {
+          margin-top: 2px;
+
           h4 {
             font-size: 16px;
             font-weight: 600;
@@ -99,7 +102,7 @@
 
             ion-label {
               font-size: 9px;
-              font-weight: 600;
+              font-weight: 500;
               padding: 0;
             }
           }

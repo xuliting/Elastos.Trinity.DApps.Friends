@@ -1,52 +1,70 @@
-ion-grid {
+.container {
+  background: linear-gradient(to bottom, #BFFFD9 0%, #9BDEFF 100%);
   min-height: 100%;
-  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+  padding-top: 25px;
 
-  h1 {
-    font-weight: 700;
-    margin: 40px 0 0;
-    color: rgb(59, 59, 59);
-  }
+  div {
+    background: white;
 
-  .scan-btn {
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-
-    /* ion-icon {
-      font-size: 300px;
-      color: rgb(59, 59, 59);
-    } */
-
-    ion-img {
-      transform: scale(1.75);
-    }
-  }
-}
-
-ion-footer {
-  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
-  height: 22%;
-
-  ion-row {
-    padding: 5px 0;
-    justify-content: center;
-
-   /*  ion-label {
-      font-size: 26px;
-      font-weight: 600;
-    } */
-
-    .text-area {
-      border-radius: 20px;
+    .img-container {
+      padding-top: 20px;
       background: white;
+
+      .logo {
+        background: white;
+        height:24vw;
+        width:24vw;
+        margin: 0 auto;
+        border-radius: 50%;
+        box-shadow: 3px 3px 8px rgba(100,100,100,0.2);
+        overflow:hidden;
+      }
     }
 
-    .add-btn {
-      width: 100%;
-      height: 50px;
-      font-weight: 900;
-      --border-radius: 20px;
+    ion-grid {
+      padding: 12px;
+
+      .center {
+        ion-col {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          h2 {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 700;
+          }
+
+          .first-title {
+            color: #FB599D;
+          }
+
+          .second-title {
+            color: #3ABAFB;
+          }
+        }
+      }
+
+      .bottom {
+        ion-row {
+          display: flex;
+          justify-content: center;
+          padding: 8px 0;
+
+          .text-area {
+            border-radius: 30px;
+            background: #FAFAFA;
+          }
+
+          .add-btn {
+            width: 100%;
+            height: 50px;
+            font-weight: 900;
+            --border-radius: 20px;
+          }
+        }
+      }
     }
   }
 }
