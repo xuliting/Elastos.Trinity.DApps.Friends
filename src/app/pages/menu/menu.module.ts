@@ -6,20 +6,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { MenuPage } from './menu.page';
-import { FriendsPageModule } from '../friends/friends.module';
-import { AddFriendPageModule } from '../add-friend/add-friend.module';
-import { FriendDetailsPageModule } from '../friend-details/friend-details.module';
-import { FriendConfirmationPageModule } from '../friend-confirmation/friend-confirmation.module';
 
 const routes: Routes = [
   {
     path: 'menu',
     component: MenuPage,
     children: [
-      { path: 'friends', loadChildren: () => FriendsPageModule },
-      { path: 'addFriend', loadChildren: () => AddFriendPageModule },
-      { path: 'friend-confirmation', loadChildren: () => FriendConfirmationPageModule },
-      { path: ':friendId', loadChildren: () => FriendDetailsPageModule},
+      { path: 'friends', loadChildren: '../friends/friends.module#FriendsPageModule' },
+      { path: 'addFriend', loadChildren: '../add-friend/add-friend.module#AddFriendPageModule' },
+      { path: 'friend-confirmation', loadChildren: '../friend-confirmation/friend-confirmation.module#FriendConfirmationPageModule' },
+      { path: ':friendId', loadChildren: '../friend-details/friend-details.module#FriendDetailsPageModule' },
     ]
   },
   {

@@ -1,17 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-import { FriendsPageModule } from './pages/friends/friends.module';
-import { AddFriendPageModule } from './pages/add-friend/add-friend.module';
-import { FriendConfirmationPageModule } from './pages/friend-confirmation/friend-confirmation.module';
-import { FriendDetailsPageModule } from './pages/friend-details/friend-details.module';
-
 const routes: Routes = [
   { path: '', redirectTo: 'friends', pathMatch: 'full' },
-  { path: 'friends', loadChildren: () => FriendsPageModule },
-  { path: 'addFriend', loadChildren: () => AddFriendPageModule},
-  { path: 'friend-confirmation', loadChildren: () => FriendConfirmationPageModule },
-  { path: ':friendId', loadChildren: () => FriendDetailsPageModule },
+  { path: 'friends', loadChildren: './pages/friends/friends.module#FriendsPageModule' },
+  { path: 'addFriend', loadChildren: './pages/add-friend/add-friend.module#AddFriendPageModule' },
+  { path: 'friend-confirmation', loadChildren: './pages/friend-confirmation/friend-confirmation.module#FriendConfirmationPageModule' },
+  { path: ':friendId', loadChildren: './pages/friend-details/friend-details.module#FriendDetailsPageModule' },
 ];
 
 @NgModule({
