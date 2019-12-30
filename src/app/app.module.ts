@@ -14,13 +14,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './modules/shared.module';
 import { FriendsService } from './services/friends.service';
 import { Warning2Page } from './pages/friend-details/warning2/warning2.page';
+import { Warning2PageModule } from './pages/friend-details/warning2/warning2.module';
 import { WarningPage } from './pages/friend-details/warning/warning.page';
+import { WarningPageModule } from './pages/friend-details/warning/warning.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WarningPage,
-    Warning2Page,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +28,9 @@ import { WarningPage } from './pages/friend-details/warning/warning.page';
     IonicModule.forRoot(),
     AppRoutingModule,
     SharedModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    WarningPageModule,
+    Warning2PageModule,
  ],
   bootstrap: [AppComponent],
   entryComponents: [
