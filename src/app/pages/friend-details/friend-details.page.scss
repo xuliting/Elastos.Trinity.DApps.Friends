@@ -35,6 +35,21 @@
         h1 {
           font-weight: 600;
           font-size: 28px;
+          margin-bottom: 0;
+        }
+      }
+
+      .profile-note {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p {
+          margin-top: 0px;
+          margin-bottom: 20px;
+          font-weight: 600;
+          font-size: 14px;
+          color: #3ABAFB;
         }
       }
 
@@ -58,7 +73,7 @@
 
         h2 {
           background: white;
-          padding: 8px 0 8px 24px;
+          padding: 10px 0 10px 24px;
           margin: 0;
           font-size: 15px;
           font-weight: 700;
@@ -67,45 +82,53 @@
       }
 
       ion-list {
-        ion-thumbnail {
-          width: 55px;
-          height: 55px;
-          border-radius: 10px;
-          overflow: hidden;
-        }
+        ion-item {
+          border-bottom: solid 1px rgb(216, 216, 216);
 
-        .app-info {
-          margin-top: 5px;
-
-          h4 {
-            font-size: 16px;
-            font-weight: 600;
-            margin: 0;
+          ion-thumbnail {
+            width: 55px;
+            height: 55px;
+            border-radius: 10px;
+            overflow: hidden;
           }
 
-          p {
-            font-size: 9px !important;
-            font-weight: 500;
-            color: #959595;
-            margin: 0;
-          }
-        }
+          .app-info {
+            margin-top: 5px;
 
-        .btn-container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
+            h4 {
+              font-size: 16px;
+              font-weight: 600;
+              margin: 0;
+            }
 
-          ion-button {
-            --border-radius: 30px;
-            --box-shadow: none;
-
-            ion-label {
-              font-size: 9px;
+            p {
+              font-size: 9px !important;
               font-weight: 500;
-              padding: 0;
+              color: #959595;
+              margin: 0;
             }
           }
+
+          .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            ion-button {
+              --border-radius: 30px;
+              --box-shadow: none;
+
+              ion-label {
+                font-size: 9px;
+                font-weight: 500;
+                padding: 0;
+              }
+            }
+          }
+        }
+
+        .no-apps {
+          font-weight: 600;
         }
       }
     }

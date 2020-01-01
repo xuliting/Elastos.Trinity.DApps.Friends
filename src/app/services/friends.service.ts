@@ -20,10 +20,21 @@ export class FriendsService {
 
   private _DID: DID;
   private _DIDs: DID[] = [];
+
+  private _friend: Friend = {
+    id: '',
+    name: '',
+    gender: '',
+    note: '',
+    email: '',
+    imageUrl: '',
+    ApplicationProfileCredential: []
+  };
   private _friends: Friend[] = [
-     {
+    /*  {
       id: '1',
       name: 'Chad Racelis',
+      gender: 'male',
       email: 'chad@elastos.com',
       imageUrl: 'https://chadracelis.github.io/resume/img/profile.jpg',
       ApplicationProfileCredential: [
@@ -48,6 +59,7 @@ export class FriendsService {
     {
       id: '2',
       name: 'Benjamin Piette',
+      gender: 'male',
       email: 'ben@elastos.com',
       imageUrl: 'https://avatars2.githubusercontent.com/u/7567594?s=400&v=4',
       ApplicationProfileCredential: [
@@ -72,8 +84,9 @@ export class FriendsService {
     {
       id: '3',
       name: 'Martin Knight',
+      gender: 'male',
       email: 'martin@elastos.com',
-      imageUrl: 'https://cdn.pixabay.com/photo/2017/10/07/14/50/knight-2826704_1280.jpg',
+      imageUrl: '',
       ApplicationProfileCredential: [
         {
           appName: 'SnapDapp',
@@ -92,7 +105,7 @@ export class FriendsService {
           appShortDescription: 'hello hello hello hello hello hello'
         }
       ]
-    },
+    }, */
   ];
 
   get friends() {
@@ -148,61 +161,81 @@ export class FriendsService {
     this.showConfirm(didDocument);
   }
 
-  // Direct to friend-confirmation //
   showConfirm = (did) => {
     console.log('Confirm or deny?', did);
     this._DID = did;
+    this._friend.id = this._DID.id.didString;
+    this._DID.verifiableCredential.map(key => {
+      if(key.credentialId === '#name') {
+        this._friend.name = key.credentialSubject.name;
+      }
+      if(key.credentialId === '#gender') {
+        this._friend.gender = key.credentialSubject.gender;
+      }
+    })
     let props: NavigationExtras = {
       queryParams: {
-        did: did.verifiableCredential.name = 'Chad Racelis'
+        didId: this._friend.id,
+        didName: this._friend.name,
+        didGender: this._friend.gender,
+        didImage: this._friend.imageUrl
       }
     }
-    this.router.navigate(['menu/friend-confirmation'], props);
+    this.router.navigate(['/friend-confirmation'], props);
   }
 
   // Add DID if confirmed from friend-confirmation //
   addFriend = () => {
-    let fakeDID = this._DID = {
-      clazz: 11,
-      id: {
-        storeId: 'abc',
-        didString: 'did:elastos:fakeDID'
-      },
-      created: 'october',
-      updated: 'december',
-      verifiableCredential: {
-        id: '123',
-        name: 'Chad Racelis',
-        email: 'chad@elastos.com',
-        imageUrl: '',
-        ApplicationProfileCredential: [{appName: 'app1'}, {appName: 'app2'}, {appName: 'app3'}]
-      },
-      publicKey: 123,
-      authentication: 123,
-      authorization: 123,
-      expires: 123,
-      storeId: 'abc',
+    console.log('Current did', this._DID);
+    // this._friends = this._friends.concat(this._friend);
+    if(!this._friends.includes(this._friend)) {
+      this.storageService.setFriends(this._friends = this._friends.concat(this._friend));
+      this.storageService.setDIDs(this._DIDs = this._DIDs.concat(this._DID));
+      this.friendAdded(this._friend.name);
+      console.log('Friends updated', this._friends);
+    } else {
+      this.friendAlreadyAdded(this._friend.name);
+      console.log('Friend is already added');
     }
-    this._friends = this.friends.concat(fakeDID.verifiableCredential);
-    this.storageService.setDID(this._DIDs = this._DIDs.concat(fakeDID));
-    console.log('Friends updated', this._friends);
-    this.friendAdded(this._DID.verifiableCredential.name = 'Chad Racelis');
   }
 
   // Delete DID matching profile credentials from friend-details //
   deleteFriend(friend: Friend) {
     console.log('Deleting friend', friend);
-    this._DIDs = this._DIDs.filter(did => did.verifiableCredential.id !== friend.id);
+    this._DIDs = this._DIDs.filter(did => did.id.didString !== friend.id);
     this._friends = this._friends.filter(_friend => _friend.id !== friend.id);
     console.log('Updated friends', this._friends);
-    this.storageService.setDID(this._DIDs);
+    this.storageService.setDIDs(this._DIDs);
+    this.storageService.setFriends(this._friends);
     this.friendDeleted(friend);
+  }
+
+  // Change did name & note from custom-name page //
+  customDID(customName: string, customNote: string, didId: string) {
+    this._friends.map(friend => {
+      if(friend.id === didId) {
+        friend.name = customName;
+        friend.note = customNote;
+        this.storageService.setFriends(this._friends);
+      }
+    });
   }
 
   // Alerts //
   async friendAdded(didName: string) {
     const toast = await this.toastController.create({
+      mode: 'ios',
       message: didName + ' was added',
+      color: "primary",
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async friendAlreadyAdded(didName: string) {
+    const toast = await this.toastController.create({
+      mode: 'ios',
+      message: didName + ' is already in your friends',
       color: "primary",
       duration: 2000
     });
@@ -211,6 +244,7 @@ export class FriendsService {
 
   async friendDenied(didName: string) {
     const toast = await this.toastController.create({
+      mode: 'ios',
       message: 'Denied friend ' + didName,
       color: "primary",
       duration: 2000
@@ -220,6 +254,7 @@ export class FriendsService {
 
   async didResolveErr(err: string) {
     const toast = await this.toastController.create({
+      mode: 'ios',
       message: 'There was an error: ' + err,
       color: "primary",
       duration: 6000.
@@ -229,6 +264,7 @@ export class FriendsService {
 
   async friendDeleted(friend: Friend) {
     const toast = await this.toastController.create({
+      mode: 'ios',
       message: friend.name + ' was deleted',
       color: "primary",
       duration: 2000
@@ -238,15 +274,18 @@ export class FriendsService {
 
   // Store Friend DID //
   getStoredDIDs = () => {
-    this.storageService.getDID().then(res => {
-      console.log('Fetching stored DIDs', res);
-      if(res.length > 0) {
-        this._DIDs = this._DIDs.concat(res);
-        res.map(did => {
-          this._friends = this._friends.concat(did.verifiableCredential);
-        })
-        console.log('DIDs stored', this._DIDs, this._friends);
+    this.storageService.getDIDs().then(dids => {
+      console.log('Fetching stored DIDs', dids);
+      if(dids.length > 0) {
+        this._DIDs = this._DIDs.concat(dids);
+        console.log('DIDs stored', this._DIDs);
       }
+      this.storageService.getFriends().then(friends => {
+        console.log('Fetching stored friends', friends);
+        if(friends.length > 0) {
+          this._friends = this._friends.concat(friends);
+        }
+      })
     });
   }
 
@@ -271,81 +310,4 @@ export class FriendsService {
       });
     });
   }
-
-  // Call install app from friend-details //
- /*  async installApp(dapp) {
-    // Download the file
-    const epkPath = await this.downloadDapp(dapp);
-    console.log("EPK file downloaded and saved to " + epkPath);
-
-    // Ask the app installer to install the DApp
-    return appManager.sendIntent(
-      'appinstall',
-      { url: epkPath, dappStoreServerAppId: dapp._id },
-      () => {
-        console.log('App installed');
-        return true;
-      }, (err) => {
-        console.log('App install failed', err)
-        return false;
-      }
-    );
-  }
-
-  downloadDapp(app) {
-    console.log("App download starting...");
-
-    return new Promise((resolve, reject) => {
-      // Download EPK file as blob
-      this.http.get('https://dapp-store.elastos.org/apps/'+app._id+'/download', {
-        responseType: 'arraybuffer'} ).subscribe(async response => {
-        console.log("Downloaded", response);
-        let blob = new Blob([response], { type: "application/octet-stream" });
-        console.log("Blob", blob);
-
-        // Save to a temporary location
-        let filePath = await this._savedDownloadedBlobToTempLocation(blob);
-
-        resolve(filePath);
-      });
-    });
-  }
-
-  _savedDownloadedBlobToTempLocation(blob) {
-    let fileName = "appinstall.epk"
-    console.log('Cordova file directory' + cordova.file.dataDirectory);
-
-    return new Promise((resolve, reject) => {
-      window.resolveLocalFileSystemURL(cordova.file.dataDirectory, (dirEntry: DirectoryEntry) => {
-          dirEntry.getFile(fileName, { create: true, exclusive: false }, (fileEntry) => {
-            console.log("Downloaded file entry", fileEntry);
-            fileEntry.createWriter((fileWriter) => {
-              fileWriter.write(blob);
-              resolve("trinity:///data/"+fileName);
-            }, (err) => {
-              console.error("createWriter ERROR - "+JSON.stringify(err));
-              reject(err);
-            });
-          }, (err) => {
-            console.error("getFile ERROR - "+JSON.stringify(err));
-            reject(err);
-          });
-      }, (err) => {
-        console.error("resolveLocalFileSystemURL ERROR - "+JSON.stringify(err));
-        reject(err);
-      });
-    });
-  } */
-
-    // Another option for friend-confirmation //
-   /* async showPopover(did) {
-    const _popover = await this.popover.create({
-      component: FriendConfirmationPage,
-      componentProps: {
-        _did: did
-      },
-      translucent: true
-    });
-    return await _popover.present();
-  } */
 }

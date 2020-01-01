@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: 'friends', loadChildren: './pages/friends/friends.module#FriendsPageModule' },
   { path: 'addFriend', loadChildren: './pages/add-friend/add-friend.module#AddFriendPageModule' },
   { path: 'friend-confirmation', loadChildren: './pages/friend-confirmation/friend-confirmation.module#FriendConfirmationPageModule' },
+  { path: 'custom-name', loadChildren: './pages/custom-name/custom-name.module#CustomNamePageModule' },
   { path: ':friendId', loadChildren: './pages/friend-details/friend-details.module#FriendDetailsPageModule' },
 ];
 

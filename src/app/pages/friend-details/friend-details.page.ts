@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { NavController, AlertController, PopoverController } from '@ionic/angular';
 
 import { FriendsService } from 'src/app/services/friends.service';
@@ -39,6 +39,19 @@ export class FriendDetailsPage implements OnInit {
     });
   }
 
+  customizeFriend() {
+    let props: NavigationExtras = {
+      queryParams: {
+        didId: this.friend.id,
+        didName: this.friend.name,
+        didGender: this.friend.gender,
+        didNote: this.friend.note,
+        didImage: this.friend.imageUrl
+      }
+    }
+    this.router.navigate(['/custom-name'], props);
+  }
+
   showWarning(friend: Friend) {
     this.alertDelete(friend);
     this.deleteConfirm(friend);
@@ -73,7 +86,7 @@ export class FriendDetailsPage implements OnInit {
     return await popover.present();
   }
 
-  installApp(app) {
+  discoverApp(app) {
     console.log('Installing..', app);
     // this.friendsService.installApp(app);
   }

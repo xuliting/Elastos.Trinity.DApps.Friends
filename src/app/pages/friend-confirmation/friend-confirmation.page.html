@@ -14,14 +14,15 @@
   <div>
     <div class="profile-container" padding-bottom>
       <div class="profile-picture">
-        <img  src="assets/images/Guy_Face.svg">
-        <!-- <img src="assets/images/DefaultProfileWoman.svg"> -->
+        <img *ngIf="didImage" [src]="didImage">
+        <img *ngIf="!didImage && didGender === 'male'" src="assets/images/Guy_Face.svg">
+        <img *ngIf="!didImage && didGender === 'female'" src="assets/images/DefaultProfileWoman.svg">
       </div>
 
       <ion-grid>
         <ion-row>
-          <!-- <ion-col class="profile-name"><h1>{{ didName }}</h1></ion-col> -->
-          <ion-col class="profile-name"  no-padding><h1>Martin Knight</h1></ion-col>
+          <ion-col *ngIf="didName" class="profile-name"><h1>{{ didName }}</h1></ion-col>
+          <ion-col *ngIf="!didName" class="profile-name"><h1>{{ didId }}</h1></ion-col>
         </ion-row>
 
         <ion-row padding>
@@ -35,6 +36,7 @@
         <ion-row>
           <ion-col size="10" offset="1">
             <did-button
+              (click)="addFriend()"
               title="Add Friend"
               textcolor="#ffffff"
               [bgcolor]="'#3ABAFB'"
@@ -47,6 +49,7 @@
         <ion-row class="last-btn">
           <ion-col size="10" offset="1">
             <did-button
+              (click)="denyFriend()"
               title="Cancel Request"
               textcolor="'#000000'"
               [bgcolor]="'#fffff'"

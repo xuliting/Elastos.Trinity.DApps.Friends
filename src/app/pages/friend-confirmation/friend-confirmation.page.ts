@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { DID } from 'src/app/models/did.model';
+import { Friend } from 'src/app/models/friends.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
 
@@ -14,7 +15,10 @@ declare let appManager: AppManagerPlugin.AppManager;
 })
 export class FriendConfirmationPage implements OnInit {
 
+  public didId: string = '';
   public didName: string = '';
+  public didGender: string = '';
+  public didImage: string = '';
 
   constructor(
     private friendsService: FriendsService,
@@ -25,9 +29,11 @@ export class FriendConfirmationPage implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params && params.did) {
-        this.didName = params.did;
-        console.log(this.didName);
+      if (params) {
+        this.didId = params.didId;
+        this.didName = params.didName;
+        this.didGender = params.didGender;
+        this.didImage = params.didImage;
       }
     })
   }

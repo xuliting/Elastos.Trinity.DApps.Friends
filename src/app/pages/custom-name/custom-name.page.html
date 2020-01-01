@@ -1,0 +1,68 @@
+<ion-header no-border>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/', didId]">
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Custom Name</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-grid class="container" no-padding no-margin>
+
+  <div>
+    <div class="profile-container" padding-bottom>
+      <div class="profile-picture">
+        <img *ngIf="didImage" [src]="didImage">
+        <img *ngIf="!didImage && didGender === 'male'" src="assets/images/Guy_Face.svg">
+        <img *ngIf="!didImage && didGender === 'female'" src="assets/images/DefaultProfileWoman.svg">
+      </div>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col class="profile-name"><h1>{{ customName }}</h1></ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid padding>
+        <ion-row>
+          <ion-col size="10" offset="1" class="text-area">
+            <ion-input
+              #input
+              autosize
+              placeholder="   Custom name"
+              [(ngModel)]="customName"
+              (ngModelChange)="nameChanged($event)">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row margin-top>
+          <ion-col size="10" offset="1" class="text-area">
+            <ion-input
+              autosize
+              placeholder="   Custom note"
+              [(ngModel)]="customNote"
+              (ngModelChange)="noteChanged($event)">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row class="last-btn">
+          <ion-col size="10" offset="1">
+            <did-button
+              (click)="customDID()"
+              title="Confirm Change"
+              textcolor="#ffffff"
+              [bgcolor]="'#3ABAFB'"
+              [bordercolor]="'#3ABAFB'"
+              [shadow]="false"
+            >
+            </did-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
+  </div>
+
+</ion-grid>

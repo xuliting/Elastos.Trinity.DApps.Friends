@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { Friend } from 'src/app/models/friends.model';
-import { isObject } from 'util';
 
 declare let appManager: AppManagerPlugin.AppManager;
 
