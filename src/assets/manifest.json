@@ -1,14 +1,14 @@
 {
   "id": "org.elastos.trinity.dapp.friends",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "version_code": 1,
   "name": "Friends",
   "short_name": "Friends",
-  "short_description": "Friends DApp",
-  "description": "elastOS Friends DApp",
+  "short_description": "Manage friends by their DID and view which apps they are using.",
+  "description": "Manage friends by their DID and view which apps they are using.",
   "start_url": "index.html",
   "type": "app",
-  "category": "social",
+  "category": "communication",
   "icons": [
     {
       "src": "assets/images/logo.png",
@@ -22,9 +22,9 @@
     }
   ],
   "author": {
-    "name": "Chad Racelis",
-    "email": "chadracelis@yahoo.com",
-    "website": "https://github.com/chadracelis"
+    "name": "Elastos Foundation",
+    "email": "contact@elastos.org",
+    "website": "https://www.elastos.org"
   },
   "default_locale": "en",
   "plugins": [
