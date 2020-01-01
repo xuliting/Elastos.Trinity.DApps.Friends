@@ -6,7 +6,7 @@ export class Friend {
     public note: string,
     public email: string,
     public imageUrl: string,
-    public ApplicationProfileCredential: any[]
+    public applicationProfileCredentials: any[]
   ) {}
 }
 

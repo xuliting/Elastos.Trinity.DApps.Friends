@@ -28,7 +28,7 @@ export class FriendsService {
     note: '',
     email: '',
     imageUrl: '',
-    ApplicationProfileCredential: []
+    applicationProfileCredentials: []
   };
   private _friends: Friend[] = [
     /*  {
@@ -161,9 +161,9 @@ export class FriendsService {
     this.showConfirm(didDocument);
   }
 
-  showConfirm = (did) => {
-    console.log('Confirm or deny?', did);
-    this._DID = did;
+  showConfirm = (didDocument) => { // FIXME: DID or DIDDOCUMENT?
+    console.log('Confirm or deny?', didDocument);
+    this._DID = didDocument;
     this._friend.id = this._DID.id.didString;
     this._DID.verifiableCredential.map(key => {
       if(key.credentialId === '#name') {
@@ -173,6 +173,8 @@ export class FriendsService {
         this._friend.gender = key.credentialSubject.gender;
       }
     })
+    this._friend.applicationProfileCredentials = didDocument.findCredentials(["ApplicationProfileCredential"]);
+    console.log(this._friend.applicationProfileCredentials)
     let props: NavigationExtras = {
       queryParams: {
         didId: this._friend.id,
@@ -301,6 +303,10 @@ export class FriendsService {
     return new Promise((resolve, reject)=>{
       didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument)=>{
         console.log("DIDDocument resolved for DID "+didString, didDocument);
+
+        let creds = didDocument.findCredentials(["ApplicationProfileCredential"]);
+        console.log("creds", creds);
+
         resolve(didDocument);
       }, (err: any)=>{
         console.error("DIDDocument resolving error", err);
