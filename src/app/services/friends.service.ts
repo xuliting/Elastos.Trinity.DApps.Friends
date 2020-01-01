@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { StorageService } from 'src/app/services/storage.service';
 import { Friend } from '../models/friends.model';
 import { DID } from '../models/did.model';
+import { ThrowStmt } from '@angular/compiler';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
@@ -18,8 +19,8 @@ let managerService: any;
 })
 export class FriendsService {
 
-  private _DID: DID;
-  private _DIDs: DID[] = [];
+  private _didDoc: DID;
+  private _didDocs: DID[] = [];
 
   private _friend: Friend = {
     id: '',
@@ -30,83 +31,7 @@ export class FriendsService {
     imageUrl: '',
     applicationProfileCredentials: []
   };
-  private _friends: Friend[] = [
-    /*  {
-      id: '1',
-      name: 'Chad Racelis',
-      gender: 'male',
-      email: 'chad@elastos.com',
-      imageUrl: 'https://chadracelis.github.io/resume/img/profile.jpg',
-      ApplicationProfileCredential: [
-        {
-          appName: 'DefaceBook',
-          appShortDescription: 'hello hello hello hello hello hello'
-        },
-        {
-          appName: 'DexiFi',
-          appShortDescription: 'hello hello hello hello hello hello'
-        },
-        {
-          appName: 'WhatsDApp',
-          appShortDescription: 'hello hello hello hello hello hello'
-        },
-        {
-          appName: 'Dalibaba',
-          appShortDescription: 'hello hello hello hello hello hello'
-        }
-      ]
-    },
-    {
-      id: '2',
-      name: 'Benjamin Piette',
-      gender: 'male',
-      email: 'ben@elastos.com',
-      imageUrl: 'https://avatars2.githubusercontent.com/u/7567594?s=400&v=4',
-      ApplicationProfileCredential: [
-        {
-          appName: 'Dweeeter',
-          appShortDescription: 'hello hello hello hello hello hello'
-        },
-        {
-          appName: 'CashDApp',
-          appShortDescription: 'hello hello hello hello hello hello'
-        },
-        {
-          appName: 'DeChat',
-          appShortDescription: 'hello hello hello hello hello hello'
-        },
-        {
-          appName: 'Damazon',
-          appShortDescription: 'hello hello hello hello hello hello'
-        }
-      ]
-    },
-    {
-      id: '3',
-      name: 'Martin Knight',
-      gender: 'male',
-      email: 'martin@elastos.com',
-      imageUrl: '',
-      ApplicationProfileCredential: [
-        {
-          appName: 'SnapDapp',
-          appShortDescription: 'hello hello hello hello hello hello'
-        },
-        {
-          appName: 'DeTube',
-          appShortDescription: 'hello hello hello hello hello hello'
-        },
-        {
-          appName: 'DeMessage',
-          appShortDescription: 'hello hello hello hello hello hello'
-        },
-        {
-          appName: 'DeBay',
-          appShortDescription: 'hello hello hello hello hello hello'
-        }
-      ]
-    }, */
-  ];
+  private _friends: Friend[] = [];
 
   get friends() {
     return [...this._friends];
@@ -161,20 +86,23 @@ export class FriendsService {
     this.showConfirm(didDocument);
   }
 
-  showConfirm = (didDocument) => { // FIXME: DID or DIDDOCUMENT?
+  // Direct user to friend-confirmation if DID was added via scan or through add-friend page
+  showConfirm = (didDocument) => {
     console.log('Confirm or deny?', didDocument);
-    this._DID = didDocument;
-    this._friend.id = this._DID.id.didString;
-    this._DID.verifiableCredential.map(key => {
+    this._didDoc = didDocument;
+    this._friend.id = this._didDoc.id.didString;
+    this._didDoc.verifiableCredential.map(key => {
       if(key.credentialId === '#name') {
         this._friend.name = key.credentialSubject.name;
       }
       if(key.credentialId === '#gender') {
         this._friend.gender = key.credentialSubject.gender;
       }
-    })
-    this._friend.applicationProfileCredentials = didDocument.findCredentials(["ApplicationProfileCredential"]);
-    console.log(this._friend.applicationProfileCredentials)
+    });
+
+    // this._friend.applicationProfileCredentials = didDocument.findCredentials(["ApplicationProfileCredential"]);
+    // console.log(this._friend.applicationProfileCredentials)
+
     let props: NavigationExtras = {
       queryParams: {
         didId: this._friend.id,
@@ -188,11 +116,30 @@ export class FriendsService {
 
   // Add DID if confirmed from friend-confirmation //
   addFriend = () => {
-    console.log('Current did', this._DID);
-    // this._friends = this._friends.concat(this._friend);
+    console.log('Current did', this._didDoc);
     if(!this._friends.includes(this._friend)) {
+
+      this._didDoc.verifiableCredential.map(key => {
+        if(key.type.includes('ApplicationProfileCredential')) {
+          this._friend.applicationProfileCredentials = this._friend.applicationProfileCredentials.concat(key.credentialSubject);
+        }
+      });
+
+      appManager.getAppInfos((info) => {
+        console.log("App infos", info)
+        let installedApps = Object.values(info);
+
+        this._friend.applicationProfileCredentials.map((dapp) => {
+          installedApps.map((app) => {
+            if(dapp.apppackage === app.id) {
+              dapp.installed = true;
+            }
+          });
+        });
+      });
+
       this.storageService.setFriends(this._friends = this._friends.concat(this._friend));
-      this.storageService.setDIDs(this._DIDs = this._DIDs.concat(this._DID));
+      this.storageService.setDIDs(this._didDocs = this._didDocs.concat(this._didDocs));
       this.friendAdded(this._friend.name);
       console.log('Friends updated', this._friends);
     } else {
@@ -204,10 +151,10 @@ export class FriendsService {
   // Delete DID matching profile credentials from friend-details //
   deleteFriend(friend: Friend) {
     console.log('Deleting friend', friend);
-    this._DIDs = this._DIDs.filter(did => did.id.didString !== friend.id);
+    this._didDocs = this._didDocs.filter(did => did.id.didString !== friend.id);
     this._friends = this._friends.filter(_friend => _friend.id !== friend.id);
     console.log('Updated friends', this._friends);
-    this.storageService.setDIDs(this._DIDs);
+    this.storageService.setDIDs(this._didDocs);
     this.storageService.setFriends(this._friends);
     this.friendDeleted(friend);
   }
@@ -279,8 +226,8 @@ export class FriendsService {
     this.storageService.getDIDs().then(dids => {
       console.log('Fetching stored DIDs', dids);
       if(dids.length > 0) {
-        this._DIDs = this._DIDs.concat(dids);
-        console.log('DIDs stored', this._DIDs);
+        this._didDocs = this._didDocs.concat(dids);
+        console.log('DIDs stored', this._didDocs);
       }
       this.storageService.getFriends().then(friends => {
         console.log('Fetching stored friends', friends);
@@ -303,17 +250,16 @@ export class FriendsService {
     return new Promise((resolve, reject)=>{
       didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument)=>{
         console.log("DIDDocument resolved for DID "+didString, didDocument);
-
-        let creds = didDocument.findCredentials(["ApplicationProfileCredential"]);
-        console.log("creds", creds);
-
         resolve(didDocument);
-      }, (err: any)=>{
+      }, (err: any) => {
         console.error("DIDDocument resolving error", err);
         this.didResolveErr(err.message);
-        // TODO: handle this.
         reject();
       });
     });
+  }
+
+  startApp(id) {
+    appManager.start(id);
   }
 }

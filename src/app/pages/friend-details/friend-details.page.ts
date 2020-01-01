@@ -91,28 +91,11 @@ export class FriendDetailsPage implements OnInit {
     // this.friendsService.installApp(app);
   }
 
+  startApp(id) {
+    this.friendsService.startApp(id);
+  }
+
   closeApp() {
     appManager.close();
   }
-
-   /*  async alertDelete(friend: Friend) {
-    const alert = await this.alertController.create({
-      mode: 'ios',
-      header: 'Are you sure?',
-      buttons: [
-        {
-          text: 'Confirm',
-          handler: () => {
-            this.deleteFriend(friend);
-          }
-        },
-        {
-          text: 'Go Back',
-          role: 'cancel',
-        },
-      ]
-    });
-
-    await alert.present();
-  } */
 }

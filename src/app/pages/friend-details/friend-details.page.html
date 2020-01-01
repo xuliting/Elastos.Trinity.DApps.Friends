@@ -47,7 +47,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-list *ngIf="friend.applicationProfileCredentials.length > 0" no-padding>
+        <ion-list *ngIf="friend.applicationProfileCredentials" no-padding>
             <ion-item
             *ngFor="let app of friend.applicationProfileCredentials"
             color="light"
@@ -61,13 +61,16 @@
                   </ion-col>
                   <ion-col size="6.5" class="app-info">
                     <ion-label>
-                      <h4>{{ app.appName }}</h4>
+                      <h4>{{ app.identifier }}</h4>
                       <p>{{ app.appShortDescription }}</p>
                     </ion-label>
                   </ion-col>
                   <ion-col size="3" class="btn-container">
-                    <ion-button  color="tertiary" (click)="discoverApp(app)">
+                    <ion-button *ngIf="!app.installed" color="tertiary" (click)="discoverApp(app)">
                       <ion-label>Discover</ion-label>
+                    </ion-button>
+                    <ion-button *ngIf="app.installed" (click)="startApp(app.apppackage)" color="tertiary" (click)="discoverApp(app)">
+                      <ion-label>Open</ion-label>
                     </ion-button>
                   </ion-col>
                 </ion-row>
