@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { NavController, AlertController, PopoverController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
 
 import { FriendsService } from 'src/app/services/friends.service';
 
@@ -53,7 +52,7 @@ export class FriendDetailsPage implements OnInit {
   // Using appstore get-manifest api
   getApps() {
     this.appsLoaded = true;
-    if(this.friend.applicationProfileCredentials.length > 0) {
+    if(this.friend.applicationProfileCredentials) {
       let fetchedApps = [];
       this.appsLoaded = false;
       this.friend.applicationProfileCredentials.map(app => {
