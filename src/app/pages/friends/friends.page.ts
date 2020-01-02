@@ -21,7 +21,7 @@ export class FriendsPage implements OnInit {
   friendsLoaded = true;
 
   constructor(
-    private friendsService: FriendsService,
+    public friendsService: FriendsService,
   ) { }
 
   ngOnInit() {

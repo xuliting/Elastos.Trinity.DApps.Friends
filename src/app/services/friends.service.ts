@@ -160,6 +160,27 @@ export class FriendsService {
     this.friendDeleted(friend);
   }
 
+  public isMale(gender: string) {
+    // undefined gender = consider as male by default.
+    return (!gender || gender === 'male');
+  }
+
+  async appIsInstalled(appPackageId: string): Promise<boolean> {
+    return new Promise((resolve, reject)=>{
+      appManager.getAppInfo(appPackageId, (appInfo)=>{
+        if (appInfo) {
+          resolve(true);
+        }
+        else {
+          resolve(false);
+        }
+      }, (err)=>{
+        console.warn(err);
+        resolve(false);
+      });
+    });
+  }
+
   // Change did name & note from custom-name page //
   customDID(customName: string, customNote: string, didId: string) {
     this._friends.map(friend => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { NavController, AlertController, PopoverController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
@@ -11,8 +11,15 @@ import { DApp } from 'src/app/models/dapp.model';
 import { WarningPage } from './warning/warning.page';
 import { Warning2Page } from './warning2/warning2.page';
 
-
 declare let appManager: AppManagerPlugin.AppManager;
+
+type DisplayableAppInfo = {
+  packageId: string,
+  app: DApp,
+  action: string,
+  infoFetched: boolean,
+  isInstalled: boolean
+}
 
 @Component({
   selector: 'app-friend-details',
@@ -20,15 +27,14 @@ declare let appManager: AppManagerPlugin.AppManager;
   styleUrls: ['./friend-details.page.scss'],
 })
 export class FriendDetailsPage implements OnInit {
-
   friend: Friend;
-  friendsApps: DApp[] = [];
-  appsLoaded: boolean = false;
+  friendsApps: DisplayableAppInfo[] = [];
 
   constructor(
-    private friendsService: FriendsService,
+    public friendsService: FriendsService,
     private route: ActivatedRoute,
     private router: Router,
+    private zone: NgZone,
     private navCtrl: NavController,
     private alertController: AlertController,
     private popover: PopoverController,
@@ -43,28 +49,81 @@ export class FriendDetailsPage implements OnInit {
       }
       this.friend = this.friendsService.getFriend(paramMap.get('friendId'));
       console.log(this.friend);
+      this.buildDisplayableAppsInfo();
       this.getApps();
     });
     // Used to retrieve app data from app store
     // this.shipAppInfo();
   }
 
-  // Using appstore get-manifest api
-  getApps() {
-    this.appsLoaded = true;
-    if(this.friend.applicationProfileCredentials) {
-      let fetchedApps = [];
-      this.appsLoaded = false;
-      this.friend.applicationProfileCredentials.map(app => {
-        console.log('Fetching app info', app);
-        this.http.get<DApp[]>('https://dapp-store.elastos.org/apps/' + app.apppackage + '/manifest').subscribe(manifest => {
-          console.log('Got app!', manifest);
-          fetchedApps = fetchedApps.concat(manifest);
-          this.filterApps(fetchedApps);
-          console.log('FETCHED APPS', fetchedApps);
-        });
+  /**
+   * From the list of friend's app credentials, build a preliminary list of displayable
+   * items. Those app items are going to be completed later on by fetching info from the app store.
+   */
+  private buildDisplayableAppsInfo() {
+    this.friendsApps = [];
+
+    if (this.friend.applicationProfileCredentials) {
+      this.friend.applicationProfileCredentials.map((apc)=>{
+        // Used the provided app profile action if any.
+        let action = apc.action || null;
+
+        // Push a new empty app info, waiting to get populated.
+        this.friendsApps.push({
+          packageId: apc.apppackage,
+          app: null,
+          action: action,
+          infoFetched: false,
+          isInstalled: false
+        })
       });
     }
+    else {
+      console.log("No application profile credential found in this friend's profile.");
+    }
+  }
+
+  // Using appstore get-manifest api
+  getApps() {    
+    this.friendsApps.map(appInfo => {
+      console.log('Fetching app info for:', appInfo);
+
+      this.http.get<DApp>('https://dapp-store.elastos.org/apps/' + appInfo.packageId + '/manifest').subscribe((manifest: DApp) => {
+        console.log('Got app!', manifest);
+
+        this.zone.run(async ()=>{
+          appInfo.app = manifest;
+          appInfo.infoFetched = true;
+
+          // No action defined y the credential? Use the app description instead.
+          if (!appInfo.action)
+            appInfo.action = manifest.short_description;
+
+          // Check if this app is installed on user's device or not.
+          appInfo.isInstalled = await this.friendsService.appIsInstalled(appInfo.packageId);
+        })
+      });
+    });
+  }
+
+  /**
+   * Checks if all app info have been fetched from the app store or if we are still waiting for
+   * some of them
+   */
+  allAppsInfoLoaded() {
+    // Search at least one unloaded app
+    let unloadedAppInfo = this.friendsApps.find((app)=>{
+      return !app.infoFetched;
+    })
+    return (unloadedAppInfo == null);
+  }
+
+  /**
+   * If the credential provides an action string we use it. Otherwise
+   * we just display the appliation description.
+   */
+  getDisplayableSubtitle(appInfo: DisplayableAppInfo) {
+    return appInfo.action;
   }
 
   // Using appstore apps-list api
@@ -79,20 +138,6 @@ export class FriendDetailsPage implements OnInit {
       });
     }
   } */
-
-  filterApps = (apps) => {
-    let unfilteredApps = [];
-    this.friend.applicationProfileCredentials.map(credApp => {
-      apps.map(fetchedApp => {
-        if(credApp.apppackage === fetchedApp.id) {
-          unfilteredApps = unfilteredApps.concat(fetchedApp);
-        }
-      });
-    });
-    this.friendsApps = unfilteredApps.filter((a, b) => unfilteredApps.indexOf(a) === b);
-    this.appsLoaded = true;
-    console.log('My apps', this.friendsApps);
-  }
 
   getAppIcon(app) {
     return "https://dapp-store.elastos.org/apps/"+app.id+"/icon";
@@ -145,13 +190,25 @@ export class FriendDetailsPage implements OnInit {
     return await popover.present();
   }
 
-  discoverApp(id) {
-    console.log('Inquiring app in app-store..', id);
-    appManager.sendIntent("appdetails", id)
+  discoverApp(app: DApp) {
+    console.log('Inquiring app in app-store..', app.id);
+    appManager.sendIntent("appdetails", app.id)
   }
 
-  startApp(id) {
-    this.friendsService.startApp(id);
+  startApp(app: DApp) {
+    // ON HOLD: looking for a way to send an intent to only a specific app id.
+    // TODO: Pass all the app profile credential entries as intent parameter, except: action, apppackage, apptype
+    // Those fields are like:
+    // {diddemoid: "abcd", otherField:"123"}.
+    // Need to keep "identifier"
+    //
+    // TODO: if the sendIntent tells that no app can handle the intent request, just call startApp() as fallback.
+    /*appManager.sendIntent("connectapplicationprofile", {}, ()=>{
+
+    }, ()=>{
+
+    });*/
+    this.friendsService.startApp(app.id);
   }
 
   closeApp() {

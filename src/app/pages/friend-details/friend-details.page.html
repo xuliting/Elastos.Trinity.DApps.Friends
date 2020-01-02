@@ -21,8 +21,8 @@
       <div class="profile-container" padding-bottom>
         <div class="profile-picture">
           <img *ngIf="friend.imageUrl" [src]="friend.imageUrl">
-          <img *ngIf="!friend.imageUrl && friend.gender === 'male'" src="assets/images/Guy_Face.svg">
-          <img *ngIf="!friend.imageUrl && friend.gender === 'female'" src="assets/images/DefaultProfileWoman.svg">
+          <img *ngIf="!friend.imageUrl && friendsService.isMale(friend.gender)" src="assets/images/Guy_Face.svg">
+          <img *ngIf="!friend.imageUrl && !friendsService.isMale(friend.gender)" src="assets/images/DefaultProfileWoman.svg">
         </div>
         <ion-row>
           <ion-col class="profile-name"><h1>{{ friend.name }}</h1></ion-col>
@@ -47,30 +47,31 @@
           </ion-col>
         </ion-row>
 
-        <ion-list *ngIf="friendsApps && appsLoaded" no-padding>
+        <ion-list *ngIf="allAppsInfoLoaded()" no-padding>
             <ion-item
               class="app"
-              *ngFor="let app of friendsApps"
+              *ngFor="let appInfo of friendsApps"
               color="light"
+              lines="none"
             >
-              <ion-grid no-padding>
+              <ion-grid no-padding *ngIf="appInfo.infoFetched">
                 <ion-row align-items-center>
                   <ion-col size="2.5">
                     <ion-thumbnail>
-                      <ion-img [src]="getAppIcon(app)"></ion-img>
+                      <ion-img [src]="getAppIcon(appInfo.app)"></ion-img>
                     </ion-thumbnail>
                   </ion-col>
                   <ion-col size="6.5" class="app-info">
                     <ion-label>
-                      <h4>{{ app.name }}</h4>
-                      <p>{{ app.short_description }}</p>
+                      <h4>{{ appInfo.app.name }}</h4>
+                      <p>{{ getDisplayableSubtitle(appInfo) }}</p>
                     </ion-label>
                   </ion-col>
                   <ion-col size="3" class="btn-container">
-                    <ion-button *ngIf="!app.installed" (click)="discoverApp(app.id)" color="tertiary" (click)="discoverApp(app)">
+                    <ion-button *ngIf="!appInfo.isInstalled" color="tertiary" (click)="discoverApp(appInfo.app)">
                       <ion-label>Discover</ion-label>
                     </ion-button>
-                    <ion-button *ngIf="app.installed" (click)="startApp(app.id)" color="tertiary" (click)="discoverApp(app)">
+                    <ion-button *ngIf="appInfo.isInstalled" color="tertiary" (click)="startApp(appInfo.app)">
                       <ion-label>Open</ion-label>
                     </ion-button>
                   </ion-col>
@@ -79,7 +80,7 @@
             </ion-item>
         </ion-list>
 
-        <ion-list *ngIf="friendsApps.length === 0 && appsLoaded" no-padding>
+        <ion-list *ngIf="friendsApps.length === 0 && allAppsInfoLoaded()" no-padding>
           <ion-item class="app" lines="none">
             <ion-grid>
               <ion-row>
@@ -93,7 +94,7 @@
           </ion-item>
         </ion-list>
 
-        <ion-list *ngIf="!appsLoaded">
+        <ion-list *ngIf="!allAppsInfoLoaded()">
           <ion-item lines="none" padding>
             <ion-grid>
               <ion-row text-center>

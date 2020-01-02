@@ -21,7 +21,7 @@ export class FriendConfirmationPage implements OnInit {
   public didImage: string = '';
 
   constructor(
-    private friendsService: FriendsService,
+    public friendsService: FriendsService,
     private popover: PopoverController,
     private route: ActivatedRoute,
     private router: Router,

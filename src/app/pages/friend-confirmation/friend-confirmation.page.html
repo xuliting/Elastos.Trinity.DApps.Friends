@@ -15,8 +15,8 @@
     <div class="profile-container" padding-bottom>
       <div class="profile-picture">
         <img *ngIf="didImage" [src]="didImage">
-        <img *ngIf="!didImage && didGender === 'male'" src="assets/images/Guy_Face.svg">
-        <img *ngIf="!didImage && didGender === 'female'" src="assets/images/DefaultProfileWoman.svg">
+        <img *ngIf="!didImage && friendsService.isMale(didGender)" src="assets/images/Guy_Face.svg">
+        <img *ngIf="!didImage && !friendsService.isMale(didGender)" src="assets/images/DefaultProfileWoman.svg">
       </div>
 
       <ion-grid>
