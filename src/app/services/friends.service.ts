@@ -125,7 +125,8 @@ export class FriendsService {
         }
       });
 
-      appManager.getAppInfos((info) => {
+      // Check if user has friend's apps installed
+     /*  appManager.getAppInfos((info) => {
         console.log("App infos", info)
         let installedApps = Object.values(info);
 
@@ -136,7 +137,7 @@ export class FriendsService {
             }
           });
         });
-      });
+      }); */
 
       this.storageService.setFriends(this._friends = this._friends.concat(this._friend));
       this.storageService.setDIDs(this._didDocs = this._didDocs.concat(this._didDocs));

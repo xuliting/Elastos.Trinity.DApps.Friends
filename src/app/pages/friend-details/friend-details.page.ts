@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { NavController, AlertController, PopoverController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 
 import { FriendsService } from 'src/app/services/friends.service';
+
 import { Friend } from 'src/app/models/friends.model';
+import { DApp } from 'src/app/models/dapp.model';
 
 import { WarningPage } from './warning/warning.page';
 import { Warning2Page } from './warning2/warning2.page';
+
 
 declare let appManager: AppManagerPlugin.AppManager;
 
@@ -18,6 +23,8 @@ declare let appManager: AppManagerPlugin.AppManager;
 export class FriendDetailsPage implements OnInit {
 
   friend: Friend;
+  friendsApps: DApp[] = [];
+  appsLoaded: boolean = false;
 
   constructor(
     private friendsService: FriendsService,
@@ -25,7 +32,8 @@ export class FriendDetailsPage implements OnInit {
     private router: Router,
     private navCtrl: NavController,
     private alertController: AlertController,
-    private popover: PopoverController
+    private popover: PopoverController,
+    private http: HttpClient,
   ) { }
 
   ngOnInit() {
@@ -36,7 +44,59 @@ export class FriendDetailsPage implements OnInit {
       }
       this.friend = this.friendsService.getFriend(paramMap.get('friendId'));
       console.log(this.friend);
+      this.getApps();
     });
+    // Used to retrieve app data from app store
+    // this.shipAppInfo();
+  }
+
+  // Using appstore get-manifest api
+  getApps() {
+    this.appsLoaded = true;
+    if(this.friend.applicationProfileCredentials.length > 0) {
+      let fetchedApps = [];
+      this.appsLoaded = false;
+      this.friend.applicationProfileCredentials.map(app => {
+        console.log('Fetching app info', app);
+        this.http.get<DApp[]>('https://dapp-store.elastos.org/apps/' + app.apppackage + '/manifest').subscribe(manifest => {
+          console.log('Got app!', manifest);
+          fetchedApps = fetchedApps.concat(manifest);
+          this.filterApps(fetchedApps);
+          console.log('FETCHED APPS', fetchedApps);
+        });
+      });
+    }
+  }
+
+  // Using appstore apps-list api
+  /* getApps() {
+    this.appsLoaded = true;
+    if(this.friend.applicationProfileCredentials.length > 0) {
+      this.appsLoaded = false;
+      console.log('Fetching apps');
+      this.http.get<DApp[]>('https://dapp-store.elastos.org/apps/list').subscribe(apps => {
+        console.log('Apps!', apps);
+        this.filterApps(apps);
+      });
+    }
+  } */
+
+  filterApps = (apps) => {
+    let unfilteredApps = [];
+    this.friend.applicationProfileCredentials.map(credApp => {
+      apps.map(fetchedApp => {
+        if(credApp.apppackage === fetchedApp.id) {
+          unfilteredApps = unfilteredApps.concat(fetchedApp);
+        }
+      });
+    });
+    this.friendsApps = unfilteredApps.filter((a, b) => unfilteredApps.indexOf(a) === b);
+    this.appsLoaded = true;
+    console.log('My apps', this.friendsApps);
+  }
+
+  getAppIcon(app) {
+    return "https://dapp-store.elastos.org/apps/"+app.id+"/icon";
   }
 
   customizeFriend() {
@@ -86,9 +146,9 @@ export class FriendDetailsPage implements OnInit {
     return await popover.present();
   }
 
-  discoverApp(app) {
-    console.log('Installing..', app);
-    // this.friendsService.installApp(app);
+  discoverApp(id) {
+    console.log('Inquiring app in app-store..', id);
+    appManager.sendIntent("appdetails", id)
   }
 
   startApp(id) {
@@ -98,4 +158,28 @@ export class FriendDetailsPage implements OnInit {
   closeApp() {
     appManager.close();
   }
+
+  /* // Prepare to ship app packages to app store
+  async shipAppInfo() {
+    let sendPackages = [];
+    this.friend.applicationProfileCredentials.map(app => {
+      sendPackages = sendPackages.concat(app.apppackage);
+    });
+
+    let appStoreRes = await this.getAppInfo(sendPackages);
+    console.log('App store responded!', appStoreRes);
+  }
+
+  // Wait for response from app store
+  getAppInfo(sendPackages) {
+    return new Promise((resolve, reject) => {
+      appManager.sendIntent("appdetails", sendPackages, (res) => {
+        console.log('Response recieved', res)
+        resolve(res);
+      }, (err: any) => {
+        console.log(err);
+        reject(err);
+      });
+    });
+  } */
 }
