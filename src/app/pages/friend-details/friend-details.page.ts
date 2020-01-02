@@ -64,6 +64,7 @@ export class FriendDetailsPage implements OnInit {
     this.friendsApps = [];
 
     if (this.friend.applicationProfileCredentials) {
+      console.log('Friend\'s app creds ', this.friend.applicationProfileCredentials)
       this.friend.applicationProfileCredentials.map((apc)=>{
         // Used the provided app profile action if any.
         let action = apc.action || null;
@@ -75,7 +76,8 @@ export class FriendDetailsPage implements OnInit {
           action: action,
           infoFetched: false,
           isInstalled: false
-        })
+        });
+        console.log('Friend\'s apps', this.friendsApps);
       });
     }
     else {
@@ -192,25 +194,30 @@ export class FriendDetailsPage implements OnInit {
 
   discoverApp(app: DApp) {
     console.log('Inquiring app in app-store..', app.id);
-    appManager.sendIntent("appdetails", app.id)
+    appManager.sendIntent("appdetails", app.id, {})
   }
 
   startApp(app: DApp) {
-    // TODO: Pass all the app profile credential entries as intent parameter, except: action, apppackage, apptype
-    // Those fields are like:
-    // {diddemoid: "abcd", otherField:"123"}.
-    // Need to keep "identifier"
-    //
-    // TODO: if the sendIntent tells that no app can handle the intent request, just call startApp() as fallback.
-    appManager.sendIntent("connectapplicationprofile", {/*TODO*/}, {
-      appId: app.id
-    }, ()=>{
-      console.log("connectapplicationprofile intent success");
-    }, (err)=>{
-      console.error("connectapplicationprofile intent error", err);
+    this.friend.applicationProfileCredentials.map((appCred) => {
+      if(appCred.apppackage === app.id) {
+        console.log('Launching appCred: ' + appCred, 'appManifest: ', app);
+        appManager.sendIntent(
+          "connectapplicationprofile",
+          {
+            diddemoid: appCred.diddemoid,
+            identifier: appCred.identifier,
+            otherCustomFieldDIDDemoAppWillReceiveFromConnectAppProfileIntent:
+            appCred.otherCustomFieldDIDDemoAppWillReceiveFromConnectAppProfileIntent
+          },
+          { appId: app.id },
+          () => {
+          console.log("connectapplicationprofile intent success");
+        }, (err) => {
+          this.friendsService.startApp(app.id);
+          console.error("connectapplicationprofile intent error", err);
+        });
+      }
     });
-
-    // TODO this.friendsService.startApp(app.id);
   }
 
   closeApp() {

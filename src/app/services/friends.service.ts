@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
 import { StorageService } from 'src/app/services/storage.service';
 import { Friend } from '../models/friends.model';
 import { DID } from '../models/did.model';
-import { ThrowStmt } from '@angular/compiler';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
@@ -253,7 +252,7 @@ export class FriendsService {
    * through "registerapplicationprofile" intents, by the DID app, on request from third party apps. This
    * is where we can retrieve public app profile information for a "user" (DID).
    */
-  resolveDIDDocument(didString: DIDPlugin.DIDString) {
+  resolveDIDDocument(didString: DIDPlugin.DIDString): Promise<Boolean> {
     console.log('DID string', didString);
     return new Promise((resolve, reject) => {
       didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument) => {
