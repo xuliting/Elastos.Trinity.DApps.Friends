@@ -253,16 +253,17 @@ export class FriendsService {
    * through "registerapplicationprofile" intents, by the DID app, on request from third party apps. This
    * is where we can retrieve public app profile information for a "user" (DID).
    */
-  resolveDIDDocument(didString: DIDPlugin.DIDString): Promise<DIDPlugin.DIDDocument> {
+  resolveDIDDocument(didString: DIDPlugin.DIDString) {
     console.log('DID string', didString);
-    return new Promise((resolve, reject)=>{
-      didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument)=>{
+    return new Promise((resolve, reject) => {
+      didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument) => {
         console.log("DIDDocument resolved for DID " + didString, didDocument);
-        resolve(didDocument);
+        this.showConfirm(didDocument);
+        resolve(true);
       }, (err: any) => {
         console.error("DIDDocument resolving error", err);
         this.didResolveErr(err.message);
-        reject();
+        resolve(true);
       });
     });
   }
