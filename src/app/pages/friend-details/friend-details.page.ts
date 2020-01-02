@@ -84,7 +84,7 @@ export class FriendDetailsPage implements OnInit {
   }
 
   // Using appstore get-manifest api
-  getApps() {    
+  getApps() {
     this.friendsApps.map(appInfo => {
       console.log('Fetching app info for:', appInfo);
 
@@ -95,7 +95,7 @@ export class FriendDetailsPage implements OnInit {
           appInfo.app = manifest;
           appInfo.infoFetched = true;
 
-          // No action defined y the credential? Use the app description instead.
+          // No action defined by the credential? Use the app description instead.
           if (!appInfo.action)
             appInfo.action = manifest.short_description;
 
@@ -209,7 +209,7 @@ export class FriendDetailsPage implements OnInit {
     }, (err)=>{
       console.error("connectapplicationprofile intent error", err);
     });
-    
+
     // TODO this.friendsService.startApp(app.id);
   }
 

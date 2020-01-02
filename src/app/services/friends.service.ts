@@ -125,20 +125,6 @@ export class FriendsService {
         }
       });
 
-      // Check if user has friend's apps installed
-     /*  appManager.getAppInfos((info) => {
-        console.log("App infos", info)
-        let installedApps = Object.values(info);
-
-        this._friend.applicationProfileCredentials.map((dapp) => {
-          installedApps.map((app) => {
-            if(dapp.apppackage === app.id) {
-              dapp.installed = true;
-            }
-          });
-        });
-      }); */
-
       this.storageService.setFriends(this._friends = this._friends.concat(this._friend));
       this.storageService.setDIDs(this._didDocs = this._didDocs.concat(this._didDocs));
       this.friendAdded(this._friend.name);
@@ -271,7 +257,7 @@ export class FriendsService {
     console.log('DID string', didString);
     return new Promise((resolve, reject)=>{
       didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument)=>{
-        console.log("DIDDocument resolved for DID "+didString, didDocument);
+        console.log("DIDDocument resolved for DID " + didString, didDocument);
         resolve(didDocument);
       }, (err: any) => {
         console.error("DIDDocument resolving error", err);

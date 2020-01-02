@@ -3,6 +3,7 @@ import { ToastController, IonInput } from '@ionic/angular';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { DID } from 'src/app/models/did.model';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 declare let appManager: AppManagerPlugin.AppManager;
@@ -17,6 +18,7 @@ export class AddFriendPage implements OnInit {
   @ViewChild('input', {static: false}) input: IonInput;
 
   didInput: string = '';
+  didResolved: boolean = true;
 
   constructor(
     private friendsService: FriendsService,
@@ -25,6 +27,7 @@ export class AddFriendPage implements OnInit {
   }
 
   ngOnInit() {
+    this.didResolved = true;
   }
 
   ionViewDidEnter() {
@@ -54,9 +57,12 @@ export class AddFriendPage implements OnInit {
       this.inputInvalid();
       this.didInput = "";
     } else {
+      this.didResolved = false;
       console.log("Resolving DID Document");
+
       // Test for resolving DID on TESTNET
       let didDocument = await this.friendsService.resolveDIDDocument(this.didInput);
+      this.didResolved = true;
       console.log('DID document', didDocument);
       this.friendsService.showConfirm(didDocument);
       this.didInput = "";

@@ -44,6 +44,7 @@
           <ion-row>
             <ion-col size="9">
               <did-button
+                *ngIf="didResolved"
                 (click)="addFriend()"
                 title="Add Friend"
                 textcolor="#ffffff"
@@ -52,6 +53,13 @@
                 [shadow]="false"
               >
               </did-button>
+              <ion-button
+                *ngIf="!didResolved"
+                class="add-btn"
+                color="success"
+                mode="ios">
+                <ion-spinner name="dots"></ion-spinner>
+              </ion-button>
             </ion-col>
           </ion-row>
         </div>
