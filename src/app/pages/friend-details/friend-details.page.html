@@ -47,7 +47,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-list *ngIf="friend.applicationProfileCredentials && appsLoaded" no-padding>
+        <ion-list *ngIf="friendsApps && appsLoaded" no-padding>
             <ion-item
               class="app"
               *ngFor="let app of friendsApps"
@@ -79,7 +79,7 @@
             </ion-item>
         </ion-list>
 
-        <ion-list *ngIf="friend.applicationProfileCredentials.length === 0" no-padding>
+        <ion-list *ngIf="friendsApps.length === 0 && appsLoaded" no-padding>
           <ion-item class="app" lines="none">
             <ion-grid>
               <ion-row>
