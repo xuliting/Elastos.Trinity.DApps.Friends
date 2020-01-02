@@ -196,19 +196,21 @@ export class FriendDetailsPage implements OnInit {
   }
 
   startApp(app: DApp) {
-    // ON HOLD: looking for a way to send an intent to only a specific app id.
     // TODO: Pass all the app profile credential entries as intent parameter, except: action, apppackage, apptype
     // Those fields are like:
     // {diddemoid: "abcd", otherField:"123"}.
     // Need to keep "identifier"
     //
     // TODO: if the sendIntent tells that no app can handle the intent request, just call startApp() as fallback.
-    /*appManager.sendIntent("connectapplicationprofile", {}, ()=>{
-
+    appManager.sendIntent("connectapplicationprofile", {/*TODO*/}, {
+      appId: app.id
     }, ()=>{
-
-    });*/
-    this.friendsService.startApp(app.id);
+      console.log("connectapplicationprofile intent success");
+    }, (err)=>{
+      console.error("connectapplicationprofile intent error", err);
+    });
+    
+    // TODO this.friendsService.startApp(app.id);
   }
 
   closeApp() {

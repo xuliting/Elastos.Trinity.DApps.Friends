@@ -37,7 +37,7 @@ export class FriendsPage implements OnInit {
   }
 
   scanDID() {
-    appManager.sendIntent("scanqrcode", {}, (response)=> {
+    appManager.sendIntent("scanqrcode", {}, {}, (response)=> {
       console.log("Got scan result:", response);
       this.friendsService.friendScanned(response.result.scannedContent);
     }, (err: any)=>{
