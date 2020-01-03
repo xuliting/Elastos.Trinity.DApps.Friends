@@ -1,7 +1,7 @@
 {
   "id": "org.elastos.trinity.dapp.friends",
-  "version": "1.0.0",
-  "version_code": 1,
+  "version": "1.0.1",
+  "version_code": 2,
   "name": "Friends",
   "short_name": "Friends",
   "short_description": "Manage friends by their DID and view which apps they are using.",
