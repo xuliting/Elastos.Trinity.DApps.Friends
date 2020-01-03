@@ -201,14 +201,14 @@ export class FriendDetailsPage implements OnInit {
     this.friend.applicationProfileCredentials.map((appCred) => {
       if(appCred.apppackage === app.id) {
         console.log('Launching appCred: ' + appCred, 'appManifest: ', app);
+
+        let diddemoid = appCred.diddemoid;
+        let identifier = appCred.identifier;
+        let customField = appCred.otherCustomFieldDIDDemoAppWillReceiveFromConnectAppProfileIntent;
+
         appManager.sendIntent(
           "connectapplicationprofile",
-          {
-            diddemoid: appCred.diddemoid,
-            identifier: appCred.identifier,
-            otherCustomFieldDIDDemoAppWillReceiveFromConnectAppProfileIntent:
-            appCred.otherCustomFieldDIDDemoAppWillReceiveFromConnectAppProfileIntent
-          },
+          { diddemoid, identifier, customField },
           { appId: app.id },
           () => {
           console.log("connectapplicationprofile intent success");
