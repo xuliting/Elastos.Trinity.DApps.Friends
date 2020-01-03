@@ -78,11 +78,9 @@ export class FriendsService {
   }
 
   // Add friend by scanning
-  async friendScanned(did) {
+  friendScanned(did) {
     console.log('Scanned', did);
-    let didDocument = await this.resolveDIDDocument(did);
-    console.log('DID document', didDocument);
-    this.showConfirm(didDocument);
+    this.resolveDIDDocument(did);
   }
 
   // Direct user to friend-confirmation if DID was added via scan or through add-friend page
