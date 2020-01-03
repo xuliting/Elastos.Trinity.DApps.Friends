@@ -255,12 +255,19 @@ export class FriendsService {
     return new Promise((resolve, reject) => {
       didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument) => {
         console.log("DIDDocument resolved for DID " + didString, didDocument);
-        this.showConfirm(didDocument);
-        resolve(true);
+
+        if (didDocument) {
+          this.showConfirm(didDocument);
+          resolve(true);
+        }
+        else {
+          this.didResolveErr("Sorry, we can't find your friend on chain. Did he make his DID profile public ?");
+          resolve(false);
+        }
       }, (err: any) => {
         console.error("DIDDocument resolving error", err);
         this.didResolveErr(err.message);
-        resolve(true);
+        resolve(false);
       });
     });
   }

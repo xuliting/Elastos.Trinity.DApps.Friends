@@ -202,13 +202,20 @@ export class FriendDetailsPage implements OnInit {
       if(appCred.apppackage === app.id) {
         console.log('Launching appCred: ' + appCred, 'appManifest: ', app);
 
-        let diddemoid = appCred.diddemoid;
-        let identifier = appCred.identifier;
-        let customField = appCred.otherCustomFieldDIDDemoAppWillReceiveFromConnectAppProfileIntent;
+        let passedFields = {};
+        for (let key of Object.keys(appCred)) {
+          // Don't pass specific keys to the receiving app.
+          if (key == "action" || key == "apppackage" || key == "apptype")
+            continue;
+
+          passedFields[key] = appCred[key];
+        }
+
+        console.log("Passing fields to the connectapplicationprofile intent:", passedFields);
 
         appManager.sendIntent(
           "connectapplicationprofile",
-          { diddemoid, identifier, customField },
+          passedFields,
           { appId: app.id },
           () => {
           console.log("connectapplicationprofile intent success");
