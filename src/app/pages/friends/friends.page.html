@@ -41,7 +41,11 @@
               </ion-col>
               <ion-col size="8.5">
                 <ion-label>
-                  <h4>{{ friend.name }}</h4>
+                  <h4 *ngIf="friend.name">{{ friend.name }}</h4>
+                  <h4 *ngIf="!friend.name">
+                    {{ friend.id.slice(0,12) }} <br>
+                    {{ friend.id.slice(12,27) }}...
+                  </h4>
                   <p>{{ friend.note}}<p>
                 </ion-label>
               </ion-col>

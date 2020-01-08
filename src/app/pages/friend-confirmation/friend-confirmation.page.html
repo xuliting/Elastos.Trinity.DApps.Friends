@@ -21,8 +21,15 @@
 
       <ion-grid>
         <ion-row>
-          <ion-col *ngIf="didName" class="profile-name"><h1>{{ didName }}</h1></ion-col>
-          <ion-col *ngIf="!didName" class="profile-name"><h1>{{ didId }}</h1></ion-col>
+          <ion-col *ngIf="didName" class="profile-name"><h1 padding-horizontal>{{ didName }}</h1></ion-col>
+          <ion-col *ngIf="!didName" class="profile-name">
+            <h1 padding-horizontal text-center>
+              {{ didId.slice(0,12) }} <br>
+              {{ didId.slice(12,25) }} <br>
+              {{ didId.slice(25,36) }} <br>
+              {{ didId.slice(36,46) }} <br>
+            </h1>
+          </ion-col>
         </ion-row>
 
         <ion-row padding>

@@ -65,6 +65,9 @@ export class CustomNamePage implements OnInit {
   }
 
   customDID() {
+    if(this.customName === this.didId) {
+      this.customName = null;
+    }
     this.friendsService.customDID(this.customName, this.customNote, this.didId);
     this.router.navigate(['/', this.didId]);
   }

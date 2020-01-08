@@ -17,11 +17,19 @@
         <img *ngIf="didImage" [src]="didImage">
         <img *ngIf="!didImage && didGender === 'male'" src="assets/images/Guy_Face.svg">
         <img *ngIf="!didImage && didGender === 'female'" src="assets/images/DefaultProfileWoman.svg">
+        <img *ngIf="!didImage && !didGender" src="assets/images/Guy_Face.svg">
       </div>
 
       <ion-grid>
         <ion-row>
-          <ion-col class="profile-name"><h1>{{ customName }}</h1></ion-col>
+          <ion-col class="profile-name">
+            <h1 text-center>
+              {{ customName.slice(0,12) }} <br>
+              {{ customName.slice(12,25) }} <br>
+              {{ customName.slice(25,36) }} <br>
+              {{ customName.slice(36,46) }} <br>
+            </h1>
+          </ion-col>
         </ion-row>
       </ion-grid>
 

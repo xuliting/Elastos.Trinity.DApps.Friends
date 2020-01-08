@@ -25,10 +25,24 @@
           <img *ngIf="!friend.imageUrl && !friendsService.isMale(friend.gender)" src="assets/images/DefaultProfileWoman.svg">
         </div>
         <ion-row>
-          <ion-col class="profile-name"><h1>{{ friend.name }}</h1></ion-col>
+          <ion-col *ngIf="friend.name" class="profile-name">
+            <h1 text-center padding-horizontal>
+              {{ friend.name }}
+            </h1>
+          </ion-col>
+          <ion-col *ngIf="!friend.name" class="profile-name">
+            <h1 text-center padding-horizontal>
+              {{ friend.id.slice(0,12) }} <br>
+              {{ friend.id.slice(12,25) }} <br>
+              {{ friend.id.slice(25,36) }} <br>
+              {{ friend.id.slice(36,46) }} <br>
+            </h1>
+          </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col class="profile-note" no-padding padding-horizontal><p>{{ friend.note }}</p></ion-col>
+          <ion-col class="profile-note" no-padding text-center padding-horizontal>
+            <p>{{ friend.note }}</p>
+          </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="left-btn">
