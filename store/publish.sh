@@ -1,1 +1,1 @@
-trinity-cli publish --did did:elastos:ip8v6KFcby4YxVgjDUZUyKYXP3gpToPP8A#primary --didstore ../../../../DAppSignatures/org.elastos.trinity.dapp.friends/appdid/
+trinity-cli publish --news "$1" --did did:elastos:ip8v6KFcby4YxVgjDUZUyKYXP3gpToPP8A#primary --didstore ../../../../DAppSignatures/org.elastos.trinity.dapp.friends/appdid/
