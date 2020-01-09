@@ -25,7 +25,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.friendsService.getStoredDIDs();
       this.friendsService.init();
-      //this.splashScreen.hide();
+      this.splashScreen.hide();
     });
   }
 }
