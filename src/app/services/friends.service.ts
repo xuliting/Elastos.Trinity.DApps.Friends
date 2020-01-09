@@ -53,7 +53,6 @@ export class FriendsService {
 
   // Initial render //
   init() {
-    this.getStoredDIDs();
     console.log("AppmanagerService init");
 
     // Load app manager only on real device, not in desktop browser - beware: ionic 4 bug with "desktop" or "android"/"ios"
