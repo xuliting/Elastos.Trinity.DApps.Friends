@@ -34,6 +34,8 @@ export class AddFriendPage implements OnInit {
     setTimeout(() => {
       this.input.setFocus();
     }, 200);
+
+    appManager.setVisible("show", ()=>{}, (err)=>{});
   }
 
   scanDID() {

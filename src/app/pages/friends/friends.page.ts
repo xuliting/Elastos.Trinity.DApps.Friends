@@ -36,6 +36,10 @@ export class FriendsPage implements OnInit {
     console.log(this.friends);
   }
 
+  ionViewDidEnter() {
+    appManager.setVisible("show", ()=>{}, (err)=>{});
+  }
+
   scanDID() {
     appManager.sendIntent("scanqrcode", {}, {}, (response)=> {
       console.log("Got scan result:", response);

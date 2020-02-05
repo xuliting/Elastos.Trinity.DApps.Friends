@@ -38,6 +38,10 @@ export class FriendConfirmationPage implements OnInit {
     })
   }
 
+  ionViewDidEnter() {
+    appManager.setVisible("show", ()=>{}, (err)=>{});
+  }
+
   addFriend() {
     this.friendsService.addFriend();
     this.router.navigate(['friends']);
