@@ -43,6 +43,9 @@
     "intent_filters": [
         {
             "action": "handlescannedcontent_did"
+        },
+        {
+            "action": "addfriend"
         }
     ]
 }

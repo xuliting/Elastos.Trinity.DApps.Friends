@@ -26,28 +26,31 @@
         overflow: hidden;
       }
 
-      .profile-name {
-        margin-top: 60px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      .model-container {
 
-        h1 {
-          font-size: 28px;
-          font-weight: 600;
+        .profile-name {
+          margin-top: 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          h1 {
+            font-size: 28px;
+            font-weight: 600;
+          }
         }
-      }
 
-      .message {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        .message {
+          display: flex;
+          justify-content: center;
+          align-items: center;
 
-        p {
-          font-size: 19px !important;
-          color: #3ABAFB;
-          font-weight: 700;
-          word-spacing: 2px;
+          p {
+            font-size: 14px !important;
+            color: #3ABAFB;
+            font-weight: 700;
+            word-spacing: 2px;
+          }
         }
       }
 
@@ -62,4 +65,9 @@
       }
     }
   }
+}
+
+.no-input {
+  margin: 0;
+  padding: 0;
 }

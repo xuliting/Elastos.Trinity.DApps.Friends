@@ -13,6 +13,7 @@
 
   <div>
     <div class="profile-container" padding-bottom>
+
       <div class="profile-picture">
         <img *ngIf="didImage" [src]="didImage">
         <img *ngIf="!didImage && didGender === 'male'" src="assets/images/Guy_Face.svg">
@@ -20,8 +21,11 @@
         <img *ngIf="!didImage && !didGender" src="assets/images/Guy_Face.svg">
       </div>
 
-      <ion-grid>
-        <ion-row>
+      <ion-grid class="model-container">
+        <ion-row *ngIf="customName.length < 36" class="profile-name">
+          <h1>{{ customName }}</h1>
+        </ion-row>
+        <ion-row *ngIf="customName.length > 36">
           <ion-col class="profile-name">
             <h1 text-center>
               {{ customName.slice(0,12) }} <br>
@@ -29,6 +33,13 @@
               {{ customName.slice(25,36) }} <br>
               {{ customName.slice(36,46) }} <br>
             </h1>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="customNote">
+          <ion-col class="message" no-padding>
+            <p text-center no-margin>
+              {{ customNote }}
+            </p>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -40,6 +51,7 @@
               #input
               autosize
               placeholder="   Custom name"
+              clearInput="true"
               [(ngModel)]="customName"
               (ngModelChange)="nameChanged($event)">
             </ion-input>
@@ -50,6 +62,7 @@
             <ion-input
               autosize
               placeholder="   Custom note"
+              clearInput="true"
               [(ngModel)]="customNote"
               (ngModelChange)="noteChanged($event)">
             </ion-input>

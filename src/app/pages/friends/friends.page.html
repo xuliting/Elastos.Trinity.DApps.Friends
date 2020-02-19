@@ -16,7 +16,7 @@
 
 <ion-content>
   <ion-grid class="container">
-    <ion-list *ngIf="friends.length > 0">
+    <ion-list *ngIf="friendsService._friends.length > 0">
 
       <ion-item *ngIf="!friendsLoaded" text-center color="light">
         <ion-label>
@@ -26,7 +26,7 @@
 
       <div *ngIf="friendsLoaded">
         <ion-item
-          *ngFor="let friend of filteredFriends"
+          *ngFor="let friend of friendsService._friends"
           color="light"
           [routerLink]="['/', friend.id]"
         >
@@ -58,7 +58,7 @@
       </div>
     </ion-list>
 
-    <ion-list *ngIf="friends.length === 0" text-center class="no-friends">
+    <ion-list *ngIf="friendsService._friends.length === 0" text-center class="no-friends">
       <div>Go find some friends to follow!</div>
     </ion-list>
 

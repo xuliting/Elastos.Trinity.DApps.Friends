@@ -27,6 +27,7 @@ type DisplayableAppInfo = {
   styleUrls: ['./friend-details.page.scss'],
 })
 export class FriendDetailsPage implements OnInit {
+
   friend: Friend;
   friendsApps: DisplayableAppInfo[] = [];
 

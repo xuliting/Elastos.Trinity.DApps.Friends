@@ -48,7 +48,14 @@ export class FriendConfirmationPage implements OnInit {
   }
 
   denyFriend() {
-    this.friendsService.friendDenied(this.didName);
+    let alertName: string = '';
+    if(this.didName) {
+      alertName = this.didName;
+    } else {
+      alertName = this.didId;
+    }
+
+    this.friendsService.friendDenied(alertName);
     this.router.navigate(['friends']);
   }
 

@@ -3,7 +3,6 @@ import { ToastController, IonInput } from '@ionic/angular';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { DID } from 'src/app/models/did.model';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 declare let appManager: AppManagerPlugin.AppManager;
@@ -39,9 +38,9 @@ export class AddFriendPage implements OnInit {
   }
 
   scanDID() {
-    appManager.sendIntent("scanqrcode", {}, {}, (res)=> {
-      console.log("Got scan result:", res);
-      this.friendsService.friendScanned(res.result.scannedContent);
+    appManager.sendIntent("scanqrcode", {}, {}, (res) => {
+      console.log("Got scan result", res);
+      this.friendsService.addFriendByIntent(res.result.scannedContent);
     }, (err: any)=>{
       console.error(err);
     })
@@ -65,12 +64,6 @@ export class AddFriendPage implements OnInit {
       await this.friendsService.resolveDIDDocument(this.didInput);
       this.didResolved = true;
       this.didInput = "";
-
-
-      // Test for resolving DID on TESTNET
-    /*   let didDocument = await this.friendsService.resolveDIDDocument(this.didInput);
-      console.log('DID document', didDocument);
-      this.friendsService.showConfirm(didDocument); */
     }
   }
 

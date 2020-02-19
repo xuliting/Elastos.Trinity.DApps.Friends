@@ -23,7 +23,6 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.friendsService.getStoredDIDs();
       this.friendsService.init();
       this.splashScreen.hide();
     });

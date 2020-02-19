@@ -14,10 +14,6 @@ declare let appManager: AppManagerPlugin.AppManager;
 })
 export class FriendsPage implements OnInit {
 
-  friends: Friend[] = [];
-  filteredFriends: Friend[] = [];
-  friend: string = '';
-  searchOn = false;
   friendsLoaded = true;
 
   constructor(
@@ -25,28 +21,13 @@ export class FriendsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.friends = this.friendsService.friends;
-    this.filteredFriends = this.friends;
-    console.log(this.filteredFriends);
   }
 
   ionViewWillEnter() {
-    this.friends = this.friendsService.friends;
-    this.filteredFriends = this.friends;
-    console.log(this.friends);
   }
 
   ionViewDidEnter() {
     appManager.setVisible("show", ()=>{}, (err)=>{});
-  }
-
-  scanDID() {
-    appManager.sendIntent("scanqrcode", {}, {}, (response)=> {
-      console.log("Got scan result:", response);
-      this.friendsService.friendScanned(response.result.scannedContent);
-    }, (err: any)=>{
-      console.error(err);
-    })
   }
 
   closeApp() {
