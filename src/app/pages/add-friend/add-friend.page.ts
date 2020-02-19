@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastController, IonInput } from '@ionic/angular';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { DID } from 'src/app/models/did.model';
-
 
 declare let appManager: AppManagerPlugin.AppManager;
 
@@ -22,6 +22,7 @@ export class AddFriendPage implements OnInit {
   constructor(
     private friendsService: FriendsService,
     public toastController: ToastController,
+    // private clipboard: Clipboard
   ) {
   }
 
@@ -45,6 +46,18 @@ export class AddFriendPage implements OnInit {
       console.error(err);
     })
   }
+
+  /* pasteDID() {
+    console.log('Pasting DID');
+    this.clipboard.paste().then((resolve: string) => {
+      this.didInput = resolve;
+      console.log(resolve);
+    }, (reject: string) => {
+      console.error('Error: ' + reject);
+      }
+    );
+  };
+ */
 
   // DID ex:
   // did:elastos:iWHTwXKeXdgZHFLZWS22e7itTatjmFAzkL

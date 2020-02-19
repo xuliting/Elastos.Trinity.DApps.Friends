@@ -48,13 +48,21 @@
 
       .bottom {
         ion-row {
-          display: flex;
-          justify-content: center;
           padding: 8px 0;
 
           .text-area {
             border-radius: 30px;
             background: #FAFAFA;
+          }
+
+          .clipboard {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            ion-icon {
+              font-size: 25px;
+            }
           }
 
           .add-btn {

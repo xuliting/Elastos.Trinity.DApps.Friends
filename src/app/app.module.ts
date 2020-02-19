@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -63,6 +64,7 @@ export class SentryErrorHandler implements ErrorHandler {
     FriendsService,
     StatusBar,
     SplashScreen,
+    Clipboard,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: ErrorHandler, useClass: SentryErrorHandler }
   ],

@@ -25,7 +25,7 @@
         <ion-row *ngIf="customName.length < 36" class="profile-name">
           <h1>{{ customName }}</h1>
         </ion-row>
-        <ion-row *ngIf="customName.length > 36">
+        <ion-row *ngIf="customName.length >= 36">
           <ion-col class="profile-name">
             <h1 text-center>
               {{ customName.slice(0,12) }} <br>

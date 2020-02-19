@@ -31,7 +31,8 @@
     "plugins": [
         "Device",
         "NetworkStatus",
-        "DIDPlugin"
+        "DIDPlugin",
+        "Clipboard"
     ],
     "urls": [
         "http://*",
