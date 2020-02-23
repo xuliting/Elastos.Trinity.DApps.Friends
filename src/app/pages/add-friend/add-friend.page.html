@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="container" no-padding no-margin>
+  <ion-grid class="container ion-no-padding ion-no-margin">
     <div>
 
       <div class="img-container">
@@ -26,16 +26,16 @@
 
       <ion-grid>
 
-        <div class="center" padding-bottom>
-          <ion-row no-margin>
+        <div class="center ion-padding-bottom">
+          <ion-row class="ion-no-margin">
             <ion-col><h2 class="first-title">Open QR Scanner</h2></ion-col>
           </ion-row>
           <ion-row>
-            <ion-col no-padding><h2 class="second-title">or enter a DID below</h2></ion-col>
+            <ion-col class="ion-no-padding"><h2 class="second-title">or enter a DID below</h2></ion-col>
           </ion-row>
         </div>
 
-        <div class="bottom" padding-top>
+        <div class="bottom ion-padding-top">
           <ion-row color="light">
             <ion-col offset="1.5" size="9" class="text-area">
               <ion-input #input autosize placeholder="   Enter DID" [(ngModel)]="didInput"></ion-input>

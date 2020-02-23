@@ -9,10 +9,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-grid class="container" no-padding no-margin>
+<ion-grid class="container ion-no-padding ion-no-margin">
 
   <div>
-    <div class="profile-container" padding-bottom>
+    <div class="profile-container ion-padding-bottom"m>
 
       <div class="profile-picture">
         <img *ngIf="didImage" [src]="didImage">
@@ -27,7 +27,7 @@
         </ion-row>
         <ion-row *ngIf="customName.length >= 36">
           <ion-col class="profile-name">
-            <h1 text-center>
+            <h1 class="ion-text-center">
               {{ customName.slice(0,12) }} <br>
               {{ customName.slice(12,25) }} <br>
               {{ customName.slice(25,36) }} <br>
@@ -36,15 +36,15 @@
           </ion-col>
         </ion-row>
         <ion-row *ngIf="customNote">
-          <ion-col class="message" no-padding>
-            <p text-center no-margin>
+          <ion-col class="message ion-no-padding">
+            <p class="ion-text-center ion-no-margin">
               {{ customNote }}
             </p>
           </ion-col>
         </ion-row>
       </ion-grid>
 
-      <ion-grid padding>
+      <ion-grid class="ion-padding">
         <ion-row>
           <ion-col size="10" offset="1" class="text-area">
             <ion-input
@@ -57,7 +57,7 @@
             </ion-input>
           </ion-col>
         </ion-row>
-        <ion-row margin-top>
+        <ion-row class="ion-margin-top">
           <ion-col size="10" offset="1" class="text-area">
             <ion-input
               autosize

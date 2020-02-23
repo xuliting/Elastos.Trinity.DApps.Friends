@@ -15,10 +15,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="container" no-padding no-margin>
+  <ion-grid class="container ion-no-padding ion-no-margin">
 
     <div>
-      <div class="profile-container" padding-bottom>
+      <div class="profile-container ion-padding-bottom">
         <div class="profile-picture">
           <img *ngIf="friend.imageUrl" [src]="friend.imageUrl">
           <img *ngIf="!friend.imageUrl && friendsService.isMale(friend.gender)" src="assets/images/Guy_Face.svg">
@@ -26,12 +26,12 @@
         </div>
         <ion-row>
           <ion-col *ngIf="friend.name" class="profile-name">
-            <h1 text-center padding-horizontal>
+            <h1 class="ion-text-center ion-padding-horizontal">
               {{ friend.name }}
             </h1>
           </ion-col>
           <ion-col *ngIf="!friend.name" class="profile-name">
-            <h1 text-center padding-horizontal>
+            <h1 class="ion-text-center ion-padding-horizontal">
               {{ friend.id.slice(0,12) }} <br>
               {{ friend.id.slice(12,25) }} <br>
               {{ friend.id.slice(25,36) }} <br>
@@ -40,36 +40,48 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col class="profile-note" no-padding text-center padding-horizontal>
+          <ion-col class="profile-note ion-no-padding ion-text-center ion-padding-horizontal">
             <p>{{ friend.note }}</p>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="left-btn">
-            <rounded-action-button (click)="customizeFriend()" title="Customize" image='assets/images/Edit_Simple_Icon.svg' color="#3ABAFB" imgcolor="#3ABAFB"></rounded-action-button>
+            <rounded-action-button
+              (click)="customizeFriend()"
+              title="Customize"
+              image='assets/images/Edit_Simple_Icon.svg'
+              color="#3ABAFB"
+              imgcolor="#3ABAFB">
+            </rounded-action-button>
           </ion-col>
-          <ion-col size="6" class="right-btn" padding-start>
-            <rounded-action-button (click)="showWarning(friend)" title="Delete" image='assets/images/Delete_Warning_Simple_Icon.svg' color="#FF4D4D" imgcolor="#f04141"></rounded-action-button>
+          <ion-col size="6" class="right-btn ion-padding-start">
+            <rounded-action-button
+              (click)="showWarning(friend)"
+              title="Delete"
+              image='assets/images/Delete_Warning_Simple_Icon.svg'
+              color="#FF4D4D"
+              imgcolor="#f04141">
+            </rounded-action-button>
           </ion-col>
         </ion-row>
       </div>
 
       <div class="app-container">
         <ion-row class="install-container">
-          <ion-col no-padding no-margin>
+          <ion-col class="ion-no-padding ion-no-margin">
             <h2 padding>Installed Applications</h2>
           </ion-col>
         </ion-row>
 
-        <ion-list *ngIf="allAppsInfoLoaded()" no-padding>
+        <ion-list *ngIf="allAppsInfoLoaded()" class="ion-no-padding">
             <ion-item
               class="app"
               *ngFor="let appInfo of friendsApps"
               color="light"
               lines="none"
             >
-              <ion-grid no-padding *ngIf="appInfo.infoFetched">
-                <ion-row align-items-center>
+              <ion-grid class="ion-no-padding" *ngIf="appInfo.infoFetched">
+                <ion-row class="ion-align-items-center">
                   <ion-col size="2.5">
                     <ion-thumbnail>
                       <ion-img [src]="getAppIcon(appInfo.app)"></ion-img>
@@ -94,7 +106,7 @@
             </ion-item>
         </ion-list>
 
-        <ion-list *ngIf="friendsApps.length === 0 && allAppsInfoLoaded()" no-padding>
+        <ion-list *ngIf="friendsApps.length === 0 && allAppsInfoLoaded()" class="ion-no-padding">
           <ion-item class="app" lines="none">
             <ion-grid>
               <ion-row>
@@ -109,9 +121,9 @@
         </ion-list>
 
         <ion-list *ngIf="!allAppsInfoLoaded()">
-          <ion-item lines="none" padding>
+          <ion-item lines="none" class="ion-padding">
             <ion-grid>
-              <ion-row text-center>
+              <ion-row class="ion-text-center">
                 <ion-col>
                   <ion-spinner name="bubbles"></ion-spinner>
                 </ion-col>

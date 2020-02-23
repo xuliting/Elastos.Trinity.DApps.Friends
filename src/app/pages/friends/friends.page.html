@@ -18,7 +18,7 @@
   <ion-grid class="container">
     <ion-list *ngIf="friendsService._friends.length > 0">
 
-      <ion-item *ngIf="!friendsLoaded" text-center color="light">
+      <ion-item *ngIf="!friendsLoaded" class="ion-text-center" color="light">
         <ion-label>
           <ion-spinner name="bubbles"></ion-spinner>
         </ion-label>
@@ -59,7 +59,7 @@
       </div>
     </ion-list>
 
-    <ion-list *ngIf="friendsService._friends.length === 0" text-center class="no-friends">
+    <ion-list *ngIf="friendsService._friends.length === 0" class="no-friends ion-text-center">
       <div>Go find some friends to follow!</div>
     </ion-list>
 
