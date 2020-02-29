@@ -1,0 +1,16 @@
+.footer {
+  position: fixed;
+  z-index: 1;
+  height: 18%;
+  bottom: 5px;
+  right: 5px;
+  left: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: space-between;
+
+  did-button {
+    width: 100%;
+  }
+}
+

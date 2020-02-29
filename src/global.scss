@@ -105,3 +105,54 @@ ion-header {
     }
   }
 }
+
+/* Global Friends List */
+.friends-container {
+  min-height: 100%;
+  background-image: linear-gradient(to bottom, #BFFFD9 0%, #9BDEFF 100%);
+  padding-right: 0;
+  padding-left: 0;
+
+  ion-list {
+    margin-top: 25px;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    ion-item {
+      border-bottom: solid 1px rgb(216, 216, 216);
+
+      ion-col {
+        display: flex;
+        align-items: center;
+
+        ion-avatar {
+          height: 60px;
+          width: 60px;
+        }
+
+        ion-label {
+          margin: 5px 0 0 5px;
+
+          h4 {
+            font-size: 20px;
+            font-weight: 600;
+            padding: 0;
+            margin: 0 0 2px;
+          }
+
+          p {
+            font-size: 10px !important;
+            font-weight: 500;
+            color: #3ABAFB !important;
+            padding: 0;
+            margin: 0;
+          }
+        }
+
+        ion-icon {
+          font-size: 60px;
+        }
+      }
+    }
+  }
+}

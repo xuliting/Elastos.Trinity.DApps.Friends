@@ -30,7 +30,7 @@
               {{ friend.name }}
             </h1>
           </ion-col>
-          <ion-col *ngIf="!friend.name" class="profile-name">
+          <ion-col *ngIf="!friend.name && friend.id" class="profile-name">
             <h1 class="ion-text-center ion-padding-horizontal">
               {{ friend.id.slice(0,12) }} <br>
               {{ friend.id.slice(12,25) }} <br>
@@ -69,7 +69,7 @@
       <div class="app-container">
         <ion-row class="install-container">
           <ion-col class="ion-no-padding ion-no-margin">
-            <h2 padding>Installed Applications</h2>
+            <h2 class="ion-padding">Installed Applications</h2>
           </ion-col>
         </ion-row>
 

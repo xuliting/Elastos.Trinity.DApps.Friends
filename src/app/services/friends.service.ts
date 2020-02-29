@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { PopoverController, ToastController } from '@ionic/angular';
+import { Injectable, NgZone } from '@angular/core';
+import { Platform, AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 import { StorageService } from 'src/app/services/storage.service';
 import { Friend } from '../models/friends.model';
@@ -28,9 +27,42 @@ export class FriendsService {
     note: '',
     email: '',
     imageUrl: '',
-    applicationProfileCredentials: []
+    applicationProfileCredentials: [],
+    isPicked: false
   };
-  public _friends: Friend[] = [];
+
+  public _friends: Friend[] = [
+   /*  {
+      id: 'did34r4rf4fwerf4wrfw',
+      name: 'Chad Racelis',
+      gender: 'male',
+      note: '',
+      email: '',
+      imageUrl: '',
+      applicationProfileCredentials: [],
+      isPicked: false,
+    },
+    {
+      id: 'did34frferfgerf4wrfw',
+      name: 'Marting Knight',
+      gender: 'male',
+      note: '',
+      email: '',
+      imageUrl: '',
+      applicationProfileCredentials: [],
+      isPicked: false,
+    },
+    {
+      id: 'did34r4rf4f4t34tf4wrfw',
+      name: 'Ben Piette',
+      gender: 'male',
+      note: '',
+      email: '',
+      imageUrl: '',
+      applicationProfileCredentials: [],
+      isPicked: false
+    } */
+  ];
 
   getFriend(id: string) {
     return {...this._friends.find(friend => friend.id === id)};
@@ -39,9 +71,9 @@ export class FriendsService {
   constructor(
     private platform: Platform,
     private router: Router,
-    private http: HttpClient,
-    private popover: PopoverController,
+    private alertController: AlertController,
     public toastController: ToastController,
+    public zone: NgZone,
     private storageService: StorageService,
   ) {
     managerService = this;
@@ -61,18 +93,22 @@ export class FriendsService {
   }
 
   getStoredDIDs = () => {
-    this.storageService.getDIDs().then(dids => {
-      console.log('Fetched stored DIDs', dids);
-      if(dids.length > 0) {
-        this._didDocs = this._didDocs.concat(dids);
-        console.log('DIDs stored', this._didDocs);
-      }
+    return new Promise((resolve, reject) => {
+      this.storageService.getDIDs().then(dids => {
+        console.log('Fetched stored DIDs', dids);
+        if(dids.length > 0) {
+          this._didDocs = dids;
+          console.log('DIDs stored', this._didDocs);
+        }
+      });
+
       this.storageService.getFriends().then(friends => {
         console.log('Fetched stored friends', friends);
         if(friends.length > 0) {
-          this._friends = this._friends.concat(friends);
+          this._friends = friends;
         }
-      })
+        resolve(friends || []);
+      });
     });
   }
 
@@ -88,6 +124,10 @@ export class FriendsService {
       case "addfriend":
         console.log('addfriend intent', ret);
         this.addFriendByIntent(ret.params.data);
+
+      case "pickfriend":
+        console.log('pickfriend intent', ret);
+        this.getFriends();
     }
   }
 
@@ -140,9 +180,6 @@ export class FriendsService {
       }
     });
 
-    // this._friend.applicationProfileCredentials = didDocument.findCredentials(["ApplicationProfileCredential"]);
-    // console.log(this._friend.applicationProfileCredentials)
-
     let props: NavigationExtras = {
       queryParams: {
         didId: this._friend.id,
@@ -156,7 +193,6 @@ export class FriendsService {
 
   /******************************** Add Friend if Confirmed ********************************/
   addFriend = () => {
-
     let alertName: string = '';
     if(this._friend.name) {
       alertName = this._friend.name
@@ -177,7 +213,7 @@ export class FriendsService {
       });
 
       this.storageService.setFriends(this._friends = this._friends.concat(this._friend));
-      this.storageService.setDIDs(this._didDocs = this._didDocs.concat(this._didDocs));
+      this.storageService.setDIDs(this._didDocs = this._didDocs.concat(this._didDoc));
       this.friendAdded(alertName);
       console.log('Friends updated', this._friends);
     }
@@ -213,6 +249,44 @@ export class FriendsService {
     });
   }
 
+  /******************************** Pick Friend Intent  ********************************/
+  async getFriends() {
+    await this.getStoredDIDs().then((friends) => {
+      console.log('My friends', friends);
+      if(this._friends.length > 0) {
+          this.router.navigate(['/pick-friend']);
+      } else {
+        this.alertNoFriends();
+      }
+    });
+  }
+
+  inviteFriends() {
+    let dids = [];
+    this._didDocs.map((did) => {
+      this._friends.map((friend) => {
+        if(did.id.didString === friend.id && friend.isPicked) {
+          dids.push(did);
+          friend.isPicked = false;
+        }
+      })
+    });
+    console.log('Invited friends', dids);
+
+    if(dids.length > 0) {
+      appManager.sendIntentResponse(
+        "pickfriend",
+        { friends: dids },
+        managerService.handledIntentId,
+        (res: any) => {},
+        (err: any) => {}
+      );
+      appManager.close();
+    } else {
+      this.selectFriends();
+    }
+  }
+
   /******************************** Misc ********************************/
   public isMale(gender: string) {
     // undefined gender = consider as male by default.
@@ -243,8 +317,8 @@ export class FriendsService {
   async friendAdded(name: string) {
     const toast = await this.toastController.create({
       mode: 'ios',
-      message: name + ' was added',
-      color: "primary",
+      header: name + ' was added',
+      color: "light",
       duration: 2000
     });
     toast.present();
@@ -253,8 +327,8 @@ export class FriendsService {
   async friendAlreadyAdded(name: string) {
     const toast = await this.toastController.create({
       mode: 'ios',
-      message: name + ' is already in your friends',
-      color: "primary",
+      header: name + ' is already in your friends',
+      color: "light",
       duration: 2000
     });
     toast.present();
@@ -263,8 +337,8 @@ export class FriendsService {
   async friendDenied(name: string) {
     const toast = await this.toastController.create({
       mode: 'ios',
-      message: 'Denied friend ' + name,
-      color: "primary",
+      header: 'Denied friend ' + name,
+      color: "light",
       duration: 2000
     });
     toast.present();
@@ -273,8 +347,9 @@ export class FriendsService {
   async didResolveErr(err: string) {
     const toast = await this.toastController.create({
       mode: 'ios',
-      message: 'There was an error: ' + err,
-      color: "primary",
+      header: 'There was an error',
+      message: err,
+      color: "light",
       duration: 6000.
     });
     toast.present();
@@ -283,10 +358,37 @@ export class FriendsService {
   async friendDeleted(name: string) {
     const toast = await this.toastController.create({
       mode: 'ios',
-      message: name + ' was deleted',
-      color: "primary",
+      header: name + ' was deleted',
+      color: "light",
       duration: 2000
     });
     toast.present();
+  }
+
+  async selectFriends() {
+    const toast = await this.toastController.create({
+      position: 'bottom',
+      mode: 'ios',
+      header: 'Please select some friends before inviting',
+      color: "light",
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async alertNoFriends() {
+    const alert = await this.alertController.create({
+      mode: 'ios',
+      header: 'You don\'t have any friends to invite!',
+      buttons: [
+        {
+          text: 'Okay',
+          handler: () => {
+            appManager.close();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

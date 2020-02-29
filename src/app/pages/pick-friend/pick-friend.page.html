@@ -1,11 +1,11 @@
 <ion-header no-border>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-button [routerLink]="['/', 'addFriend']">
-        <ion-icon name="person-add"></ion-icon>
+      <ion-button [routerLink]="['/', 'friends']">
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>My Friends List</ion-title>
+    <ion-title>Invite Friends</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeApp()">
         <ion-icon name="close"></ion-icon>
@@ -14,21 +14,14 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
   <ion-grid class="friends-container">
-    <ion-list *ngIf="friendsService._friends.length > 0">
-
-      <ion-item *ngIf="!friendsLoaded" class="ion-text-center" color="light">
-        <ion-label>
-          <ion-spinner name="bubbles"></ion-spinner>
-        </ion-label>
-      </ion-item>
-
-      <div *ngIf="friendsLoaded">
+    <ion-list>
+      <div>
         <ion-item
           *ngFor="let friend of friendsService._friends"
           color="light"
-          [routerLink]="['/', friend.id]"
         >
           <ion-grid>
             <ion-row>
@@ -39,7 +32,7 @@
                   <ion-img *ngIf="!friend.imageUrl && !friendsService.isMale(friend.gender)" src="assets/images/DefaultProfileWoman.svg"></ion-img>
                 </ion-avatar>
               </ion-col>
-              <ion-col size="9">
+              <ion-col size="8.5">
                 <ion-label>
                   <h4 *ngIf="friend.name && friend.name.length < 18">{{ friend.name }}</h4>
                   <h4 *ngIf="friend.name && friend.name.length >= 18">{{ friend.name.slice(0,18) }}...</h4>
@@ -50,8 +43,8 @@
                   <p>{{ friend.note}}<p>
                 </ion-label>
               </ion-col>
-              <ion-col size="1">
-                <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+              <ion-col size="1.5">
+                <ion-checkbox value="friend" [(ngModel)]="friend.isPicked" mode="ios"></ion-checkbox>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -59,9 +52,27 @@
       </div>
     </ion-list>
 
-    <ion-list *ngIf="friendsService._friends.length === 0" class="no-friends ion-text-center">
-      <div>Go find some friends to follow!</div>
-    </ion-list>
+    <div class="footer">
+      <did-button
+        (click)="this.friendsService.inviteFriends()"
+        title="Invite Friends"
+        textcolor="#ffffff"
+        [bgcolor]="'#3ABAFB'"
+        [bordercolor]="'#3ABAFB'"
+        [padding]="'18px'"
+        [shadow]="false"
+        class="invite-btn"
+      ></did-button>
 
+      <did-button
+        (click)="closeApp()"
+        title="Cancel"
+        textcolor="#ffffff"
+        [bgcolor]="'#FF4D4D'"
+        [bordercolor]="'#FF4D4D'"
+        [padding]="'18px'"
+        [shadow]="false"
+      ></did-button>
+    </div>
   </ion-grid>
 </ion-content>

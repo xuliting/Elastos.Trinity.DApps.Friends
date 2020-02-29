@@ -47,6 +47,9 @@
         },
         {
             "action": "addfriend"
+        },
+        {
+          "action": "pickfriend"
         }
     ]
 }
