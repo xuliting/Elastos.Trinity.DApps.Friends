@@ -276,7 +276,7 @@ export class FriendsService {
     if(dids.length > 0) {
       appManager.sendIntentResponse(
         "pickfriend",
-        { friends: dids },
+        { document: dids,  },
         managerService.handledIntentId,
         (res: any) => {},
         (err: any) => {}
