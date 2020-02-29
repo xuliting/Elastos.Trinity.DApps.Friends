@@ -7,7 +7,7 @@ export class DID {
     },
     public created: any,
     public updated: string,
-    public verifiableCredential: any[],
+    public verifiableCredential: any[] = [],
     public publicKey: any,
     public authentication: any,
     public authorization: any,

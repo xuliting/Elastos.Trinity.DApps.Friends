@@ -21,50 +21,30 @@ export class FriendsService {
   private _didDocs: DID[] = [];
 
   private _friend: Friend = {
-    id: '',
-    name: '',
-    gender: '',
-    note: '',
-    email: '',
-    imageUrl: '',
-    applicationProfileCredentials: [],
+    id: null,
+    name: null,
+    gender: null,
+    note: null,
+    nickname: null,
+    country: null,
+    birthDate: null,
+    telephone: null,
+    email: null,
+    description: null,
+    website: null,
+    twitter: null,
+    facebook: null,
+    telegram: null,
+    imageUrl: null,
+    applicationProfileCredentials: [{
+      action: null,
+      apppackage: null,
+      apptype: null,
+    }],
     isPicked: false
   };
 
-  public _friends: Friend[] = [
-
-    // For Test Purposes
-  /*   {
-      id: 'didTest1',
-      name: 'Sarah Marshall',
-      gender: 'female',
-      note: '',
-      email: '',
-      imageUrl: '',
-      applicationProfileCredentials: [],
-      isPicked: false
-    },
-    {
-      id: 'didTest2',
-      name: 'Jon Snow',
-      gender: 'male',
-      note: '',
-      email: '',
-      imageUrl: '',
-      applicationProfileCredentials: [],
-      isPicked: false
-    },
-    {
-      id: 'didTest3',
-      name: 'Donald Trump',
-      gender: 'male',
-      note: '',
-      email: '',
-      imageUrl: '',
-      applicationProfileCredentials: [],
-      isPicked: false
-    } */
-  ];
+  public _friends: Friend[] = [];
 
   getFriend(id: string) {
     return {...this._friends.find(friend => friend.id === id)};
@@ -174,11 +154,48 @@ export class FriendsService {
     this._didDoc = didDocument;
     this._friend.id = this._didDoc.id.didString;
     this._didDoc.verifiableCredential.map(key => {
-      if(key.credentialId === '#name') {
+      if(key.credentialSubject.hasOwnProperty('name')) {
         this._friend.name = key.credentialSubject.name;
       }
-      if(key.credentialId === '#gender') {
+      if(key.credentialSubject.hasOwnProperty('gender')) {
         this._friend.gender = key.credentialSubject.gender;
+      }
+      if(key.credentialSubject.hasOwnProperty('nickname')) {
+        this._friend.nickname = key.credentialSubject.nickname;
+      }
+      if(key.credentialSubject.hasOwnProperty('country')) {
+        this._friend.country = key.credentialSubject.country;
+      }
+      if(key.credentialSubject.hasOwnProperty('birthDate')) {
+        this._friend.birthDate = key.credentialSubject.birthDate;
+      }
+      if(key.credentialSubject.hasOwnProperty('telephone')) {
+        this._friend.telephone = key.credentialSubject.telephone;
+      }
+      if(key.credentialSubject.hasOwnProperty('email')) {
+        this._friend.email = key.credentialSubject.email;
+      }
+      if(key.credentialSubject.hasOwnProperty('description')) {
+        this._friend.description = key.credentialSubject.description;
+      }
+      if(key.credentialSubject.hasOwnProperty('website')) {
+        this._friend.website = key.credentialSubject.website;
+      }
+      if(key.credentialSubject.hasOwnProperty('twitter')) {
+        this._friend.twitter = key.credentialSubject.twitter;
+      }
+      if(key.credentialSubject.hasOwnProperty('facebook')) {
+        this._friend.facebook = key.credentialSubject.facebook;
+      }
+      if(key.credentialSubject.hasOwnProperty('telegram')) {
+        this._friend.telegram = key.credentialSubject.telegram;
+      }
+      if(key.credentialSubject.hasOwnProperty('apppackage')) {
+        this._friend.applicationProfileCredentials.push({
+          action: key.credentialSubject.action,
+          apppackage: key.credentialSubject.apppackage,
+          apptype: key.credentialSubject.apptype,
+        });
       }
     });
 
@@ -208,12 +225,6 @@ export class FriendsService {
       this.friendAlreadyAdded(alertName);
       console.log('Friend is already added');
     } else {
-      this._didDoc.verifiableCredential.map(key => {
-        if(key.type.includes('ApplicationProfileCredential')) {
-          this._friend.applicationProfileCredentials = key.credentialSubject;
-        }
-      });
-
       this.storageService.setFriends(this._friends = this._friends.concat(this._friend));
       this.storageService.setDIDs(this._didDocs = this._didDocs.concat(this._didDoc));
       this.friendAdded(alertName);

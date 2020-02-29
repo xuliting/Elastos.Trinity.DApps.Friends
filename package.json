@@ -30,6 +30,7 @@
     "@types/node": "^8.9.5",
     "cordova-plugin-file": "^6.0.2",
     "core-js": "^2.5.4",
+    "moment": "^2.24.0",
     "nan": "^2.14.0",
     "node-gyp": "6.0.0",
     "node-sass": "4.12.0",

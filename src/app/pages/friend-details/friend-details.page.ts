@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { NavController, AlertController, PopoverController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment';
 
 import { FriendsService } from 'src/app/services/friends.service';
 
@@ -17,7 +18,6 @@ type DisplayableAppInfo = {
   packageId: string,
   app: DApp,
   action: string,
-  infoFetched: boolean,
   isInstalled: boolean
 }
 
@@ -28,8 +28,9 @@ type DisplayableAppInfo = {
 })
 export class FriendDetailsPage implements OnInit {
 
-  friend: Friend;
-  friendsApps: DisplayableAppInfo[] = [];
+  public friend: Friend;
+  public friendsApps: DisplayableAppInfo[] = [];
+  public fetchingApps = false;
 
   constructor(
     public friendsService: FriendsService,
@@ -51,74 +52,43 @@ export class FriendDetailsPage implements OnInit {
       this.friend = this.friendsService.getFriend(paramMap.get('friendId'));
       console.log(this.friend);
       this.buildDisplayableAppsInfo();
-      this.getApps();
     });
     // Used to retrieve app data from app store
     // this.shipAppInfo();
   }
 
-  /**
-   * From the list of friend's app credentials, build a preliminary list of displayable
-   * items. Those app items are going to be completed later on by fetching info from the app store.
-   */
-  private buildDisplayableAppsInfo() {
+  /* From the app credentials, build a list of displayable items onced its fetched from the app store */
+  private async buildDisplayableAppsInfo() {
     this.friendsApps = [];
 
-    if (this.friend.applicationProfileCredentials) {
+    if (
+      this.friend.applicationProfileCredentials.length > 0 &&
+      this.friend.applicationProfileCredentials[0].apppackage !== null
+      ) {
       console.log('Friend\'s app creds ', this.friend.applicationProfileCredentials)
       this.friend.applicationProfileCredentials.map((apc)=>{
-        // Used the provided app profile action if any.
-        let action = apc.action || null;
+        this.fetchingApps = true;
 
-        // Push a new empty app info, waiting to get populated.
-        this.friendsApps.push({
-          packageId: apc.apppackage,
-          app: null,
-          action: action,
-          infoFetched: false,
-          isInstalled: false
+        this.http.get<DApp>('https://dapp-store.elastos.org/apps/' + apc.apppackage + '/manifest').subscribe((manifest: DApp) => {
+          console.log('Got app!', manifest);
+          this.zone.run(async () => {
+
+            this.friendsApps.push({
+              packageId: apc.apppackage,
+              app: manifest,
+              action: apc.action ? apc.action : manifest.short_description,
+              isInstalled: await this.friendsService.appIsInstalled(apc.apppackage)
+            });
+
+            this.fetchingApps = false;
+            console.log('Updated apps', this.friendsApps);
+          });
         });
-        console.log('Friend\'s apps', this.friendsApps);
       });
     }
     else {
       console.log("No application profile credential found in this friend's profile.");
     }
-  }
-
-  // Using appstore get-manifest api
-  getApps() {
-    this.friendsApps.map(appInfo => {
-      console.log('Fetching app info for:', appInfo);
-
-      this.http.get<DApp>('https://dapp-store.elastos.org/apps/' + appInfo.packageId + '/manifest').subscribe((manifest: DApp) => {
-        console.log('Got app!', manifest);
-
-        this.zone.run(async ()=>{
-          appInfo.app = manifest;
-          appInfo.infoFetched = true;
-
-          // No action defined by the credential? Use the app description instead.
-          if (!appInfo.action)
-            appInfo.action = manifest.short_description;
-
-          // Check if this app is installed on user's device or not.
-          appInfo.isInstalled = await this.friendsService.appIsInstalled(appInfo.packageId);
-        })
-      });
-    });
-  }
-
-  /**
-   * Checks if all app info have been fetched from the app store or if we are still waiting for
-   * some of them
-   */
-  allAppsInfoLoaded() {
-    // Search at least one unloaded app
-    let unloadedAppInfo = this.friendsApps.find((app)=>{
-      return !app.infoFetched;
-    })
-    return (unloadedAppInfo == null);
   }
 
   /**
@@ -129,21 +99,12 @@ export class FriendDetailsPage implements OnInit {
     return appInfo.action;
   }
 
-  // Using appstore apps-list api
-  /* getApps() {
-    this.appsLoaded = true;
-    if(this.friend.applicationProfileCredentials.length > 0) {
-      this.appsLoaded = false;
-      console.log('Fetching apps');
-      this.http.get<DApp[]>('https://dapp-store.elastos.org/apps/list').subscribe(apps => {
-        console.log('Apps!', apps);
-        this.filterApps(apps);
-      });
-    }
-  } */
+  getAppIcon(appId) {
+    return "https://dapp-store.elastos.org/apps/" +appId+ "/icon";
+  }
 
-  getAppIcon(app) {
-    return "https://dapp-store.elastos.org/apps/"+app.id+"/icon";
+  fixBirthDate(birth) {
+    return moment(birth).format("MMMM Do YYYY");
   }
 
   customizeFriend() {
