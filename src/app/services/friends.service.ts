@@ -32,29 +32,31 @@ export class FriendsService {
   };
 
   public _friends: Friend[] = [
-   /*  {
-      id: 'did34r4rf4fwerf4wrfw',
-      name: 'Chad Racelis',
+
+    // For Test Purposes
+  /*   {
+      id: 'didTest1',
+      name: 'Sarah Marshall',
+      gender: 'female',
+      note: '',
+      email: '',
+      imageUrl: '',
+      applicationProfileCredentials: [],
+      isPicked: false
+    },
+    {
+      id: 'didTest2',
+      name: 'Jon Snow',
       gender: 'male',
       note: '',
       email: '',
       imageUrl: '',
       applicationProfileCredentials: [],
-      isPicked: false,
+      isPicked: false
     },
     {
-      id: 'did34frferfgerf4wrfw',
-      name: 'Marting Knight',
-      gender: 'male',
-      note: '',
-      email: '',
-      imageUrl: '',
-      applicationProfileCredentials: [],
-      isPicked: false,
-    },
-    {
-      id: 'did34r4rf4f4t34tf4wrfw',
-      name: 'Ben Piette',
+      id: 'didTest3',
+      name: 'Donald Trump',
       gender: 'male',
       note: '',
       email: '',
@@ -106,8 +108,9 @@ export class FriendsService {
         console.log('Fetched stored friends', friends);
         if(friends.length > 0) {
           this._friends = friends;
+          // this._friends = this._friends.concat(friends);
         }
-        resolve(friends || []);
+        resolve(friends || this._friends);
       });
     });
   }
@@ -119,7 +122,6 @@ export class FriendsService {
       case "handlescannedcontent_did":
         console.log('handlescannedcontent_did intent', ret);
         this.addFriendByIntent(ret.params.data);
-        // this.showPopover(ret.params.data);
 
       case "addfriend":
         console.log('addfriend intent', ret);
@@ -221,7 +223,6 @@ export class FriendsService {
 
   /******************************** Delete Friend ********************************/
   deleteFriend(friend: Friend) {
-
     let alertName: string = '';
     if(friend.name) {
       alertName = friend.name
@@ -250,6 +251,8 @@ export class FriendsService {
   }
 
   /******************************** Pick Friend Intent  ********************************/
+
+  // Wait for storage before handling intent
   async getFriends() {
     await this.getStoredDIDs().then((friends) => {
       console.log('My friends', friends);
@@ -261,6 +264,7 @@ export class FriendsService {
     });
   }
 
+  // Send intent response after selecting friends from pick-friend pg
   inviteFriends() {
     let dids = [];
     this._didDocs.map((did) => {
@@ -269,14 +273,14 @@ export class FriendsService {
           dids.push(did);
           friend.isPicked = false;
         }
-      })
+      });
     });
     console.log('Invited friends', dids);
 
     if(dids.length > 0) {
       appManager.sendIntentResponse(
         "pickfriend",
-        { document: dids,  },
+        { document: dids },
         managerService.handledIntentId,
         (res: any) => {},
         (err: any) => {}
