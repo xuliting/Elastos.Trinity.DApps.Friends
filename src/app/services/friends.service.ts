@@ -36,15 +36,12 @@ export class FriendsService {
     facebook: null,
     telegram: null,
     imageUrl: null,
-    applicationProfileCredentials: [{
-      action: null,
-      apppackage: null,
-      apptype: null,
-    }],
+    applicationProfileCredentials: [],
     isPicked: false
   };
 
   public _friends: Friend[] = [];
+  public filteredFriends: Friend[] = [];
 
   getFriend(id: string) {
     return {...this._friends.find(friend => friend.id === id)};
@@ -109,7 +106,12 @@ export class FriendsService {
 
       case "pickfriend":
         console.log('pickfriend intent', ret);
-        this.getFriends();
+        if(ret.params.filter) {
+          console.log(ret.params.filter)
+          this.getFilteredFriends(ret);
+        } else {
+          this.getFriends();
+        }
     }
   }
 
@@ -150,6 +152,28 @@ export class FriendsService {
 
   /******************************** Confirm Friend  ********************************/
   showConfirm = (didDocument) => {
+
+    // Reset state of current friend
+    this._friend = {
+      id: null,
+      name: null,
+      gender: null,
+      note: null,
+      nickname: null,
+      country: null,
+      birthDate: null,
+      telephone: null,
+      email: null,
+      description: null,
+      website: null,
+      twitter: null,
+      facebook: null,
+      telegram: null,
+      imageUrl: null,
+      applicationProfileCredentials: [],
+      isPicked: false
+    };
+
     console.log('Confirm or deny?', didDocument);
     this._didDoc = didDocument;
     this._friend.id = this._didDoc.id.didString;
@@ -222,12 +246,12 @@ export class FriendsService {
     console.log('Current did', this._didDoc);
     let targetFriend: Friend = this._friends.find(friend => friend.id === this._friend.id);
     if(targetFriend) {
-      this.friendAlreadyAdded(alertName);
+      this.genericToast(alertName + ' is already added');
       console.log('Friend is already added');
     } else {
       this.storageService.setFriends(this._friends = this._friends.concat(this._friend));
       this.storageService.setDIDs(this._didDocs = this._didDocs.concat(this._didDoc));
-      this.friendAdded(alertName);
+      this.genericToast(alertName + ' was added');
       console.log('Friends updated', this._friends);
     }
   }
@@ -247,7 +271,7 @@ export class FriendsService {
     console.log('Updated friends', this._friends);
     this.storageService.setDIDs(this._didDocs);
     this.storageService.setFriends(this._friends);
-    this.friendDeleted(alertName);
+    this.genericToast(alertName + ' was deleted');
   }
 
   /******************************** Customize friend ********************************/
@@ -270,7 +294,44 @@ export class FriendsService {
       if(this._friends.length > 0) {
           this.router.navigate(['/pick-friend']);
       } else {
-        this.alertNoFriends();
+        this.alertNoFriends('You don\'t have any friends to invite!');
+      }
+    });
+  }
+
+  async getFilteredFriends(ret) {
+    await this.getStoredDIDs().then((friends) => {
+      console.log('My friends', friends);
+
+      if(this._friends.length > 0) {
+        if(ret.params.filter.credentialType === "apppackage") {
+          console.log('Intent requesting friends with app', ret.from);
+          this.filteredFriends = [];
+          this._friends.map((friend) => {
+            friend.applicationProfileCredentials.map((appCreds) => {
+              if(appCreds.apppackage === ret.from) {
+                this.filteredFriends.push(friend);
+              }
+              // For Testing Purposes
+              /* if(appCreds.apppackage === 'org.elastos.trinity.dapp.diddemo') {
+                this.filteredFriends.push(friend);
+              } */
+            });
+          });
+
+          if(this.filteredFriends.length > 0) {
+            let props: NavigationExtras = {
+              queryParams: {
+                friendsFiltered: true
+              }
+            }
+            this.router.navigate(['/pick-friend'], props);
+          } else {
+            this.alertNoFriends('You don\'t have any friends with this app!');
+          }
+        }
+      } else {
+        this.alertNoFriends('You don\'t have any friends to invite!');
       }
     });
   }
@@ -286,8 +347,27 @@ export class FriendsService {
         }
       });
     });
-    console.log('Invited friends', dids);
 
+    console.log('Invited friends', dids);
+    this.sendIntentRes(dids);
+  }
+
+  inviteFilteredFriends() {
+    let dids = [];
+    this._didDocs.map((did) => {
+      this.filteredFriends.map((friend) => {
+        if(did.id.didString === friend.id && friend.isPicked) {
+          dids.push(did);
+          friend.isPicked = false;
+        }
+      });
+    });
+
+    console.log('Invited friends', dids);
+    this.sendIntentRes(dids);
+  }
+
+  sendIntentRes(dids) {
     if(dids.length > 0) {
       appManager.sendIntentResponse(
         "pickfriend",
@@ -298,7 +378,7 @@ export class FriendsService {
       );
       appManager.close();
     } else {
-      this.selectFriends();
+      this.genericToast('Please select some friends before inviting');
     }
   }
 
@@ -329,30 +409,10 @@ export class FriendsService {
   }
 
   /******************************** Alerts ********************************/
-  async friendAdded(name: string) {
+  async genericToast(msg) {
     const toast = await this.toastController.create({
       mode: 'ios',
-      header: name + ' was added',
-      color: "light",
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async friendAlreadyAdded(name: string) {
-    const toast = await this.toastController.create({
-      mode: 'ios',
-      header: name + ' is already in your friends',
-      color: "light",
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async friendDenied(name: string) {
-    const toast = await this.toastController.create({
-      mode: 'ios',
-      header: 'Denied friend ' + name,
+      header: msg,
       color: "light",
       duration: 2000
     });
@@ -370,31 +430,10 @@ export class FriendsService {
     toast.present();
   }
 
-  async friendDeleted(name: string) {
-    const toast = await this.toastController.create({
-      mode: 'ios',
-      header: name + ' was deleted',
-      color: "light",
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async selectFriends() {
-    const toast = await this.toastController.create({
-      position: 'bottom',
-      mode: 'ios',
-      header: 'Please select some friends before inviting',
-      color: "light",
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async alertNoFriends() {
+  async alertNoFriends(msg) {
     const alert = await this.alertController.create({
       mode: 'ios',
-      header: 'You don\'t have any friends to invite!',
+      header: msg,
       buttons: [
         {
           text: 'Okay',

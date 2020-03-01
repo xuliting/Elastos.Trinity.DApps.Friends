@@ -59,8 +59,10 @@
       </div>
     </ion-list>
 
-    <ion-list *ngIf="friendsService._friends.length === 0" class="no-friends ion-text-center">
-      <div>Go find some friends to follow!</div>
+    <ion-list *ngIf="friendsService._friends.length === 0" class="no-friends">
+      <div class="ion-text-center">
+        Go find some friends to follow!
+      </div>
     </ion-list>
 
   </ion-grid>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FriendsService } from 'src/app/services/friends.service';
+import { ActivatedRoute } from '@angular/router';
+import { Friend } from 'src/app/models/friends.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
 
@@ -11,9 +13,18 @@ declare let appManager: AppManagerPlugin.AppManager;
 })
 export class PickFriendPage implements OnInit {
 
-  constructor(public friendsService: FriendsService,) { }
+  isFilter: boolean = false;
+  filteredFriends: Friend[];
+
+  constructor(public friendsService: FriendsService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params.friendsFiltered) {
+        this.isFilter = true;
+      }
+    });
+    console.log('Friends filtered?', this.isFilter);
   }
 
   closeApp() {

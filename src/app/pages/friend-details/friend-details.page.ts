@@ -61,10 +61,7 @@ export class FriendDetailsPage implements OnInit {
   private async buildDisplayableAppsInfo() {
     this.friendsApps = [];
 
-    if (
-      this.friend.applicationProfileCredentials.length > 0 &&
-      this.friend.applicationProfileCredentials[0].apppackage !== null
-      ) {
+    if (this.friend.applicationProfileCredentials.length > 0) {
       console.log('Friend\'s app creds ', this.friend.applicationProfileCredentials)
       this.friend.applicationProfileCredentials.map((apc)=>{
         this.fetchingApps = true;

@@ -15,11 +15,7 @@ export class Friend {
     public facebook: string,
     public telegram: string,
     public imageUrl: string,
-    public applicationProfileCredentials: [{
-      action: string,
-      apppackage: string,
-      apptype: string,
-    }],
+    public applicationProfileCredentials: any,
     public isPicked: boolean = false
   ) {}
 }
