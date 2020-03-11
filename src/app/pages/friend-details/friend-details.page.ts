@@ -63,13 +63,13 @@ export class FriendDetailsPage implements OnInit {
 
     if (this.friend.applicationProfileCredentials.length > 0) {
       console.log('Friend\'s app creds ', this.friend.applicationProfileCredentials)
+      
+      let fetchCount = this.friend.applicationProfileCredentials.length;
+      this.fetchingApps = true;
       this.friend.applicationProfileCredentials.map((apc)=>{
-        this.fetchingApps = true;
-
         this.http.get<DApp>('https://dapp-store.elastos.org/apps/' + apc.apppackage + '/manifest').subscribe((manifest: DApp) => {
           console.log('Got app!', manifest);
           this.zone.run(async () => {
-
             this.friendsApps.push({
               packageId: apc.apppackage,
               app: manifest,
@@ -77,9 +77,19 @@ export class FriendDetailsPage implements OnInit {
               isInstalled: await this.friendsService.appIsInstalled(apc.apppackage)
             });
 
-            this.fetchingApps = false;
+            fetchCount--;
+            if (fetchCount == 0)
+              this.fetchingApps = false;
+
             console.log('Updated apps', this.friendsApps);
           });
+        },
+        (error)=> {
+          console.log("HTTP ERROR "+JSON.stringify(error));
+
+          fetchCount--;
+          if (fetchCount == 0)
+            this.fetchingApps = false;
         });
       });
     }
