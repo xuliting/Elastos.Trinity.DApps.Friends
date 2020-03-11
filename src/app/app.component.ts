@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FriendsService } from './services/friends.service';
@@ -12,6 +12,7 @@ import { FriendsService } from './services/friends.service';
 })
 export class AppComponent {
   constructor(
+    private navController: NavController,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -25,6 +26,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.friendsService.init();
       this.splashScreen.hide();
+      this.navController.navigateRoot("/friends");
     });
   }
 }
