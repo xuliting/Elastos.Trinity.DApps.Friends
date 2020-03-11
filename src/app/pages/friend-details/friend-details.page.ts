@@ -13,6 +13,7 @@ import { WarningPage } from './warning/warning.page';
 import { Warning2Page } from './warning2/warning2.page';
 
 declare let appManager: AppManagerPlugin.AppManager;
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 type DisplayableAppInfo = {
   packageId: string,
@@ -55,6 +56,11 @@ export class FriendDetailsPage implements OnInit {
     });
     // Used to retrieve app data from app store
     // this.shipAppInfo();
+  }
+
+  ionViewWillEnter() {
+    titleBarManager.setTitle("Friend profile");
+    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
   }
 
   /* From the app credentials, build a list of displayable items onced its fetched from the app store */
@@ -194,10 +200,6 @@ export class FriendDetailsPage implements OnInit {
         });
       }
     });
-  }
-
-  closeApp() {
-    appManager.close();
   }
 
   /* // Prepare to ship app packages to app store

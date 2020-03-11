@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, AlertController } from '@ionic/angular';
+import { Platform, AlertController, NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 
@@ -54,6 +54,7 @@ export class FriendsService {
     public toastController: ToastController,
     public zone: NgZone,
     private storageService: StorageService,
+    private navController: NavController
   ) {
     managerService = this;
   }
@@ -65,6 +66,9 @@ export class FriendsService {
     // Load app manager only on real device, not in desktop browser - beware: ionic 4 bug with "desktop" or "android"/"ios"
     if (this.platform.platforms().indexOf("cordova") >= 0) {
         console.log("Listening to intent events")
+        appManager.setListener((msg)=>{
+          this.onMessageReceived(msg);
+        })
         appManager.setIntentListener(
           this.onReceiveIntent
         );
@@ -75,21 +79,33 @@ export class FriendsService {
     return new Promise((resolve, reject) => {
       this.storageService.getDIDs().then(dids => {
         console.log('Fetched stored DIDs', dids);
-        if(dids.length > 0) {
+        if(dids && dids.length > 0) {
           this._didDocs = dids;
           console.log('DIDs stored', this._didDocs);
+        }
+        else {
+          console.log("Empty DID list received");
         }
       });
 
       this.storageService.getFriends().then(friends => {
         console.log('Fetched stored friends', friends);
-        if(friends.length > 0) {
+        if(friends && friends.length > 0) {
           this._friends = friends;
           // this._friends = this._friends.concat(friends);
+        }
+        else {
+          console.log("Empty friends list");
         }
         resolve(friends || this._friends);
       });
     });
+  }
+
+  onMessageReceived(msg: AppManagerPlugin.ReceivedMessage) {
+    if (msg.message == "navback") {
+      this.navController.back();
+    }
   }
 
   onReceiveIntent = (ret) => {

@@ -6,6 +6,7 @@ import { FriendsService } from 'src/app/services/friends.service';
 import { DID } from 'src/app/models/did.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
   selector: 'app-add-friend',
@@ -35,7 +36,10 @@ export class AddFriendPage implements OnInit {
       this.input.setFocus();
     }, 200);
 
-    appManager.setVisible("show", ()=>{}, (err)=>{});
+    appManager.setVisible("show");
+
+    titleBarManager.setTitle("Add a friend");
+    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
   }
 
   scanDID() {
@@ -87,9 +91,5 @@ export class AddFriendPage implements OnInit {
       duration: 2000
     });
     toast.present();
-  }
-
-  closeApp() {
-    appManager.close();
   }
 }

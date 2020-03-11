@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FriendsService } from 'src/app/services/friends.service';
 
 declare let appManager: AppManagerPlugin.AppManager;
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
   selector: 'app-friends',
@@ -9,7 +10,6 @@ declare let appManager: AppManagerPlugin.AppManager;
   styleUrls: ['./friends.page.scss'],
 })
 export class FriendsPage implements OnInit {
-
   friendsLoaded = true;
 
   constructor(
@@ -20,14 +20,11 @@ export class FriendsPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    titleBarManager.setTitle();
+    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
   }
 
   ionViewDidEnter() {
-    appManager.setVisible("show", ()=>{}, (err)=>{});
-  }
-
-  closeApp() {
-    console.log('Closing app');
-    appManager.close();
+    appManager.setVisible("show");
   }
 }

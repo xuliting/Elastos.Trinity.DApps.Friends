@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Friend } from 'src/app/models/friends.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
   selector: 'app-pick-friend',
@@ -25,6 +26,10 @@ export class PickFriendPage implements OnInit {
       }
     });
     console.log('Friends filtered?', this.isFilter);
+  }
+
+  ionViewWillEnter() {
+    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.CLOSE);
   }
 
   closeApp() {

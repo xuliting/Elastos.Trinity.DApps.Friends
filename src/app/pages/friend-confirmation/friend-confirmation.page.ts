@@ -7,6 +7,7 @@ import { DID } from 'src/app/models/did.model';
 import { Friend } from 'src/app/models/friends.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
   selector: 'app-friend-confirmation',
@@ -38,8 +39,13 @@ export class FriendConfirmationPage implements OnInit {
     })
   }
 
+  ionViewWillEnter() {
+    titleBarManager.setTitle("Add Friend");
+    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
+  }
+
   ionViewDidEnter() {
-    appManager.setVisible("show", ()=>{}, (err)=>{});
+    appManager.setVisible("show");
   }
 
   addFriend() {
@@ -57,9 +63,5 @@ export class FriendConfirmationPage implements OnInit {
 
     this.friendsService.genericToast('Denied friend ' + alertName);
     this.router.navigate(['friends']);
-  }
-
-  closeApp() {
-    appManager.close();
   }
 }
