@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FriendsService } from './services/friends.service';
 
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -26,6 +28,10 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.friendsService.init();
       this.splashScreen.hide();
+
+      titleBarManager.setBackgroundColor("#FFFFFF");
+      titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.DARK);
+
       this.navController.navigateRoot("/friends");
     });
   }
