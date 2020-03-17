@@ -1,4 +1,17 @@
 .no-friends {
   background-color: transparent !important;
-  font-weight: 600;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h5 {
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  did-button {
+    width: 90%;
+  }
 }

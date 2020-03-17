@@ -1,4 +1,4 @@
-<ion-header no-border>
+<!-- <ion-header no-border>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-button [routerLink]="['/', 'addFriend']">
@@ -7,18 +7,17 @@
     </ion-buttons>
     <ion-title>Contacts list</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
+
   <ion-grid class="friends-container">
     <ion-list *ngIf="friendsService._friends.length > 0">
-
       <ion-item *ngIf="!friendsLoaded" class="ion-text-center" color="light">
         <ion-label>
           <ion-spinner name="bubbles"></ion-spinner>
         </ion-label>
       </ion-item>
-
       <div *ngIf="friendsLoaded">
         <ion-item
           *ngFor="let friend of friendsService._friends"
@@ -55,10 +54,22 @@
     </ion-list>
 
     <ion-list *ngIf="friendsService._friends.length === 0" class="no-friends">
-      <div class="ion-text-center">
-        Go find some friends to follow!
-      </div>
+      <did-button
+        [routerLink]="['/', 'addFriend']"
+        title="Add Friend"
+        textcolor="#000000"
+        [bgcolor]="'#ffffff'"
+        [bordercolor]="'#ffffff'"
+        [shadow]="false">
+      </did-button>
     </ion-list>
-
   </ion-grid>
+
+  <ion-fab *ngIf="friendsService._friends.length > 0" vertical="bottom" horizontal="center" slot="fixed" class="ion-padding-bottom">
+    <ion-fab-button [routerLink]="['/', 'addFriend']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>
+
