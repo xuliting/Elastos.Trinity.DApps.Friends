@@ -53,7 +53,7 @@
       </div>
     </ion-list>
 
-    <ion-list *ngIf="friendsService._friends.length === 0" class="no-friends">
+<!--     <ion-list *ngIf="friendsService._friends.length === 0" class="no-friends">
       <did-button
         [routerLink]="['/', 'addFriend']"
         title="Add Friend"
@@ -62,10 +62,10 @@
         [bordercolor]="'#ffffff'"
         [shadow]="false">
       </did-button>
-    </ion-list>
+    </ion-list> -->
   </ion-grid>
 
-  <ion-fab *ngIf="friendsService._friends.length > 0" vertical="bottom" horizontal="center" slot="fixed" class="ion-padding-bottom">
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" class="ion-padding-bottom">
     <ion-fab-button [routerLink]="['/', 'addFriend']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

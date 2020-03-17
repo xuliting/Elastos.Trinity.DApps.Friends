@@ -20,7 +20,7 @@ export class FriendsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    titleBarManager.setTitle();
+    titleBarManager.setTitle('Friends');
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
   }
 

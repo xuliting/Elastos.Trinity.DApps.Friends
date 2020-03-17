@@ -11,6 +11,7 @@ import { DApp } from 'src/app/models/dapp.model';
 
 import { WarningPage } from './warning/warning.page';
 import { Warning2Page } from './warning2/warning2.page';
+import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -54,8 +55,6 @@ export class FriendDetailsPage implements OnInit {
       console.log(this.friend);
       this.buildDisplayableAppsInfo();
     });
-    // Used to retrieve app data from app store
-    // this.shipAppInfo();
   }
 
   ionViewWillEnter() {
@@ -66,13 +65,19 @@ export class FriendDetailsPage implements OnInit {
   /* From the app credentials, build a list of displayable items onced its fetched from the app store */
   private async buildDisplayableAppsInfo() {
     this.friendsApps = [];
+ /*    this.friendsApps.push({
+      packageId: 'Chads.dapp.org',
+      app: null,
+      action: 'Im a dapp',
+      isInstalled: false
+    }); */
 
     if (this.friend.applicationProfileCredentials.length > 0) {
       console.log('Friend\'s app creds ', this.friend.applicationProfileCredentials)
-      
+
       let fetchCount = this.friend.applicationProfileCredentials.length;
       this.fetchingApps = true;
-      this.friend.applicationProfileCredentials.map((apc)=>{
+      this.friend.applicationProfileCredentials.forEach((apc)=>{
         this.http.get<DApp>('https://dapp-store.elastos.org/apps/' + apc.apppackage + '/manifest').subscribe((manifest: DApp) => {
           console.log('Got app!', manifest);
           this.zone.run(async () => {
@@ -86,30 +91,29 @@ export class FriendDetailsPage implements OnInit {
             fetchCount--;
             if (fetchCount == 0)
               this.fetchingApps = false;
-
-            console.log('Updated apps', this.friendsApps);
           });
         },
         (error)=> {
           console.log("HTTP ERROR "+JSON.stringify(error));
+          this.zone.run(async () => {
+            this.friendsApps.push({
+              packageId: apc.apppackage,
+              app: null,
+              action: apc.action ? apc.action : null,
+              isInstalled: await this.friendsService.appIsInstalled(apc.apppackage)
+            });
 
-          fetchCount--;
-          if (fetchCount == 0)
-            this.fetchingApps = false;
+            fetchCount--;
+            if (fetchCount == 0)
+              this.fetchingApps = false;
+          });
         });
+        console.log('Updated apps', this.friendsApps);
       });
     }
     else {
       console.log("No application profile credential found in this friend's profile.");
     }
-  }
-
-  /**
-   * If the credential provides an action string we use it. Otherwise
-   * we just display the appliation description.
-   */
-  getDisplayableSubtitle(appInfo: DisplayableAppInfo) {
-    return appInfo.action;
   }
 
   getAppIcon(appId) {
@@ -167,15 +171,15 @@ export class FriendDetailsPage implements OnInit {
     return await popover.present();
   }
 
-  discoverApp(app: DApp) {
-    console.log('Inquiring app in app-store..', app.id);
-    appManager.sendIntent("appdetails", app.id, {})
+  discoverApp(appId: string) {
+    console.log('Inquiring app in app-store..', appId);
+    appManager.sendIntent("appdetails", appId, {})
   }
 
-  startApp(app: DApp) {
+  connectApp(appId: string) {
     this.friend.applicationProfileCredentials.map((appCred) => {
-      if(appCred.apppackage === app.id) {
-        console.log('Launching appCred: ' + appCred, 'appManifest: ', app);
+      if(appCred.apppackage === appId) {
+        console.log('Launching appCred: ' + appCred, 'appManifest: ', appId);
 
         let passedFields = {};
         for (let key of Object.keys(appCred)) {
@@ -191,38 +195,14 @@ export class FriendDetailsPage implements OnInit {
         appManager.sendIntent(
           "connectapplicationprofile",
           passedFields,
-          { appId: app.id },
+          { appId: appId },
           () => {
           console.log("connectapplicationprofile intent success");
         }, (err) => {
-          this.friendsService.startApp(app.id);
+          this.friendsService.startApp(appId);
           console.error("connectapplicationprofile intent error", err);
         });
       }
     });
   }
-
-  /* // Prepare to ship app packages to app store
-  async shipAppInfo() {
-    let sendPackages = [];
-    this.friend.applicationProfileCredentials.map(app => {
-      sendPackages = sendPackages.concat(app.apppackage);
-    });
-
-    let appStoreRes = await this.getAppInfo(sendPackages);
-    console.log('App store responded!', appStoreRes);
-  }
-
-  // Wait for response from app store
-  getAppInfo(sendPackages) {
-    return new Promise((resolve, reject) => {
-      appManager.sendIntent("appdetails", sendPackages, (res) => {
-        console.log('Response recieved', res)
-        resolve(res);
-      }, (err: any) => {
-        console.log(err);
-        reject(err);
-      });
-    });
-  } */
 }

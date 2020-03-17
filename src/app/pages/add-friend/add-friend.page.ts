@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { ToastController, IonInput } from '@ionic/angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 
@@ -23,6 +23,7 @@ export class AddFriendPage implements OnInit {
   constructor(
     private friendsService: FriendsService,
     public toastController: ToastController,
+    private zone: NgZone
     // private clipboard: Clipboard
   ) {
   }
@@ -31,15 +32,17 @@ export class AddFriendPage implements OnInit {
     this.didResolved = true;
   }
 
+  ionViewWillEnter() {
+    titleBarManager.setTitle("Add a friend");
+    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
+  }
+
   ionViewDidEnter() {
+    appManager.setVisible("show");
+
     setTimeout(() => {
       this.input.setFocus();
     }, 200);
-
-    appManager.setVisible("show");
-
-    titleBarManager.setTitle("Add a friend");
-    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
   }
 
   scanDID() {

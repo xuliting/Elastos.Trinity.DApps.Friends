@@ -92,10 +92,10 @@ export class FriendsService {
         console.log('Fetched stored friends', friends);
         if(friends && friends.length > 0) {
           this._friends = friends;
-          // this._friends = this._friends.concat(friends);
         }
         else {
           console.log("Empty friends list");
+          this.router.navigate(['/addFriend']);
         }
         resolve(friends || this._friends);
       });
