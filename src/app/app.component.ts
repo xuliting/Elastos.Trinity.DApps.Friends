@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import { Platform, NavController } from '@ionic/angular';
+import { Platform, NavController, IonRouterOutlet } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FriendsService } from './services/friends.service';
+import { Router } from '@angular/router';
 
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
@@ -13,12 +14,15 @@ declare let titleBarManager: TitleBarPlugin.TitleBarManager;
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  @ViewChild(IonRouterOutlet, {static: true}) routerOutlet: IonRouterOutlet;
+
   constructor(
     private navController: NavController,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private friendsService: FriendsService
+    private friendsService: FriendsService,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -32,7 +36,23 @@ export class AppComponent {
       titleBarManager.setBackgroundColor("#FFFFFF");
       titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.DARK);
 
+      this.setupBackKeyNavigation();
+
       this.navController.navigateRoot("/friends");
+    });
+  }
+
+  /**
+   * Listen to back key events. If the default router can go back, just go back.
+   * Otherwise, exit the application.
+   */
+  setupBackKeyNavigation() {
+    this.platform.backButton.subscribeWithPriority(0, () => {
+      if (this.routerOutlet && this.routerOutlet.canGoBack()) {
+        this.routerOutlet.pop();
+      } else {
+        navigator['app'].exitApp();
+      }
     });
   }
 }
