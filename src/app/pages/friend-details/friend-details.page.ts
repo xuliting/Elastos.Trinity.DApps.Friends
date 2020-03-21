@@ -11,7 +11,6 @@ import { DApp } from 'src/app/models/dapp.model';
 
 import { WarningPage } from './warning/warning.page';
 import { Warning2Page } from './warning2/warning2.page';
-import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;

@@ -20,6 +20,8 @@ import { WarningPage } from './pages/friend-details/warning/warning.page';
 import { WarningPageModule } from './pages/friend-details/warning/warning.module';
 
 import * as Sentry from "@sentry/browser";
+import { NoFriendsPageModule } from './pages/friends/no-friends/no-friends.module';
+import { NoFriendsPage } from './pages/friends/no-friends/no-friends.page';
 
 Sentry.init({
   dsn: "https://c22ac246ed2c4d2cb71cd482705d8adb@sentry.io/1875747"
@@ -53,12 +55,14 @@ export class SentryErrorHandler implements ErrorHandler {
     IonicStorageModule.forRoot(),
     WarningPageModule,
     Warning2PageModule,
+    NoFriendsPageModule
  ],
   bootstrap: [AppComponent],
   entryComponents: [
     AppComponent,
     WarningPage,
     Warning2Page,
+    NoFriendsPage
   ],
   providers: [
     FriendsService,

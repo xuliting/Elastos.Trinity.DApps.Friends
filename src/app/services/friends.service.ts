@@ -95,7 +95,7 @@ export class FriendsService {
         }
         else {
           console.log("Empty friends list");
-          this.router.navigate(['/addFriend']);
+         // this.router.navigate(['/addFriend']);
         }
         resolve(friends || this._friends);
       });

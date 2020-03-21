@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'custom-name', loadChildren: './pages/custom-name/custom-name.module#CustomNamePageModule' },
   { path: 'pick-friend', loadChildren: './pages/pick-friend/pick-friend.module#PickFriendPageModule' },
   { path: ':friendId', loadChildren: './pages/friend-details/friend-details.module#FriendDetailsPageModule' },
+  { path: 'no-friends', loadChildren: './pages/friends/no-friends/no-friends.module#NoFriendsPageModule' },
 ];
 
 @NgModule({

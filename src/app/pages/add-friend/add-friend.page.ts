@@ -39,7 +39,6 @@ export class AddFriendPage implements OnInit {
 
   ionViewDidEnter() {
     appManager.setVisible("show");
-
     setTimeout(() => {
       this.input.setFocus();
     }, 200);

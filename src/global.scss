@@ -106,6 +106,19 @@ ion-header {
   }
 }
 
+.no-friends {
+  ion-backdrop {
+    opacity: 0.1 !important;
+  }
+
+  .popover-wrapper{
+    .popover-content{
+      top: 50px !important;
+      width: 80vw;
+    }
+  }
+}
+
 /* Global Friends List */
 .friends-container {
   min-height: 100%;
@@ -114,7 +127,7 @@ ion-header {
   padding-left: 0;
 
   ion-list {
-    margin-top: 25px;
+    margin-top: 20px;
     padding-top: 0;
     padding-bottom: 0;
 
