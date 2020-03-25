@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
-import { ToastController, IonInput } from '@ionic/angular';
+import { ToastController, IonInput, PopoverController } from '@ionic/angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { FriendsService } from 'src/app/services/friends.service';
@@ -22,7 +22,8 @@ export class AddFriendPage implements OnInit {
 
   constructor(
     private friendsService: FriendsService,
-    public toastController: ToastController,
+    private toastController: ToastController,
+    private popoverController: PopoverController,
     private zone: NgZone
     // private clipboard: Clipboard
   ) {

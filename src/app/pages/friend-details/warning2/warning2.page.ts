@@ -32,12 +32,16 @@ export class Warning2Page implements OnInit {
   deleteFriend() {
     this.friendsService.deleteFriend(this.friend);
     this.popover.dismiss();
-    this.router.navigate(['/friends']);
-    console.log('Deleting friend ->' + this.friend);
+    console.log('Friend Deleted' + this.friend);
+
+    if(this.friendsService._friends.length > 0) {
+      this.router.navigate(['friends']);
+    } else {
+      this.router.navigate(['addFriend']);
+    }
   }
 
   goBack() {
     this.popover.dismiss();
   }
-
 }

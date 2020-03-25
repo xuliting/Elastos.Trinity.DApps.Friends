@@ -29,6 +29,7 @@ export class FriendConfirmationPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.popover.dismiss();
     this.route.queryParams.subscribe(params => {
       if (params) {
         this.didId = params.didId;
@@ -36,7 +37,7 @@ export class FriendConfirmationPage implements OnInit {
         this.didGender = params.didGender;
         this.didImage = params.didImage;
       }
-    })
+    });
   }
 
   ionViewWillEnter() {

@@ -1,11 +1,12 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, AlertController, NavController } from '@ionic/angular';
+import { Platform, AlertController, NavController, PopoverController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 
 import { StorageService } from 'src/app/services/storage.service';
 import { Friend } from '../models/friends.model';
 import { DID } from '../models/did.model';
+import { popoverController } from '@ionic/core';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
@@ -54,7 +55,8 @@ export class FriendsService {
     public toastController: ToastController,
     public zone: NgZone,
     private storageService: StorageService,
-    private navController: NavController
+    private navController: NavController,
+    private popoverController: PopoverController
   ) {
     managerService = this;
   }
@@ -104,7 +106,7 @@ export class FriendsService {
 
   onMessageReceived(msg: AppManagerPlugin.ReceivedMessage) {
     if (msg.message == "navback") {
-      this.navController.back();
+      this.router.navigate(['friends']);
     }
   }
 
@@ -115,11 +117,11 @@ export class FriendsService {
       case "handlescannedcontent_did":
         console.log('handlescannedcontent_did intent', ret);
         this.addFriendByIntent(ret.params.data);
-
+        break;
       case "addfriend":
         console.log('addfriend intent', ret);
         this.addFriendByIntent(ret.params.data);
-
+        break;
       case "pickfriend":
         console.log('pickfriend intent', ret);
         if(ret.params.filter) {
@@ -128,6 +130,7 @@ export class FriendsService {
         } else {
           this.getFriends();
         }
+        break;
     }
   }
 
@@ -267,7 +270,7 @@ export class FriendsService {
     } else {
       this.storageService.setFriends(this._friends = this._friends.concat(this._friend));
       this.storageService.setDIDs(this._didDocs = this._didDocs.concat(this._didDoc));
-      this.genericToast(alertName + ' was added');
+      // this.genericToast(alertName + ' was added');
       console.log('Friends updated', this._friends);
     }
   }
@@ -287,7 +290,7 @@ export class FriendsService {
     console.log('Updated friends', this._friends);
     this.storageService.setDIDs(this._didDocs);
     this.storageService.setFriends(this._friends);
-    this.genericToast(alertName + ' was deleted');
+    // this.genericToast(alertName + ' was deleted');
   }
 
   /******************************** Customize friend ********************************/
