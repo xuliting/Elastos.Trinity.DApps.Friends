@@ -81,7 +81,7 @@ export class AddFriendPage implements OnInit {
       this.didResolved = false;
       console.log("Resolving DID Document");
 
-      await this.friendsService.resolveDIDDocument(this.didInput);
+      await this.friendsService.resolveDIDDocument(this.didInput, false);
       this.didResolved = true;
       this.didInput = "";
     }

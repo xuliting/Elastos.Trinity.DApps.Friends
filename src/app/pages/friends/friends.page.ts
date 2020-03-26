@@ -30,10 +30,18 @@ export class FriendsPage implements OnInit {
 
   ionViewDidEnter() {
     appManager.setVisible("show");
+    this.checkForFriends();
+  }
 
-    if(this.friendsService._friends.length === 0) {
-      this.alertNoFriends();
-    }
+  async checkForFriends() {
+    await this.friendsService.getStoredDIDs().then((friends) => {
+      console.log('My friends', friends);
+      if(this.friendsService._friends.length > 0) {
+          return;
+      } else {
+        this.alertNoFriends();
+      }
+    });
   }
 
   async alertNoFriends() {

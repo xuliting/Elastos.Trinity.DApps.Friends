@@ -6,7 +6,6 @@ import { Router, NavigationExtras } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { Friend } from '../models/friends.model';
 import { DID } from '../models/did.model';
-import { popoverController } from '@ionic/core';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
@@ -55,8 +54,6 @@ export class FriendsService {
     public toastController: ToastController,
     public zone: NgZone,
     private storageService: StorageService,
-    private navController: NavController,
-    private popoverController: PopoverController
   ) {
     managerService = this;
   }
@@ -67,10 +64,10 @@ export class FriendsService {
 
     // Load app manager only on real device, not in desktop browser - beware: ionic 4 bug with "desktop" or "android"/"ios"
     if (this.platform.platforms().indexOf("cordova") >= 0) {
-        console.log("Listening to intent events")
-        appManager.setListener((msg)=>{
+        console.log("Listening to intent events");
+        appManager.setListener((msg) => {
           this.onMessageReceived(msg);
-        })
+        });
         appManager.setIntentListener(
           this.onReceiveIntent
         );
@@ -83,6 +80,7 @@ export class FriendsService {
         console.log('Fetched stored DIDs', dids);
         if(dids && dids.length > 0) {
           this._didDocs = dids;
+          this._didDocs
           console.log('DIDs stored', this._didDocs);
         }
         else {
@@ -94,10 +92,12 @@ export class FriendsService {
         console.log('Fetched stored friends', friends);
         if(friends && friends.length > 0) {
           this._friends = friends;
+          this._friends.forEach((friend) => {
+            this.resolveDIDDocument(friend.id, true);
+          });
         }
         else {
           console.log("Empty friends list");
-         // this.router.navigate(['/addFriend']);
         }
         resolve(friends || this._friends);
       });
@@ -137,7 +137,7 @@ export class FriendsService {
   /******************************** Resolve DID  ********************************/
   addFriendByIntent(did) {
     console.log('Received friend by intent', did);
-    this.resolveDIDDocument(did);
+    this.resolveDIDDocument(did, false);
   }
 
   /*
@@ -147,17 +147,18 @@ export class FriendsService {
    * through "registerapplicationprofile" intents, by the DID app, on request from third party apps. This
    * is where we can retrieve public app profile information for a "user" (DID).
    */
-  resolveDIDDocument(didString: DIDPlugin.DIDString): Promise<Boolean> {
+  resolveDIDDocument(didString: DIDPlugin.DIDString, updatingFriends): Promise<Boolean> {
     console.log('DID string', didString);
     return new Promise((resolve, reject) => {
       didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument) => {
         console.log("DIDDocument resolved for DID " + didString, didDocument);
 
-        if (didDocument) {
+        if (didDocument && !updatingFriends) {
           this.showConfirm(didDocument);
           resolve(true);
-        }
-        else {
+        } else if (didDocument && updatingFriends) {
+          this.updateFriends(didDocument);
+        } else {
           this.didResolveErr("Sorry, we can't find your friend on chain. Did he make his DID profile public ?");
           resolve(false);
         }
@@ -169,9 +170,73 @@ export class FriendsService {
     });
   }
 
+  /*************** Check friends list on render for any changes *******************/
+  updateFriends(didDocument) {
+    this._didDocs.map((didDoc) => {
+      if(didDoc.id.didString === didDocument.id.didString) {
+        didDoc = didDocument
+      }
+    });
+
+    this._friends.map((friend) => {
+      if(friend.id === didDocument.id.didString) {
+        console.log('Checking friend for any changes', friend);
+
+        didDocument.verifiableCredential.map(key => {
+          if(key.credentialSubject.hasOwnProperty('name')) {
+            friend.name = key.credentialSubject.name;
+          }
+          if(key.credentialSubject.hasOwnProperty('gender')) {
+            friend.gender = key.credentialSubject.gender;
+          }
+          if(key.credentialSubject.hasOwnProperty('nickname')) {
+            friend.nickname = key.credentialSubject.nickname;
+          }
+          if(key.credentialSubject.hasOwnProperty('country')) {
+            friend.country = key.credentialSubject.country;
+          }
+          if(key.credentialSubject.hasOwnProperty('birthDate')) {
+            friend.birthDate = key.credentialSubject.birthDate;
+          }
+          if(key.credentialSubject.hasOwnProperty('telephone')) {
+            friend.telephone = key.credentialSubject.telephone;
+          }
+          if(key.credentialSubject.hasOwnProperty('email')) {
+            friend.email = key.credentialSubject.email;
+          }
+          if(key.credentialSubject.hasOwnProperty('description')) {
+            friend.description = key.credentialSubject.description;
+          }
+          if(key.credentialSubject.hasOwnProperty('website')) {
+            friend.website = key.credentialSubject.website;
+          }
+          if(key.credentialSubject.hasOwnProperty('twitter')) {
+            friend.twitter = key.credentialSubject.twitter;
+          }
+          if(key.credentialSubject.hasOwnProperty('facebook')) {
+            friend.facebook = key.credentialSubject.facebook;
+          }
+          if(key.credentialSubject.hasOwnProperty('telegram')) {
+            friend.telegram = key.credentialSubject.telegram;
+          }
+          if(key.credentialSubject.hasOwnProperty('apppackage')) {
+            friend.applicationProfileCredentials = [];
+            friend.applicationProfileCredentials.push({
+              action: key.credentialSubject.action,
+              apppackage: key.credentialSubject.apppackage,
+              apptype: key.credentialSubject.apptype,
+            });
+          }
+        });
+      }
+    });
+
+    this.storageService.setDIDs(this._didDocs);
+    this.storageService.setFriends(this._friends);
+  }
+
   /******************************** Confirm Friend  ********************************/
   showConfirm = (didDocument) => {
-
     // Reset state of current friend
     this._friend = {
       id: null,
@@ -241,6 +306,7 @@ export class FriendsService {
         });
       }
     });
+
 
     let props: NavigationExtras = {
       queryParams: {
