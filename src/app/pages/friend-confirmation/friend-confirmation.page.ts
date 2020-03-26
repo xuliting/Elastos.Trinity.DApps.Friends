@@ -62,7 +62,7 @@ export class FriendConfirmationPage implements OnInit {
       alertName = this.didId;
     }
 
-    this.friendsService.genericToast('Denied friend ' + alertName);
+    // this.friendsService.genericToast('Denied friend ' + alertName);
     this.router.navigate(['friends']);
   }
 }

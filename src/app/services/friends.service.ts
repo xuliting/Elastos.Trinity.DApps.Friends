@@ -80,8 +80,6 @@ export class FriendsService {
         console.log('Fetched stored DIDs', dids);
         if(dids && dids.length > 0) {
           this._didDocs = dids;
-          this._didDocs
-          console.log('DIDs stored', this._didDocs);
         }
         else {
           console.log("Empty DID list received");
@@ -482,7 +480,7 @@ export class FriendsService {
         else {
           resolve(false);
         }
-      }, (err)=>{
+      }, (err) => {
         console.warn(err);
         resolve(false);
       });
