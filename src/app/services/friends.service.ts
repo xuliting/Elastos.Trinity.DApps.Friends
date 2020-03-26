@@ -181,9 +181,6 @@ export class FriendsService {
         console.log('Checking friend for any changes', friend);
 
         didDocument.verifiableCredential.map(key => {
-          if(key.credentialSubject.hasOwnProperty('name')) {
-            friend.name = key.credentialSubject.name;
-          }
           if(key.credentialSubject.hasOwnProperty('gender')) {
             friend.gender = key.credentialSubject.gender;
           }
