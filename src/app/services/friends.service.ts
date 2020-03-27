@@ -107,20 +107,24 @@ export class FriendsService {
   }
 
   onReceiveIntent = (ret) => {
+
     console.log("Intent received", ret);
     managerService.handledIntentId = ret.intentId;
     switch (ret.action) {
       case "handlescannedcontent_did":
         console.log('handlescannedcontent_did intent', ret);
-        this.addFriendByIntent(ret.params.data);
+        this.zone.run(() => {
+          this.addFriendByIntent(ret.params.data);
+        });
         break;
       case "addfriend":
         console.log('addfriend intent', ret);
-        this.addFriendByIntent(ret.params.data);
+        this.zone.run(() => {
+          this.addFriendByIntent(ret.params.did);
+        });
         break;
       case "pickfriend":
         console.log('pickfriend intent', ret);
-
         this.zone.run(() => {
           let params = ret.params;
           if(params.singleSelection === true && !params.filter) {

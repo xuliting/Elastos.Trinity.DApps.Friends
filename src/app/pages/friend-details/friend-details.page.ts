@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { NavController, AlertController, PopoverController } from '@ionic/angular';
+import { NavController, AlertController, PopoverController, ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 
@@ -41,6 +41,7 @@ export class FriendDetailsPage implements OnInit {
     private zone: NgZone,
     private navCtrl: NavController,
     private alertController: AlertController,
+    private toastController: ToastController,
     private popover: PopoverController,
     private http: HttpClient,
   ) { }
@@ -176,7 +177,12 @@ export class FriendDetailsPage implements OnInit {
     appManager.sendIntent("appdetails", appId, {}, (res) => {
       console.log(res)
     }, (err) => {
-      console.log(err);
+      console.error(err);
+      appManager.sendIntent(
+        "app",
+        { id: 'org.elastos.trinity.dapp.diddemo'},
+        {}
+      );
     });
   }
 

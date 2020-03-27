@@ -89,8 +89,9 @@ export class AddFriendPage implements OnInit {
 
   async inputInvalid() {
     const toast = await this.toastController.create({
-      message: "Please add a valid DID",
-      color: "primary",
+      mode: 'ios',
+      header: "Please add a valid DID",
+      color: "light",
       duration: 2000
     });
     toast.present();
