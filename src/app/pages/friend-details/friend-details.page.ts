@@ -11,6 +11,7 @@ import { DApp } from 'src/app/models/dapp.model';
 
 import { WarningPage } from './warning/warning.page';
 import { Warning2Page } from './warning2/warning2.page';
+import { resolve } from '@sentry/utils';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -172,7 +173,11 @@ export class FriendDetailsPage implements OnInit {
 
   discoverApp(appId: string) {
     console.log('Inquiring app in app-store..', appId);
-    appManager.sendIntent("appdetails", appId, {})
+    appManager.sendIntent("appdetails", appId, {}, (res) => {
+      console.log(res)
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   connectApp(appId: string) {

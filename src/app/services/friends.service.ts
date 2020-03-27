@@ -80,8 +80,7 @@ export class FriendsService {
         console.log('Fetched stored DIDs', dids);
         if(dids && dids.length > 0) {
           this._didDocs = dids;
-        }
-        else {
+        } else {
           console.log("Empty DID list received");
         }
       });
@@ -93,8 +92,7 @@ export class FriendsService {
           this._friends.forEach((friend) => {
             this.resolveDIDDocument(friend.id, true);
           });
-        }
-        else {
+        } else {
           console.log("Empty friends list");
         }
         resolve(friends || this._friends);
@@ -122,18 +120,33 @@ export class FriendsService {
         break;
       case "pickfriend":
         console.log('pickfriend intent', ret);
-        if(ret.params.filter) {
-          console.log(ret.params.filter)
-          this.getFilteredFriends(ret);
-        } else {
-          this.getFriends();
-        }
+
+        this.zone.run(() => {
+          let params = ret.params;
+          if(params.singleSelection === true && !params.filter) {
+            console.log('pickfriend intent is single selection without filter');
+            this.getFriends(true);
+          }
+          if(params.singleSelection === false && !params.filter) {
+            console.log('pickfriend intent is multiple selection without filter');
+            this.getFriends(false);
+          }
+          if(params.singleSelection === true && params.filter && params.filter.credentialType === 'ApplicationProfileCredential') {
+            console.log('pickfriend intent is single selection and filtered to ApplicationProfileCredential');
+            this.getFilteredFriends(true, ret);
+          }
+          if(params.singleSelection === false && params.filter && params.filter.credentialType === 'ApplicationProfileCredential') {
+            console.log('pickfriend intent is multiple selection and filtered to ApplicationProfileCredential');
+            this.getFilteredFriends(false, ret);
+          }
+        });
+
         break;
     }
   }
 
   /******************************** Resolve DID  ********************************/
-  addFriendByIntent(did) {
+  addFriendByIntent(did: string) {
     console.log('Received friend by intent', did);
     this.resolveDIDDocument(did, false);
   }
@@ -368,23 +381,28 @@ export class FriendsService {
   /******************************** Pick Friend Intent  ********************************/
 
   // Wait for storage before handling intent
-  async getFriends() {
-    await this.getStoredDIDs().then((friends) => {
+  async getFriends(isSingleInvite: boolean) {
+    await this.getStoredDIDs().then((friends: Friend[]) => {
       console.log('My friends', friends);
-      if(this._friends.length > 0) {
-          this.router.navigate(['/pick-friend']);
+
+      if (friends.length > 0) {
+        let props: NavigationExtras = {
+          queryParams: {
+            singleInvite: isSingleInvite
+          }
+        }
+        this.router.navigate(['/pick-friend'], props);
       } else {
         this.alertNoFriends('You don\'t have any friends to invite!');
       }
     });
   }
 
-  async getFilteredFriends(ret) {
-    await this.getStoredDIDs().then((friends) => {
+  async getFilteredFriends(isSingleInvite: boolean, ret) {
+    await this.getStoredDIDs().then((friends: Friend[]) => {
       console.log('My friends', friends);
 
-      if(this._friends.length > 0) {
-        if(ret.params.filter.credentialType === "apppackage") {
+      if(friends.length > 0) {
           console.log('Intent requesting friends with app', ret.from);
           this.filteredFriends = [];
           this._friends.map((friend) => {
@@ -402,6 +420,7 @@ export class FriendsService {
           if(this.filteredFriends.length > 0) {
             let props: NavigationExtras = {
               queryParams: {
+                singleInvite: isSingleInvite,
                 friendsFiltered: true
               }
             }
@@ -409,7 +428,6 @@ export class FriendsService {
           } else {
             this.alertNoFriends('You don\'t have any friends with this app!');
           }
-        }
       } else {
         this.alertNoFriends('You don\'t have any friends to invite!');
       }
@@ -417,41 +435,43 @@ export class FriendsService {
   }
 
   // Send intent response after selecting friends from pick-friend pg
-  inviteFriends() {
-    let dids = [];
+  inviteFriends(isFilter: boolean) {
+    console.log('Invited filtered friends?', isFilter);
+    let friends = [];
+
     this._didDocs.map((did) => {
-      this._friends.map((friend) => {
-        if(did.id.didString === friend.id && friend.isPicked) {
-          dids.push(did);
-          friend.isPicked = false;
-        }
-      });
+      if (!isFilter) {
+        this._friends.map((friend) => {
+          if(did.id.didString === friend.id && friend.isPicked) {
+            friends.push({
+              did: did.id.didString,
+              document: did
+            });
+            friend.isPicked = false;
+          }
+        });
+      } else {
+        this.filteredFriends.map((friend) => {
+          if(did.id.didString === friend.id && friend.isPicked) {
+            friends.push({
+              did: did.id.didString,
+              document: did
+            });
+            friend.isPicked = false;
+          }
+        });
+      }
     });
 
-    console.log('Invited friends', dids);
-    this.sendIntentRes(dids);
+    console.log('Invited friends', friends);
+    this.sendIntentRes(friends);
   }
 
-  inviteFilteredFriends() {
-    let dids = [];
-    this._didDocs.map((did) => {
-      this.filteredFriends.map((friend) => {
-        if(did.id.didString === friend.id && friend.isPicked) {
-          dids.push(did);
-          friend.isPicked = false;
-        }
-      });
-    });
-
-    console.log('Invited friends', dids);
-    this.sendIntentRes(dids);
-  }
-
-  sendIntentRes(dids) {
-    if(dids.length > 0) {
+  sendIntentRes(_friends) {
+    if(_friends.length > 0) {
       appManager.sendIntentResponse(
         "pickfriend",
-        { document: dids },
+        { friends: _friends },
         managerService.handledIntentId,
         (res: any) => {},
         (err: any) => {}
@@ -494,7 +514,7 @@ export class FriendsService {
       mode: 'ios',
       header: msg,
       color: "light",
-      duration: 2000
+      duration: 1000
     });
     toast.present();
   }
