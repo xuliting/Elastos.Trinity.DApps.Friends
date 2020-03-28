@@ -6,6 +6,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { Friend } from '../models/friends.model';
 import { DID } from '../models/did.model';
+import { popoverController } from '@ionic/core';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
@@ -51,6 +52,7 @@ export class FriendsService {
     private platform: Platform,
     private router: Router,
     private alertController: AlertController,
+    private popoverController: PopoverController,
     public toastController: ToastController,
     public zone: NgZone,
     private storageService: StorageService,
@@ -127,19 +129,29 @@ export class FriendsService {
         console.log('pickfriend intent', ret);
         this.zone.run(() => {
           let params = ret.params;
-          if(params.singleSelection === true && !params.filter) {
+          // Single Invite, No Filter
+          if(
+            !params.hasOwnProperty('singleSelection') && !params.hasOwnProperty('filter') ||
+            params.hasOwnProperty('singleSelection') && params.singleSelection === true && !params.hasOwnProperty('filter'))
+          {
             console.log('pickfriend intent is single selection without filter');
             this.getFriends(true);
           }
-          if(params.singleSelection === false && !params.filter) {
+          // Multiple Invite, No Filter
+          if(params.hasOwnProperty('singleSelection') && params.singleSelection === false && !params.hasOwnProperty('filter')) {
             console.log('pickfriend intent is multiple selection without filter');
             this.getFriends(false);
           }
-          if(params.singleSelection === true && params.filter && params.filter.credentialType === 'ApplicationProfileCredential') {
+          // Single Invite, With Filter
+          if(
+            !params.hasOwnProperty('singleSelection') && params.hasOwnProperty('filter') && params.filter.credentialType === 'ApplicationProfileCredential' ||
+            params.hasOwnProperty('singleSelection') && params.singleSelection === true && params.hasOwnProperty('filter') && params.filter.credentialType === 'ApplicationProfileCredential')
+          {
             console.log('pickfriend intent is single selection and filtered to ApplicationProfileCredential');
             this.getFilteredFriends(true, ret);
           }
-          if(params.singleSelection === false && params.filter && params.filter.credentialType === 'ApplicationProfileCredential') {
+          // Multiple Invite, With Filter
+          if(params.hasOwnProperty('singleSelection') && params.singleSelection === false && params.hasOwnProperty('filter') && params.filter.credentialType === 'ApplicationProfileCredential') {
             console.log('pickfriend intent is multiple selection and filtered to ApplicationProfileCredential');
             this.getFilteredFriends(false, ret);
           }
@@ -397,7 +409,7 @@ export class FriendsService {
         }
         this.router.navigate(['/pick-friend'], props);
       } else {
-        this.alertNoFriends('You don\'t have any friends to invite!');
+        return;
       }
     });
   }
@@ -433,7 +445,7 @@ export class FriendsService {
             this.alertNoFriends('You don\'t have any friends with this app!');
           }
       } else {
-        this.alertNoFriends('You don\'t have any friends to invite!');
+        return;
       }
     });
   }
