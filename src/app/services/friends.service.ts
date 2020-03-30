@@ -118,6 +118,7 @@ export class FriendsService {
         this.zone.run(() => {
           this.addFriendByIntent(ret.params.data);
         });
+        this.sendEmptyIntentRes();
         break;
       case "addfriend":
         console.log('addfriend intent', ret);
@@ -496,6 +497,15 @@ export class FriendsService {
     } else {
       this.genericToast('Please select some friends before inviting');
     }
+  }
+
+  // just notify the qrscanner to quit
+  sendEmptyIntentRes() {
+    appManager.sendIntentResponse(
+        "",
+        {},
+        managerService.handledIntentId
+      );
   }
 
   /******************************** Misc ********************************/
