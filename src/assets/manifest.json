@@ -1,7 +1,7 @@
 {
     "id": "org.elastos.trinity.dapp.friends",
-    "version": "1.0.5",
-    "version_code": 6,
+    "version": "1.0.6",
+    "version_code": 7,
     "name": "Friends",
     "short_name": "Friends",
     "short_description": "Manage friends by their DID and view which apps they are using.",
@@ -49,7 +49,7 @@
             "action": "addfriend"
         },
         {
-          "action": "pickfriend"
+            "action": "pickfriend"
         }
     ]
 }
