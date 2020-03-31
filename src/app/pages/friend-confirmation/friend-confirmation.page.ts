@@ -44,7 +44,7 @@ export class FriendConfirmationPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    titleBarManager.setTitle("Add Friend");
+    titleBarManager.setTitle("Confirm Contact");
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
   }
 

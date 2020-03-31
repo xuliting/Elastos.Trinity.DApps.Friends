@@ -38,6 +38,7 @@ export class PickFriendPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    titleBarManager.setTitle('Invite Contact');
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.CLOSE);
   }
 

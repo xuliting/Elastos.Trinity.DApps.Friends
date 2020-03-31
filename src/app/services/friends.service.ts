@@ -44,6 +44,8 @@ export class FriendsService {
   public _friends: Friend[] = [];
   public filteredFriends: Friend[] = [];
 
+  public inProfileView = false;
+
   getFriend(id: string) {
     return {...this._friends.find(friend => friend.id === id)};
   }
@@ -51,6 +53,7 @@ export class FriendsService {
   constructor(
     private platform: Platform,
     private router: Router,
+    private navController: NavController,
     private alertController: AlertController,
     public toastController: ToastController,
     public zone: NgZone,
@@ -103,7 +106,12 @@ export class FriendsService {
 
   onMessageReceived(msg: AppManagerPlugin.ReceivedMessage) {
     if (msg.message == "navback") {
-      this.router.navigate(['friends']);
+      if(this._friends.length === 0 || this.inProfileView) {
+        console.log('In profile page?', this.inProfileView);
+        this.router.navigate(['friends']);
+      } else {
+        this.navController.back();
+      }
     }
   }
 

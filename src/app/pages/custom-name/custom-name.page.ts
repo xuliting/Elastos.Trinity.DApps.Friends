@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FriendsService } from 'src/app/services/friends.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ThrowStmt } from '@angular/compiler';
 import { IonInput } from '@ionic/angular';
+
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
   selector: 'app-custom-name',
@@ -44,6 +45,11 @@ export class CustomNamePage implements OnInit {
         this.customName = this.didId;
       }
     });
+  }
+
+  ionViewWillEnter() {
+    titleBarManager.setTitle('Customize Contact');
+    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
   }
 
   ionViewDidEnter() {

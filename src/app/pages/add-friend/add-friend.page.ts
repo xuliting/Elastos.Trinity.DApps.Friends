@@ -34,7 +34,7 @@ export class AddFriendPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    titleBarManager.setTitle("Add a friend");
+    titleBarManager.setTitle("Add Contact");
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
   }
 

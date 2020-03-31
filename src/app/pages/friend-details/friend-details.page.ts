@@ -59,8 +59,16 @@ export class FriendDetailsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    titleBarManager.setTitle("Friend profile");
+    titleBarManager.setTitle("Contact's Profile");
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
+  }
+
+  ionViewDidEnter() {
+    this.friendsService.inProfileView = true;
+  }
+
+  ionViewDidLeave() {
+    this.friendsService.inProfileView = false;
   }
 
   /* From the app credentials, build a list of displayable items onced its fetched from the app store */
@@ -126,6 +134,7 @@ export class FriendDetailsPage implements OnInit {
   }
 
   customizeFriend() {
+    this.friendsService.inProfileView = false;
     let props: NavigationExtras = {
       queryParams: {
         didId: this.friend.id,
