@@ -24,7 +24,7 @@ export class FriendsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    titleBarManager.setTitle('Friends');
+    titleBarManager.setTitle('Contacts');
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
   }
 

@@ -6,7 +6,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { Friend } from '../models/friends.model';
 import { DID } from '../models/did.model';
-import { popoverController } from '@ionic/core';
+import { encode } from 'punycode';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
@@ -52,7 +52,6 @@ export class FriendsService {
     private platform: Platform,
     private router: Router,
     private alertController: AlertController,
-    private popoverController: PopoverController,
     public toastController: ToastController,
     public zone: NgZone,
     private storageService: StorageService,
