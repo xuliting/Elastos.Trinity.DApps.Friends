@@ -14,8 +14,11 @@
         <!-- Friend Name & Header -->
         <ion-row>
           <ion-col *ngIf="friend.name" class="profile-name">
-            <h1 class="ion-text-center ion-padding-horizontal">
-              {{ friend.name }}
+            <h1 *ngIf="friend.name.length < 20" class="ion-text-center ion-padding-horizontal">
+              {{ friend.name.slice(0,20) }}
+            </h1>
+            <h1 *ngIf="friend.name.length >= 20" class="ion-text-center ion-padding-horizontal">
+              {{ friend.name.slice(0,20) }}...
             </h1>
           </ion-col>
           <ion-col *ngIf="!friend.name && friend.id" class="profile-name">
