@@ -63,70 +63,88 @@
           <ion-col>
             <h5>{{ 'nickname' | translate }}</h5>
           </ion-col>
-          <h4>{{ friend.nickname }}</h4>
+          <ion-col class="cred">
+            <h4>{{ friend.nickname }}</h4>
+          </ion-col>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.country">
           <ion-col>
             <h5>{{ 'country' | translate }}</h5>
           </ion-col>
-          <h4>{{ friend.country }}</h4>
+          <ion-col class="cred">
+            <h4>{{ friend.country }}</h4>
+          </ion-col>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.birthDate">
           <ion-col>
             <h5>{{ 'birth' | translate }}</h5>
           </ion-col>
-          <h4>{{ fixBirthDate(friend.birthDate) }}</h4>
+          <ion-col class="cred">
+            <h4>{{ fixBirthDate(friend.birthDate) }}</h4>
+          </ion-col>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.telephone">
           <ion-col>
             <h5>{{ 'telephone' | translate }}</h5>
           </ion-col>
-          <h4>{{ friend.telephone }}</h4>
+          <ion-col class="cred">
+            <h4>{{ friend.telephone }}</h4>
+          </ion-col>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.email">
           <ion-col>
             <h5>{{ 'email' | translate }}</h5>
           </ion-col>
-          <h4>{{ friend.email }}</h4>
+          <ion-col class="cred">
+            <h4>{{ friend.email }}</h4>
+          </ion-col>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.website">
           <ion-col>
             <h5>{{ 'website' | translate }}</h5>
           </ion-col>
-          <h4>{{ friend.website }}</h4>
+          <ion-col class="cred">
+            <h4>{{ friend.website }}</h4>
+          </ion-col>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.twitter">
           <ion-col>
             <h5>Twitter</h5>
           </ion-col>
-          <h4>{{ friend.twitter }}</h4>
+          <ion-col class="cred">
+            <h4>{{ friend.twitter }}</h4>
+          </ion-col>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.facebook">
           <ion-col>
             <h5>Facebook</h5>
           </ion-col>
-          <h4>{{ friend.facebook }}</h4>
+          <ion-col class="cred">
+            <h4>{{ friend.facebook }}</h4>
+          </ion-col>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.telegram">
           <ion-col>
             <h5>Telegram</h5>
           </ion-col>
-          <h4>{{ friend.telegram }}</h4>
+          <ion-col class="cred">
+            <h4>{{ friend.telegram }}</h4>
+          </ion-col>
         </ion-row>
 
         <ion-row class="profile-data">
           <ion-col>
             <h5>{{ 'did' | translate }}</h5>
           </ion-col>
-          <ion-col class="did">
+          <ion-col class="cred">
             <h4>
               {{ friend.id.slice(0,25) }} <br>
               {{ friend.id.slice(25,50) }}
