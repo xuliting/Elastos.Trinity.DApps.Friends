@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-no-friends',
@@ -9,7 +10,11 @@ import { Router } from '@angular/router';
 })
 export class NoFriendsPage implements OnInit {
 
-  constructor(private popover: PopoverController, private router: Router) { }
+  constructor(
+    private popover: PopoverController,
+    private router: Router,
+    public translate: TranslateService
+  ) { }
 
   ngOnInit() {
 
@@ -19,5 +24,4 @@ export class NoFriendsPage implements OnInit {
     this.popover.dismiss();
     this.router.navigate(['/addFriend']);
   }
-
 }

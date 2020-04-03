@@ -3,6 +3,7 @@ import { FriendsService } from 'src/app/services/friends.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { PopoverController } from '@ionic/angular';
 import { NoFriendsPage } from './no-friends/no-friends.page';
+import { TranslateService } from '@ngx-translate/core';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -17,6 +18,7 @@ export class FriendsPage implements OnInit {
 
   constructor(
     private popover: PopoverController,
+    public translate: TranslateService,
     public friendsService: FriendsService,
   ) { }
 
@@ -24,7 +26,7 @@ export class FriendsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    titleBarManager.setTitle('Contacts');
+    titleBarManager.setTitle(this.translate.instant('contacts'));
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
   }
 

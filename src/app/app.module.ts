@@ -2,6 +2,8 @@ import { NgModule, ErrorHandler, CUSTOM_ELEMENTS_SCHEMA, Injectable } from '@ang
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 
 import { IonicRouteStrategy } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular';
@@ -23,6 +25,10 @@ import * as Sentry from "@sentry/browser";
 import { NoFriendsPageModule } from './pages/friends/no-friends/no-friends.module';
 import { NoFriendsPage } from './pages/friends/no-friends/no-friends.page';
 
+import { zh } from './../assets/languages/zh';
+import { en } from './../assets/languages/en';
+import { fr } from './../assets/languages/fr';
+
 Sentry.init({
   dsn: "https://c22ac246ed2c4d2cb71cd482705d8adb@sentry.io/1875747"
 });
@@ -42,6 +48,30 @@ export class SentryErrorHandler implements ErrorHandler {
   }
 }
 
+export class CustomTranslateLoader implements TranslateLoader {
+  public getTranslation(lang: string): Observable<any> {
+      return Observable.create(observer => {
+          switch (lang) {
+              case 'zh':
+                observer.next(zh);
+                break;
+              case 'fr':
+                observer.next(fr);
+                break;
+              case 'en':
+              default:
+                observer.next(en);
+          }
+
+          observer.complete();
+      });
+  }
+}
+
+export function TranslateLoaderFactory() {
+  return new CustomTranslateLoader();
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +83,12 @@ export class SentryErrorHandler implements ErrorHandler {
     AppRoutingModule,
     SharedModule,
     IonicStorageModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: (TranslateLoaderFactory)
+      }
+    }),
     WarningPageModule,
     Warning2PageModule,
     NoFriendsPageModule

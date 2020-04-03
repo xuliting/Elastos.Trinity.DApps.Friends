@@ -8,16 +8,16 @@
     </ion-row>
 
     <ion-row>
-      <ion-col class="ion-text-center ion-no-padding">
-        <h1>Looks like you <br> have no contacts!</h1>
+      <ion-col class="ion-text-center ion-padding-horizontal">
+        <h1>{{ 'no-contacts-header' | translate }}</h1>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col offset="1.25" size="9.5" class="ion-text-center ion-no-padding">
         <p>
-          You would need to aquire contacts that own a DID (Decentralized ID)
-          inside the elastOS ecosystem using their DID QR code or DID address
+          You would need to aquire contacts that own a decentralized identity
+          inside the elastOS ecosystem using their Identity QR code or Identity address
         </p>
       </ion-col>
     </ion-row>
@@ -35,7 +35,7 @@
       <ion-col size="12" class="ion-text-center ion-padding-vertical">
         <did-button
           (click)="addFriend()"
-          title="Add Contacts"
+          [title]="'add-contacts' | translate"
           textcolor="#ffffff"
           [bgcolor]="'#3ABAFB'"
           [bordercolor]="'#3ABAFB'"

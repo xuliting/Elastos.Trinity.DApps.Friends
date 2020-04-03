@@ -4,6 +4,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { DID } from 'src/app/models/did.model';
+import { TranslateService } from '@ngx-translate/core';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -24,7 +25,8 @@ export class AddFriendPage implements OnInit {
     private friendsService: FriendsService,
     private toastController: ToastController,
     private popoverController: PopoverController,
-    private zone: NgZone
+    private zone: NgZone,
+    public translate: TranslateService
     // private clipboard: Clipboard
   ) {
   }
@@ -34,7 +36,7 @@ export class AddFriendPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    titleBarManager.setTitle("Add Contact");
+    titleBarManager.setTitle(this.translate.instant('add-contact'));
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
   }
 

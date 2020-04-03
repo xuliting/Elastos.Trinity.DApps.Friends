@@ -4,6 +4,7 @@ import { PopoverController, NavParams } from '@ionic/angular';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { Friend } from 'src/app/models/friends.model';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class Warning2Page implements OnInit {
     private router: Router,
     private popover: PopoverController,
     private navParams: NavParams,
+    public translate: TranslateService
   ) { }
 
   ngOnInit() {

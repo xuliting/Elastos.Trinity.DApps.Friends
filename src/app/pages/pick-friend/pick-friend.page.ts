@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FriendsService } from 'src/app/services/friends.service';
 import { ActivatedRoute } from '@angular/router';
 import { Friend } from 'src/app/models/friends.model';
+import { TranslateService } from '@ngx-translate/core';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -20,7 +21,8 @@ export class PickFriendPage implements OnInit {
 
   constructor(
     public friendsService: FriendsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -28,6 +30,9 @@ export class PickFriendPage implements OnInit {
       console.log('Pick-friend', params);
       if (params.singleInvite === "true") {
         this.isSingleInvite = true;
+        titleBarManager.setTitle(this.translate.instant('invite-contact'));
+      } else {
+        titleBarManager.setTitle(this.translate.instant('invite-contacts'));
       }
       if (params.friendsFiltered) {
         this.isFilter = true;
@@ -38,7 +43,6 @@ export class PickFriendPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    titleBarManager.setTitle('Invite Contact');
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.CLOSE);
   }
 

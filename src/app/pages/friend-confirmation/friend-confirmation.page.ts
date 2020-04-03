@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { DID } from 'src/app/models/did.model';
@@ -26,6 +27,7 @@ export class FriendConfirmationPage implements OnInit {
     private popover: PopoverController,
     private route: ActivatedRoute,
     private router: Router,
+    public translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -44,7 +46,7 @@ export class FriendConfirmationPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    titleBarManager.setTitle("Confirm Contact");
+    titleBarManager.setTitle(this.translate.instant('confirm-contact'));
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
   }
 

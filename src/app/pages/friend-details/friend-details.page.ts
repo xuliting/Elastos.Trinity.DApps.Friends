@@ -12,6 +12,7 @@ import { DApp } from 'src/app/models/dapp.model';
 import { WarningPage } from './warning/warning.page';
 import { Warning2Page } from './warning2/warning2.page';
 import { resolve } from '@sentry/utils';
+import { TranslateService } from '@ngx-translate/core';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -44,6 +45,7 @@ export class FriendDetailsPage implements OnInit {
     private toastController: ToastController,
     private popover: PopoverController,
     private http: HttpClient,
+    public translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -59,7 +61,7 @@ export class FriendDetailsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    titleBarManager.setTitle("Contact's Profile");
+    titleBarManager.setTitle(this.translate.instant('contact-profile'));
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
   }
 

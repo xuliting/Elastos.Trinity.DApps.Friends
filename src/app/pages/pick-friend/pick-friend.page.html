@@ -46,7 +46,7 @@
     <div class="footer">
       <did-button
         (click)="this.friendsService.inviteFriends(false)"
-        title="Invite Friends"
+        [title]="'invite' | translate"
         textcolor="#ffffff"
         [bgcolor]="'#3ABAFB'"
         [bordercolor]="'#3ABAFB'"
@@ -57,7 +57,7 @@
 
       <did-button
         (click)="closeApp()"
-        title="Cancel"
+        [title]="'cancel' | translate"
         textcolor="#ffffff"
         [bgcolor]="'#FF4D4D'"
         [bordercolor]="'#FF4D4D'"
@@ -113,7 +113,7 @@
     <div class="footer">
       <did-button
         (click)="this.friendsService.inviteFriends(true)"
-        title="Invite Friends"
+        [title]="'invite' | translate"
         textcolor="#ffffff"
         [bgcolor]="'#3ABAFB'"
         [bordercolor]="'#3ABAFB'"
@@ -124,7 +124,7 @@
 
       <did-button
         (click)="closeApp()"
-        title="Cancel"
+        [title]="'cancel' | translate"
         textcolor="#ffffff"
         [bgcolor]="'#FF4D4D'"
         [bordercolor]="'#FF4D4D'"

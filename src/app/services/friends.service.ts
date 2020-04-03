@@ -1,12 +1,12 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Platform, AlertController, NavController, PopoverController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 
 import { StorageService } from 'src/app/services/storage.service';
 import { Friend } from '../models/friends.model';
 import { DID } from '../models/did.model';
-import { encode } from 'punycode';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
@@ -57,6 +57,7 @@ export class FriendsService {
     private alertController: AlertController,
     public toastController: ToastController,
     public zone: NgZone,
+    public translate: TranslateService,
     private storageService: StorageService,
   ) {
     managerService = this;
@@ -64,6 +65,7 @@ export class FriendsService {
 
   /******************************** Initial Render  ********************************/
   init() {
+    this.getLanguage();
     this.getStoredDIDs();
 
     // Load app manager only on real device, not in desktop browser - beware: ionic 4 bug with "desktop" or "android"/"ios"
@@ -76,6 +78,22 @@ export class FriendsService {
           this.onReceiveIntent
         );
     }
+  }
+
+  getLanguage() {
+    appManager.getLocale(
+      (defaultLang, currentLang, systemLang) => {
+        this.setCurLang(currentLang);
+      }
+    );
+  }
+
+  setCurLang(lang: string) {
+    console.log("Setting current language to "+ lang);
+
+    this.zone.run(()=>{
+      this.translate.use(lang);
+    });
   }
 
   getStoredDIDs = () => {

@@ -3,14 +3,14 @@
 
     <ion-row>
       <ion-col>
-        <h1>Are you sure?</h1>
+        <h1>{{ 'are-you-sure' | translate }}</h1>
       </ion-col>
     </ion-row>
 
     <ion-row class="ion-padding-top">
       <ion-col size="10" offset="1" class="first-button">
         <did-button
-          title="Confirm"
+          [title]="'confirm' | translate"
           textcolor="#ffffff"
           [bgcolor]="'#FF4D4D'"
           [bordercolor]="'#FF4D4D'"
@@ -25,7 +25,7 @@
     <ion-row class="ion-padding-bottom">
       <ion-col size="10" offset="1">
         <did-button
-          title="Go Back"
+          [title]="'go-back' | translate"
           textcolor="#6E7379"
           [bgcolor]="'#ffffff'"
           [padding]="'3px'"

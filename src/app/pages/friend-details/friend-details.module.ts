@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { FriendDetailsPage } from './friend-details.page';
 import { RoundedActionButtonComponent } from 'src/app/components/rounded-action-button/rounded-action-button.component';
 import { SharedModule } from 'src/app/modules/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
+    TranslateModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

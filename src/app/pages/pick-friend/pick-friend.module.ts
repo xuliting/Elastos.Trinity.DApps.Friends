@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { PickFriendPage } from './pick-friend.page';
 import { SharedModule } from 'src/app/modules/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     SharedModule,
     FormsModule,
     IonicModule,
+    TranslateModule,
     RouterModule.forChild(routes)
   ],
   declarations: [PickFriendPage]

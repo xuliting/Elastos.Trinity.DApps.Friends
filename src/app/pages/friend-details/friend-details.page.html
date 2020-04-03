@@ -41,7 +41,7 @@
           <ion-col size="6" class="left-btn">
             <rounded-action-button
               (click)="customizeFriend()"
-              title="Customize"
+              [title]="'customize' | translate"
               image='assets/images/Edit_Simple_Icon.svg'
               color="#3ABAFB"
               imgcolor="#3ABAFB">
@@ -50,7 +50,7 @@
           <ion-col size="6" class="right-btn ion-padding-start">
             <rounded-action-button
               (click)="showWarning(friend)"
-              title="Delete"
+              [title]="'delete' | translate"
               image='assets/images/Delete_Warning_Simple_Icon.svg'
               color="#FF4D4D"
               imgcolor="#f04141">
@@ -61,42 +61,42 @@
         <!-- Friend Published Creds -->
         <ion-row class="profile-data" *ngIf="friend.nickname">
           <ion-col>
-            <h5>Nickname</h5>
+            <h5>{{ 'nickname' | translate }}</h5>
           </ion-col>
           <h4>{{ friend.nickname }}</h4>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.country">
           <ion-col>
-            <h5>Country</h5>
+            <h5>{{ 'country' | translate }}</h5>
           </ion-col>
           <h4>{{ friend.country }}</h4>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.birthDate">
           <ion-col>
-            <h5>Birth Date</h5>
+            <h5>{{ 'birth' | translate }}</h5>
           </ion-col>
           <h4>{{ fixBirthDate(friend.birthDate) }}</h4>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.telephone">
           <ion-col>
-            <h5>Telephone</h5>
+            <h5>{{ 'telephone' | translate }}</h5>
           </ion-col>
           <h4>{{ friend.telephone }}</h4>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.email">
           <ion-col>
-            <h5>Email</h5>
+            <h5>{{ 'email' | translate }}</h5>
           </ion-col>
           <h4>{{ friend.email }}</h4>
         </ion-row>
 
         <ion-row class="profile-data" *ngIf="friend.website">
           <ion-col>
-            <h5>Website</h5>
+            <h5>{{ 'website' | translate }}</h5>
           </ion-col>
           <h4>{{ friend.website }}</h4>
         </ion-row>
@@ -127,7 +127,7 @@
       <div class="app-container">
         <ion-row class="install-container">
           <ion-col class="ion-no-padding ion-no-margin">
-            <h2 class="ion-padding">Browsed Capsules</h2>
+            <h2 class="ion-padding">{{ 'apps' | translate }}</h2>
           </ion-col>
         </ion-row>
 
@@ -155,13 +155,13 @@
                 </ion-col>
                 <ion-col size="3" class="btn-container">
                   <ion-button *ngIf="!appInfo.isInstalled" color="tertiary" (click)="discoverApp(appInfo.packageId)">
-                    <ion-label>Discover</ion-label>
+                    <ion-label>{{ 'discover' | translate }}</ion-label>
                   </ion-button>
                   <ion-button *ngIf="appInfo.isInstalled && appInfo.app" color="tertiary" (click)="connectApp(appInfo.packageId)">
-                    <ion-label>Open</ion-label>
+                    <ion-label>{{ 'open' | translate }}</ion-label>
                   </ion-button>
                   <ion-button *ngIf="appInfo.isInstalled && !appInfo.app" color="tertiary" (click)="friendsService.startApp(appInfo.packageId)">
-                    <ion-label>Open</ion-label>
+                    <ion-label>{{ 'open' | translate }}</ion-label>
                   </ion-button>
                 </ion-col>
               </ion-row>
@@ -189,7 +189,7 @@
               <ion-row>
                 <ion-col>
                   <ion-label class="no-apps">
-                    No Capsules available
+                    {{ 'no-apps' | translate }}
                   </ion-label>
                 </ion-col>
               </ion-row>

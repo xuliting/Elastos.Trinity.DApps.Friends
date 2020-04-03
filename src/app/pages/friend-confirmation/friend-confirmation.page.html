@@ -21,9 +21,9 @@
           </ion-col>
         </ion-row>
 
-        <ion-row class="ion-padding">
-          <ion-col class="message ion-text-center">
-            <p>Do you want to add this <br> user to your contacts?</p>
+        <ion-row>
+          <ion-col class="message ion-text-center ion-no-padding ion-padding-horizontal">
+            <p class="ion-padding-horizontal">{{ 'do-you-want-to-add' | translate }}</p>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -33,7 +33,7 @@
           <ion-col size="10" offset="1">
             <did-button
               (click)="addFriend()"
-              title="Add Contact"
+              [title]="'add-contact' | translate"
               textcolor="#ffffff"
               [bgcolor]="'#3ABAFB'"
               [bordercolor]="'#3ABAFB'"
@@ -46,7 +46,7 @@
           <ion-col size="10" offset="1">
             <did-button
               (click)="denyFriend()"
-              title="Cancel Request"
+              [title]="'cancel-request' | translate"
               textcolor="'#000000'"
               [bgcolor]="'#fffff'"
               [bordercolor]="'#000000'"

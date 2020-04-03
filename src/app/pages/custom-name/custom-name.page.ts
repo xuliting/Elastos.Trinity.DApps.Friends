@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FriendsService } from 'src/app/services/friends.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInput } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
@@ -27,6 +28,7 @@ export class CustomNamePage implements OnInit {
     private friendsService: FriendsService,
     private route: ActivatedRoute,
     private router: Router,
+    public translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -48,7 +50,7 @@ export class CustomNamePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    titleBarManager.setTitle('Customize Contact');
+    titleBarManager.setTitle(this.translate.instant('customize-contact'));
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
   }
 
