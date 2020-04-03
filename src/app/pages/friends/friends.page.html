@@ -11,6 +11,8 @@
         <ion-item
           *ngFor="let friend of friendsService._friends"
           color="light"
+          mode='md'
+          detail="false"
           [routerLink]="['/', friend.id]"
         >
           <ion-grid>
