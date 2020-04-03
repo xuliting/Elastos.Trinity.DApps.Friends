@@ -5,8 +5,8 @@ export const fr = {
   // Friend-Details Pg
   'contact-profile': "Profil du contact",
   'apps': 'Capsules',
-  'no-apps': 'Aucune Capsule disponible',
-  'nickname': 'Surnom',
+  'no-apps': 'Aucune capsule disponible',
+  'nickname': 'Pseudo',
   'country': 'Pays',
   'birth': 'Date de naissance',
   'telephone': 'Téléphone',
@@ -15,7 +15,7 @@ export const fr = {
 
   // Add Pg
   'open-scanner': 'Ouvrir le scanner QR',
-  'enter-did': 'Ou entrez une identité',
+  'enter-did': 'Ou saisissez une identité',
 
   // Confirm Pg
   'do-you-want-to-add': 'Voulez-vous ajouter cette personne à vos contacts?',
@@ -32,9 +32,9 @@ export const fr = {
   'no-contacts-header': "Vous n'avez aucun contact!",
 
   // Delete-Friend-Warning
-  'delete-header': 'Les contacts seront supprimés',
-  'delete-message': 'Vous pouvez toujours ajouter à nouveau ce contact à votre liste',
-  'are-you-sure': 'Etes-vous sûr?',
+  'delete-header': 'Le contact sera supprimé',
+  'delete-message': 'Vous pourrez toujours ajouter à nouveau ce contact à votre liste',
+  'are-you-sure': 'Etes-vous sûr(e)?',
 
   // Buttons
   'add-contact': 'Ajouter le contact',
@@ -47,7 +47,7 @@ export const fr = {
   'open': 'Ouvrir',
   'cancel': 'Annuler',
   'confirm': 'Confirmer',
-  'go-back': 'Retourner',
+  'go-back': 'Retour',
   'invite': 'Inviter'
 };
 
