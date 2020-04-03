@@ -138,9 +138,12 @@ ion-header {
         display: flex;
         align-items: center;
 
-        ion-avatar {
-          height: 60px;
-          width: 60px;
+        .man-img {
+          transform: scale(1.25);
+        }
+
+        .woman-img {
+          transform: scale(.9);
         }
 
         ion-label {

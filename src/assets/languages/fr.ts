@@ -12,6 +12,7 @@ export const fr = {
   'telephone': 'Téléphone',
   'email': 'Email',
   'Website': 'Site Web',
+  'did': 'Identité',
 
   // Add Pg
   'open-scanner': 'Ouvrir le scanner QR',

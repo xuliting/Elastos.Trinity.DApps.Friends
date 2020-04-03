@@ -12,6 +12,7 @@ export const zh = {
   'telephone': 'Telephone',
   'email': 'Email',
   'Website': 'Website',
+  'did': 'Identity',
 
   // Add pg
   'open-scanner': 'Open QR Scanner',
