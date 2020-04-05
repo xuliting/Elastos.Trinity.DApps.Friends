@@ -13,6 +13,17 @@ declare let didManager: DIDPlugin.DIDManager;
 
 let managerService: any;
 
+enum MessageType {
+    INTERNAL = 1,
+    IN_RETURN = 2,
+    IN_REFRESH = 3,
+
+    EXTERNAL = 11,
+    EX_LAUNCHER = 12,
+    EX_INSTALL = 13,
+    EX_RETURN = 14,
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -123,13 +134,30 @@ export class FriendsService {
   }
 
   onMessageReceived(msg: AppManagerPlugin.ReceivedMessage) {
-    if (msg.message == "navback") {
-      if(this._friends.length === 0 || this.inProfileView) {
-        console.log('In profile page?', this.inProfileView);
-        this.router.navigate(['friends']);
-      } else {
-        this.navController.back();
-      }
+    var params: any = msg.message;
+    if (typeof (params) == "string") {
+        try {
+            params = JSON.parse(params);
+        } catch (e) {
+            console.log('Params are not JSON format: ', params);
+        }
+    }
+    switch (msg.type) {
+        case MessageType.IN_REFRESH:
+            if (params.action === "currentLocaleChanged") {
+                this.setCurLang(params.data);
+            }
+            break;
+        case MessageType.INTERNAL:
+            if (msg.message == "navback") {
+              if(this._friends.length === 0 || this.inProfileView) {
+                console.log('In profile page?', this.inProfileView);
+                this.router.navigate(['friends']);
+              } else {
+                this.navController.back();
+              }
+            }
+            break;
     }
   }
 
