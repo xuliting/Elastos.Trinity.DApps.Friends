@@ -14,7 +14,7 @@ declare let titleBarManager: TitleBarPlugin.TitleBarManager;
   styleUrls: ['./friends.page.scss'],
 })
 export class FriendsPage implements OnInit {
-  friendsLoaded = true;
+  public friendsLoaded = true;
 
   constructor(
     private popover: PopoverController,

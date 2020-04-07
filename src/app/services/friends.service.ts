@@ -56,6 +56,7 @@ export class FriendsService {
   public filteredFriends: Friend[] = [];
 
   public inProfileView = false;
+  public friendsChecked = false;
 
   getFriend(id: string) {
     return {...this._friends.find(friend => friend.id === id)};
@@ -122,9 +123,13 @@ export class FriendsService {
         console.log('Fetched stored friends', friends);
         if(friends && friends.length > 0) {
           this._friends = friends;
-          this._friends.forEach((friend) => {
-            this.resolveDIDDocument(friend.id, true);
-          });
+
+          if(!this.friendsChecked) {
+            this.friendsChecked = true;
+            this._friends.forEach((friend) => {
+              this.resolveDIDDocument(friend.id, true);
+            });
+          }
         } else {
           console.log("Empty friends list");
         }
@@ -237,8 +242,12 @@ export class FriendsService {
         if (didDocument && !updatingFriends) {
           this.showConfirm(didDocument);
           resolve(true);
-        } else if (didDocument && updatingFriends) {
+        }
+        if (didDocument && updatingFriends) {
           this.updateFriends(didDocument);
+        }
+        else if (!didDocument && updatingFriends) {
+          return;
         } else {
           this.didResolveErr("Sorry, we can't find your friend on chain. Did he make his DID profile public ?");
           resolve(false);
