@@ -28,6 +28,7 @@ import { NoFriendsPage } from './pages/friends/no-friends/no-friends.page';
 import { zh } from './../assets/languages/zh';
 import { en } from './../assets/languages/en';
 import { fr } from './../assets/languages/fr';
+import { OptionsComponent } from './components/options/options.component';
 
 Sentry.init({
   dsn: "https://c22ac246ed2c4d2cb71cd482705d8adb@sentry.io/1875747"
@@ -75,6 +76,7 @@ export function TranslateLoaderFactory() {
 @NgModule({
   declarations: [
     AppComponent,
+    OptionsComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +100,8 @@ export function TranslateLoaderFactory() {
     AppComponent,
     WarningPage,
     Warning2Page,
-    NoFriendsPage
+    NoFriendsPage,
+    OptionsComponent
   ],
   providers: [
     FriendsService,

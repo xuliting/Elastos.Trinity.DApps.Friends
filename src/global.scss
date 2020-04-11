@@ -18,51 +18,53 @@
   outline: none;
 }
 
+
+
 @font-face {
-  font-family: 'Raleway';
+  font-family: 'Montserrat';
   font-weight: 300;
   font-style: normal;
-  src: url('assets/fonts/Raleway-Light.ttf') format('truetype');
+  src: url('assets/fonts/montserrat/Montserrat-Light.ttf');
 }
 @font-face {
-  font-family: 'Raleway';
+  font-family: 'Montserrat';
   font-weight: 400;
   font-style: normal;
-  src: url('assets/fonts/Raleway-Regular.ttf') format('truetype');
+  src: url('assets/fonts/montserrat/Montserrat-Regular.ttf');
 }
 @font-face {
-  font-family: 'Raleway';
+  font-family: 'Montserrat';
   font-weight: 500;
   font-style: normal;
-  src: url('assets/fonts/Raleway-Medium.ttf') format('truetype');
+  src: url('assets/fonts/montserrat/Montserrat-Medium.ttf');
 }
 @font-face {
-  font-family: 'Raleway';
+  font-family: 'Montserrat';
   font-weight: 600;
   font-style: normal;
-  src: url('assets/fonts/Raleway-SemiBold.ttf') format('truetype');
+  src: url('assets/fonts/montserrat/Montserrat-SemiBold.ttf');
 }
 @font-face {
-  font-family: 'Raleway';
+  font-family: 'Montserrat';
   font-weight: 700;
   font-style: normal;
-  src: url('assets/fonts/Raleway-Bold.ttf') format('truetype');
+  src: url('assets/fonts/montserrat/Montserrat-Bold.ttf');
 }
 @font-face {
-  font-family: 'Raleway';
+  font-family: 'Montserrat';
   font-weight: 800;
   font-style: normal;
-  src: url('assets/fonts/Raleway-ExtraBold.ttf') format('truetype');
+  src: url('assets/fonts/montserrat/Montserrat-ExtraBold.ttf');
 }
 @font-face {
-  font-family: 'Raleway';
+  font-family: 'Montserrat';
   font-weight: 900;
   font-style: normal;
-  src: url('assets/fonts/Raleway-Black.ttf') format('truetype');
+  src: url('assets/fonts/montserrat/Montserrat-Black.ttf');
 }
 
 * {
-  font-family: 'Raleway' !important;
+  font-family: 'Montserrat' !important;
 }
 
 ion-header {
@@ -78,6 +80,10 @@ ion-header {
       font-size: 26px;
     }
   }
+}
+
+.options {
+  --height: 120px;
 }
 
 .warning {

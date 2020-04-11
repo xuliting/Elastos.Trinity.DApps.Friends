@@ -2,6 +2,66 @@
 
   <div>
     <div class="profile-container ion-padding-bottom">
+      <img class="profile-picture" *ngIf="didImage" [src]="didImage">
+      <img class="profile-picture" *ngIf="!didImage" src="/assets/images/default-contact.svg">
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngIf="didName" class="profile-name"><h1 class="ion-padding-horizontal">{{ didName }}</h1></ion-col>
+          <ion-col *ngIf="!didName" class="profile-name">
+            <h1 class="ion-padding-horizontal ion-text-center">
+              {{ didId.slice(0,12) }} <br>
+              {{ didId.slice(12,25) }} <br>
+              {{ didId.slice(25,36) }} <br>
+              {{ didId.slice(36,46) }} <br>
+            </h1>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="message ion-text-center ion-no-padding ion-padding-horizontal">
+            <p class="ion-padding-horizontal">{{ 'do-you-want-to-add' | translate }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid class="ion-padding">
+        <ion-row>
+          <ion-col size="10" offset="1">
+            <did-button
+              (click)="addFriend()"
+              [title]="'add-contact' | translate"
+              textcolor="#ffffff"
+              [bgcolor]="'#3ABAFB'"
+              [bordercolor]="'#3ABAFB'"
+              [shadow]="false"
+            >
+            </did-button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="last-btn">
+          <ion-col size="10" offset="1">
+            <did-button
+              (click)="denyFriend()"
+              [title]="'cancel-request' | translate"
+              textcolor="'#000000'"
+              [bgcolor]="'#fffff'"
+              [bordercolor]="'#000000'"
+              [shadow]="false"
+            >
+            </did-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
+  </div>
+
+</ion-grid>
+
+<!-- <ion-grid class="container ion-no-padding ion-no-margin">
+
+  <div>
+    <div class="profile-container ion-padding-bottom">
       <div class="profile-picture">
         <img *ngIf="didImage" [src]="didImage">
         <img *ngIf="!didImage && friendsService.isMale(didGender)" src="assets/images/Guy_Face.svg">
@@ -61,3 +121,4 @@
   </div>
 
 </ion-grid>
+ -->

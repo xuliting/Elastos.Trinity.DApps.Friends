@@ -1,4 +1,136 @@
-.no-friends {
+.container {
+  padding: 30px 0;
+
+  ion-slide, .no-contacts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    ion-img {
+      width: 84px;
+      height: 84px;
+    }
+
+    ion-title, p {
+      color: #161740 !important;
+    }
+
+    ion-title {
+      padding-top: 21px;
+      padding-bottom: 10px;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.21;
+      text-align: center;
+    }
+
+    p {
+      margin: 0;
+      padding: 0px 60px;
+      font-size: 12px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .btn-row {
+      padding: 30px 0px;
+
+      ion-img {
+        margin: 0 7.5px;
+        height: 46px;
+        width: 46px;
+      }
+    }
+  }
+
+  ion-segment {
+    padding: 0px 30px;
+
+    ion-segment-button {
+      width: 90px;
+      height: 22px;
+      --border-color: #161740 !important;
+      --border-radius: 0;
+      --border-style: none;
+
+      ion-label {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.22;
+        letter-spacing: 0.45px;
+        text-align: left;
+        text-transform: none;
+        color: #b2b7fa;
+      }
+    }
+
+    .active {
+      border-bottom: 2.7px solid #161740 !important;
+      border-radius: 4px;
+
+      ion-label {
+        color: #161740;
+      }
+    }
+  }
+
+  ion-list {
+   padding-top: 30px;
+   margin: 0;
+
+    ion-item {
+      --padding-start: 0px;
+      --inner-padding-end: 0px;
+
+      ion-col {
+        padding: 0;
+        display: flex;
+        align-items: center;
+
+        ion-img {
+          width: 50px ;
+          height: 50px;
+        }
+
+        ion-label {
+          font-size: 18px;
+          font-weight: 600;
+          line-height: 1.2;
+        }
+      }
+    }
+  }
+
+  .onboard-msg {
+    // padding: 30px 0px;s
+
+    ion-title, p {
+      color: #161740 !important;
+    }
+
+    ion-title {
+      padding: 21px 0px;
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.21;
+      text-align: center;
+    }
+
+    p {
+      margin: 0;
+      padding: 0 60px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 23px;
+      letter-spacing: 0.75px;
+      text-align: center;
+    }
+  }
+}
+
+
+/* .no-friends {
   background-color: transparent !important;
   min-height: 100%;
   display: flex;
@@ -15,4 +147,7 @@
     width: 90%;
   }
 }
+
+ */
+
 

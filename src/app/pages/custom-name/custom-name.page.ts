@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FriendsService } from 'src/app/services/friends.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonInput } from '@ionic/angular';
+import { IonInput, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -28,6 +28,7 @@ export class CustomNamePage implements OnInit {
     private friendsService: FriendsService,
     private route: ActivatedRoute,
     private router: Router,
+    private nav: NavController,
     public translate: TranslateService
   ) { }
 
@@ -77,6 +78,6 @@ export class CustomNamePage implements OnInit {
       this.customName = null;
     }
     this.friendsService.customDID(this.customName, this.customNote, this.didId);
-    this.router.navigate(['/', this.didId]);
+    this.nav.back();
   }
 }

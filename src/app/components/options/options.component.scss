@@ -1,0 +1,28 @@
+ion-grid {
+  padding: 5px 15px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+ion-row {
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+
+  ion-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #161740;
+    margin-top: 2.5px;
+  }
+
+  .delete {
+    color: #f55555;
+  }
+
+  ion-img {
+    width: 19px;
+    height: 23px;
+  }
+}

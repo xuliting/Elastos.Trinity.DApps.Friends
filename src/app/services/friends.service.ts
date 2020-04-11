@@ -49,12 +49,14 @@ export class FriendsService {
     telegram: null,
     imageUrl: null,
     applicationProfileCredentials: [],
-    isPicked: false
+    isPicked: false,
+    isFav: false
   };
 
   public _friends: Friend[] = [];
   public filteredFriends: Friend[] = [];
 
+  public firstVisit = false;
   public inProfileView = false;
   public friendsChecked = false;
 
@@ -77,6 +79,7 @@ export class FriendsService {
 
   /******************************** Initial Render  ********************************/
   init() {
+    this.getVisit();
     this.getLanguage();
     this.getStoredDIDs();
 
@@ -90,6 +93,37 @@ export class FriendsService {
           this.onReceiveIntent
         );
     }
+  }
+
+  getVisit() {
+    this.storageService.getVisit().then(data => {
+        if (data && data === true) {
+          console.log('First visit?', this.firstVisit);
+        } else {
+          this._friends.push({
+            id: 'did:elastos',
+            name: 'My First Contact',
+            gender: null,
+            note: 'Hi! Click me to see my profile and see what Capsules I have',
+            nickname: null,
+            country: null,
+            birthDate: null,
+            telephone: null,
+            email: null,
+            description: null,
+            website: null,
+            twitter: null,
+            facebook: null,
+            telegram: null,
+            imageUrl: null,
+            applicationProfileCredentials: [],
+            isPicked: null,
+            isFav: true
+          });
+          this.storageService.setVisit(true);
+          this.storageService.setFriends(this._friends);
+        }
+    });
   }
 
   getLanguage() {
@@ -127,7 +161,7 @@ export class FriendsService {
           if(!this.friendsChecked) {
             this.friendsChecked = true;
             this._friends.forEach((friend) => {
-              this.resolveDIDDocument(friend.id, true);
+              friend.id !== 'did:elastos' ? this.resolveDIDDocument(friend.id, true) : null;
             });
           }
         } else {
@@ -342,7 +376,8 @@ export class FriendsService {
       telegram: null,
       imageUrl: null,
       applicationProfileCredentials: [],
-      isPicked: false
+      isPicked: false,
+      isFav: false
     };
 
     console.log('Confirm or deny?', didDocument);
@@ -633,4 +668,9 @@ export class FriendsService {
     });
     alert.present();
   }
+
+  deleteStorage() {
+    this.storageService.setVisit(false);
+  }
 }
+

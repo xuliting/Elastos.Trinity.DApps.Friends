@@ -1,4 +1,122 @@
 <ion-content>
+  <ion-grid class="container">
+    <div class="header">
+      <div *ngIf="friendsService._friends.length === 0" class="no-contacts">
+        <ion-img src="/assets/images/default-contact.svg"></ion-img>
+        <ion-title>No Contacts?</ion-title>
+        <p>Add a contact by clicking the add icon above</p>
+        <ion-row class="btn-row">
+          <ion-img src="/assets/buttons/scan.svg"></ion-img>
+          <ion-img src="/assets/buttons/edit.svg"></ion-img>
+          <ion-img src="/assets/buttons/options.svg"></ion-img>
+        </ion-row>
+      </div>
+      <ion-slides *ngIf="friendsService._friends.length > 0">
+        <ion-slide *ngFor="let friend of friendsService._friends">
+          <ion-img src="/assets/images/default-contact.svg"></ion-img>
+          <ion-title *ngIf="friend.name">
+            {{ friend.name }}
+          </ion-title>
+          <ion-title *ngIf="!friend.name">
+            {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
+          </ion-title>
+          <p>{{ friend.note }}</p>
+          <ion-row class="btn-row">
+            <ion-img src="/assets/buttons/scan.svg" (click)="openScanner()"></ion-img>
+            <ion-img src="/assets/buttons/edit.svg" (click)="customizeFriend(friend)"></ion-img>
+            <ion-img src="/assets/buttons/options.svg" (click)="showOptions($event, friend)"></ion-img>
+          </ion-row>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+    <ion-segment>
+      <ion-segment-button [class.active]="favActive" (click)="favActive = true">
+        <ion-label>Favorites</ion-label>
+      </ion-segment-button>
+      <ion-segment-button [class.active]="!favActive" (click)="favActive = false">
+        <ion-label>All Contacts</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-list *ngIf="friendsService._friends.length > 0 && !favActive">
+      <ion-item
+        *ngFor="let friend of friendsService._friends"
+        color="secondary"
+        detail="false"
+        lines="none"
+        [routerLink]="['/', friend.id]"
+      >
+        <ion-grid>
+          <ion-row>
+            <ion-col offset="0.75" size="1.75">
+              <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
+              <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
+            </ion-col>
+            <ion-col size="9.25">
+              <ion-label *ngIf="friend.name">
+                {{ friend.name }}
+              </ion-label>
+              <ion-label *ngIf="!friend.name">
+                {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="friendsService._friends.length > 0 && favActive">
+      <ion-item
+        *ngFor="let friend of getFavorites()"
+        color="secondary"
+        detail="false"
+        lines="none"
+        [routerLink]="['/', friend.id]"
+      >
+        <ion-grid>
+          <ion-row>
+            <ion-col offset="0.75" size="1.75">
+              <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
+              <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
+            </ion-col>
+            <ion-col size="9.25">
+              <ion-label *ngIf="friend.name">
+                {{ friend.name }}
+              </ion-label>
+              <ion-label *ngIf="!friend.name">
+                {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+
+    <div *ngIf="firstContact()" class="onboard-msg">
+      <ion-title>No Contacts?</ion-title>
+      <p>
+        This is your starter contact. Click on it to see the profile
+        and see what Capsules they have Add real contacts by the add icon above
+      </p>
+    </div>
+
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-padding-bottom ion-padding-end">
+    <ion-fab-button [routerLink]="['/', 'addFriend']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<!-- <ion-footer>
+  <ion-button (click)="friendsService.deleteStorage()">
+    <ion-label>Delete Visit</ion-label>
+  </ion-button>
+</ion-footer> -->
+
+<!-- <ion-content>
 
   <ion-grid class="friends-container">
     <ion-list *ngIf="friendsService._friends.length > 0">
@@ -49,5 +167,5 @@
     </ion-fab-button>
   </ion-fab>
 
-</ion-content>
+</ion-content> -->
 

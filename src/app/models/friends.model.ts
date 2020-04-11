@@ -16,7 +16,8 @@ export class Friend {
     public telegram: string,
     public imageUrl: string,
     public applicationProfileCredentials: any,
-    public isPicked: boolean = false
+    public isPicked: boolean = false,
+    public isFav: boolean
   ) {}
 }
 
