@@ -5,13 +5,13 @@ export const en = {
   // Friend-Details Pg
   'contact-profile': "Contact's Profile",
   'apps': 'Browsed Capsules',
-  'no-apps': 'No Capsules available',
+  'no-apps': 'No Capsules Available',
   'nickname': 'Nickname',
   'country': 'Country',
   'birth': 'Birth Date',
   'telephone': 'Telephone',
   'email': 'Email',
-  'Website': 'Website',
+  'website': 'Website',
   'did': 'Identity',
 
   // Add pg
@@ -19,7 +19,7 @@ export const en = {
   'enter-did': 'Or enter an Identity',
 
   // Confirm Pg
-  'do-you-want-to-add': 'Do you want to add this user to your contacts?',
+  'do-you-want-to-add': 'Would you like to add this user to your contacts?',
   'confirm-contact': 'Confirm Contact',
 
   // Customize Pg
@@ -33,8 +33,8 @@ export const en = {
   'no-contacts-header': 'You have no contacts!',
 
   // Delete-Friend-Warning
-  'delete-header': 'Contact will be deleted from list',
-  'delete-message': 'You can always add this contact again to your list',
+  'delete-msg': 'Contact will be deleted.',
+  'delete-msg2': 'You can always add them back again!',
   'are-you-sure': 'Are you sure?',
 
   // Buttons
@@ -45,7 +45,9 @@ export const en = {
   'customize': 'Customize',
   'delete': 'Delete',
   'discover': 'Discover',
+  'connect': 'Connect',
   'open': 'Open',
+  'add': 'Add',
   'cancel': 'Cancel',
   'confirm': 'Confirm',
   'go-back': 'Go Back',

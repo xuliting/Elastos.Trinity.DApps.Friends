@@ -51,43 +51,6 @@ export class FriendsPage implements OnInit {
     }
   }
 
-  openScanner() {
-    appManager.sendIntent("scanqrcode", {}, {}, (res) => {
-      console.log("Got scan result", res);
-      this.friendsService.addFriendByIntent(res.result.scannedContent);
-    }, (err: any)=>{
-      console.error(err);
-    })
-  }
-
-  customizeFriend(friend: Friend) {
-    this.friendsService.inProfileView = false;
-    let props: NavigationExtras = {
-      queryParams: {
-        didId: friend.id,
-        didName: friend.name,
-        didGender: friend.gender,
-        didNote: friend.note,
-        didImage: friend.imageUrl
-      }
-    }
-    this.router.navigate(['/custom-name'], props);
-  }
-
-  async showOptions(ev: any, friend: Friend) {
-    const popover = await this.popover.create({
-      mode: 'ios',
-      component: OptionsComponent,
-      cssClass: 'options',
-      event: ev,
-      componentProps: {
-        friend: friend
-      },
-      translucent: false
-    });
-    return await popover.present();
-  }
-
   getFavorites(): Friend[] {
     return this.friendsService._friends.filter((friend) => friend.isFav === true);
   }

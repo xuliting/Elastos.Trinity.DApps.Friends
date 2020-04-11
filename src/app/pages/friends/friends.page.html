@@ -22,9 +22,9 @@
           </ion-title>
           <p>{{ friend.note }}</p>
           <ion-row class="btn-row">
-            <ion-img src="/assets/buttons/scan.svg" (click)="openScanner()"></ion-img>
-            <ion-img src="/assets/buttons/edit.svg" (click)="customizeFriend(friend)"></ion-img>
-            <ion-img src="/assets/buttons/options.svg" (click)="showOptions($event, friend)"></ion-img>
+            <ion-img src="/assets/buttons/scan.svg" (click)="friendsService.openScanner()"></ion-img>
+            <ion-img src="/assets/buttons/edit.svg" (click)="friendsService.customizeFriend(friend)"></ion-img>
+            <ion-img src="/assets/buttons/options.svg" (click)="friendsService.showOptions($event, friend)"></ion-img>
           </ion-row>
         </ion-slide>
       </ion-slides>
@@ -40,57 +40,82 @@
     </ion-segment>
 
     <ion-list *ngIf="friendsService._friends.length > 0 && !favActive">
-      <ion-item
-        *ngFor="let friend of friendsService._friends"
-        color="secondary"
-        detail="false"
-        lines="none"
-        [routerLink]="['/', friend.id]"
-      >
-        <ion-grid>
-          <ion-row>
-            <ion-col offset="0.75" size="1.75">
-              <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
-              <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
-            </ion-col>
-            <ion-col size="9.25">
-              <ion-label *ngIf="friend.name">
-                {{ friend.name }}
-              </ion-label>
-              <ion-label *ngIf="!friend.name">
-                {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+      <ion-item-sliding  *ngFor="let friend of friendsService._friends">
+        <ion-item
+          color="secondary"
+          detail="false"
+          lines="none"
+          [routerLink]="['/', friend.id]"
+        >
+          <ion-grid>
+            <ion-row>
+              <ion-col offset="0.75" size="1.75">
+                <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
+                <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
+              </ion-col>
+              <ion-col size="9.25">
+                <ion-label *ngIf="friend.name">
+                  {{ friend.name }}
+                </ion-label>
+                <ion-label *ngIf="!friend.name">
+                  {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option class="itemOption" color="secondary" (click)="friendsService.changeFav(friend)">
+            <ion-img *ngIf="friend.isFav" src="/assets/images/favorite.svg"></ion-img>
+            <ion-img *ngIf="!friend.isFav" src="/assets/images/unfavorite.svg"></ion-img>
+          </ion-item-option>
+          <ion-item-option class="itemOption" color="secondary">
+            <ion-img src="/assets/images/share.svg"></ion-img>
+          </ion-item-option>
+          <ion-item-option class="itemOption" color="secondary">
+            <ion-img src="/assets/images/delete.svg"></ion-img>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
     </ion-list>
 
     <ion-list *ngIf="friendsService._friends.length > 0 && favActive">
-      <ion-item
-        *ngFor="let friend of getFavorites()"
-        color="secondary"
-        detail="false"
-        lines="none"
-        [routerLink]="['/', friend.id]"
-      >
-        <ion-grid>
-          <ion-row>
-            <ion-col offset="0.75" size="1.75">
-              <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
-              <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
-            </ion-col>
-            <ion-col size="9.25">
-              <ion-label *ngIf="friend.name">
-                {{ friend.name }}
-              </ion-label>
-              <ion-label *ngIf="!friend.name">
-                {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+      <ion-item-sliding *ngFor="let friend of getFavorites()">
+        <ion-item
+          color="secondary"
+          detail="false"
+          lines="none"
+          [routerLink]="['/', friend.id]"
+        >
+          <ion-grid>
+            <ion-row>
+              <ion-col offset="0.75" size="1.75">
+                <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
+                <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
+              </ion-col>
+              <ion-col size="9.25">
+                <ion-label *ngIf="friend.name">
+                  {{ friend.name }}
+                </ion-label>
+                <ion-label *ngIf="!friend.name">
+                  {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option class="itemOption" color="secondary" (click)="friendsService.changeFav(friend)">
+            <ion-img src="/assets/images/favorite.svg"></ion-img>
+          </ion-item-option>
+          <ion-item-option class="itemOption" color="secondary">
+            <ion-img src="/assets/images/share.svg"></ion-img>
+          </ion-item-option>
+          <ion-item-option class="itemOption" color="secondary">
+            <ion-img src="/assets/images/delete.svg"></ion-img>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
     </ion-list>
 
     <div *ngIf="firstContact()" class="onboard-msg">
@@ -115,57 +140,3 @@
     <ion-label>Delete Visit</ion-label>
   </ion-button>
 </ion-footer> -->
-
-<!-- <ion-content>
-
-  <ion-grid class="friends-container">
-    <ion-list *ngIf="friendsService._friends.length > 0">
-      <ion-item *ngIf="!friendsLoaded" class="ion-text-center" color="light">
-        <ion-label>
-          <ion-spinner name="bubbles"></ion-spinner>
-        </ion-label>
-      </ion-item>
-      <div *ngIf="friendsLoaded">
-        <ion-item
-          *ngFor="let friend of friendsService._friends"
-          color="light"
-          mode='md'
-          detail="false"
-          [routerLink]="['/', friend.id]"
-        >
-          <ion-grid>
-            <ion-row>
-              <ion-col size="2">
-                <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
-                <ion-img class="man-img" *ngIf="!friend.imageUrl && friendsService.isMale(friend.gender)" src="assets/images/Guy_Face.jpg"></ion-img>
-                <ion-img class="woman-img" *ngIf="!friend.imageUrl && !friendsService.isMale(friend.gender)" src="assets/images/DefaultProfileWoman.svg"></ion-img>
-              </ion-col>
-              <ion-col size="9">
-                <ion-label>
-                  <h4 *ngIf="friend.name && friend.name.length < 18">{{ friend.name }}</h4>
-                  <h4 *ngIf="friend.name && friend.name.length >= 18">{{ friend.name.slice(0,18) }}...</h4>
-                  <h4 *ngIf="!friend.name">
-                    {{ friend.id.slice(0,12) }} <br>
-                    {{ friend.id.slice(12,27) }}...
-                  </h4>
-                  <p>{{ friend.note }}<p>
-                </ion-label>
-              </ion-col>
-              <ion-col size="1">
-                <ion-icon mode="ios" name="arrow-forward"></ion-icon>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item>
-      </div>
-    </ion-list>
-  </ion-grid>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-padding-bottom ion-padding-end">
-    <ion-fab-button [routerLink]="['/', 'addFriend']">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-</ion-content> -->
-

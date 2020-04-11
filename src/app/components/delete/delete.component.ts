@@ -7,11 +7,11 @@ import { Friend } from 'src/app/models/friends.model';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-options',
-  templateUrl: './options.component.html',
-  styleUrls: ['./options.component.scss'],
+  selector: 'app-delete',
+  templateUrl: './delete.component.html',
+  styleUrls: ['./delete.component.scss'],
 })
-export class OptionsComponent implements OnInit {
+export class DeleteComponent implements OnInit {
 
   @Output() cancelEvent = new EventEmitter<boolean>();
 
@@ -27,15 +27,15 @@ export class OptionsComponent implements OnInit {
 
   ngOnInit() {
     this.friend = this.navParams.get('friend');
-    console.log('Options', this.friend);
+    console.log('Delete Warning', this.friend);
   }
 
-  async deleteFriend() {
-    this.friendsService.deleteWarning(this.friend);
+  deleteFriend() {
+    this.friendsService.deleteFriend(this.friend);
     this.popover.dismiss();
   }
 
-  goBack() {
+  cancel() {
     this.popover.dismiss();
   }
 }

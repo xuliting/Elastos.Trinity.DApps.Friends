@@ -1,128 +1,80 @@
 .container {
-  background: #FAFAFA;
-  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f1ff;
+  padding: 24px;
   min-height: 100%;
 
-  div {
-    position: relative;
-    top: 50px;
+  .profile-container {
+    background: #fafaff;
+    border: 1.2px solid #6d74ef;
+    border-radius: 12px;
 
-    .profile-container {
-      background: #FAFAFA;
-      border: 1px solid #6d74ef;
-      border-radius: 15px;
+    .img-row {
+      display: flex;
+      justify-content: center;
 
-      .profile-picture {
-        position: absolute;
-        background: white;
-        top:0;
-        left:0;
-        right:0;
-        z-index: 10;
+      img {
         height: 84px;
         width: 84px;
-        margin: 0 auto;
         margin-top: -42px;
         border-radius: 50%;
         box-shadow: 3px 3px 8px rgba(100,100,100,0.2);
-        align-content: center;
         overflow: hidden;
       }
+    }
 
-      .profile-name {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .profile-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-        h1 {
-          margin: 45px 15px 15px;
-          font-size: 24px;
-          font-weight: 600;
-          text-align: center;
-          color: #161740;
-        }
+      h1 {
+        margin: 15px;
+        font-size: 22px;
+        font-weight: 600;
+        text-align: center;
+        color: #161740;
       }
+    }
 
-      .message {
+    .message {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffffff;
+      height: 110px;
+      overflow: hidden;
+
+      p {
+        font-size: 14px;
+        text-align: center;
+        color: #161740;
+      }
+    }
+
+    .btn-row {
+      height: 80px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      .btn {
+        width: 167px;
+        height: 41px;
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #ffffff;
-        height: 108px;
+        border-radius: 8px;
+        background-color: #ffffff;
 
-        p {
+        ion-label {
           font-size: 16px;
-          text-align: center;
+          font-weight: 500;
           color: #161740;
         }
       }
-
-      .last-btn {
-        padding-top: 10px;
-        padding-bottom: 10px;
-      }
     }
   }
 }
-
-/* .container {
-  background: #FAFAFA;
-  min-height: 100%;
-
-  div {
-    position: relative;
-    top: 50px;
-
-    .profile-container {
-      background: white;
-
-      .profile-picture {
-        position: absolute;
-        background: white;
-        top:0;
-        left:0;
-        right:0;
-        z-index: 10;
-        height:30vw;
-        width:30vw;
-        margin: 0 auto;
-        margin-top: -14vw;
-        border-radius: 50%;
-        box-shadow: 3px 3px 8px rgba(100,100,100,0.2);
-        align-content: center;
-        overflow: hidden;
-      }
-
-      .profile-name {
-        margin-top: 60px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        h1 {
-          font-size: 28px;
-          font-weight: 600;
-        }
-      }
-
-      .message {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        p {
-          font-size: 19px !important;
-          color: #3ABAFB;
-          font-weight: 700;
-          word-spacing: 2px;
-        }
-      }
-
-      .last-btn {
-        padding-top: 10px;
-        padding-bottom: 10px;
-      }
-    }
-  }
-}
- */

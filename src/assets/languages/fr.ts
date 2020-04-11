@@ -11,7 +11,7 @@ export const fr = {
   'birth': 'Date de naissance',
   'telephone': 'Téléphone',
   'email': 'Email',
-  'Website': 'Site Web',
+  'website': 'Site Web',
   'did': 'Identité',
 
   // Add Pg
@@ -33,8 +33,8 @@ export const fr = {
   'no-contacts-header': "Vous n'avez aucun contact!",
 
   // Delete-Friend-Warning
-  'delete-header': 'Le contact sera supprimé',
-  'delete-message': 'Vous pourrez toujours ajouter à nouveau ce contact à votre liste',
+  'delete-msg': 'Le contact sera supprimé',
+  'delete-msg2': 'Vous pourrez toujours ajouter à nouveau ce contact à votre liste',
   'are-you-sure': 'Etes-vous sûr(e)?',
 
   // Buttons
@@ -45,7 +45,9 @@ export const fr = {
   'customize': 'Personnaliser',
   'delete': 'Supprimer',
   'discover': 'Découvrir',
+  'connect': 'Relier',
   'open': 'Ouvrir',
+  'add': 'Ajouter',
   'cancel': 'Annuler',
   'confirm': 'Confirmer',
   'go-back': 'Retour',

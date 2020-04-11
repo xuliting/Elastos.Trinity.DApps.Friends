@@ -34,6 +34,7 @@ export class FriendDetailsPage implements OnInit {
   public friend: Friend;
   public friendsApps: DisplayableAppInfo[] = [];
   public fetchingApps = false;
+  public detailsActive = true;
 
   constructor(
     public friendsService: FriendsService,
@@ -133,54 +134,6 @@ export class FriendDetailsPage implements OnInit {
 
   fixBirthDate(birth) {
     return moment(birth).format("MMMM Do YYYY");
-  }
-
-  customizeFriend() {
-    this.friendsService.inProfileView = false;
-    let props: NavigationExtras = {
-      queryParams: {
-        didId: this.friend.id,
-        didName: this.friend.name,
-        didGender: this.friend.gender,
-        didNote: this.friend.note,
-        didImage: this.friend.imageUrl
-      }
-    }
-    this.router.navigate(['/custom-name'], props);
-  }
-
-  showWarning(friend: Friend) {
-    this.alertDelete(friend);
-    this.deleteConfirm(friend);
-  }
-
-  async alertDelete(friend: Friend) {
-    const popover = await this.popover.create({
-      mode: 'ios',
-      cssClass: 'warning',
-      component: WarningPage,
-      componentProps: {
-        friend: friend
-      }
-    });
-    return await popover.present();
-  }
-
-  async deleteConfirm(friend: Friend) {
-    const popover = await this.popover.create({
-      mode: 'ios',
-      cssClass: '_warning',
-      component: Warning2Page,
-      componentProps: {
-        friend: friend
-      }
-    });
-
-    popover.onDidDismiss().then(() => {
-      this.popover.dismiss();
-    })
-
-    return await popover.present();
   }
 
   discoverApp(appId: string) {

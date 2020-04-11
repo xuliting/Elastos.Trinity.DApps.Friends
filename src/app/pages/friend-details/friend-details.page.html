@@ -1,233 +1,188 @@
 <ion-content>
-  <ion-grid class="container ion-no-padding ion-no-margin">
-    <div>
-
-      <div class="profile-container ion-padding-bottom">
-
-        <!-- Friend Image -->
-        <div class="profile-picture">
-          <img *ngIf="friend.imageUrl" [src]="friend.imageUrl">
-          <img *ngIf="!friend.imageUrl && friendsService.isMale(friend.gender)" src="assets/images/Guy_Face.svg">
-          <img *ngIf="!friend.imageUrl && !friendsService.isMale(friend.gender)" src="assets/images/DefaultProfileWoman.svg">
-        </div>
-
-        <!-- Friend Name & Header -->
-        <ion-row>
-          <ion-col *ngIf="friend.name" class="profile-name">
-            <h1 *ngIf="friend.name.length < 20" class="ion-text-center ion-padding-horizontal">
-              {{ friend.name.slice(0,20) }}
-            </h1>
-            <h1 *ngIf="friend.name.length >= 20" class="ion-text-center ion-padding-horizontal">
-              {{ friend.name.slice(0,20) }}...
-            </h1>
-          </ion-col>
-          <ion-col *ngIf="!friend.name && friend.id" class="profile-name">
-            <h1 class="ion-text-center ion-padding-horizontal">
-              {{ friend.id.slice(0,12) }} <br>
-              {{ friend.id.slice(12,25) }} <br>
-              {{ friend.id.slice(25,36) }} <br>
-              {{ friend.id.slice(36,46) }} <br>
-            </h1>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="profile-note ion-no-padding ion-text-center ion-padding-horizontal">
-            <p>{{ friend.note }}</p>
-          </ion-col>
-        </ion-row>
-
-        <!-- Buttons -->
-        <ion-row class="ion-margin-bottom">
-          <ion-col size="6" class="left-btn">
-            <rounded-action-button
-              (click)="customizeFriend()"
-              [title]="'customize' | translate"
-              image='assets/images/Edit_Simple_Icon.svg'
-              color="#3ABAFB"
-              imgcolor="#3ABAFB">
-            </rounded-action-button>
-          </ion-col>
-          <ion-col size="6" class="right-btn ion-padding-start">
-            <rounded-action-button
-              (click)="showWarning(friend)"
-              [title]="'delete' | translate"
-              image='assets/images/Delete_Warning_Simple_Icon.svg'
-              color="#FF4D4D"
-              imgcolor="#f04141">
-            </rounded-action-button>
-          </ion-col>
-        </ion-row>
-
-        <!-- Friend Published Creds -->
-        <ion-row class="profile-data" *ngIf="friend.nickname">
-          <ion-col>
-            <h5>{{ 'nickname' | translate }}</h5>
-          </ion-col>
-          <ion-col class="cred">
-            <h4>{{ friend.nickname }}</h4>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="profile-data" *ngIf="friend.country">
-          <ion-col>
-            <h5>{{ 'country' | translate }}</h5>
-          </ion-col>
-          <ion-col class="cred">
-            <h4>{{ friend.country }}</h4>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="profile-data" *ngIf="friend.birthDate">
-          <ion-col>
-            <h5>{{ 'birth' | translate }}</h5>
-          </ion-col>
-          <ion-col class="cred">
-            <h4>{{ fixBirthDate(friend.birthDate) }}</h4>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="profile-data" *ngIf="friend.telephone">
-          <ion-col>
-            <h5>{{ 'telephone' | translate }}</h5>
-          </ion-col>
-          <ion-col class="cred">
-            <h4>{{ friend.telephone }}</h4>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="profile-data" *ngIf="friend.email">
-          <ion-col>
-            <h5>{{ 'email' | translate }}</h5>
-          </ion-col>
-          <ion-col class="cred">
-            <h4>{{ friend.email }}</h4>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="profile-data" *ngIf="friend.website">
-          <ion-col>
-            <h5>{{ 'website' | translate }}</h5>
-          </ion-col>
-          <ion-col class="cred">
-            <h4>{{ friend.website }}</h4>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="profile-data" *ngIf="friend.twitter">
-          <ion-col>
-            <h5>Twitter</h5>
-          </ion-col>
-          <ion-col class="cred">
-            <h4>{{ friend.twitter }}</h4>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="profile-data" *ngIf="friend.facebook">
-          <ion-col>
-            <h5>Facebook</h5>
-          </ion-col>
-          <ion-col class="cred">
-            <h4>{{ friend.facebook }}</h4>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="profile-data" *ngIf="friend.telegram">
-          <ion-col>
-            <h5>Telegram</h5>
-          </ion-col>
-          <ion-col class="cred">
-            <h4>{{ friend.telegram }}</h4>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="profile-data">
-          <ion-col>
-            <h5>{{ 'did' | translate }}</h5>
-          </ion-col>
-          <ion-col class="cred">
-            <h4>
-              {{ friend.id.slice(0,25) }} <br>
-              {{ friend.id.slice(25,50) }}
-            </h4>
-          </ion-col>
-        </ion-row>
-      </div>
-
-      <!-- Friend Apps Container  -->
-      <div class="app-container">
-        <ion-row class="install-container">
-          <ion-col class="ion-no-padding ion-no-margin">
-            <h2 class="ion-padding">{{ 'apps' | translate }}</h2>
-          </ion-col>
-        </ion-row>
-
-        <!-- Loaded Apps List -->
-        <ion-list *ngIf="friendsApps.length > 0 && !fetchingApps" class="ion-no-padding">
-          <ion-item
-            class="app"
-            *ngFor="let appInfo of friendsApps"
-            color="light"
-            lines="none"
-          >
-            <ion-grid class="ion-no-padding" >
-              <ion-row class="ion-align-items-center">
-                <ion-col size="2.5">
-                  <ion-thumbnail>
-                    <ion-img [src]="appInfo.app ? getAppIcon(appInfo.app.id) : '/assets/icon/elalogo.svg'"></ion-img>
-                  </ion-thumbnail>
-                </ion-col>
-                <ion-col size="6.5" class="app-info">
-                  <ion-label>
-                    <h4 *ngIf="appInfo.app">{{ appInfo.app.name }}</h4>
-                    <h4 *ngIf="!appInfo.app">{{ appInfo.packageId }}</h4>
-                    <p *ngIf="appInfo.action">{{ appInfo.action }}</p>
-                  </ion-label>
-                </ion-col>
-                <ion-col size="3" class="btn-container">
-                  <ion-button *ngIf="!appInfo.isInstalled" color="tertiary" (click)="discoverApp(appInfo.packageId)">
-                    <ion-label>{{ 'discover' | translate }}</ion-label>
-                  </ion-button>
-                  <ion-button *ngIf="appInfo.isInstalled && appInfo.app" color="tertiary" (click)="connectApp(appInfo.packageId)">
-                    <ion-label>{{ 'open' | translate }}</ion-label>
-                  </ion-button>
-                  <ion-button *ngIf="appInfo.isInstalled && !appInfo.app" color="tertiary" (click)="friendsService.startApp(appInfo.packageId)">
-                    <ion-label>{{ 'open' | translate }}</ion-label>
-                  </ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item>
-        </ion-list>
-
-        <!-- Apps Loader -->
-        <ion-list *ngIf="fetchingApps" class="ion-no-padding">
-          <ion-item class="ion-padding" lines="none">
-            <ion-grid>
-              <ion-row class="ion-text-center">
-                <ion-col>
-                  <ion-spinner name="bubbles"></ion-spinner>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item>
-        </ion-list>
-
-        <!-- No Apps -->
-        <ion-list *ngIf="friendsApps.length === 0 && !fetchingApps" class="ion-no-padding">
-          <ion-item class="app" lines="none">
-            <ion-grid>
-              <ion-row>
-                <ion-col>
-                  <ion-label class="no-apps">
-                    {{ 'no-apps' | translate }}
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item>
-        </ion-list>
-      </div>
-
+  <ion-grid class="container">
+    <div class="header">
+      <ion-img src="/assets/images/default-contact.svg"></ion-img>
+      <ion-title mode='md' *ngIf="friend.name">
+        {{ friend.name }}
+      </ion-title>
+      <ion-title mode='md' *ngIf="!friend.name">
+        {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
+      </ion-title>
+      <p>{{ friend.note }}</p>
+      <ion-row class="btn-row">
+        <ion-img src="/assets/buttons/scan.svg" (click)="friendsService.openScanner()"></ion-img>
+        <ion-img src="/assets/buttons/edit.svg" (click)="friendsService.customizeFriend(friend)"></ion-img>
+        <ion-img src="/assets/buttons/options.svg" (click)="friendsService.showOptions($event, friend)"></ion-img>
+      </ion-row>
     </div>
+
+    <ion-segment>
+      <ion-segment-button [class.active]="detailsActive" (click)="detailsActive = true">
+        <ion-label>Details</ion-label>
+      </ion-segment-button>
+      <ion-segment-button [class.active]="!detailsActive" (click)="detailsActive = false">
+        <ion-label>Capsules</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-list *ngIf="detailsActive">
+      <ion-row class="profile-data" *ngIf="friend.nickname">
+        <ion-col>
+          <h5>{{ 'nickname' | translate }}</h5>
+        </ion-col>
+        <ion-col class="cred">
+          <h4>{{ friend.nickname }}</h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="profile-data" *ngIf="friend.country">
+        <ion-col>
+          <h5>{{ 'country' | translate }}</h5>
+        </ion-col>
+        <ion-col class="cred">
+          <h4>{{ friend.country }}</h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="profile-data" *ngIf="friend.birthDate">
+        <ion-col>
+          <h5>{{ 'birth' | translate }}</h5>
+        </ion-col>
+        <ion-col class="cred">
+          <h4>{{ fixBirthDate(friend.birthDate) }}</h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="profile-data" *ngIf="friend.telephone">
+        <ion-col>
+          <h5>{{ 'telephone' | translate }}</h5>
+        </ion-col>
+        <ion-col class="cred">
+          <h4>{{ friend.telephone }}</h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="profile-data" *ngIf="friend.email">
+        <ion-col>
+          <h5>{{ 'email' | translate }}</h5>
+        </ion-col>
+        <ion-col class="cred">
+          <h4>{{ friend.email }}</h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="profile-data" *ngIf="friend.website">
+        <ion-col>
+          <h5>{{ 'website' | translate }}</h5>
+        </ion-col>
+        <ion-col class="cred">
+          <h4>{{ friend.website }}</h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="profile-data" *ngIf="friend.twitter">
+        <ion-col>
+          <h5>Twitter</h5>
+        </ion-col>
+        <ion-col class="cred">
+          <h4>{{ friend.twitter }}</h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="profile-data" *ngIf="friend.facebook">
+        <ion-col>
+          <h5>Facebook</h5>
+        </ion-col>
+        <ion-col class="cred">
+          <h4>{{ friend.facebook }}</h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="profile-data" *ngIf="friend.telegram">
+        <ion-col>
+          <h5>Telegram</h5>
+        </ion-col>
+        <ion-col class="cred">
+          <h4>{{ friend.telegram }}</h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="profile-data">
+        <ion-col>
+          <h5>{{ 'did' | translate }}</h5>
+        </ion-col>
+        <ion-col class="cred">
+          <h4>
+            {{ friend.id.slice(0,25) }} <br>
+            {{ friend.id.slice(25,50) }}
+          </h4>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+
+    <ion-list *ngIf="!detailsActive && friendsApps.length > 0 && !fetchingApps" class="ion-no-padding">
+      <ion-item
+        class="app"
+        *ngFor="let appInfo of friendsApps"
+        color="light"
+        mode="md"
+        lines="none"
+        details="none"
+      >
+        <ion-grid class="ion-no-padding" >
+          <ion-row class="ion-align-items-center">
+            <ion-col class="img-col" offset="0.5" size="2.5">
+              <ion-avatar>
+                <ion-img [src]="appInfo.app ? getAppIcon(appInfo.app.id) : '/assets/icon/elalogo.svg'"></ion-img>
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="5" class="appInfo-col">
+              <h4 *ngIf="appInfo.app">{{ appInfo.app.name }}</h4>
+              <h4 *ngIf="!appInfo.app">{{ appInfo.packageId }}</h4>
+              <p *ngIf="appInfo.action">{{ appInfo.action }}</p>
+            </ion-col>
+            <ion-col offset="0.5" size="3" class="btn-col">
+              <ion-button *ngIf="!appInfo.isInstalled" color="tertiary" (click)="discoverApp(appInfo.packageId)">
+                <ion-label>{{ 'discover' | translate }}</ion-label>
+              </ion-button>
+              <ion-button *ngIf="appInfo.isInstalled && appInfo.app" color="tertiary" (click)="connectApp(appInfo.packageId)">
+                <ion-label>{{ 'connect' | translate }}</ion-label>
+              </ion-button>
+              <ion-button *ngIf="appInfo.isInstalled && !appInfo.app" color="tertiary" (click)="friendsService.startApp(appInfo.packageId)">
+                <ion-label>{{ 'open' | translate }}</ion-label>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+
+      <!-- Apps Loader -->
+      <ion-list *ngIf="!detailsActive && fetchingApps" class="ion-no-padding">
+        <ion-item class="ion-padding" lines="none">
+          <ion-grid>
+            <ion-row class="ion-text-center">
+              <ion-col>
+                <ion-spinner name="bubbles" color="primary"></ion-spinner>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+
+      <!-- No Apps -->
+      <ion-list *ngIf="!detailsActive && friendsApps.length === 0 && !fetchingApps" class="ion-no-padding">
+        <ion-item class="app" lines="none">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-label class="no-apps ion-text-center">
+                  {{ 'no-apps' | translate }}
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+
   </ion-grid>
-</ion-content>

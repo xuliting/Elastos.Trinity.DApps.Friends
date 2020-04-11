@@ -31,10 +31,6 @@ export class FriendConfirmationPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(this.popover) {
-      this.popover.dismiss();
-    }
-
     this.route.queryParams.subscribe(params => {
       if (params) {
         this.didId = params.didId;

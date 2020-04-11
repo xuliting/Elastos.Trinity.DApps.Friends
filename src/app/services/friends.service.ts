@@ -7,6 +7,8 @@ import { Router, NavigationExtras } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { Friend } from '../models/friends.model';
 import { DID } from '../models/did.model';
+import { DeleteComponent } from '../components/delete/delete.component';
+import { OptionsComponent } from '../components/options/options.component';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
@@ -69,6 +71,7 @@ export class FriendsService {
     private router: Router,
     private navController: NavController,
     private alertController: AlertController,
+    private popoverController: PopoverController,
     public toastController: ToastController,
     public zone: NgZone,
     public translate: TranslateService,
@@ -107,16 +110,57 @@ export class FriendsService {
             note: 'Hi! Click me to see my profile and see what Capsules I have',
             nickname: null,
             country: null,
-            birthDate: null,
+            birthDate: 'December 2017',
             telephone: null,
-            email: null,
+            email: 'contact@elastos.org',
             description: null,
-            website: null,
-            twitter: null,
+            website: 'https://www.elastos.org',
+            twitter: '@Elastos_org',
             facebook: null,
             telegram: null,
             imageUrl: null,
-            applicationProfileCredentials: [],
+            applicationProfileCredentials: [
+              {
+                action: "This is a basic demo which demonstrates the identity service",
+                apppackage: "org.elastos.trinity.dapp.diddemo",
+                apptype: "elastosbrowser"
+              },
+              {
+                action: "This is a basic demo which demonstrates P2P networking",
+                apppackage: "org.elastos.trinity.dapp.carrierdemo",
+                apptype: "elastosbrowser"
+              },
+              {
+                action: "Learn elastOS the fun way! Quizzes, chats, guilds, level up & earn points!",
+                apppackage: "tech.tuum.academy",
+                apptype: "elastosbrowser"
+              },
+              {
+                action: "Let your voice be heard and vote for your CRC candidate!",
+                apppackage: "org.elastos.trinity.dapp.crcvoting",
+                apptype: "elastosbrowser"
+              },
+              {
+                action: "Check out the latest and greatest capsules in elastOS!",
+                apppackage: "org.elastos.trinity.dapp.dappstore",
+                apptype: "elastosbrowser"
+              },
+              {
+                action: "Vote for your favorite Supernodes and earn ELA along the way",
+                apppackage: "org.elastos.trinity.dapp.dposvoting",
+                apptype: "elastosbrowser"
+              },
+              {
+                action: "Check for any block, transaction or address ever created on Elastos!",
+                apppackage: "org.elastos.trinity.dapp.blockchain",
+                apptype: "elastosbrowser"
+              },
+              {
+                action: "Show some love to your friends by giving them ELA!",
+                apppackage: "org.elastos.trinity.dapp.redpacket",
+                apptype: "elastosbrowser"
+              },
+            ],
             isPicked: null,
             isFav: true
           });
@@ -280,12 +324,12 @@ export class FriendsService {
         if (didDocument && updatingFriends) {
           this.updateFriends(didDocument);
         }
-        else if (!didDocument && updatingFriends) {
+    /*     else if (!didDocument && updatingFriends) {
           return;
         } else {
           this.didResolveErr("Sorry, we can't find your friend on chain. Did he make his DID profile public ?");
           resolve(false);
-        }
+        } */
       }, (err: any) => {
         console.error("DIDDocument resolving error", err);
         this.didResolveErr(err.message);
@@ -458,12 +502,27 @@ export class FriendsService {
     } else {
       this.storageService.setFriends(this._friends = this._friends.concat(this._friend));
       this.storageService.setDIDs(this._didDocs = this._didDocs.concat(this._didDoc));
-      // this.genericToast(alertName + ' was added');
+      this.genericToast(alertName + ' was added');
       console.log('Friends updated', this._friends);
     }
   }
 
   /******************************** Delete Friend ********************************/
+  async deleteWarning(friend) {
+    const popover = await this.popoverController.create({
+      mode: 'ios',
+      cssClass: 'delete',
+      component: DeleteComponent,
+      componentProps: {
+        friend: friend
+      }
+    });
+    return await popover.present();
+  /*   this.friendsService.deleteFriend(this.friend);
+    this.popover.dismiss();
+    console.log('Friend Deleted' + this.friend); */
+  }
+
   deleteFriend(friend: Friend) {
     let alertName: string = '';
     if(friend.name) {
@@ -475,10 +534,13 @@ export class FriendsService {
     console.log('Deleting friend', friend);
     this._didDocs = this._didDocs.filter(did => did.id.didString !== friend.id);
     this._friends = this._friends.filter(_friend => _friend.id !== friend.id);
+
     console.log('Updated friends', this._friends);
     this.storageService.setDIDs(this._didDocs);
     this.storageService.setFriends(this._friends);
-    // this.genericToast(alertName + ' was deleted');
+
+    this.genericToast(alertName + ' was deleted');
+    this.router.navigate(['/friends']);
   }
 
   /******************************** Customize friend ********************************/
@@ -605,6 +667,50 @@ export class FriendsService {
       );
   }
 
+  /******************************** Manage Favorite ********************************/
+  changeFav(friend: Friend) {
+    friend.isFav = !friend.isFav;
+    this.storageService.setFriends(this._friends);
+  }
+
+  /******************************** Contact Buttons ********************************/
+  openScanner() {
+    appManager.sendIntent("scanqrcode", {}, {}, (res) => {
+      console.log("Got scan result", res);
+      this.addFriendByIntent(res.result.scannedContent);
+    }, (err: any)=>{
+      console.error(err);
+    })
+  }
+
+  customizeFriend(friend: Friend) {
+    this.inProfileView = false;
+    let props: NavigationExtras = {
+      queryParams: {
+        didId: friend.id,
+        didName: friend.name,
+        didGender: friend.gender,
+        didNote: friend.note,
+        didImage: friend.imageUrl
+      }
+    }
+    this.router.navigate(['/custom-name'], props);
+  }
+
+  async showOptions(ev: any, friend: Friend) {
+    const popover = await this.popoverController.create({
+      mode: 'ios',
+      component: OptionsComponent,
+      cssClass: 'options',
+      event: ev,
+      componentProps: {
+        friend: friend
+      },
+      translucent: false
+    });
+    return await popover.present();
+  }
+
   /******************************** Misc ********************************/
   public isMale(gender: string) {
     // undefined gender = consider as male by default.
@@ -636,7 +742,7 @@ export class FriendsService {
     const toast = await this.toastController.create({
       mode: 'ios',
       header: msg,
-      color: "light",
+      color: "secondary",
       duration: 1000
     });
     toast.present();
@@ -647,7 +753,7 @@ export class FriendsService {
       mode: 'ios',
       header: 'There was an error',
       message: err,
-      color: "light",
+      color: "secondary",
       duration: 6000.
     });
     toast.present();

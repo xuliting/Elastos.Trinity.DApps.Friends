@@ -29,6 +29,7 @@ import { zh } from './../assets/languages/zh';
 import { en } from './../assets/languages/en';
 import { fr } from './../assets/languages/fr';
 import { OptionsComponent } from './components/options/options.component';
+import { DeleteComponent } from './components/delete/delete.component';
 
 Sentry.init({
   dsn: "https://c22ac246ed2c4d2cb71cd482705d8adb@sentry.io/1875747"
@@ -76,7 +77,8 @@ export function TranslateLoaderFactory() {
 @NgModule({
   declarations: [
     AppComponent,
-    OptionsComponent
+    OptionsComponent,
+    DeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +103,8 @@ export function TranslateLoaderFactory() {
     WarningPage,
     Warning2Page,
     NoFriendsPage,
-    OptionsComponent
+    OptionsComponent,
+    DeleteComponent
   ],
   providers: [
     FriendsService,

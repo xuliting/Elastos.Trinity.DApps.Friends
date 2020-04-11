@@ -11,7 +11,7 @@ export const zh = {
   'birth': '生日',
   'telephone': '电话',
   'email': '邮箱',
-  'Website': '网址',
+  'website': '网址',
   'did': '身份码',
 
   // Add pg
@@ -33,8 +33,8 @@ export const zh = {
   'no-contacts-header': '联系人为空!',
 
   // Delete-Friend-Warning
-  'delete-header': '删除联系人',
-  'delete-message': '删除后仍可重新添加为联系人',
+  'delete-msg': '删除联系人',
+  'delete-msg2': '删除后仍可重新添加为联系人',
   'are-you-sure': '确定删除?',
 
   // Buttons
@@ -45,7 +45,9 @@ export const zh = {
   'customize': ' 定制',
   'delete': '删除',
   'discover': '发现',
+  'connect': 'Connect',
   'open': '打开',
+  'add': 'Add',
   'cancel': '取消',
   'confirm': '确定',
   'go-back': '返回',
