@@ -144,7 +144,7 @@ export class FriendDetailsPage implements OnInit {
       console.error(err);
       appManager.sendIntent(
         "app",
-        { id: appId},
+        { id: appId },
         {}
       );
     });

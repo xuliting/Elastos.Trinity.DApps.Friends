@@ -4,10 +4,10 @@
     <ion-img src="/assets/images/share.svg"></ion-img>
   </ion-row>
 
-  <ion-row (click)="friendsService.changeFav(friend)">
+  <ion-row (click)="toggleFav()">
     <ion-label class="favorite">Favorite</ion-label>
-    <ion-img *ngIf="friend.isFav" src="/assets/images/favorite.svg"></ion-img>
-    <ion-img *ngIf="!friend.isFav" src="/assets/images/unfavorite.svg"></ion-img>
+    <ion-img *ngIf="isFav" src="/assets/images/favorite.svg"></ion-img>
+    <ion-img *ngIf="!isFav" src="/assets/images/unfavorite.svg"></ion-img>
   </ion-row>
 
   <ion-row (click)="deleteFriend()">

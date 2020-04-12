@@ -65,7 +65,7 @@
           </ion-grid>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option class="itemOption" color="secondary" (click)="friendsService.changeFav(friend)">
+          <ion-item-option class="itemOption" color="secondary" (click)="friendsService.toggleFav(friend)">
             <ion-img *ngIf="friend.isFav" src="/assets/images/favorite.svg"></ion-img>
             <ion-img *ngIf="!friend.isFav" src="/assets/images/unfavorite.svg"></ion-img>
           </ion-item-option>
@@ -105,7 +105,7 @@
           </ion-grid>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option class="itemOption" color="secondary" (click)="friendsService.changeFav(friend)">
+          <ion-item-option class="itemOption" color="secondary" (click)="friendsService.toggleFav(friend)">
             <ion-img src="/assets/images/favorite.svg"></ion-img>
           </ion-item-option>
           <ion-item-option class="itemOption" color="secondary">

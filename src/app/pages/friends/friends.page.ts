@@ -37,7 +37,6 @@ export class FriendsPage implements OnInit {
 
   ionViewDidEnter() {
     appManager.setVisible("show");
-    // this.checkForFriends();
   }
 
   firstContact(): boolean {
@@ -53,27 +52,5 @@ export class FriendsPage implements OnInit {
 
   getFavorites(): Friend[] {
     return this.friendsService._friends.filter((friend) => friend.isFav === true);
-  }
-
-  /**************************************OLD DESIGN*********************************************************/
-  async checkForFriends() {
-    await this.friendsService.getStoredDIDs().then((friends) => {
-      console.log('My friends', friends);
-      if(this.friendsService._friends.length > 0) {
-          return;
-      } else {
-        this.alertNoFriends();
-      }
-    });
-  }
-
-  async alertNoFriends() {
-    const popover = await this.popover.create({
-      mode: 'ios',
-      cssClass: 'no-friends',
-      component: NoFriendsPage
-    });
-
-    return await popover.present();
   }
 }

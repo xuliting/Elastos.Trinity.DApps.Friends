@@ -668,8 +668,13 @@ export class FriendsService {
   }
 
   /******************************** Manage Favorite ********************************/
-  changeFav(friend: Friend) {
-    friend.isFav = !friend.isFav;
+  toggleFav(friend: Friend) {
+    // friend.isFav = !friend.isFav;
+    this._friends.map((_friend) => {
+      if(_friend.id === friend.id) {
+        _friend.isFav = !_friend.isFav;
+      }
+    });
     this.storageService.setFriends(this._friends);
   }
 
