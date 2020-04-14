@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { Platform, NavController, IonRouterOutlet } from '@ionic/angular';
+import { Platform, NavController, IonRouterOutlet, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FriendsService } from './services/friends.service';
 import { Router } from '@angular/router';
+import { SplashPage } from './pages/splash/splash.page';
 
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
@@ -18,6 +19,7 @@ export class AppComponent {
 
   constructor(
     private navController: NavController,
+    private modalController: ModalController,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -31,15 +33,19 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.friendsService.init();
-      this.splashScreen.hide();
 
-      titleBarManager.setBackgroundColor("#FFFFFF");
-      titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.DARK);
+      this.splashScreen.hide();
+      this.navController.navigateRoot("/friends");
+
+      // this.splash();
 
       this.setupBackKeyNavigation();
-
-      this.navController.navigateRoot("/friends");
     });
+  }
+
+  async splash() {
+    const splash = await this.modalController.create({ component: SplashPage});
+    return await splash.present();
   }
 
   /**

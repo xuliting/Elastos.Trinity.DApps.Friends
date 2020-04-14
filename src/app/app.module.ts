@@ -24,6 +24,7 @@ import { SharedModule } from './modules/shared.module';
 import { FriendsService } from './services/friends.service';
 import { OptionsComponent } from './components/options/options.component';
 import { DeleteComponent } from './components/delete/delete.component';
+import { SplashPage } from './pages/splash/splash.page';
 
 Sentry.init({
   dsn: "https://c22ac246ed2c4d2cb71cd482705d8adb@sentry.io/1875747"
@@ -72,7 +73,8 @@ export function TranslateLoaderFactory() {
   declarations: [
     AppComponent,
     OptionsComponent,
-    DeleteComponent
+    DeleteComponent,
+    SplashPage
   ],
   imports: [
     BrowserModule,
@@ -92,7 +94,8 @@ export function TranslateLoaderFactory() {
   entryComponents: [
     AppComponent,
     OptionsComponent,
-    DeleteComponent
+    DeleteComponent,
+    SplashPage
   ],
   providers: [
     FriendsService,

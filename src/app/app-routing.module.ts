@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'customize', loadChildren: './pages/customize/customize.module#CustomizePageModule' },
   { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
   { path: 'friends/:friendId', loadChildren: './pages/friend-details/friend-details.module#FriendDetailsPageModule' },
+  { path: 'splash', loadChildren: './pages/splash/splash.module#SplashPageModule' },
 ];
 
 @NgModule({
