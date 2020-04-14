@@ -59,7 +59,6 @@ export class FriendsService {
   public filteredFriends: Friend[] = [];
 
   public firstVisit = false;
-  public inProfileView = false;
   public friendsChecked = false;
 
   getFriend(id: string) {
@@ -138,11 +137,6 @@ export class FriendsService {
               {
                 action: "Let your voice be heard and vote for your CRC candidate!",
                 apppackage: "org.elastos.trinity.dapp.crcvoting",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Check out the latest and greatest capsules in elastOS!",
-                apppackage: "org.elastos.trinity.dapp.dappstore",
                 apptype: "elastosbrowser"
               },
               {
@@ -233,8 +227,7 @@ export class FriendsService {
             break;
         case MessageType.INTERNAL:
             if (msg.message == "navback") {
-              if(this._friends.length === 0 || this.inProfileView) {
-                console.log('In profile page?', this.inProfileView);
+              if(this._friends.length === 0) {
                 this.router.navigate(['friends']);
               } else {
                 this.navController.back();
@@ -518,9 +511,6 @@ export class FriendsService {
       }
     });
     return await popover.present();
-  /*   this.friendsService.deleteFriend(this.friend);
-    this.popover.dismiss();
-    console.log('Friend Deleted' + this.friend); */
   }
 
   deleteFriend(friend: Friend) {
@@ -689,7 +679,6 @@ export class FriendsService {
   }
 
   customizeFriend(friend: Friend) {
-    this.inProfileView = false;
     let props: NavigationExtras = {
       queryParams: {
         didId: friend.id,
@@ -748,7 +737,7 @@ export class FriendsService {
       mode: 'ios',
       header: msg,
       color: "secondary",
-      duration: 1000
+      duration: 2000
     });
     toast.present();
   }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FriendsService } from 'src/app/services/friends.service';
 import { PopoverController } from '@ionic/angular';
-import { NoFriendsPage } from './no-friends/no-friends.page';
 import { TranslateService } from '@ngx-translate/core';
 import { OptionsComponent } from 'src/app/components/options/options.component';
 import { NavigationExtras, Router } from '@angular/router';

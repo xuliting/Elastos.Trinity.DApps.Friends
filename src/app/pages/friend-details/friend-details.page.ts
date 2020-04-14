@@ -2,6 +2,8 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { NavController, AlertController, PopoverController, ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
+
 import * as moment from 'moment';
 
 import { FriendsService } from 'src/app/services/friends.service';
@@ -9,10 +11,6 @@ import { FriendsService } from 'src/app/services/friends.service';
 import { Friend } from 'src/app/models/friends.model';
 import { DApp } from 'src/app/models/dapp.model';
 
-import { WarningPage } from './warning/warning.page';
-import { Warning2Page } from './warning2/warning2.page';
-import { resolve } from '@sentry/utils';
-import { TranslateService } from '@ngx-translate/core';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -67,11 +65,9 @@ export class FriendDetailsPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.friendsService.inProfileView = true;
   }
 
   ionViewDidLeave() {
-    this.friendsService.inProfileView = false;
   }
 
   /* From the app credentials, build a list of displayable items onced its fetched from the app store */
@@ -136,6 +132,7 @@ export class FriendDetailsPage implements OnInit {
     return moment(birth).format("MMMM Do YYYY");
   }
 
+  // Find app in marketplace, if marketplace is not installed, automatically install app //
   discoverApp(appId: string) {
     console.log('Inquiring app in app-store..', appId);
     appManager.sendIntent("appdetails", appId, {}, (res) => {
@@ -150,6 +147,7 @@ export class FriendDetailsPage implements OnInit {
     });
   }
 
+  // If app is installed, connect app to identity demo //
   connectApp(appId: string) {
     this.friend.applicationProfileCredentials.map((appCred) => {
       if(appCred.apppackage === appId) {
