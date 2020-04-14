@@ -5,6 +5,7 @@ import { PopoverController, NavParams } from '@ionic/angular';
 import { FriendsService } from 'src/app/services/friends.service';
 import { Friend } from 'src/app/models/friends.model';
 import { TranslateService } from '@ngx-translate/core';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-options',
@@ -22,7 +23,8 @@ export class OptionsComponent implements OnInit {
     private router: Router,
     private popover: PopoverController,
     private navParams: NavParams,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public theme: ThemeService
   ) { }
 
   ngOnInit() {

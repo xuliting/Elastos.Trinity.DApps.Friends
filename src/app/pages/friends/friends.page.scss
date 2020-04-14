@@ -140,3 +140,31 @@
   }
 }
 
+.darkContainer {
+  ion-slide, .no-contacts {
+    ion-title, p {
+      color: #ffffff !important;
+    }
+  }
+
+  ion-segment {
+    .active {
+      border-bottom: 2.7px solid #ffffff !important;
+
+      ion-label {
+        color: #ffffff;
+      }
+    }
+  }
+
+  ion-list {
+    background: #191a2f;
+  }
+
+  .onboard-msg {
+    ion-title, p {
+      color: #ffffff !important;
+    }
+  }
+}
+

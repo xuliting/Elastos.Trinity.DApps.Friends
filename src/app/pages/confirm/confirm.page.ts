@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FriendsService } from 'src/app/services/friends.service';
+import { ThemeService } from 'src/app/services/theme.service';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -22,10 +23,10 @@ export class ConfirmPage implements OnInit {
 
   constructor(
     public friendsService: FriendsService,
-    private popover: PopoverController,
     private route: ActivatedRoute,
     private router: Router,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public theme: ThemeService
   ) { }
 
   ngOnInit() {
@@ -54,14 +55,6 @@ export class ConfirmPage implements OnInit {
   }
 
   denyFriend() {
-    let alertName: string = '';
-    if(this.name) {
-      alertName = this.name;
-    } else {
-      alertName = this.id;
-    }
-
-    // this.friendsService.genericToast('Denied friend ' + alertName);
     this.router.navigate(['friends']);
   }
 }

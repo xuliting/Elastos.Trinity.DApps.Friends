@@ -9,6 +9,7 @@ import { Friend } from '../models/friends.model';
 import { DID } from '../models/did.model';
 import { DeleteComponent } from '../components/delete/delete.component';
 import { OptionsComponent } from '../components/options/options.component';
+import { ThemeService } from './theme.service';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
@@ -74,6 +75,7 @@ export class FriendsService {
     public toastController: ToastController,
     public zone: NgZone,
     public translate: TranslateService,
+    private theme: ThemeService,
     private storageService: StorageService,
   ) {
     managerService = this;
@@ -84,6 +86,7 @@ export class FriendsService {
     this.getVisit();
     this.getLanguage();
     this.getStoredDIDs();
+    this.theme.getTheme();
 
     // Load app manager only on real device, not in desktop browser - beware: ionic 4 bug with "desktop" or "android"/"ios"
     if (this.platform.platforms().indexOf("cordova") >= 0) {
@@ -223,6 +226,12 @@ export class FriendsService {
         case MessageType.IN_REFRESH:
             if (params.action === "currentLocaleChanged") {
                 this.setCurLang(params.data);
+            }
+            if(params.action === 'preferenceChanged' && params.data.key === "ui.darkmode") {
+              this.zone.run(() => {
+                console.log('Dark Mode toggled');
+                this.theme.setTheme(params.data.value);
+              });
             }
             break;
         case MessageType.INTERNAL:
@@ -466,7 +475,6 @@ export class FriendsService {
       }
     });
 
-
     let props: NavigationExtras = {
       queryParams: {
         id: this._friend.id,
@@ -648,7 +656,7 @@ export class FriendsService {
     }
   }
 
-  // just notify the qrscanner to quit
+  // Just notify the qrscanner to quit
   sendEmptyIntentRes() {
     appManager.sendIntentResponse(
         "",
@@ -698,7 +706,7 @@ export class FriendsService {
     const popover = await this.popoverController.create({
       mode: 'ios',
       component: OptionsComponent,
-      cssClass: 'options',
+      cssClass: !this.theme.darkMode ? 'options' : 'darkOptions',
       event: ev,
       componentProps: {
         contact: contact

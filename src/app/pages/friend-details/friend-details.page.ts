@@ -10,6 +10,7 @@ import { FriendsService } from 'src/app/services/friends.service';
 
 import { Friend } from 'src/app/models/friends.model';
 import { DApp } from 'src/app/models/dapp.model';
+import { ThemeService } from 'src/app/services/theme.service';
 
 
 declare let appManager: AppManagerPlugin.AppManager;
@@ -40,11 +41,9 @@ export class FriendDetailsPage implements OnInit {
     private router: Router,
     private zone: NgZone,
     private navCtrl: NavController,
-    private alertController: AlertController,
-    private toastController: ToastController,
-    private popover: PopoverController,
     private http: HttpClient,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public theme: ThemeService
   ) { }
 
   ngOnInit() {
