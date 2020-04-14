@@ -469,13 +469,13 @@ export class FriendsService {
 
     let props: NavigationExtras = {
       queryParams: {
-        didId: this._friend.id,
-        didName: this._friend.name,
-        didGender: this._friend.gender,
-        didImage: this._friend.imageUrl
+        id: this._friend.id,
+        name: this._friend.name,
+        gender: this._friend.gender,
+        image: this._friend.imageUrl
       }
     }
-    this.router.navigate(['/friend-confirmation'], props);
+    this.router.navigate(['/confirm'], props);
   }
 
   /******************************** Add Friend if Confirmed ********************************/
@@ -534,9 +534,9 @@ export class FriendsService {
   }
 
   /******************************** Customize friend ********************************/
-  customDID(customName: string, customNote: string, didId: string) {
+  customizeContact(customName: string, customNote: string, id: string) {
     this._friends.map(friend => {
-      if(friend.id === didId) {
+      if(friend.id === id) {
         friend.name = customName;
         friend.note = customNote;
         this.storageService.setFriends(this._friends);
@@ -557,7 +557,7 @@ export class FriendsService {
             singleInvite: isSingleInvite
           }
         }
-        this.router.navigate(['/pick-friend'], props);
+        this.router.navigate(['/invite'], props);
       } else {
         return;
       }
@@ -590,7 +590,7 @@ export class FriendsService {
                 friendsFiltered: true
               }
             }
-            this.router.navigate(['/pick-friend'], props);
+            this.router.navigate(['/invite'], props);
           } else {
             this.alertNoFriends('You don\'t have any friends with this app!');
           }
@@ -659,12 +659,12 @@ export class FriendsService {
 
   /******************************** Manage Favorite ********************************/
   toggleFav(friend: Friend) {
-    // friend.isFav = !friend.isFav;
-    this._friends.map((_friend) => {
+    friend.isFav = !friend.isFav;
+/*     this._friends.map((_friend) => {
       if(_friend.id === friend.id) {
         _friend.isFav = !_friend.isFav;
       }
-    });
+    }); */
     this.storageService.setFriends(this._friends);
   }
 
@@ -673,32 +673,35 @@ export class FriendsService {
     appManager.sendIntent("scanqrcode", {}, {}, (res) => {
       console.log("Got scan result", res);
       this.addFriendByIntent(res.result.scannedContent);
-    }, (err: any)=>{
+    }, (err: any) => {
       console.error(err);
     })
   }
 
-  customizeFriend(friend: Friend) {
+  showCustomization(friend: Friend) {
     let props: NavigationExtras = {
       queryParams: {
-        didId: friend.id,
-        didName: friend.name,
-        didGender: friend.gender,
-        didNote: friend.note,
-        didImage: friend.imageUrl
+        id: friend.id,
+        name: friend.name,
+        gender: friend.gender,
+        note: friend.note,
+        image: friend.imageUrl
       }
     }
-    this.router.navigate(['/custom-name'], props);
+    this.router.navigate(['/customize'], props);
   }
 
   async showOptions(ev: any, friend: Friend) {
+    let contact = this._friends.find((_friend) => _friend.id === friend.id);
+    console.log('Opening options for contact', contact);
+
     const popover = await this.popoverController.create({
       mode: 'ios',
       component: OptionsComponent,
       cssClass: 'options',
       event: ev,
       componentProps: {
-        friend: friend
+        contact: contact
       },
       translucent: false
     });

@@ -4,10 +4,10 @@
     <div class="profile-container ion-padding-bottom"m>
 
       <div class="profile-picture">
-        <img *ngIf="didImage" [src]="didImage">
-        <img *ngIf="!didImage && didGender === 'male'" src="assets/images/Guy_Face.svg">
-        <img *ngIf="!didImage && didGender === 'female'" src="assets/images/DefaultProfileWoman.svg">
-        <img *ngIf="!didImage && !didGender" src="assets/images/Guy_Face.svg">
+        <img *ngIf="image" [src]="image">
+        <img *ngIf="!image && gender === 'male'" src="assets/images/Guy_Face.svg">
+        <img *ngIf="!image && gender === 'female'" src="assets/images/DefaultProfileWoman.svg">
+        <img *ngIf="!image && !gender" src="assets/images/Guy_Face.svg">
       </div>
 
       <ion-grid class="model-container">
@@ -60,7 +60,7 @@
         <ion-row class="last-btn">
           <ion-col size="10" offset="1">
             <did-button
-              (click)="customDID()"
+              (click)="customizeContact()"
               [title]="'confirm-change' | translate"
               textcolor="#ffffff"
               [bgcolor]="'#3ABAFB'"

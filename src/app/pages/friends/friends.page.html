@@ -13,17 +13,17 @@
       </div>
       <ion-slides *ngIf="friendsService._friends.length > 0">
         <ion-slide *ngFor="let friend of friendsService._friends">
-          <ion-img src="/assets/images/default-contact.svg"></ion-img>
-          <ion-title mode='md' *ngIf="friend.name">
+          <ion-img src="/assets/images/default-contact.svg" [routerLink]="['/friends/', friend.id]"></ion-img>
+          <ion-title mode='md' *ngIf="friend.name" [routerLink]="['/friends/', friend.id]">
             {{ friend.name }}
           </ion-title>
-          <ion-title mode='md' *ngIf="!friend.name">
+          <ion-title mode='md' *ngIf="!friend.name" [routerLink]="['/friends/', friend.id]">
             {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
           </ion-title>
-          <p>{{ friend.note }}</p>
+          <p [routerLink]="['/friends/', friend.id]">{{ friend.note }}</p>
           <ion-row class="btn-row">
             <ion-img src="/assets/buttons/scan.svg" (click)="friendsService.openScanner()"></ion-img>
-            <ion-img src="/assets/buttons/edit.svg" (click)="friendsService.customizeFriend(friend)"></ion-img>
+            <ion-img src="/assets/buttons/edit.svg" (click)="friendsService.showCustomization(friend)"></ion-img>
             <ion-img src="/assets/buttons/options.svg" (click)="friendsService.showOptions($event, friend)"></ion-img>
           </ion-row>
         </ion-slide>
@@ -45,7 +45,7 @@
           color="secondary"
           detail="false"
           lines="none"
-          [routerLink]="['/', friend.id]"
+          [routerLink]="['/friends/', friend.id]"
         >
           <ion-grid>
             <ion-row>
@@ -85,7 +85,7 @@
           color="secondary"
           detail="false"
           lines="none"
-          [routerLink]="['/', friend.id]"
+          [routerLink]="['/friends/', friend.id]"
         >
           <ion-grid>
             <ion-row>
@@ -129,7 +129,7 @@
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-padding-bottom ion-padding-end">
-    <ion-fab-button [routerLink]="['/', 'addFriend']">
+    <ion-fab-button [routerLink]="['/', 'add']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

@@ -9,11 +9,11 @@ declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
-  selector: 'app-pick-friend',
-  templateUrl: './pick-friend.page.html',
-  styleUrls: ['./pick-friend.page.scss'],
+  selector: 'app-invite',
+  templateUrl: './invite.page.html',
+  styleUrls: ['./invite.page.scss'],
 })
-export class PickFriendPage implements OnInit {
+export class InvitePage implements OnInit {
 
   isFilter: boolean = false;
   isSingleInvite: boolean = false;

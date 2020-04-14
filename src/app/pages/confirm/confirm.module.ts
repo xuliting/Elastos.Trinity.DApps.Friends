@@ -5,14 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FriendConfirmationPage } from './friend-confirmation.page';
+import { ConfirmPage } from './confirm.page';
 import { SharedModule } from 'src/app/modules/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
     path: '',
-    component: FriendConfirmationPage
+    component: ConfirmPage
   }
 ];
 
@@ -25,6 +25,6 @@ const routes: Routes = [
     TranslateModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [FriendConfirmationPage]
+  declarations: [ConfirmPage]
 })
-export class FriendConfirmationPageModule {}
+export class ConfirmPageModule {}

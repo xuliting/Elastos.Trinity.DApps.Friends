@@ -3,18 +3,17 @@ import { ToastController, IonInput, PopoverController } from '@ionic/angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { FriendsService } from 'src/app/services/friends.service';
-import { DID } from 'src/app/models/did.model';
 import { TranslateService } from '@ngx-translate/core';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
-  selector: 'app-add-friend',
-  templateUrl: './add-friend.page.html',
-  styleUrls: ['./add-friend.page.scss'],
+  selector: 'app-add',
+  templateUrl: './add.page.html',
+  styleUrls: ['./add.page.scss'],
 })
-export class AddFriendPage implements OnInit {
+export class AddPage implements OnInit {
 
   @ViewChild('input', {static: false}) input: IonInput;
 

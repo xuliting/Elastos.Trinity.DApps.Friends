@@ -2,17 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PickFriendPage } from './pick-friend.page';
+import { AddPage } from './add.page';
 import { SharedModule } from 'src/app/modules/shared.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
     path: '',
-    component: PickFriendPage
+    component: AddPage
   }
 ];
 
@@ -25,6 +25,6 @@ const routes: Routes = [
     TranslateModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PickFriendPage]
+  declarations: [AddPage]
 })
-export class PickFriendPageModule {}
+export class AddPageModule {}

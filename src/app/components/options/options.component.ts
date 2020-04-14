@@ -16,7 +16,6 @@ export class OptionsComponent implements OnInit {
   @Output() cancelEvent = new EventEmitter<boolean>();
 
   friend: Friend;
-  isFav: boolean;
 
   constructor(
     public friendsService: FriendsService,
@@ -27,23 +26,12 @@ export class OptionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.friend = this.navParams.get('friend');
-    this.isFav = this.friend.isFav;
-    console.log('Options ', this.friend + ', is Fav?', this.isFav);
-  }
-
-  toggleFav() {
-    this.isFav = !this.isFav;
-    this.friendsService.toggleFav(this.friend);
-    // this.router.navigate(['/friends']);
+    this.friend = this.navParams.get('contact');
+    console.log('Options ', this.friend);
   }
 
   async deleteFriend() {
     this.friendsService.deleteWarning(this.friend);
-    this.popover.dismiss();
-  }
-
-  goBack() {
     this.popover.dismiss();
   }
 }

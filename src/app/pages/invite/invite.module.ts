@@ -5,26 +5,26 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CustomNamePage } from './custom-name.page';
+import { InvitePage } from './invite.page';
 import { SharedModule } from 'src/app/modules/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
     path: '',
-    component: CustomNamePage
+    component: InvitePage
   }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
     FormsModule,
     IonicModule,
-    SharedModule,
     TranslateModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [CustomNamePage]
+  declarations: [InvitePage]
 })
-export class CustomNamePageModule {}
+export class InvitePageModule {}

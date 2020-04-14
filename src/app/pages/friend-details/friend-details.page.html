@@ -11,7 +11,7 @@
       <p>{{ friend.note }}</p>
       <ion-row class="btn-row">
         <ion-img src="/assets/buttons/scan.svg" (click)="friendsService.openScanner()"></ion-img>
-        <ion-img src="/assets/buttons/edit.svg" (click)="friendsService.customizeFriend(friend)"></ion-img>
+        <ion-img src="/assets/buttons/edit.svg" (click)="friendsService.showCustomization(friend)"></ion-img>
         <ion-img src="/assets/buttons/options.svg" (click)="friendsService.showOptions($event, friend)"></ion-img>
       </ion-row>
     </div>

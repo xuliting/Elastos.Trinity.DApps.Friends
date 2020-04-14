@@ -4,23 +4,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FriendsService } from 'src/app/services/friends.service';
-import { DID } from 'src/app/models/did.model';
-import { Friend } from 'src/app/models/friends.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
-  selector: 'app-friend-confirmation',
-  templateUrl: './friend-confirmation.page.html',
-  styleUrls: ['./friend-confirmation.page.scss'],
+  selector: 'app-confirm',
+  templateUrl: './confirm.page.html',
+  styleUrls: ['./confirm.page.scss'],
 })
-export class FriendConfirmationPage implements OnInit {
+export class ConfirmPage implements OnInit {
 
-  public didId: string = '';
-  public didName: string = '';
-  public didGender: string = '';
-  public didImage: string = '';
+  public id: string = '';
+  public name: string = '';
+  public gender: string = '';
+  public image: string = '';
 
   constructor(
     public friendsService: FriendsService,
@@ -33,10 +31,10 @@ export class FriendConfirmationPage implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params) {
-        this.didId = params.didId;
-        this.didName = params.didName;
-        this.didGender = params.didGender;
-        this.didImage = params.didImage;
+        this.id = params.id;
+        this.name = params.name;
+        this.gender = params.gender;
+        this.image = params.image;
       }
     });
   }
@@ -57,10 +55,10 @@ export class FriendConfirmationPage implements OnInit {
 
   denyFriend() {
     let alertName: string = '';
-    if(this.didName) {
-      alertName = this.didName;
+    if(this.name) {
+      alertName = this.name;
     } else {
-      alertName = this.didId;
+      alertName = this.id;
     }
 
     // this.friendsService.genericToast('Denied friend ' + alertName);

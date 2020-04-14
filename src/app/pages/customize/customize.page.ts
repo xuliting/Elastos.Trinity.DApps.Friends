@@ -7,19 +7,19 @@ import { TranslateService } from '@ngx-translate/core';
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
-  selector: 'app-custom-name',
-  templateUrl: './custom-name.page.html',
-  styleUrls: ['./custom-name.page.scss'],
+  selector: 'app-customize',
+  templateUrl: './customize.page.html',
+  styleUrls: ['./customize.page.scss'],
 })
-export class CustomNamePage implements OnInit {
+export class CustomizePage implements OnInit {
 
   @ViewChild('input', {static: false}) input: IonInput;
 
-  public didId: string = '';
-  public didName: string = '';
-  public didGender: string = '';
-  public didImage: string = '';
-  public didNote: string = '';
+  public id: string = '';
+  public name: string = '';
+  public gender: string = '';
+  public image: string = '';
+  public note: string = '';
 
   public customName: string = '';
   public customNote: string = '';
@@ -35,17 +35,17 @@ export class CustomNamePage implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params) {
-        this.didId = params.didId;
-        this.didName = params.didName;
-        this.didGender = params.didGender;
-        this.didImage = params.didImage;
-        this.didNote = params.didNote;
+        this.id = params.id;
+        this.name = params.name;
+        this.gender = params.gender;
+        this.image = params.image;
+        this.note = params.note;
 
-        this.customName = this.didName;
-        this.customNote = this.didNote;
+        this.customName = this.name;
+        this.customNote = this.note;
       }
-      if(!this.didName) {
-        this.customName = this.didId;
+      if(!this.name) {
+        this.customName = this.id;
       }
     });
   }
@@ -73,11 +73,11 @@ export class CustomNamePage implements OnInit {
     }
   }
 
-  customDID() {
-    if(this.customName === this.didId) {
+  customizeContact() {
+    if(this.customName === this.id) {
       this.customName = null;
     }
-    this.friendsService.customDID(this.customName, this.customNote, this.didId);
+    this.friendsService.customizeContact(this.customName, this.customNote, this.id);
     this.nav.back();
   }
 }

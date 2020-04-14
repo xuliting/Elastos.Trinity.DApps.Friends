@@ -2,17 +2,17 @@
   <div class="profile-container">
 
     <ion-row class="img-row">
-      <img *ngIf="didImage" [src]="didImage">
-      <img *ngIf="!didImage" src="/assets/images/default-contact.svg">
+      <img *ngIf="image" [src]="image">
+      <img *ngIf="!image" src="/assets/images/default-contact.svg">
     </ion-row>
 
     <ion-row>
-      <ion-col *ngIf="didName" class="profile-name">
-        <h1 class="ion-padding-horizontal">{{ didName }}</h1>
+      <ion-col *ngIf="name" class="profile-name">
+        <h1 class="ion-padding-horizontal">{{ name }}</h1>
       </ion-col>
-      <ion-col *ngIf="!didName" class="profile-name">
+      <ion-col *ngIf="!name" class="profile-name">
         <h1 class="ion-padding-horizontal ion-text-center">
-          {{ didId.slice(0,18) }}...{{ didId.slice(40,50) }}
+          {{ id.slice(0,18) }}...{{ id.slice(40,50) }}
         </h1>
       </ion-col>
     </ion-row>
