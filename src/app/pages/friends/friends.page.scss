@@ -1,13 +1,23 @@
 .container {
   padding: 30px 0;
 
-  ion-slide, .no-contacts {
+  ion-slide {
+    width: 84px;
+    height: 84px;
+  }
+
+  ion-slide, .slide-content, .no-contacts {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 
-    ion-img {
+    .inactiveSlide {
+      width: 42px;
+      height: 42px;
+    }
+
+    ion-img, .activeSlide {
       width: 84px;
       height: 84px;
     }
@@ -141,7 +151,7 @@
 }
 
 .darkContainer {
-  ion-slide, .no-contacts {
+  ion-slide, .slide-content, .no-contacts {
     ion-title, p {
       color: #ffffff !important;
     }

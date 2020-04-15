@@ -59,6 +59,8 @@ export class FriendsService {
   public _friends: Friend[] = [];
   public filteredFriends: Friend[] = [];
 
+  public activeSlide: Friend;
+
   public firstVisit = false;
   public friendsChecked = false;
 
@@ -528,6 +530,18 @@ export class FriendsService {
     } else {
       alertName = friend.id;
     }
+
+    /**
+    * If contact was deleted from slides, change active slide to next index of array
+    * If contact of next index doesn't exist, change active slide to previous index
+    **/
+    let replacedSlide = this._friends[this._friends.indexOf(friend) + 1];
+    if(replacedSlide) {
+      this.activeSlide = replacedSlide
+    } else {
+      this.activeSlide = this._friends[this._friends.indexOf(friend) - 1];
+    }
+    console.log('Active slide after deletion', this.activeSlide);
 
     console.log('Deleting friend', friend);
     this._didDocs = this._didDocs.filter(did => did.id.didString !== friend.id);

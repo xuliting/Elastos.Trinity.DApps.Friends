@@ -19,14 +19,14 @@ export class FriendsPage implements OnInit {
 
   public friendsLoaded = true;
   public favActive = true;
-  public activeSlide: Friend;
 
   slideOpts = {
     initialSlide: 0,
     speed: 400,
     zoom: true,
     centeredSlides: true,
-    slidesPerView: 1
+    slidesPerView: 3.5
+    // slidesPerView: 1
   };
 
   constructor(
@@ -45,9 +45,21 @@ export class FriendsPage implements OnInit {
 
   ionViewDidEnter() {
     appManager.setVisible("show");
+    this.getActiveSlide();
+  }
 
-    this.activeSlide = this.friendsService._friends[0];
-    console.log('Active slide', this.activeSlide);
+  async getActiveSlide() {
+    await this.friendsService.getStoredDIDs().then((friends) => {
+      console.log('My friends', friends);
+      if(this.friendsService._friends.length > 0) {
+        this.slider.getActiveIndex().then((index) => {
+          this.friendsService.activeSlide = this.friendsService._friends[index];
+          console.log('Active slide', this.friendsService.activeSlide);
+        });
+      } else {
+        return;
+      }
+    });
   }
 
   firstContact(): boolean {
@@ -67,8 +79,8 @@ export class FriendsPage implements OnInit {
 
   slideChanged() {
     this.slider.getActiveIndex().then((index) => {
-      this.activeSlide = this.friendsService._friends[index];
-      console.log(this.activeSlide);
+      this.friendsService.activeSlide = this.friendsService._friends[index];
+      console.log(this.friendsService.activeSlide);
     });
   }
 }
