@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FriendsService } from 'src/app/services/friends.service';
 import { TranslateService } from '@ngx-translate/core';
+
 import { IonSlides } from '@ionic/angular';
-import { Friend } from 'src/app/models/friends.model';
+
+import { FriendsService } from 'src/app/services/friends.service';
 import { ThemeService } from 'src/app/services/theme.service';
+
+import { Friend } from 'src/app/models/friends.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -17,16 +20,14 @@ export class FriendsPage implements OnInit {
 
   @ViewChild('slider', {static: false}) slider: IonSlides;
 
-  public friendsLoaded = true;
   public favActive = true;
 
   slideOpts = {
     initialSlide: 0,
-    speed: 400,
+    speed: 200,
     zoom: true,
     centeredSlides: true,
     slidesPerView: 3.5
-    // slidesPerView: 1
   };
 
   constructor(
@@ -49,8 +50,7 @@ export class FriendsPage implements OnInit {
   }
 
   async getActiveSlide() {
-    await this.friendsService.getStoredDIDs().then((friends) => {
-      console.log('My friends', friends);
+    await this.friendsService.getStoredDIDs().then(() => {
       if(this.friendsService._friends.length > 0) {
         this.slider.getActiveIndex().then((index) => {
           this.friendsService.activeSlide = this.friendsService._friends[index];

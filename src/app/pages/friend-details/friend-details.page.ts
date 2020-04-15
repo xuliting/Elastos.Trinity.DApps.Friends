@@ -1,17 +1,17 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { NavController, AlertController, PopoverController, ToastController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
+
+import { NavController } from '@ionic/angular';
 
 import * as moment from 'moment';
 
 import { FriendsService } from 'src/app/services/friends.service';
+import { ThemeService } from 'src/app/services/theme.service';
 
 import { Friend } from 'src/app/models/friends.model';
 import { DApp } from 'src/app/models/dapp.model';
-import { ThemeService } from 'src/app/services/theme.service';
-
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -38,7 +38,6 @@ export class FriendDetailsPage implements OnInit {
   constructor(
     public friendsService: FriendsService,
     private route: ActivatedRoute,
-    private router: Router,
     private zone: NgZone,
     private navCtrl: NavController,
     private http: HttpClient,
@@ -80,7 +79,7 @@ export class FriendDetailsPage implements OnInit {
     }); */
 
     if (this.friend.applicationProfileCredentials.length > 0) {
-      console.log('Friend\'s app creds ', this.friend.applicationProfileCredentials)
+      console.log('Friend\'s app creds ', this.friend.applicationProfileCredentials);
 
       let fetchCount = this.friend.applicationProfileCredentials.length;
       this.fetchingApps = true;
@@ -99,9 +98,8 @@ export class FriendDetailsPage implements OnInit {
             if (fetchCount == 0)
               this.fetchingApps = false;
           });
-        },
-        (error)=> {
-          console.log("HTTP ERROR "+JSON.stringify(error));
+        }, (err) => {
+          console.log("HTTP ERROR " + JSON.stringify(err));
           this.zone.run(async () => {
             this.friendsApps.push({
               packageId: apc.apppackage,
@@ -123,7 +121,7 @@ export class FriendDetailsPage implements OnInit {
     }
   }
 
-  getAppIcon(appId) {
+  getAppIcon(appId: string) {
     return "https://dapp-store.elastos.org/apps/" +appId+ "/icon";
   }
 
@@ -146,7 +144,7 @@ export class FriendDetailsPage implements OnInit {
     });
   }
 
-  // If app is installed, connect app to identity demo //
+  // If app is installed, connect app to identity demo, if identity demo is not installed, open app instead  //
   connectApp(appId: string) {
     this.friend.applicationProfileCredentials.map((appCred) => {
       if(appCred.apppackage === appId) {

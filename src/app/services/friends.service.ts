@@ -5,11 +5,13 @@ import { ToastController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 
 import { StorageService } from 'src/app/services/storage.service';
+import { ThemeService } from './theme.service';
+
 import { Friend } from '../models/friends.model';
 import { DID } from '../models/did.model';
+
 import { DeleteComponent } from '../components/delete/delete.component';
 import { OptionsComponent } from '../components/options/options.component';
-import { ThemeService } from './theme.service';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
@@ -249,9 +251,9 @@ export class FriendsService {
   }
 
   onReceiveIntent = (ret) => {
-
     console.log("Intent received", ret);
     managerService.handledIntentId = ret.intentId;
+
     switch (ret.action) {
       case "handlescannedcontent_did":
         console.log('handlescannedcontent_did intent', ret);
@@ -315,7 +317,7 @@ export class FriendsService {
    * through "registerapplicationprofile" intents, by the DID app, on request from third party apps. This
    * is where we can retrieve public app profile information for a "user" (DID).
    */
-  resolveDIDDocument(didString: DIDPlugin.DIDString, updatingFriends): Promise<Boolean> {
+  resolveDIDDocument(didString: DIDPlugin.DIDString, updatingFriends: boolean): Promise<Boolean> {
     console.log('DID string', didString);
     return new Promise((resolve, reject) => {
       didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument) => {
@@ -511,7 +513,7 @@ export class FriendsService {
   }
 
   /******************************** Delete Friend ********************************/
-  async deleteWarning(friend) {
+  async deleteWarning(friend: Friend) {
     const popover = await this.popoverController.create({
       mode: 'ios',
       cssClass: 'delete',

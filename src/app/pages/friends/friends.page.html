@@ -5,8 +5,8 @@
       <!-- Empty Contacts -->
       <div *ngIf="friendsService._friends.length === 0" class="no-contacts">
         <ion-img src="/assets/images/default-contact.svg"></ion-img>
-        <ion-title>No Contacts?</ion-title>
-        <p>Add a contact by clicking the add icon above</p>
+        <ion-title>{{ 'no-contacts' | translate }}</ion-title>
+        <p>{{ 'add-a-contact' | translate }}</p>
         <ion-row *ngIf="!theme.darkMode" class="btn-row">
           <ion-img src="/assets/buttons/scan.svg"></ion-img>
           <ion-img src="/assets/buttons/edit.svg"></ion-img>
@@ -19,35 +19,27 @@
         </ion-row>
       </div>
 
-      <!-- Contacts Slider -->
-   <!--    <ion-slides *ngIf="friendsService._friends.length > 0" #slider [options]="slideOpts" (ionSlideDidChange)="slideChanged()">
-        <ion-slide *ngFor="let friend of friendsService._friends">
-          <ion-img src="/assets/images/default-contact.svg" [routerLink]="['/friends/', friend.id]"></ion-img>
-          <ion-title mode='md' *ngIf="friend.name" [routerLink]="['/friends/', friend.id]">
-            {{ friend.name }}
-          </ion-title>
-          <ion-title mode='md' *ngIf="!friend.name" [routerLink]="['/friends/', friend.id]">
-            {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
-          </ion-title>
-          <p [routerLink]="['/friends/', friend.id]">{{ friend.note }}</p>
-          <ion-row *ngIf="!theme.darkMode" class="btn-row">
-            <ion-img src="/assets/buttons/scan.svg" (click)="friendsService.openScanner()"></ion-img>
-            <ion-img src="/assets/buttons/edit.svg" (click)="friendsService.showCustomization(friend)"></ion-img>
-            <ion-img src="/assets/buttons/options.svg" (click)="friendsService.showOptions($event, friend)"></ion-img>
-          </ion-row>
-          <ion-row *ngIf="theme.darkMode" class="btn-row">
-            <ion-img src="/assets/buttons/darkmode/scan.svg" (click)="friendsService.openScanner()"></ion-img>
-            <ion-img src="/assets/buttons/darkmode/edit.svg" (click)="friendsService.showCustomization(friend)"></ion-img>
-            <ion-img src="/assets/buttons/darkmode/options.svg" (click)="friendsService.showOptions($event, friend)"></ion-img>
-          </ion-row>
-        </ion-slide>
-      </ion-slides>
- -->
+      <!-- Contacts Img Slide -->
       <ion-slides *ngIf="friendsService._friends.length > 0" #slider [options]="slideOpts" (ionSlideDidChange)="slideChanged()">
         <ion-slide *ngFor="let friend of friendsService._friends">
-          <ion-img src="/assets/images/default-contact.svg" class="inactiveSlide" [class.activeSlide]="friend === friendsService.activeSlide" [routerLink]="['/friends/', friend.id]"></ion-img>
+          <ion-img
+            *ngIf="!friend.imageUrl"
+            src="/assets/images/default-contact.svg"
+            class="inactiveSlide"
+            [class.activeSlide]="friend === friendsService.activeSlide"
+            [routerLink]="['/friends/', friend.id]">
+          </ion-img>
+          <ion-img
+            *ngIf="friend.imageUrl"
+            [src]="friend.imageUrl"
+            class="inactiveSlide"
+            [class.activeSlide]="friend === friendsService.activeSlide"
+            [routerLink]="['/friends/', friend.id]">
+          </ion-img>
         </ion-slide>
       </ion-slides>
+
+      <!-- Contact Management -->
       <div class="slide-content" *ngIf="friendsService.activeSlide">
         <ion-title mode='md' *ngIf="friendsService.activeSlide.name" [routerLink]="['/friends/', friendsService.activeSlide.id]">
           {{ friendsService.activeSlide.name }}
@@ -72,10 +64,10 @@
     <!-- Contacts List Tabs -->
     <ion-segment>
       <ion-segment-button [class.active]="favActive" (click)="favActive = true">
-        <ion-label>Favorites</ion-label>
+        <ion-label>{{ 'favorites' | translate }}</ion-label>
       </ion-segment-button>
       <ion-segment-button [class.active]="!favActive" (click)="favActive = false">
-        <ion-label>All Contacts</ion-label>
+        <ion-label>{{ 'all-contacts' | translate }}</ion-label>
       </ion-segment-button>
     </ion-segment>
 
@@ -164,11 +156,8 @@
 
     <!-- Empty Contacts -->
     <div *ngIf="firstContact()" class="onboard-msg">
-      <ion-title mode='md'>No Contacts?</ion-title>
-      <p>
-        This is your starter contact. Click on it to see the profile
-        and see what Capsules they have Add real contacts by the add icon above
-      </p>
+      <ion-title mode='md'>{{ 'no-contacts' | translate }}</ion-title>
+      <p>{{ 'starter-contact' | translate }}</p>
     </div>
 
   </ion-grid>

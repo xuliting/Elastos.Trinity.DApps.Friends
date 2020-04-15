@@ -1,9 +1,15 @@
 export const zh = {
   // Friends-List Pg
   'contacts': '联系人',
+  'no-contacts': 'No Contacts?',
+  'add-a-contact': 'Add a contact by clicking the add icon above',
+  'favorites': 'Favorites',
+  'all-contacts': 'All Contacts',
+  'starter-contact': 'This is your starter contact. Click on it to see the profile and see what Capsules they have. Add real contacts by the add icon above',
 
   // Friend-Details Pg
   'contact-profile': "联系人信息",
+  'details': 'Details',
   'apps': '已浏览的程序',
   'no-apps': '没有可用的程序',
   'nickname': '昵称',
@@ -29,10 +35,15 @@ export const zh = {
   'invite-contact': '邀请联系人',
   'invite-contacts': '邀请联系人',
 
+  // Options
+  'share': 'Share',
+  'favorite': 'Favorite',
+
   // No-Friends Warning
   'no-contacts-header': '联系人为空!',
 
   // Delete-Friend-Warning
+  'delete-contact': 'Delete Contact',
   'delete-msg': '删除联系人',
   'delete-msg2': '删除后仍可重新添加为联系人',
   'are-you-sure': '确定删除?',

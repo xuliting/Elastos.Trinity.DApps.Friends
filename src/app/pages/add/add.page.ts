@@ -23,8 +23,6 @@ export class AddPage implements OnInit {
   constructor(
     private friendsService: FriendsService,
     private toastController: ToastController,
-    private popoverController: PopoverController,
-    private zone: NgZone,
     public translate: TranslateService
     // private clipboard: Clipboard
   ) {

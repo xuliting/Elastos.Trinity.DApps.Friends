@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
 import { PopoverController, NavParams } from '@ionic/angular';
 
 import { FriendsService } from 'src/app/services/friends.service';
@@ -20,7 +19,6 @@ export class OptionsComponent implements OnInit {
 
   constructor(
     public friendsService: FriendsService,
-    private router: Router,
     private popover: PopoverController,
     private navParams: NavParams,
     public translate: TranslateService,

@@ -1,10 +1,16 @@
 export const en = {
   // Friends-List Pg
   'contacts': 'Contacts',
+  'no-contacts': 'No Contacts?',
+  'add-a-contact': 'Add a contact by clicking the add icon above',
+  'favorites': 'Favorites',
+  'all-contacts': 'All Contacts',
+  'starter-contact': 'This is your starter contact. Click on it to see the profile and see what Capsules they have. Add real contacts by the add icon above',
 
   // Friend-Details Pg
   'contact-profile': "Contact's Profile",
-  'apps': 'Browsed Capsules',
+  'details': 'Details',
+  'apps': 'Capsules',
   'no-apps': 'No Capsules Available',
   'nickname': 'Nickname',
   'country': 'Country',
@@ -29,10 +35,15 @@ export const en = {
   'invite-contact': 'Invite Contact',
   'invite-contacts': 'Invite Contacts',
 
+  // Options
+  'share': 'Share',
+  'favorite': 'Favorite',
+
   // No-Friends Warning
   'no-contacts-header': 'You have no contacts!',
 
   // Delete-Friend-Warning
+  'delete-contact': 'Delete Contact',
   'delete-msg': 'Contact will be deleted.',
   'delete-msg2': 'You can always add them back again!',
   'are-you-sure': 'Are you sure?',

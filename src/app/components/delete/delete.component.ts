@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
 import { PopoverController, NavParams } from '@ionic/angular';
 
 import { FriendsService } from 'src/app/services/friends.service';
-import { Friend } from 'src/app/models/friends.model';
 import { TranslateService } from '@ngx-translate/core';
+
+import { Friend } from 'src/app/models/friends.model';
 
 @Component({
   selector: 'app-delete',
@@ -19,7 +19,6 @@ export class DeleteComponent implements OnInit {
 
   constructor(
     public friendsService: FriendsService,
-    private router: Router,
     private popover: PopoverController,
     private navParams: NavParams,
     public translate: TranslateService

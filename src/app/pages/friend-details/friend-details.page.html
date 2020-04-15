@@ -23,10 +23,10 @@
 
     <ion-segment>
       <ion-segment-button [class.active]="detailsActive" (click)="detailsActive = true">
-        <ion-label>Details</ion-label>
+        <ion-label>{{ 'details' | translate }}</ion-label>
       </ion-segment-button>
       <ion-segment-button [class.active]="!detailsActive" (click)="detailsActive = false">
-        <ion-label>Capsules</ion-label>
+        <ion-label>{{ 'apps' | translate }}</ion-label>
       </ion-segment-button>
     </ion-segment>
 
@@ -162,32 +162,32 @@
       </ion-item>
     </ion-list>
 
-      <!-- Apps Loader -->
-      <ion-list *ngIf="!detailsActive && fetchingApps" class="ion-no-padding">
-        <ion-item class="ion-padding" lines="none" color="light">
-          <ion-grid>
-            <ion-row class="ion-text-center">
-              <ion-col>
-                <ion-spinner name="bubbles" color="primary"></ion-spinner>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item>
-      </ion-list>
+    <!-- Apps Loader -->
+    <ion-list *ngIf="!detailsActive && fetchingApps" class="ion-no-padding">
+      <ion-item class="ion-padding" lines="none" color="light">
+        <ion-grid>
+          <ion-row class="ion-text-center">
+            <ion-col>
+              <ion-spinner name="bubbles" color="primary"></ion-spinner>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
 
-      <!-- No Apps -->
-      <ion-list *ngIf="!detailsActive && friendsApps.length === 0 && !fetchingApps" class="ion-no-padding">
-        <ion-item class="app" lines="none">
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <ion-label class="no-apps ion-text-center">
-                  {{ 'no-apps' | translate }}
-                </ion-label>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item>
-      </ion-list>
+    <!-- No Apps -->
+    <ion-list *ngIf="!detailsActive && friendsApps.length === 0 && !fetchingApps" class="ion-no-padding">
+      <ion-item class="app" lines="none" color="light">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="no-apps ion-text-center">
+                {{ 'no-apps' | translate }}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
 
   </ion-grid>
