@@ -3,6 +3,7 @@ import { FriendsService } from 'src/app/services/friends.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInput, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { ThemeService } from 'src/app/services/theme.service';
 
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
@@ -29,7 +30,8 @@ export class CustomizePage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private nav: NavController,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public theme: ThemeService
   ) { }
 
   ngOnInit() {

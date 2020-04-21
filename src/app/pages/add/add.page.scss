@@ -1,81 +1,52 @@
 .container {
-  background: linear-gradient(to bottom, #BFFFD9 0%, #9BDEFF 100%);
+  background: #fdfeff;
   min-height: 100%;
-  padding-top: 25px;
+  padding: 30px 35px;
 
-  div {
-    background: white;
+  ion-input {
+    background: #f0f1ff;
+    border-radius: 8px;
+  }
 
-    .img-container {
-      padding-top: 20px;
-      background: white;
+  .btn-container {
+    padding-top: 15px;
 
-      .logo {
-        background: white;
-        height:24vw;
-        width:24vw;
-        margin: 0 auto;
-        border-radius: 50%;
-        box-shadow: 3px 3px 8px rgba(100,100,100,0.2);
-        overflow:hidden;
+    ion-button {
+      height: 41px;
+      width: 100%;
+      --border-radius: 8px;
+
+      ion-label {
+        text-transform: none;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: -0.43px;
       }
     }
+  }
 
-    ion-grid {
-      padding: 12px;
+  .msg-container {
+    padding-top: 20px;
 
-      .center {
-        ion-col {
-          display: flex;
-          justify-content: center;
-          align-items: center;
+    p {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: #161740;
+    };
+  }
+}
 
-          h2 {
-            margin: 0;
-            font-size: 19px;
-            font-weight: 700;
-          }
+.darkContainer {
+  background: #191a2f;
 
-          .first-title {
-            color: #FB599D;
-          }
+  ion-input {
+    background: #464660;
+  }
 
-          .second-title {
-            color: #3ABAFB;
-          }
-        }
-      }
-
-      .bottom {
-        ion-row {
-          padding: 8px 0;
-
-          .text-area {
-            border-radius: 30px;
-            background: #FAFAFA;
-          }
-
-          .clipboard {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            ion-icon {
-              font-size: 25px;
-            }
-          }
-
-          .add-btn {
-            width: 100%;
-            height: 40px;
-            --border-radius: 20px;
-
-            ion-spinner {
-              color: white;
-            }
-          }
-        }
-      }
-    }
+  .msg-container {
+    p {
+      color: #fdfeff;
+    };
   }
 }

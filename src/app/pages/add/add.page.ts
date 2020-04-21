@@ -4,6 +4,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ThemeService } from 'src/app/services/theme.service';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -23,7 +24,8 @@ export class AddPage implements OnInit {
   constructor(
     private friendsService: FriendsService,
     private toastController: ToastController,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public theme: ThemeService
     // private clipboard: Clipboard
   ) {
   }
