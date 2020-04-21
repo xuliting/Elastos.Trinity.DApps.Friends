@@ -58,3 +58,31 @@
   }
 }
 
+.darkContainer {
+  background: #72748e;
+
+  .delete-header {
+    h1 {
+      color: #fdfeff;
+    }
+  }
+
+  .message {
+    background: #393A48;
+
+    p {
+      color: #fdfeff;
+    }
+  }
+
+  .btn-row {
+    .btn {
+      background: #393A48;
+
+      ion-label {
+        color: #fdfeff;
+      }
+    }
+  }
+}
+

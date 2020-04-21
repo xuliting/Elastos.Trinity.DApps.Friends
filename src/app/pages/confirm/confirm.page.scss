@@ -9,6 +9,7 @@
   .profile-container {
     background: #fafaff;
     border: 1.2px solid #6d74ef;
+    width: 90vw;
     border-radius: 12px;
 
     .img-row {
@@ -80,5 +81,37 @@
 }
 
 .darkContainer {
+  // background: #161740;
   background: #191a2f;
+
+  .profile-container {
+    background: #72748e;
+
+
+    .profile-name {
+      h1 {
+        color: #fdfeff;
+      }
+    }
+
+    .message {
+      background: #393A48;
+      // opacity: 0.5;
+
+      p {
+        color: #fdfeff;
+      }
+    }
+
+    .btn-row {
+      .btn {
+        background: #393A48;
+        // opacity: 0.5;
+
+        ion-label {
+          color: #fdfeff;
+        }
+      }
+    }
+  }
 }
