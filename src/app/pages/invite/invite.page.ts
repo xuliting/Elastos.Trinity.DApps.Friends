@@ -4,6 +4,7 @@ import { FriendsService } from 'src/app/services/friends.service';
 import { ActivatedRoute } from '@angular/router';
 import { Friend } from 'src/app/models/friends.model';
 import { TranslateService } from '@ngx-translate/core';
+import { ThemeService } from 'src/app/services/theme.service';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -22,7 +23,8 @@ export class InvitePage implements OnInit {
   constructor(
     public friendsService: FriendsService,
     private route: ActivatedRoute,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public theme: ThemeService
   ) {}
 
   ngOnInit() {
