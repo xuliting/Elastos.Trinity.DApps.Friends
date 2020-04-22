@@ -35,7 +35,7 @@ export class AppComponent {
       this.friendsService.init();
 
       this.splashScreen.hide();
-      this.navController.navigateRoot("/invite");
+      this.navController.navigateRoot("/friends");
 
       // this.splash();
 
