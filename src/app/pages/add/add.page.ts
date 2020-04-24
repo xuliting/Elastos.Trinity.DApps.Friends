@@ -91,8 +91,8 @@ export class AddPage implements OnInit {
   async inputInvalid() {
     const toast = await this.toastController.create({
       mode: 'ios',
-      header: "Please add a valid DID",
-      color: 'primary',
+      header: "Please add a valid Identity",
+      color: 'secondary',
       duration: 2000
     });
     toast.present();

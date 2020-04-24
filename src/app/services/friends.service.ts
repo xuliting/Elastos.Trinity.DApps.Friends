@@ -771,7 +771,7 @@ export class FriendsService {
   async genericToast(msg) {
     const toast = await this.toastController.create({
       mode: 'ios',
-      color: 'primary',
+      color: 'light',
       header: msg,
       duration: 2000
     });
@@ -781,10 +781,21 @@ export class FriendsService {
   async didResolveErr(err: string) {
     const toast = await this.toastController.create({
       mode: 'ios',
-      color: 'primary',
+      color: 'light',
       header: 'There was an error',
       message: err,
       duration: 6000.
+    });
+    toast.present();
+  }
+
+  async shareToast(link: string) {
+    const toast = await this.toastController.create({
+      mode: 'ios',
+      color: 'light',
+      header: 'Contact copied',
+      message: link,
+      duration: 3000
     });
     toast.present();
   }
@@ -803,17 +814,6 @@ export class FriendsService {
       ]
     });
     alert.present();
-  }
-
-  async shareToast(link: string) {
-    const toast = await this.toastController.create({
-      mode: 'ios',
-      color: 'primary',
-      header: 'Contact copied',
-      message: link,
-      duration: 3000
-    });
-    toast.present();
   }
 
   deleteStorage() {
