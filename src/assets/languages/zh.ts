@@ -3,6 +3,7 @@ export const zh = {
   'contacts': '联系人',
   'no-contacts': 'No Contacts?',
   'add-a-contact': 'Add a contact by clicking the add icon above',
+  'add-a-contact2': 'Add a contact by clicking the add icon below',
   'favorites': 'Favorites',
   'all-contacts': 'All Contacts',
   'starter-contact': 'This is your starter contact. Click on it to see the profile and see what Capsules they have. Add real contacts by the add icon above',

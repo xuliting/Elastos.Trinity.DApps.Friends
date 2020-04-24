@@ -1,5 +1,5 @@
 <ion-grid [class.darkContainer]="theme.darkMode">
-  <ion-row (click)="share()">
+  <ion-row (click)="friendsService.shareContact(friend)">
     <ion-label>{{ 'share' | translate }}</ion-label>
     <ion-img *ngIf="!theme.darkMode" src="/assets/images/share.svg"></ion-img>
     <ion-img *ngIf="theme.darkMode" src="/assets/images/darkmode/share.svg"></ion-img>

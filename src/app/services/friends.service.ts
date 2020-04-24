@@ -3,6 +3,7 @@ import { Platform, AlertController, NavController, PopoverController } from '@io
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { StorageService } from 'src/app/services/storage.service';
 import { ThemeService } from './theme.service';
@@ -78,6 +79,7 @@ export class FriendsService {
     private popoverController: PopoverController,
     public toastController: ToastController,
     public zone: NgZone,
+    private clipboard: Clipboard,
     public translate: TranslateService,
     private theme: ThemeService,
     private storageService: StorageService,
@@ -692,6 +694,13 @@ export class FriendsService {
     this.storageService.setFriends(this._friends);
   }
 
+  /******************************* Share Contact  *******************************/
+  shareContact(friend: Friend) {
+    let link = 'https://scheme.elastos.org/addfriend?did=' + friend.id;
+    this.clipboard.copy(link);
+    this.shareToast(link);
+  }
+
   /******************************** Contact Buttons ********************************/
   openScanner() {
     appManager.sendIntent("scanqrcode", {}, {}, (res) => {
@@ -762,8 +771,8 @@ export class FriendsService {
   async genericToast(msg) {
     const toast = await this.toastController.create({
       mode: 'ios',
+      color: 'primary',
       header: msg,
-      color: "secondary",
       duration: 2000
     });
     toast.present();
@@ -772,9 +781,9 @@ export class FriendsService {
   async didResolveErr(err: string) {
     const toast = await this.toastController.create({
       mode: 'ios',
+      color: 'primary',
       header: 'There was an error',
       message: err,
-      color: "secondary",
       duration: 6000.
     });
     toast.present();
@@ -794,6 +803,17 @@ export class FriendsService {
       ]
     });
     alert.present();
+  }
+
+  async shareToast(link: string) {
+    const toast = await this.toastController.create({
+      mode: 'ios',
+      color: 'primary',
+      header: 'Contact copied',
+      message: link,
+      duration: 3000
+    });
+    toast.present();
   }
 
   deleteStorage() {

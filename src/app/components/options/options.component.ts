@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PopoverController, NavParams } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
-import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { Friend } from 'src/app/models/friends.model';
@@ -23,7 +22,6 @@ export class OptionsComponent implements OnInit {
     public friendsService: FriendsService,
     private popover: PopoverController,
     private navParams: NavParams,
-    private clipboard: Clipboard,
     private toastController: ToastController,
     public translate: TranslateService,
     public theme: ThemeService
@@ -37,22 +35,5 @@ export class OptionsComponent implements OnInit {
   async deleteFriend() {
     this.friendsService.deleteWarning(this.friend);
     this.popover.dismiss();
-  }
-
-  share() {
-    let link = 'https://scheme.elastos.org/addfriend?did=' + this.friend.id;
-    this.clipboard.copy(link);
-    this.shareToast(link);
-  }
-
-  async shareToast(link: string) {
-    const toast = await this.toastController.create({
-      mode: 'ios',
-      color: 'primary',
-      header: 'Contact copied',
-      message: link,
-      duration: 3000
-    });
-    toast.present();
   }
 }

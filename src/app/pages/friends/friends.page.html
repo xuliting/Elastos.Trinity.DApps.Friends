@@ -6,16 +6,16 @@
       <div *ngIf="friendsService._friends.length === 0" class="no-contacts">
         <ion-img src="/assets/images/default-contact.svg"></ion-img>
         <ion-title>{{ 'no-contacts' | translate }}</ion-title>
-        <p>{{ 'add-a-contact' | translate }}</p>
+        <p>{{ 'add-a-contact2' | translate }}</p>
         <ion-row *ngIf="!theme.darkMode" class="btn-row">
-          <ion-img src="/assets/buttons/scan.svg"></ion-img>
-          <ion-img src="/assets/buttons/edit.svg"></ion-img>
-          <ion-img src="/assets/buttons/options.svg"></ion-img>
+          <ion-img src="/assets/buttons/disable/scan.svg"></ion-img>
+          <ion-img src="/assets/buttons/disable/edit.svg"></ion-img>
+          <ion-img src="/assets/buttons/disable/options.svg"></ion-img>
         </ion-row>
         <ion-row *ngIf="theme.darkMode" class="btn-row">
-          <ion-img src="/assets/buttons/darkmode/scan.svg"></ion-img>
-          <ion-img src="/assets/buttons/darkmode/edit.svg"></ion-img>
-          <ion-img src="/assets/buttons/darkmode/options.svg"></ion-img>
+          <ion-img src="/assets/buttons/darkmode/disable/scan.svg"></ion-img>
+          <ion-img src="/assets/buttons/darkmode/disable/edit.svg"></ion-img>
+          <ion-img src="/assets/buttons/darkmode/disable/options.svg"></ion-img>
         </ion-row>
       </div>
 
@@ -102,11 +102,11 @@
             <ion-img *ngIf="friend.isFav" src="/assets/images/favorite.svg"></ion-img>
             <ion-img *ngIf="!friend.isFav" src="/assets/images/unfavorite.svg"></ion-img>
           </ion-item-option>
-          <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'">
+          <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.shareContact(friend)">
             <ion-img *ngIf="!theme.darkMode" src="/assets/images/share.svg"></ion-img>
             <ion-img *ngIf="theme.darkMode" src="/assets/images/darkmode/share.svg"></ion-img>
           </ion-item-option>
-          <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'">
+          <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.deleteWarning(friend)">
             <ion-img src="/assets/images/delete.svg"></ion-img>
           </ion-item-option>
         </ion-item-options>
@@ -143,11 +143,11 @@
           <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.toggleFav(friend)">
             <ion-img src="/assets/images/favorite.svg"></ion-img>
           </ion-item-option>
-          <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'">
+          <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.shareContact(friend)">
             <ion-img *ngIf="!theme.darkMode" src="/assets/images/share.svg"></ion-img>
             <ion-img *ngIf="theme.darkMode" src="/assets/images/darkmode/share.svg"></ion-img>
           </ion-item-option>
-          <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'">
+          <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.deleteWarning(friend)">
             <ion-img src="/assets/images/delete.svg"></ion-img>
           </ion-item-option>
         </ion-item-options>

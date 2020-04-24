@@ -3,6 +3,7 @@ export const fr = {
   'contacts': 'Contacts',
   'no-contacts': 'Aucun contact?',
   'add-a-contact': "Ajouter un contact en cliquant sur l'icône d'ajout ci-dessus'",
+  'add-a-contact2': 'Add a contact by clicking the add icon below',
   'favorites': 'Favoris',
   'all-contacts': 'Les contacts',
   'starter-contact': 'This is your starter contact. Click on it to see the profile and see what Capsules they have. Add real contacts by the add icon above',

@@ -92,7 +92,7 @@ export class AddPage implements OnInit {
     const toast = await this.toastController.create({
       mode: 'ios',
       header: "Please add a valid DID",
-      color: "light",
+      color: 'primary',
       duration: 2000
     });
     toast.present();
