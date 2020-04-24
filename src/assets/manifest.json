@@ -1,7 +1,7 @@
 {
     "id": "org.elastos.trinity.dapp.friends",
-    "version": "1.0.6",
-    "version_code": 7,
+    "version": "1.1.1",
+    "version_code": 8,
     "name": "Contacts",
     "short_name": "Contacts",
     "short_description": "Connect with friends using their DID!",
@@ -23,9 +23,9 @@
         }
     ],
     "author": {
-        "name": "Elastos Foundation",
-        "email": "contact@elastos.org",
-        "website": "https://www.elastos.org"
+        "name": "Trinity Tech Co., Ltd.",
+        "email": "contact@trinity-tech.io",
+        "website": "https://www.trinity-tech.io"
     },
     "default_locale": "en",
     "plugins": [
