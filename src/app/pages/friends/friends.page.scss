@@ -112,6 +112,22 @@
         }
       }
     }
+
+    .first-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .letter {
+        font-size: 11px;
+        font-weight: 700;
+        color: #161740;
+      }
+    }
+
+    .ordered-list {
+      padding-top: 15px;
+    }
   }
 
   .onboard-msg {
@@ -167,6 +183,12 @@
 
   ion-list {
     background: #191a2f;
+
+    .first-col {
+      .letter {
+        color: #ffffff;
+      }
+    }
   }
 
   .onboard-msg {
@@ -175,4 +197,3 @@
     }
   }
 }
-
