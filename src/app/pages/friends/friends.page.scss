@@ -1,9 +1,9 @@
 .container {
-  padding: 30px 0;
+  padding: 40px 0;
 
   ion-slide {
-    width: 84px;
-    height: 84px;
+    width: 80px;
+    height: 80px;
   }
 
   ion-slide, .slide-content, .no-contacts {
@@ -13,13 +13,13 @@
     flex-direction: column;
 
     .inactiveSlide {
-      width: 42px;
-      height: 42px;
+      width: 50px;
+      height: 50px;
     }
 
     ion-img, .activeSlide {
-      width: 84px;
-      height: 84px;
+      width: 80px;
+      height: 80px;
     }
 
     ion-title, p {
@@ -28,7 +28,7 @@
 
     ion-title {
       padding-top: 15px;
-      padding-bottom: 7.5px;
+      padding-bottom: 10px;
       font-size: 22px;
       font-weight: 600;
       line-height: 1.21;
@@ -60,6 +60,7 @@
     padding: 0px 45px;
 
     ion-segment-button {
+      margin: 0 10px;
       width: 90px;
       height: 22px;
       --border-color: #161740 !important;
@@ -124,10 +125,10 @@
         color: #161740;
       }
     }
+  }
 
-    .ordered-list {
-      padding-top: 15px;
-    }
+  .ordered-list {
+    padding-top: 15px;
   }
 
   .onboard-msg {
@@ -159,8 +160,8 @@
 /******************** Ion-item option ********************/
 .itemOption {
   ion-img {
-    height: 18px;
-    width: 18px
+    height: 20px;
+    width: 20px
   }
 }
 

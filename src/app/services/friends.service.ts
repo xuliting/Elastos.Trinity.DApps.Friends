@@ -63,6 +63,7 @@ export class FriendsService {
   public filteredFriends: Friend[] = [];
 
   public activeSlide: Friend;
+  public letters: string[] = [];
 
   public firstVisit = false;
   public friendsChecked = false;
@@ -96,80 +97,80 @@ export class FriendsService {
 
     // Load app manager only on real device, not in desktop browser - beware: ionic 4 bug with "desktop" or "android"/"ios"
     if (this.platform.platforms().indexOf("cordova") >= 0) {
-        console.log("Listening to intent events");
-        appManager.setListener((msg) => {
-          this.onMessageReceived(msg);
-        });
-        appManager.setIntentListener(
-          this.onReceiveIntent
-        );
+      console.log("Listening to intent events");
+      appManager.setListener((msg) => {
+        this.onMessageReceived(msg);
+      });
+      appManager.setIntentListener(
+        this.onReceiveIntent
+      );
     }
   }
 
   getVisit() {
     this.storageService.getVisit().then(data => {
-        if (data && data === true) {
-          console.log('First visit?', this.firstVisit);
-        } else {
-          this._friends.push({
-            id: 'did:elastos',
-            name: 'My First Contact',
-            gender: null,
-            note: 'Hi! Click me to see my profile and see what Capsules I have',
-            nickname: null,
-            country: null,
-            birthDate: 'December 2017',
-            telephone: null,
-            email: 'contact@elastos.org',
-            description: null,
-            website: 'https://www.elastos.org',
-            twitter: '@Elastos_org',
-            facebook: null,
-            telegram: null,
-            imageUrl: null,
-            applicationProfileCredentials: [
-              {
-                action: "This is a basic demo which demonstrates the identity service",
-                apppackage: "org.elastos.trinity.dapp.diddemo",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "This is a basic demo which demonstrates P2P networking",
-                apppackage: "org.elastos.trinity.dapp.carrierdemo",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Learn elastOS the fun way! Quizzes, chats, guilds, level up & earn points!",
-                apppackage: "tech.tuum.academy",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Let your voice be heard and vote for your CRC candidate!",
-                apppackage: "org.elastos.trinity.dapp.crcvoting",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Vote for your favorite Supernodes and earn ELA along the way",
-                apppackage: "org.elastos.trinity.dapp.dposvoting",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Check for any block, transaction or address ever created on Elastos!",
-                apppackage: "org.elastos.trinity.dapp.blockchain",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Show some love to your friends by giving them ELA!",
-                apppackage: "org.elastos.trinity.dapp.redpacket",
-                apptype: "elastosbrowser"
-              },
-            ],
-            isPicked: null,
-            isFav: true
-          });
-          this.storageService.setVisit(true);
-          this.storageService.setFriends(this._friends);
-        }
+      if (data && data === true) {
+        console.log('First visit?', this.firstVisit);
+      } else {
+        this._friends.push({
+          id: 'did:elastos',
+          name: 'My First Contact',
+          gender: null,
+          note: 'Hi! Click me to see my profile and see what Capsules I have',
+          nickname: null,
+          country: null,
+          birthDate: 'December 2017',
+          telephone: null,
+          email: 'contact@elastos.org',
+          description: null,
+          website: 'https://www.elastos.org',
+          twitter: '@Elastos_org',
+          facebook: null,
+          telegram: null,
+          imageUrl: null,
+          applicationProfileCredentials: [
+            {
+              action: "This is a basic demo which demonstrates the identity service",
+              apppackage: "org.elastos.trinity.dapp.diddemo",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "This is a basic demo which demonstrates P2P networking",
+              apppackage: "org.elastos.trinity.dapp.carrierdemo",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "Learn elastOS the fun way! Quizzes, chats, guilds, level up & earn points!",
+              apppackage: "tech.tuum.academy",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "Let your voice be heard and vote for your CRC candidate!",
+              apppackage: "org.elastos.trinity.dapp.crcvoting",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "Vote for your favorite Supernodes and earn ELA along the way",
+              apppackage: "org.elastos.trinity.dapp.dposvoting",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "Check for any block, transaction or address ever created on Elastos!",
+              apppackage: "org.elastos.trinity.dapp.blockchain",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "Show some love to your friends by giving them ELA!",
+              apppackage: "org.elastos.trinity.dapp.redpacket",
+              apptype: "elastosbrowser"
+            },
+          ],
+          isPicked: null,
+          isFav: true
+        });
+        this.storageService.setVisit(true);
+        this.storageService.setFriends(this._friends);
+      }
     });
   }
 
@@ -204,6 +205,7 @@ export class FriendsService {
         console.log('Fetched stored friends', friends);
         if(friends && friends.length > 0) {
           this._friends = friends;
+          this.sortContacts();
 
           if(!this.friendsChecked) {
             this.friendsChecked = true;
@@ -222,33 +224,33 @@ export class FriendsService {
   onMessageReceived(msg: AppManagerPlugin.ReceivedMessage) {
     var params: any = msg.message;
     if (typeof (params) == "string") {
-        try {
-            params = JSON.parse(params);
-        } catch (e) {
-            console.log('Params are not JSON format: ', params);
-        }
+      try {
+          params = JSON.parse(params);
+      } catch (e) {
+          console.log('Params are not JSON format: ', params);
+      }
     }
     switch (msg.type) {
-        case MessageType.IN_REFRESH:
-            if (params.action === "currentLocaleChanged") {
-                this.setCurLang(params.data);
-            }
-            if(params.action === 'preferenceChanged' && params.data.key === "ui.darkmode") {
-              this.zone.run(() => {
-                console.log('Dark Mode toggled');
-                this.theme.setTheme(params.data.value);
-              });
-            }
-            break;
-        case MessageType.INTERNAL:
-            if (msg.message == "navback") {
-              if(this._friends.length === 0) {
-                this.router.navigate(['friends']);
-              } else {
-                this.navController.back();
-              }
-            }
-            break;
+      case MessageType.IN_REFRESH:
+        if (params.action === "currentLocaleChanged") {
+            this.setCurLang(params.data);
+        }
+        if(params.action === 'preferenceChanged' && params.data.key === "ui.darkmode") {
+          this.zone.run(() => {
+            console.log('Dark Mode toggled');
+            this.theme.setTheme(params.data.value);
+          });
+        }
+        break;
+      case MessageType.INTERNAL:
+        if (msg.message == "navback") {
+          if(this._friends.length === 0) {
+            this.router.navigate(['friends']);
+          } else {
+            this.navController.back();
+          }
+        }
+        break;
     }
   }
 
@@ -555,6 +557,7 @@ export class FriendsService {
     this.storageService.setDIDs(this._didDocs);
     this.storageService.setFriends(this._friends);
 
+    this.sortContacts();
     this.genericToast(alertName + ' was deleted');
     this.router.navigate(['/friends']);
   }
@@ -566,6 +569,7 @@ export class FriendsService {
         friend.name = customName;
         friend.note = customNote;
         this.storageService.setFriends(this._friends);
+        this.sortContacts();
       }
     });
   }
@@ -739,6 +743,22 @@ export class FriendsService {
       translucent: false
     });
     return await popover.present();
+  }
+
+  /******************************** Sort Contacts ********************************/
+  sortContacts() {
+    this.letters = [];
+    this._friends.map((friend) => {
+      if(!friend.name && !this.letters.includes('No Name')) {
+        this.letters.push('No Name');
+      };
+      if(friend.name && !this.letters.includes(friend.name[0].toUpperCase())) {
+        this.letters.push(friend.name[0].toUpperCase());
+      }
+    });
+
+    this.letters = this.letters.sort((a, b) => a > b ? 1 : -1);
+    console.log('Letter groups', this.letters);
   }
 
   /******************************** Misc ********************************/

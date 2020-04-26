@@ -4,12 +4,12 @@
     "version_code": 7,
     "name": "Contacts",
     "short_name": "Contacts",
-    "short_description": "Connect with friends using their DID!",
-    "description": "Manage Contacts by their DID and view their profile and apps they are using.",
+    "short_description": "Connect with friends using their Identity!",
+    "description": "Manage Contacts by their Identity and view their profile and apps they are using.",
     "start_url": "index.html",
     "type": "app",
     "start_visible": "hide",
-    "category": "communication",
+    "category": "social",
     "icons": [
         {
             "src": "assets/images/logo.png",

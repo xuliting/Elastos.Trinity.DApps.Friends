@@ -21,7 +21,6 @@ export class FriendsPage implements OnInit {
   @ViewChild('slider', {static: false}) slider: IonSlides;
 
   public favActive = true;
-  public letters: string[] = [];
 
   slideOpts = {
     initialSlide: 0,
@@ -53,7 +52,6 @@ export class FriendsPage implements OnInit {
   async getActiveSlide() {
     await this.friendsService.getStoredDIDs().then(() => {
       if(this.friendsService._friends.length > 0) {
-        this.sortContacts();
         this.slider.getActiveIndex().then((index) => {
           this.friendsService.activeSlide = this.friendsService._friends[index];
           console.log('Active slide', this.friendsService.activeSlide);
@@ -62,21 +60,6 @@ export class FriendsPage implements OnInit {
         return;
       }
     });
-  }
-
-  sortContacts() {
-    this.friendsService._friends.map((friend) => {
-      this.letters = [];
-      if(!friend.name && !this.letters.includes('No Name')) {
-        this.letters.push('No Name');
-      };
-      if(friend.name && !this.letters.includes(friend.name[0].toUpperCase())) {
-        this.letters.push(friend.name[0].toUpperCase());
-      }
-    });
-
-    this.letters = this.letters.sort((a, b) => a > b ? 1 : -1);
-    console.log('Letter groups', this.letters);
   }
 
   firstContact(): boolean {
