@@ -45,7 +45,7 @@
           {{ friendsService.activeSlide.name }}
         </ion-title>
         <ion-title mode='md' *ngIf="!friendsService.activeSlide.name" [routerLink]="['/friends/', friendsService.activeSlide.id]">
-          {{ friendsService.activeSlide.id.slice(0,18) }}...{{ friendsService.activeSlide.id.slice(40,50) }}
+          {{ friendsService.activeSlide.id.slice(4,16) }}...{{ friendsService.activeSlide.id.slice(40,46) }}
         </ion-title>
         <p [routerLink]="['/friends/', friendsService.activeSlide.id]">{{ friendsService.activeSlide.note }}</p>
         <ion-row *ngIf="!theme.darkMode" class="btn-row">
@@ -118,7 +118,7 @@
               </ion-col>
               <ion-col offset="0.125" size="9.125">
                 <ion-label>
-                  {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
+                  {{ friend.id.slice(4,16) }}...{{ friend.id.slice(40,46) }}
                 </ion-label>
               </ion-col>
             </ion-row>
@@ -161,7 +161,7 @@
                   {{ friend.name }}
                 </ion-label>
                 <ion-label *ngIf="!friend.name">
-                  {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
+                  {{ friend.id.slice(4,16) }}...{{ friend.id.slice(40,46) }}
                 </ion-label>
               </ion-col>
             </ion-row>

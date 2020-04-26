@@ -6,7 +6,7 @@
         {{ friend.name }}
       </ion-title>
       <ion-title mode='md' *ngIf="!friend.name">
-        {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
+        {{ friend.id.slice(4,16) }}...{{ friend.id.slice(40,46) }}
       </ion-title>
       <p>{{ friend.note }}</p>
       <ion-row *ngIf="!theme.darkMode" class="btn-row">

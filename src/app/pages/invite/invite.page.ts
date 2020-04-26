@@ -19,6 +19,7 @@ export class InvitePage implements OnInit {
   isFilter: boolean = false;
   isSingleInvite: boolean = false;
   filteredFriends: Friend[];
+  letters: string[] = [];
 
   constructor(
     public friendsService: FriendsService,
@@ -38,6 +39,7 @@ export class InvitePage implements OnInit {
       }
       if (params.friendsFiltered) {
         this.isFilter = true;
+        this.sortContacts();
       }
     });
     console.log('Is single invite?', this.isSingleInvite);
@@ -46,6 +48,24 @@ export class InvitePage implements OnInit {
 
   ionViewWillEnter() {
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.CLOSE);
+  }
+
+  ionViewDidEnter() {
+  }
+
+  sortContacts() {
+    this.letters = [];
+    this.friendsService.filteredFriends.map((friend) => {
+      if(!friend.name && !this.letters.includes('No Name')) {
+        this.letters.push('No Name');
+      };
+      if(friend.name && !this.letters.includes(friend.name[0].toUpperCase())) {
+        this.letters.push(friend.name[0].toUpperCase());
+      }
+    });
+
+    this.letters = this.letters.sort((a, b) => a > b ? 1 : -1);
+    console.log('Letter groups', this.letters);
   }
 
   // If pick-friend intent is single invite, disable checkboxes if a friend is picked //

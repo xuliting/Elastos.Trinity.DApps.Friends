@@ -31,7 +31,7 @@
   }
 
   ion-list {
-    padding-top: 25px;
+    padding-top: 15px;
     margin: 0;
 
     ion-item {
@@ -53,6 +53,23 @@
           font-weight: 600;
           line-height: 1.2;
         }
+
+        ion-checkbox {
+          --border-color: #565bdb;
+          --background: transparent;
+        }
+      }
+    }
+
+    .first-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .letter {
+        font-size: 11px;
+        font-weight: 700;
+        color: #161740;
       }
     }
   }
@@ -72,6 +89,12 @@
 
     ion-item {
       --background: #191a2f;
+    }
+
+    .first-col {
+      .letter {
+        color: #ffffff;
+      }
     }
   }
 }
