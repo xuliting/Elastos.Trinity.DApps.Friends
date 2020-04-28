@@ -1,0 +1,42 @@
+<ion-content>
+  <ion-grid class="container ion-no-padding ion-no-margin" [class.darkContainer]="theme.darkMode">
+    <ion-row class="input-container">
+      <ion-col class="input-title" size="2.5">
+        <ion-label>Name</ion-label>
+      </ion-col>
+      <ion-col class="input" size="9.5">
+        <ion-input
+          #input
+          autosize
+          placeholder=" Custom name"
+          clearInput="true"
+          [(ngModel)]="customName"
+          (ngModelChange)="nameChanged($event)">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row class="input-container">
+      <ion-col class="input-title" size="2.5">
+        <ion-label>Bio</ion-label>
+      </ion-col>
+      <ion-col class="input" size="9.5">
+        <ion-input
+          autosize
+          placeholder="   Custom note"
+          clearInput="true"
+          [(ngModel)]="customNote"
+          (ngModelChange)="noteChanged($event)">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="btn-container">
+      <ion-button color="success" (click)="customizeContact()">
+        <ion-label>Save Changes</ion-label>
+      </ion-button>
+    </ion-row>
+    <ion-row class="msg-container">
+      <p class="ion-text-center">You can give your contact a custom name and note/bio so you can organize your contacts better</p>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,135 +1,197 @@
 <ion-content>
-  <ion-grid class="container">
+  <ion-grid class="container" [class.darkContainer]="theme.darkMode">
     <div class="header">
+
+      <!-- Empty Contacts -->
       <div *ngIf="friendsService._friends.length === 0" class="no-contacts">
         <ion-img src="/assets/images/default-contact.svg"></ion-img>
-        <ion-title>No Contacts?</ion-title>
-        <p>Add a contact by clicking the add icon above</p>
-        <ion-row class="btn-row">
-          <ion-img src="/assets/buttons/scan.svg"></ion-img>
-          <ion-img src="/assets/buttons/edit.svg"></ion-img>
-          <ion-img src="/assets/buttons/options.svg"></ion-img>
+        <ion-title>{{ 'no-contacts' | translate }}</ion-title>
+        <p>{{ 'add-a-contact2' | translate }}</p>
+        <ion-row *ngIf="!theme.darkMode" class="btn-row">
+          <ion-img src="/assets/buttons/disable/scan.svg"></ion-img>
+          <ion-img src="/assets/buttons/disable/edit.svg"></ion-img>
+          <ion-img src="/assets/buttons/disable/options.svg"></ion-img>
+        </ion-row>
+        <ion-row *ngIf="theme.darkMode" class="btn-row">
+          <ion-img src="/assets/buttons/darkmode/disable/scan.svg"></ion-img>
+          <ion-img src="/assets/buttons/darkmode/disable/edit.svg"></ion-img>
+          <ion-img src="/assets/buttons/darkmode/disable/options.svg"></ion-img>
         </ion-row>
       </div>
-      <ion-slides *ngIf="friendsService._friends.length > 0">
+
+      <!-- Contacts Img Slide -->
+      <ion-slides *ngIf="friendsService._friends.length > 0" #slider [options]="slideOpts" (ionSlideDidChange)="slideChanged()">
         <ion-slide *ngFor="let friend of friendsService._friends">
-          <ion-img src="/assets/images/default-contact.svg"></ion-img>
-          <ion-title mode='md' *ngIf="friend.name">
-            {{ friend.name }}
-          </ion-title>
-          <ion-title mode='md' *ngIf="!friend.name">
-            {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
-          </ion-title>
-          <p>{{ friend.note }}</p>
-          <ion-row class="btn-row">
-            <ion-img src="/assets/buttons/scan.svg" (click)="friendsService.openScanner()"></ion-img>
-            <ion-img src="/assets/buttons/edit.svg" (click)="friendsService.customizeFriend(friend)"></ion-img>
-            <ion-img src="/assets/buttons/options.svg" (click)="friendsService.showOptions($event, friend)"></ion-img>
-          </ion-row>
+          <ion-img
+            *ngIf="!friend.imageUrl"
+            src="/assets/images/default-contact.svg"
+            class="inactiveSlide"
+            [class.activeSlide]="friend === friendsService.activeSlide"
+            [routerLink]="['/friends/', friend.id]">
+          </ion-img>
+          <ion-img
+            *ngIf="friend.imageUrl"
+            [src]="friend.imageUrl"
+            class="inactiveSlide"
+            [class.activeSlide]="friend === friendsService.activeSlide"
+            [routerLink]="['/friends/', friend.id]">
+          </ion-img>
         </ion-slide>
       </ion-slides>
+
+      <!-- Contact Management -->
+      <div class="slide-content" *ngIf="friendsService.activeSlide">
+        <ion-title mode='md' *ngIf="friendsService.activeSlide.name" [routerLink]="['/friends/', friendsService.activeSlide.id]">
+          {{ friendsService.activeSlide.name }}
+        </ion-title>
+        <ion-title mode='md' *ngIf="!friendsService.activeSlide.name" [routerLink]="['/friends/', friendsService.activeSlide.id]">
+          {{ friendsService.activeSlide.id.slice(4,16) }}...{{ friendsService.activeSlide.id.slice(40,46) }}
+        </ion-title>
+        <p [routerLink]="['/friends/', friendsService.activeSlide.id]">{{ friendsService.activeSlide.note }}</p>
+        <ion-row *ngIf="!theme.darkMode" class="btn-row">
+          <ion-img src="/assets/buttons/scan.svg" (click)="friendsService.openScanner()"></ion-img>
+          <ion-img src="/assets/buttons/edit.svg" (click)="friendsService.showCustomization(friendsService.activeSlide)"></ion-img>
+          <ion-img src="/assets/buttons/options.svg" (click)="friendsService.showOptions($event, friendsService.activeSlide)"></ion-img>
+        </ion-row>
+        <ion-row *ngIf="theme.darkMode" class="btn-row">
+          <ion-img src="/assets/buttons/darkmode/scan.svg" (click)="friendsService.openScanner()"></ion-img>
+          <ion-img src="/assets/buttons/darkmode/edit.svg" (click)="friendsService.showCustomization(friendsService.activeSlide)"></ion-img>
+          <ion-img src="/assets/buttons/darkmode/options.svg" (click)="friendsService.showOptions($event, friendsService.activeSlide)"></ion-img>
+        </ion-row>
+      </div>
     </div>
 
+    <!-- Contacts List Tabs -->
     <ion-segment>
       <ion-segment-button [class.active]="favActive" (click)="favActive = true">
-        <ion-label>Favorites</ion-label>
+        <ion-label>{{ 'favorites' | translate }}</ion-label>
       </ion-segment-button>
       <ion-segment-button [class.active]="!favActive" (click)="favActive = false">
-        <ion-label>All Contacts</ion-label>
+        <ion-label>{{ 'all-contacts' | translate }}</ion-label>
       </ion-segment-button>
     </ion-segment>
 
-    <ion-list *ngIf="friendsService._friends.length > 0 && !favActive">
-      <ion-item-sliding  *ngFor="let friend of friendsService._friends">
-        <ion-item
-          color="secondary"
-          detail="false"
-          lines="none"
-          [routerLink]="['/', friend.id]"
-        >
+    <!-- All Contacts -->
+    <ion-list *ngIf="friendsService._friends.length > 0 && !favActive" class="ordered-list">
+      <ion-grid class="ion-no-padding" *ngFor="let letter of friendsService.letters">
+        <ion-grid>
+          <ion-row>
+            <ion-col offset="0.75" size="2" class="first-col">
+              <ion-label class="letter ion-text-center">{{ letter }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-item-sliding *ngFor="let friend of friendsService._friends">
+          <ion-item
+            [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'"
+            detail="false"
+            lines="none"
+            [routerLink]="['/friends/', friend.id]"
+            *ngIf="friend.name && friend.name[0].toUpperCase() === letter"
+          >
+            <ion-grid>
+              <ion-row>
+                <ion-col offset="0.75" size="2" class="first-col">
+                  <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
+                  <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
+                </ion-col>
+                <ion-col offset="0.125" size="9.125">
+                  <ion-label *ngIf="friend.name">
+                    {{ friend.name }}
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-item
+            [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'"
+            detail="false"
+            lines="none"
+            [routerLink]="['/friends/', friend.id]"
+            *ngIf="!friend.name && letter === 'No Name'"
+          >
           <ion-grid>
             <ion-row>
-              <ion-col offset="0.75" size="1.75">
+              <ion-col offset="0.75" size="2" class="first-col">
                 <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
                 <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
               </ion-col>
-              <ion-col size="9.25">
-                <ion-label *ngIf="friend.name">
-                  {{ friend.name }}
-                </ion-label>
-                <ion-label *ngIf="!friend.name">
-                  {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
+              <ion-col offset="0.125" size="9.125">
+                <ion-label>
+                  {{ friend.id.slice(4,16) }}...{{ friend.id.slice(40,46) }}
                 </ion-label>
               </ion-col>
             </ion-row>
           </ion-grid>
         </ion-item>
-        <ion-item-options side="end">
-          <ion-item-option class="itemOption" color="secondary" (click)="friendsService.toggleFav(friend)">
-            <ion-img *ngIf="friend.isFav" src="/assets/images/favorite.svg"></ion-img>
-            <ion-img *ngIf="!friend.isFav" src="/assets/images/unfavorite.svg"></ion-img>
-          </ion-item-option>
-          <ion-item-option class="itemOption" color="secondary">
-            <ion-img src="/assets/images/share.svg"></ion-img>
-          </ion-item-option>
-          <ion-item-option class="itemOption" color="secondary">
-            <ion-img src="/assets/images/delete.svg"></ion-img>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
+          <ion-item-options side="end">
+            <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.toggleFav(friend)">
+              <ion-img *ngIf="friend.isFav" src="/assets/images/favorite.svg"></ion-img>
+              <ion-img *ngIf="!friend.isFav" src="/assets/images/unfavorite.svg"></ion-img>
+            </ion-item-option>
+            <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.shareContact(friend)">
+              <ion-img *ngIf="!theme.darkMode" src="/assets/images/share.svg"></ion-img>
+              <ion-img *ngIf="theme.darkMode" src="/assets/images/darkmode/share.svg"></ion-img>
+            </ion-item-option>
+            <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.deleteWarning(friend)">
+              <ion-img src="/assets/images/delete.svg"></ion-img>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-grid>
     </ion-list>
 
+    <!-- Favorite Contacts -->
     <ion-list *ngIf="friendsService._friends.length > 0 && favActive">
       <ion-item-sliding *ngFor="let friend of getFavorites()">
         <ion-item
-          color="secondary"
+          [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'"
           detail="false"
           lines="none"
-          [routerLink]="['/', friend.id]"
+          [routerLink]="['/friends/', friend.id]"
         >
           <ion-grid>
             <ion-row>
-              <ion-col offset="0.75" size="1.75">
+              <ion-col offset="0.75" size="2" class="first-col">
                 <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
                 <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
               </ion-col>
-              <ion-col size="9.25">
+              <ion-col offset="0.125" size="9.125">
                 <ion-label *ngIf="friend.name">
                   {{ friend.name }}
                 </ion-label>
                 <ion-label *ngIf="!friend.name">
-                  {{ friend.id.slice(0,18) }}...{{ friend.id.slice(40,50) }}
+                  {{ friend.id.slice(4,16) }}...{{ friend.id.slice(40,46) }}
                 </ion-label>
               </ion-col>
             </ion-row>
           </ion-grid>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option class="itemOption" color="secondary" (click)="friendsService.toggleFav(friend)">
+          <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.toggleFav(friend)">
             <ion-img src="/assets/images/favorite.svg"></ion-img>
           </ion-item-option>
-          <ion-item-option class="itemOption" color="secondary">
-            <ion-img src="/assets/images/share.svg"></ion-img>
+          <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.shareContact(friend)">
+            <ion-img *ngIf="!theme.darkMode" src="/assets/images/share.svg"></ion-img>
+            <ion-img *ngIf="theme.darkMode" src="/assets/images/darkmode/share.svg"></ion-img>
           </ion-item-option>
-          <ion-item-option class="itemOption" color="secondary">
+          <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.deleteWarning(friend)">
             <ion-img src="/assets/images/delete.svg"></ion-img>
           </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
 
+    <!-- Empty Contacts -->
     <div *ngIf="firstContact()" class="onboard-msg">
-      <ion-title mode='md'>No Contacts?</ion-title>
-      <p>
-        This is your starter contact. Click on it to see the profile
-        and see what Capsules they have Add real contacts by the add icon above
-      </p>
+      <ion-title mode='md'>{{ 'no-contacts' | translate }}</ion-title>
+      <p>{{ 'starter-contact' | translate }}</p>
     </div>
 
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-padding-bottom ion-padding-end">
-    <ion-fab-button [routerLink]="['/', 'addFriend']">
+    <ion-fab-button [routerLink]="['/', 'add']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

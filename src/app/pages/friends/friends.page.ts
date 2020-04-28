@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FriendsService } from 'src/app/services/friends.service';
-import { PopoverController } from '@ionic/angular';
-import { NoFriendsPage } from './no-friends/no-friends.page';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { OptionsComponent } from 'src/app/components/options/options.component';
-import { NavigationExtras, Router } from '@angular/router';
+
+import { IonSlides } from '@ionic/angular';
+
+import { FriendsService } from 'src/app/services/friends.service';
+import { ThemeService } from 'src/app/services/theme.service';
+
 import { Friend } from 'src/app/models/friends.model';
 
 declare let appManager: AppManagerPlugin.AppManager;
@@ -17,13 +18,21 @@ declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 })
 export class FriendsPage implements OnInit {
 
-  public friendsLoaded = true;
+  @ViewChild('slider', {static: false}) slider: IonSlides;
+
   public favActive = true;
 
+  slideOpts = {
+    initialSlide: 0,
+    speed: 200,
+    zoom: true,
+    centeredSlides: true,
+    slidesPerView: 3.5
+  };
+
   constructor(
-    private popover: PopoverController,
-    private router: Router,
     public translate: TranslateService,
+    public theme: ThemeService,
     public friendsService: FriendsService,
   ) { }
 
@@ -37,6 +46,20 @@ export class FriendsPage implements OnInit {
 
   ionViewDidEnter() {
     appManager.setVisible("show");
+    this.getActiveSlide();
+  }
+
+  async getActiveSlide() {
+    await this.friendsService.getStoredDIDs().then(() => {
+      if(this.friendsService._friends.length > 0) {
+        this.slider.getActiveIndex().then((index) => {
+          this.friendsService.activeSlide = this.friendsService._friends[index];
+          console.log('Active slide', this.friendsService.activeSlide);
+        });
+      } else {
+        return;
+      }
+    });
   }
 
   firstContact(): boolean {
@@ -52,5 +75,12 @@ export class FriendsPage implements OnInit {
 
   getFavorites(): Friend[] {
     return this.friendsService._friends.filter((friend) => friend.isFav === true);
+  }
+
+  slideChanged() {
+    this.slider.getActiveIndex().then((index) => {
+      this.friendsService.activeSlide = this.friendsService._friends[index];
+      console.log(this.friendsService.activeSlide);
+    });
   }
 }

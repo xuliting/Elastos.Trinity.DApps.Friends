@@ -3,12 +3,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: 'friends', loadChildren: './pages/friends/friends.module#FriendsPageModule' },
-  { path: 'addFriend', loadChildren: './pages/add-friend/add-friend.module#AddFriendPageModule' },
-  { path: 'friend-confirmation', loadChildren: './pages/friend-confirmation/friend-confirmation.module#FriendConfirmationPageModule' },
-  { path: 'custom-name', loadChildren: './pages/custom-name/custom-name.module#CustomNamePageModule' },
-  { path: 'pick-friend', loadChildren: './pages/pick-friend/pick-friend.module#PickFriendPageModule' },
-  { path: ':friendId', loadChildren: './pages/friend-details/friend-details.module#FriendDetailsPageModule' },
-  { path: 'no-friends', loadChildren: './pages/friends/no-friends/no-friends.module#NoFriendsPageModule' },
+  { path: 'add', loadChildren: './pages/add/add.module#AddPageModule' },
+  { path: 'confirm', loadChildren: './pages/confirm/confirm.module#ConfirmPageModule' },
+  { path: 'customize', loadChildren: './pages/customize/customize.module#CustomizePageModule' },
+  { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
+  { path: 'friends/:friendId', loadChildren: './pages/friend-details/friend-details.module#FriendDetailsPageModule' },
+  { path: 'splash', loadChildren: './pages/splash/splash.module#SplashPageModule' },
 ];
 
 @NgModule({

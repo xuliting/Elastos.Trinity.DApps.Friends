@@ -1,0 +1,36 @@
+<ion-grid class="container ion-no-padding ion-no-margin" [class.darkContainer]="theme.darkMode">
+  <div class="profile-container">
+
+    <ion-row class="img-row">
+      <img *ngIf="image" [src]="image">
+      <img *ngIf="!image" src="/assets/images/default-contact.svg">
+    </ion-row>
+
+    <ion-row>
+      <ion-col *ngIf="name" class="profile-name">
+        <h1 class="ion-padding-horizontal">{{ name }}</h1>
+      </ion-col>
+      <ion-col *ngIf="!name" class="profile-name">
+        <h1 class="ion-padding-horizontal ion-text-center">
+          {{ id.slice(0,18) }}...{{ id.slice(40,50) }}
+        </h1>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="message ion-no-padding">
+        <p class="ion-padding-horizontal">{{ 'do-you-want-to-add' | translate }}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="btn-row">
+      <ion-col class="btn" size="5" (click)="denyFriend()">
+        <ion-label>{{ 'cancel' | translate }}</ion-label>
+      </ion-col>
+      <ion-col class="btn" size="5" (click)="addFriend()">
+        <ion-label>{{ 'add' | translate }}</ion-label>
+      </ion-col>
+    </ion-row>
+
+  </div>
+</ion-grid>

@@ -3,10 +3,14 @@ import { Platform, AlertController, NavController, PopoverController } from '@io
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { StorageService } from 'src/app/services/storage.service';
+import { ThemeService } from './theme.service';
+
 import { Friend } from '../models/friends.model';
 import { DID } from '../models/did.model';
+
 import { DeleteComponent } from '../components/delete/delete.component';
 import { OptionsComponent } from '../components/options/options.component';
 
@@ -58,8 +62,10 @@ export class FriendsService {
   public _friends: Friend[] = [];
   public filteredFriends: Friend[] = [];
 
+  public activeSlide: Friend;
+  public letters: string[] = [];
+
   public firstVisit = false;
-  public inProfileView = false;
   public friendsChecked = false;
 
   getFriend(id: string) {
@@ -74,7 +80,9 @@ export class FriendsService {
     private popoverController: PopoverController,
     public toastController: ToastController,
     public zone: NgZone,
+    private clipboard: Clipboard,
     public translate: TranslateService,
+    private theme: ThemeService,
     private storageService: StorageService,
   ) {
     managerService = this;
@@ -85,88 +93,84 @@ export class FriendsService {
     this.getVisit();
     this.getLanguage();
     this.getStoredDIDs();
+    this.theme.getTheme();
 
     // Load app manager only on real device, not in desktop browser - beware: ionic 4 bug with "desktop" or "android"/"ios"
     if (this.platform.platforms().indexOf("cordova") >= 0) {
-        console.log("Listening to intent events");
-        appManager.setListener((msg) => {
-          this.onMessageReceived(msg);
-        });
-        appManager.setIntentListener(
-          this.onReceiveIntent
-        );
+      console.log("Listening to intent events");
+      appManager.setListener((msg) => {
+        this.onMessageReceived(msg);
+      });
+      appManager.setIntentListener(
+        this.onReceiveIntent
+      );
     }
   }
 
   getVisit() {
     this.storageService.getVisit().then(data => {
-        if (data && data === true) {
-          console.log('First visit?', this.firstVisit);
-        } else {
-          this._friends.push({
-            id: 'did:elastos',
-            name: 'My First Contact',
-            gender: null,
-            note: 'Hi! Click me to see my profile and see what Capsules I have',
-            nickname: null,
-            country: null,
-            birthDate: 'December 2017',
-            telephone: null,
-            email: 'contact@elastos.org',
-            description: null,
-            website: 'https://www.elastos.org',
-            twitter: '@Elastos_org',
-            facebook: null,
-            telegram: null,
-            imageUrl: null,
-            applicationProfileCredentials: [
-              {
-                action: "This is a basic demo which demonstrates the identity service",
-                apppackage: "org.elastos.trinity.dapp.diddemo",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "This is a basic demo which demonstrates P2P networking",
-                apppackage: "org.elastos.trinity.dapp.carrierdemo",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Learn elastOS the fun way! Quizzes, chats, guilds, level up & earn points!",
-                apppackage: "tech.tuum.academy",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Let your voice be heard and vote for your CRC candidate!",
-                apppackage: "org.elastos.trinity.dapp.crcvoting",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Check out the latest and greatest capsules in elastOS!",
-                apppackage: "org.elastos.trinity.dapp.dappstore",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Vote for your favorite Supernodes and earn ELA along the way",
-                apppackage: "org.elastos.trinity.dapp.dposvoting",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Check for any block, transaction or address ever created on Elastos!",
-                apppackage: "org.elastos.trinity.dapp.blockchain",
-                apptype: "elastosbrowser"
-              },
-              {
-                action: "Show some love to your friends by giving them ELA!",
-                apppackage: "org.elastos.trinity.dapp.redpacket",
-                apptype: "elastosbrowser"
-              },
-            ],
-            isPicked: null,
-            isFav: true
-          });
-          this.storageService.setVisit(true);
-          this.storageService.setFriends(this._friends);
-        }
+      if (data && data === true) {
+        console.log('First visit?', this.firstVisit);
+      } else {
+        this._friends.push({
+          id: 'did:elastos',
+          name: 'My First Contact',
+          gender: null,
+          note: 'Hi! Click me to see my profile and see what Capsules I have',
+          nickname: null,
+          country: null,
+          birthDate: 'December 2017',
+          telephone: null,
+          email: 'contact@elastos.org',
+          description: null,
+          website: 'https://www.elastos.org',
+          twitter: '@Elastos_org',
+          facebook: null,
+          telegram: null,
+          imageUrl: null,
+          applicationProfileCredentials: [
+            {
+              action: "This is a basic demo which demonstrates the identity service",
+              apppackage: "org.elastos.trinity.dapp.diddemo",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "This is a basic demo which demonstrates P2P networking",
+              apppackage: "org.elastos.trinity.dapp.carrierdemo",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "Learn elastOS the fun way! Quizzes, chats, guilds, level up & earn points!",
+              apppackage: "tech.tuum.academy",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "Let your voice be heard and vote for your CRC candidate!",
+              apppackage: "org.elastos.trinity.dapp.crcvoting",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "Vote for your favorite Supernodes and earn ELA along the way",
+              apppackage: "org.elastos.trinity.dapp.dposvoting",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "Check for any block, transaction or address ever created on Elastos!",
+              apppackage: "org.elastos.trinity.dapp.blockchain",
+              apptype: "elastosbrowser"
+            },
+            {
+              action: "Show some love to your friends by giving them ELA!",
+              apppackage: "org.elastos.trinity.dapp.redpacket",
+              apptype: "elastosbrowser"
+            },
+          ],
+          isPicked: null,
+          isFav: true
+        });
+        this.storageService.setVisit(true);
+        this.storageService.setFriends(this._friends);
+      }
     });
   }
 
@@ -201,6 +205,7 @@ export class FriendsService {
         console.log('Fetched stored friends', friends);
         if(friends && friends.length > 0) {
           this._friends = friends;
+          this.sortContacts();
 
           if(!this.friendsChecked) {
             this.friendsChecked = true;
@@ -219,35 +224,40 @@ export class FriendsService {
   onMessageReceived(msg: AppManagerPlugin.ReceivedMessage) {
     var params: any = msg.message;
     if (typeof (params) == "string") {
-        try {
-            params = JSON.parse(params);
-        } catch (e) {
-            console.log('Params are not JSON format: ', params);
-        }
+      try {
+          params = JSON.parse(params);
+      } catch (e) {
+          console.log('Params are not JSON format: ', params);
+      }
     }
     switch (msg.type) {
-        case MessageType.IN_REFRESH:
-            if (params.action === "currentLocaleChanged") {
-                this.setCurLang(params.data);
-            }
-            break;
-        case MessageType.INTERNAL:
-            if (msg.message == "navback") {
-              if(this._friends.length === 0 || this.inProfileView) {
-                console.log('In profile page?', this.inProfileView);
-                this.router.navigate(['friends']);
-              } else {
-                this.navController.back();
-              }
-            }
-            break;
+      case MessageType.IN_REFRESH:
+        if (params.action === "currentLocaleChanged") {
+            this.setCurLang(params.data);
+        }
+        if(params.action === 'preferenceChanged' && params.data.key === "ui.darkmode") {
+          this.zone.run(() => {
+            console.log('Dark Mode toggled');
+            this.theme.setTheme(params.data.value);
+          });
+        }
+        break;
+      case MessageType.INTERNAL:
+        if (msg.message == "navback") {
+          if(this._friends.length === 0) {
+            this.router.navigate(['friends']);
+          } else {
+            this.navController.back();
+          }
+        }
+        break;
     }
   }
 
   onReceiveIntent = (ret) => {
-
     console.log("Intent received", ret);
     managerService.handledIntentId = ret.intentId;
+
     switch (ret.action) {
       case "handlescannedcontent_did":
         console.log('handlescannedcontent_did intent', ret);
@@ -311,7 +321,7 @@ export class FriendsService {
    * through "registerapplicationprofile" intents, by the DID app, on request from third party apps. This
    * is where we can retrieve public app profile information for a "user" (DID).
    */
-  resolveDIDDocument(didString: DIDPlugin.DIDString, updatingFriends): Promise<Boolean> {
+  resolveDIDDocument(didString: DIDPlugin.DIDString, updatingFriends: boolean): Promise<Boolean> {
     console.log('DID string', didString);
     return new Promise((resolve, reject) => {
       didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument) => {
@@ -473,16 +483,15 @@ export class FriendsService {
       }
     });
 
-
     let props: NavigationExtras = {
       queryParams: {
-        didId: this._friend.id,
-        didName: this._friend.name,
-        didGender: this._friend.gender,
-        didImage: this._friend.imageUrl
+        id: this._friend.id,
+        name: this._friend.name,
+        gender: this._friend.gender,
+        image: this._friend.imageUrl
       }
     }
-    this.router.navigate(['/friend-confirmation'], props);
+    this.router.navigate(['/confirm'], props);
   }
 
   /******************************** Add Friend if Confirmed ********************************/
@@ -508,7 +517,7 @@ export class FriendsService {
   }
 
   /******************************** Delete Friend ********************************/
-  async deleteWarning(friend) {
+  async deleteWarning(friend: Friend) {
     const popover = await this.popoverController.create({
       mode: 'ios',
       cssClass: 'delete',
@@ -518,9 +527,6 @@ export class FriendsService {
       }
     });
     return await popover.present();
-  /*   this.friendsService.deleteFriend(this.friend);
-    this.popover.dismiss();
-    console.log('Friend Deleted' + this.friend); */
   }
 
   deleteFriend(friend: Friend) {
@@ -531,6 +537,18 @@ export class FriendsService {
       alertName = friend.id;
     }
 
+    /**
+    * If contact was deleted from slides, change active slide to next index of array
+    * If contact of next index doesn't exist, change active slide to previous index
+    **/
+    let replacedSlide = this._friends[this._friends.indexOf(friend) + 1];
+    if(replacedSlide) {
+      this.activeSlide = replacedSlide
+    } else {
+      this.activeSlide = this._friends[this._friends.indexOf(friend) - 1];
+    }
+    console.log('Active slide after deletion', this.activeSlide);
+
     console.log('Deleting friend', friend);
     this._didDocs = this._didDocs.filter(did => did.id.didString !== friend.id);
     this._friends = this._friends.filter(_friend => _friend.id !== friend.id);
@@ -539,17 +557,19 @@ export class FriendsService {
     this.storageService.setDIDs(this._didDocs);
     this.storageService.setFriends(this._friends);
 
+    this.sortContacts();
     this.genericToast(alertName + ' was deleted');
     this.router.navigate(['/friends']);
   }
 
   /******************************** Customize friend ********************************/
-  customDID(customName: string, customNote: string, didId: string) {
+  customizeContact(customName: string, customNote: string, id: string) {
     this._friends.map(friend => {
-      if(friend.id === didId) {
+      if(friend.id === id) {
         friend.name = customName;
         friend.note = customNote;
         this.storageService.setFriends(this._friends);
+        this.sortContacts();
       }
     });
   }
@@ -567,7 +587,7 @@ export class FriendsService {
             singleInvite: isSingleInvite
           }
         }
-        this.router.navigate(['/pick-friend'], props);
+        this.router.navigate(['/invite'], props);
       } else {
         return;
       }
@@ -600,7 +620,7 @@ export class FriendsService {
                 friendsFiltered: true
               }
             }
-            this.router.navigate(['/pick-friend'], props);
+            this.router.navigate(['/invite'], props);
           } else {
             this.alertNoFriends('You don\'t have any friends with this app!');
           }
@@ -658,7 +678,7 @@ export class FriendsService {
     }
   }
 
-  // just notify the qrscanner to quit
+  // Just notify the qrscanner to quit
   sendEmptyIntentRes() {
     appManager.sendIntentResponse(
         "",
@@ -669,13 +689,20 @@ export class FriendsService {
 
   /******************************** Manage Favorite ********************************/
   toggleFav(friend: Friend) {
-    // friend.isFav = !friend.isFav;
-    this._friends.map((_friend) => {
+    friend.isFav = !friend.isFav;
+/*     this._friends.map((_friend) => {
       if(_friend.id === friend.id) {
         _friend.isFav = !_friend.isFav;
       }
-    });
+    }); */
     this.storageService.setFriends(this._friends);
+  }
+
+  /******************************* Share Contact  *******************************/
+  shareContact(friend: Friend) {
+    let link = 'https://scheme.elastos.org/addfriend?did=' + friend.id;
+    this.clipboard.copy(link);
+    this.shareToast(link);
   }
 
   /******************************** Contact Buttons ********************************/
@@ -683,37 +710,55 @@ export class FriendsService {
     appManager.sendIntent("scanqrcode", {}, {}, (res) => {
       console.log("Got scan result", res);
       this.addFriendByIntent(res.result.scannedContent);
-    }, (err: any)=>{
+    }, (err: any) => {
       console.error(err);
     })
   }
 
-  customizeFriend(friend: Friend) {
-    this.inProfileView = false;
+  showCustomization(friend: Friend) {
     let props: NavigationExtras = {
       queryParams: {
-        didId: friend.id,
-        didName: friend.name,
-        didGender: friend.gender,
-        didNote: friend.note,
-        didImage: friend.imageUrl
+        id: friend.id,
+        name: friend.name,
+        gender: friend.gender,
+        note: friend.note,
+        image: friend.imageUrl
       }
     }
-    this.router.navigate(['/custom-name'], props);
+    this.router.navigate(['/customize'], props);
   }
 
   async showOptions(ev: any, friend: Friend) {
+    let contact = this._friends.find((_friend) => _friend.id === friend.id);
+    console.log('Opening options for contact', contact);
+
     const popover = await this.popoverController.create({
       mode: 'ios',
       component: OptionsComponent,
-      cssClass: 'options',
+      cssClass: !this.theme.darkMode ? 'options' : 'darkOptions',
       event: ev,
       componentProps: {
-        friend: friend
+        contact: contact
       },
       translucent: false
     });
     return await popover.present();
+  }
+
+  /******************************** Sort Contacts ********************************/
+  sortContacts() {
+    this.letters = [];
+    this._friends.map((friend) => {
+      if(!friend.name && !this.letters.includes('No Name')) {
+        this.letters.push('No Name');
+      };
+      if(friend.name && !this.letters.includes(friend.name[0].toUpperCase())) {
+        this.letters.push(friend.name[0].toUpperCase());
+      }
+    });
+
+    this.letters = this.letters.sort((a, b) => a > b ? 1 : -1);
+    console.log('Letter groups', this.letters);
   }
 
   /******************************** Misc ********************************/
@@ -746,9 +791,9 @@ export class FriendsService {
   async genericToast(msg) {
     const toast = await this.toastController.create({
       mode: 'ios',
+      color: 'light',
       header: msg,
-      color: "secondary",
-      duration: 1000
+      duration: 2000
     });
     toast.present();
   }
@@ -756,10 +801,21 @@ export class FriendsService {
   async didResolveErr(err: string) {
     const toast = await this.toastController.create({
       mode: 'ios',
+      color: 'light',
       header: 'There was an error',
       message: err,
-      color: "secondary",
       duration: 6000.
+    });
+    toast.present();
+  }
+
+  async shareToast(link: string) {
+    const toast = await this.toastController.create({
+      mode: 'ios',
+      color: 'light',
+      header: 'Contact copied',
+      message: link,
+      duration: 3000
     });
     toast.present();
   }

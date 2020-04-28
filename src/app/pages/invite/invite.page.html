@@ -1,0 +1,150 @@
+<ion-content>
+
+  <ion-grid *ngIf="!isFilter" class="container" [class.darkContainer]="theme.darkMode">
+<!--      <ion-row class="msg-container">
+      <p>
+        Select the contact/contacts you would like by scrolling through
+        your contacts and clicking the purple icon on the right
+      </p>
+    </ion-row> -->
+    <ion-row class="btn-container">
+      <ion-button color="success"  (click)="this.friendsService.inviteFriends(false)">
+        <ion-label>Invite Contact</ion-label>
+      </ion-button>
+    </ion-row>
+    <ion-list>
+      <div class="ion-no-padding" *ngFor="let letter of friendsService.letters">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="1.75" class="first-col">
+              <ion-label class="letter ion-text-center">{{ letter }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <div *ngFor="let friend of friendsService._friends">
+          <ion-item *ngIf="friend.name && friend.name[0].toUpperCase() === letter" lines="none" detail="false">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="1.75" class="first-col">
+                  <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
+                  <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
+                </ion-col>
+                <ion-col offset="0.5" size="8.5">
+                  <ion-label>
+                    {{ friend.name }}
+                  </ion-label>
+                </ion-col>
+                <ion-col size="1.25">
+                  <ion-checkbox
+                    mode="ios"
+                    color="success"
+                    value="friend"
+                    [(ngModel)]="friend.isPicked"
+                    [disabled]="isSingleInvite && singlePicked(false) && !friend.isPicked"
+                  >
+                  </ion-checkbox>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-item *ngIf="!friend.name && letter === 'No Name'" lines="none" detail="false">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="1.75" class="first-col">
+                  <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
+                  <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
+                </ion-col>
+                <ion-col offset="0.5" size="8.5">
+                  <ion-label>
+                    {{ friend.id.slice(4,16) }}...{{ friend.id.slice(40,46) }}
+                  </ion-label>
+                </ion-col>
+                <ion-col size="1.25">
+                  <ion-checkbox
+                    mode="ios"
+                    color="success"
+                    value="friend"
+                    [(ngModel)]="friend.isPicked"
+                    [disabled]="isSingleInvite && singlePicked(false) && !friend.isPicked"
+                  >
+                  </ion-checkbox>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </div>
+      </div>
+    </ion-list>
+  </ion-grid>
+
+  <ion-grid *ngIf="isFilter" class="container" [class.darkContainer]="theme.darkMode">
+    <ion-row class="btn-container">
+      <ion-button color="success" (click)="this.friendsService.inviteFriends(true)">
+        <ion-label>Invite Contact</ion-label>
+      </ion-button>
+    </ion-row>
+    <ion-list>
+      <div class="ion-no-padding" *ngFor="let letter of letters">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="1.75" class="first-col">
+              <ion-label class="letter ion-text-center">{{ letter }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <div *ngFor="let friend of friendsService.filteredFriends">
+          <ion-item *ngIf="friend.name && friend.name[0].toUpperCase() === letter" lines="none" detail="false">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="1.75" class="first-col">
+                  <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
+                  <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
+                </ion-col>
+                <ion-col offset="0.5" size="8.5">
+                  <ion-label>
+                    {{ friend.name }}
+                  </ion-label>
+                </ion-col>
+                <ion-col size="1.25">
+                  <ion-checkbox
+                    mode="ios"
+                    color="success"
+                    value="friend"
+                    [(ngModel)]="friend.isPicked"
+                    [disabled]="isSingleInvite && singlePicked(true) && !friend.isPicked"
+                  >
+                  </ion-checkbox>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-item *ngIf="!friend.name && letter === 'No Name'" lines="none" detail="false">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="1.75" class="first-col">
+                  <ion-img *ngIf="friend.imageUrl" [src]="friend.imageUrl"></ion-img>
+                  <ion-img *ngIf="!friend.imageUrl" src="/assets/images/default-contact.svg"></ion-img>
+                </ion-col>
+                <ion-col offset="0.5" size="8.5">
+                  <ion-label>
+                    {{ friend.id.slice(4,16) }}...{{ friend.id.slice(40,46) }}
+                  </ion-label>
+                </ion-col>
+                <ion-col size="1.25">
+                  <ion-checkbox
+                    mode="ios"
+                    color="success"
+                    value="friend"
+                    [(ngModel)]="friend.isPicked"
+                    [disabled]="isSingleInvite && singlePicked(true) && !friend.isPicked"
+                  >
+                  </ion-checkbox>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </div>
+      </div>
+    </ion-list>
+  </ion-grid>
+</ion-content>
