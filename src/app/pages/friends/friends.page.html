@@ -127,7 +127,8 @@
           <ion-item-options side="end">
             <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.toggleFav(friend)">
               <ion-img *ngIf="friend.isFav" src="/assets/images/favorite.svg"></ion-img>
-              <ion-img *ngIf="!friend.isFav" src="/assets/images/unfavorite.svg"></ion-img>
+              <ion-img *ngIf="!theme.darkMode && !friend.isFav" src="/assets/images/unfavorite.svg"></ion-img>
+              <ion-img *ngIf="theme.darkMode && !friend.isFav" src="/assets/images/darkmode/unfavorite.svg"></ion-img>
             </ion-item-option>
             <ion-item-option class="itemOption" [color]="friend === friendsService.activeSlide ? 'secondary' : 'light'" (click)="friendsService.shareContact(friend)">
               <ion-img *ngIf="!theme.darkMode" src="/assets/images/share.svg"></ion-img>

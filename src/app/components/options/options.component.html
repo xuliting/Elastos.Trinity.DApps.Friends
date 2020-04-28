@@ -8,7 +8,8 @@
   <ion-row (click)="friendsService.toggleFav(friend)">
     <ion-label class="favorite">{{ 'favorite' | translate }}</ion-label>
     <ion-img *ngIf="friend.isFav" src="/assets/images/favorite.svg"></ion-img>
-    <ion-img *ngIf="!friend.isFav" src="/assets/images/unfavorite.svg"></ion-img>
+    <ion-img *ngIf="!theme.darkMode && !friend.isFav" src="/assets/images/unfavorite.svg"></ion-img>
+    <ion-img *ngIf="theme.darkMode && !friend.isFav" src="/assets/images/darkmode/unfavorite.svg"></ion-img>
   </ion-row>
 
   <ion-row (click)="deleteFriend()">
