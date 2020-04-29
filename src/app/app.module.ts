@@ -24,7 +24,7 @@ import { SharedModule } from './modules/shared.module';
 import { FriendsService } from './services/friends.service';
 import { OptionsComponent } from './components/options/options.component';
 import { DeleteComponent } from './components/delete/delete.component';
-import { SplashPage } from './pages/splash/splash.page';
+import { SplashPageModule } from './pages/splash/splash.module';
 
 Sentry.init({
   dsn: "https://c22ac246ed2c4d2cb71cd482705d8adb@sentry.io/1875747"
@@ -73,8 +73,7 @@ export function TranslateLoaderFactory() {
   declarations: [
     AppComponent,
     OptionsComponent,
-    DeleteComponent,
-    SplashPage
+    DeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +81,7 @@ export function TranslateLoaderFactory() {
     IonicModule.forRoot(),
     AppRoutingModule,
     SharedModule,
+    SplashPageModule,
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
@@ -95,7 +95,6 @@ export function TranslateLoaderFactory() {
     AppComponent,
     OptionsComponent,
     DeleteComponent,
-    SplashPage
   ],
   providers: [
     FriendsService,

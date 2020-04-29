@@ -24,6 +24,8 @@ export const fr = {
   // Add Pg
   'open-scanner': 'Ouvrir le scanner QR',
   'enter-did': 'Ou saisissez une identité',
+  'enter-identity-placeholder': ' Enter Identity',
+  'add-contact-prompt': 'Add contacts by manually entering an Identity or open a QR Scanner and scan an Identity QR Code',
 
   // Confirm Pg
   'do-you-want-to-add': 'Voulez-vous ajouter cette personne à vos contacts?',
@@ -31,6 +33,8 @@ export const fr = {
 
   // Customize Pg
   'customize-contact': 'Personnaliser le contact',
+  'name': 'Name',
+  'save-changes': 'Save Changes',
 
   // Invite Pg
   'invite-contact': 'Inviter un contact',

@@ -2,7 +2,7 @@
   <ion-grid class="container ion-no-padding ion-no-margin" [class.darkContainer]="theme.darkMode">
     <ion-row class="input-container">
       <ion-col class="input-title" size="2.5">
-        <ion-label>Name</ion-label>
+        <ion-label>{{ 'name' | translate }}</ion-label>
       </ion-col>
       <ion-col class="input" size="9.5">
         <ion-input
@@ -32,7 +32,7 @@
 
     <ion-row class="btn-container">
       <ion-button color="success" (click)="customizeContact()">
-        <ion-label>Save Changes</ion-label>
+        <ion-label>{{ 'save-changes' | translate }}</ion-label>
       </ion-button>
     </ion-row>
     <ion-row class="msg-container">

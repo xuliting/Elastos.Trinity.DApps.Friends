@@ -13,8 +13,8 @@ const routes: Routes = [
     component: MenuPage,
     children: [
       { path: 'friends', loadChildren: '../friends/friends.module#FriendsPageModule' },
-      { path: 'addFriend', loadChildren: '../add-friend/add-friend.module#AddFriendPageModule' },
-      { path: 'friend-confirmation', loadChildren: '../friend-confirmation/friend-confirmation.module#FriendConfirmationPageModule' },
+    //   { path: 'addFriend', loadChildren: '../add-friend/add-friend.module#AddFriendPageModule' },
+    //   { path: 'friend-confirmation', loadChildren: '../friend-confirmation/friend-confirmation.module#FriendConfirmationPageModule' },
       { path: ':friendId', loadChildren: '../friend-details/friend-details.module#FriendDetailsPageModule' },
     ]
   },

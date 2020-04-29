@@ -1,15 +1,15 @@
 <ion-content>
   <ion-grid class="container ion-no-padding ion-no-margin" [class.darkContainer]="theme.darkMode">
     <ion-row>
-      <ion-input #input autosize placeholder=" Enter Identity" [(ngModel)]="didInput"></ion-input>
+      <ion-input #input autosize placeholder="{{'enter-identity-placeholder'|translate}}" [(ngModel)]="didInput"></ion-input>
     </ion-row>
     <ion-row class="btn-container">
       <ion-button color="success" (click)="addFriend()">
-        <ion-label>Add Contact</ion-label>
+        <ion-label>{{ 'add-contact' | translate }}</ion-label>
       </ion-button>
     </ion-row>
     <ion-row class="msg-container">
-      <p class="ion-text-center">Add contacts by manually entering an Identity or open a QR Scanner and scan an Identity QR Code</p>
+      <p class="ion-text-center">{{ 'add-contact-prompt' | translate }}</p>
    <!--  <p class="ion-text-center">Add contacts by manually entering an Identity or open a QR Scanner below and scan an Identity QR Code</p> -->
     </ion-row>
   </ion-grid>
