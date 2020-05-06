@@ -14,6 +14,7 @@ export const en = {
   'apps': 'Capsules',
   'no-apps': 'No Capsules Available',
   'nickname': 'Nickname',
+  'bio': 'Bio',
   'country': 'Country',
   'birth': 'Birth Date',
   'telephone': 'Telephone',

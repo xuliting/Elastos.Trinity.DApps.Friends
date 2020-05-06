@@ -9,7 +9,7 @@
     </ion-row> -->
     <ion-row class="btn-container">
       <ion-button color="success"  (click)="this.friendsService.inviteFriends(false)">
-        <ion-label>Invite Contact</ion-label>
+        <ion-label>{{ 'invite-contact' | translate }}</ion-label>
       </ion-button>
     </ion-row>
     <ion-list>
@@ -80,7 +80,7 @@
   <ion-grid *ngIf="isFilter" class="container" [class.darkContainer]="theme.darkMode">
     <ion-row class="btn-container">
       <ion-button color="success" (click)="this.friendsService.inviteFriends(true)">
-        <ion-label>Invite Contact</ion-label>
+        <ion-label>{{ 'invite-contact' | translate }}</ion-label>
       </ion-button>
     </ion-row>
     <ion-list>

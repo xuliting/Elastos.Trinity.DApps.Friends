@@ -14,6 +14,7 @@ export const zh = {
   'apps': '已浏览的程序',
   'no-apps': '没有可用的程序',
   'nickname': '昵称',
+  'bio': 'Bio',
   'country': '国家/地区',
   'birth': '生日',
   'telephone': '电话',

@@ -168,16 +168,16 @@
 .darkContainer {
   ion-slide, .slide-content, .no-contacts {
     ion-title, p {
-      color: #ffffff !important;
+      color: #fdfeff !important;
     }
   }
 
   ion-segment {
     .active {
-      border-bottom: 2.7px solid #ffffff !important;
+      border-bottom: 2.7px solid #fdfeff !important;
 
       ion-label {
-        color: #ffffff;
+        color: #fdfeff;
       }
     }
   }
@@ -187,14 +187,14 @@
 
     .first-col {
       .letter {
-        color: #ffffff;
+        color: #fdfeff;
       }
     }
   }
 
   .onboard-msg {
     ion-title, p {
-      color: #ffffff !important;
+      color: #fdfeff !important;
     }
   }
 }

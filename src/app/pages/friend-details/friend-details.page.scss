@@ -79,38 +79,28 @@
   }
 
   ion-list {
-    padding-top: 20px;
+    padding-top: 22.5px;
     margin: 0;
 
     .profile-data {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 30px;
+      padding: 7.5px 30px 7.5px;
+      border-bottom: 1px solid #f0f1ff;
 
       h5, h4 {
         margin: 0;
       }
 
       h5 {
-        font-size: 14px;
+        font-size: 10px;
         font-weight: 600;
-        text-align: left;
-        color: #161740;
+        color: #a0a2c4;
+        line-height: 1.27;
       }
 
-      .cred {
-        padding: 0;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-
-        h4 {
-          font-size: 12px;
-          font-weight: 500;
-          font-stretch: 500;
-          text-align: right;
-          color: #161740;
-        }
+      h4 {
+        font-size: 13px;
+        font-weight: 500;
+        color: #161740;
       }
     }
 
@@ -184,16 +174,16 @@
 .darkContainer {
   .header {
     ion-title, p {
-      color: #ffffff !important;
+      color: #fdfeff !important;
     }
   }
 
   ion-segment {
     .active {
-      border-bottom: 2.7px solid #ffffff !important;
+      border-bottom: 2.7px solid #fdfeff !important;
 
       ion-label {
-        color: #ffffff;
+        color: #fdfeff;
       }
     }
   }
@@ -202,31 +192,35 @@
     background: #191a2f;
 
     .profile-data {
-      h5 {
-        color: #ffffff;
+      border-bottom: 1px solid #2f305a;
+
+      h5, h4 {
+        margin: 0;
       }
 
-      .cred {
-        h4 {
-          color: #ffffff;
-        }
+      h5 {
+        color: #8485a3;
+      }
+
+      h4 {
+        color: #fdfeff;
       }
     }
 
     .app {
       .appInfo-col {
         h4 {
-          color: #ffffff;
+          color: #fdfeff;
         }
 
         p {
-          color: #ffffff;
+          color: #fdfeff;
         }
       }
     }
 
     .no-apps {
-      color: #ffffff;
+      color: #fdfeff;
     }
   }
 }

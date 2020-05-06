@@ -14,6 +14,7 @@ export const fr = {
   'apps': 'Capsules',
   'no-apps': 'Aucune capsule disponible',
   'nickname': 'Pseudo',
+  'bio': 'Bio',
   'country': 'Pays',
   'birth': 'Date de naissance',
   'telephone': 'Téléphone',
@@ -33,7 +34,7 @@ export const fr = {
 
   // Customize Pg
   'customize-contact': 'Personnaliser le contact',
-  'name': 'Name',
+  'name': 'Nom',
   'save-changes': 'Save Changes',
 
   // Invite Pg
