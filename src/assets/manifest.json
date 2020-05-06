@@ -32,7 +32,8 @@
         "Device",
         "NetworkStatus",
         "DIDPlugin",
-        "Clipboard"
+        "Clipboard",
+        "ContactNotifierPlugin"
     ],
     "urls": [
         "http://*",

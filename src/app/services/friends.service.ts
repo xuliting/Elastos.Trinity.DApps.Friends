@@ -16,6 +16,7 @@ import { OptionsComponent } from '../components/options/options.component';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
+declare let contactNotifier: ContactNotifierPlugin.ContactNotifier;
 
 let managerService: any;
 
@@ -67,6 +68,8 @@ export class FriendsService {
 
   public firstVisit = false;
   public friendsChecked = false;
+
+  private pendingAddFriendByIntentCarrierAddress: string = null; // temporary storage for a potential carrier address inside received "addfriend" intent.
 
   getFriend(id: string) {
     return {...this._friends.find(friend => friend.id === id)};
@@ -262,14 +265,14 @@ export class FriendsService {
       case "handlescannedcontent_did":
         console.log('handlescannedcontent_did intent', ret);
         this.zone.run(() => {
-          this.addFriendByIntent(ret.params.data);
+          this.addFriendByIntent(ret.params.data, null);
         });
         this.sendEmptyIntentRes();
         break;
       case "addfriend":
         console.log('addfriend intent', ret);
         this.zone.run(() => {
-          this.addFriendByIntent(ret.params.did);
+          this.addFriendByIntent(ret.params.did, ret.params.carrier);
         });
         break;
       case "pickfriend":
@@ -309,8 +312,9 @@ export class FriendsService {
   }
 
   /******************************** Resolve DID  ********************************/
-  addFriendByIntent(did: string) {
+  addFriendByIntent(did: string, carrierAddress: string = null) {
     console.log('Received friend by intent', did);
+    this.pendingAddFriendByIntentCarrierAddress = carrierAddress;
     this.resolveDIDDocument(did, false);
   }
 
@@ -505,10 +509,17 @@ export class FriendsService {
 
     console.log('Current did', this._didDoc);
     let targetFriend: Friend = this._friends.find(friend => friend.id === this._friend.id);
-    if(targetFriend) {
+    if(/* TMP BPI */ false && /* TMP BPI END */ targetFriend) {
       this.genericToast(alertName + ' is already added');
       console.log('Friend is already added');
     } else {
+      // If a carrier address was provided with a addfriend intent, we use this friend's carrier address
+      // To try to reach him also through contact notifier plugin's global carrier address.
+      // After he accepts this invitation, it becomes possible to send him remote notifications.
+      if (this.pendingAddFriendByIntentCarrierAddress) {
+        contactNotifier.sendInvitation(this._friend.id, this.pendingAddFriendByIntentCarrierAddress);
+      }
+
       this.storageService.setFriends(this._friends = this._friends.concat(this._friend));
       this.storageService.setDIDs(this._didDocs = this._didDocs.concat(this._didDoc));
       this.genericToast(alertName + ' was added');
