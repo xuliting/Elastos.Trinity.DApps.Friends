@@ -1,5 +1,4 @@
 .container {
-  background: #fdfeff;
   min-height: 100%;
   padding: 10px 35px;
 
@@ -12,7 +11,6 @@
       ion-label {
         font-size: 15px;
         font-weight: 600;
-        color: #161740;
       }
     }
 
@@ -22,7 +20,6 @@
       ion-input {
         font-size: 13px;
         text-align: right;
-        color: #161740;
       }
     }
   }
@@ -51,31 +48,9 @@
       margin: 0;
       font-size: 12px;
       font-weight: 600;
-      color: #161740;
     };
   }
 }
 
 .darkContainer {
-  background: #191a2f;
-
-  .input-container {
-    .input-title {
-      ion-label {
-        color: #fdfeff;
-      }
-    }
-
-    .input {
-      ion-input {
-        color: #fdfeff;
-       }
-    }
-  }
-
-  .msg-container {
-    p {
-      color: #fdfeff;
-    };
-  }
 }

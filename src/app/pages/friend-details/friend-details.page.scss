@@ -12,10 +12,6 @@
       height: 84px;
     }
 
-    ion-title, p {
-      color: #161740 !important;
-    }
-
     ion-title {
       padding-top: 15px;
       padding-bottom: 10px;
@@ -100,7 +96,6 @@
       h4 {
         font-size: 13px;
         font-weight: 500;
-        color: #161740;
       }
     }
 
@@ -130,7 +125,6 @@
         h4 {
           font-size: 13px;
           font-weight: 600;
-          color: #161740;
           margin: 0;
           line-height: 1.29;
         }
@@ -138,7 +132,6 @@
         p {
           font-size: 8px;
           font-weight: 600;
-          color: #161740;
           margin: 0;
           line-height: 1.22;
         }
@@ -166,18 +159,11 @@
     .no-apps {
       font-weight: 600;
       font-size: 14px;
-      color: #161740;
     }
   }
 }
 
 .darkContainer {
-  .header {
-    ion-title, p {
-      color: #fdfeff !important;
-    }
-  }
-
   ion-segment {
     .active {
       border-bottom: 2.7px solid #fdfeff !important;
@@ -194,33 +180,9 @@
     .profile-data {
       border-bottom: 1px solid #2f305a;
 
-      h5, h4 {
-        margin: 0;
-      }
-
       h5 {
         color: #8485a3;
       }
-
-      h4 {
-        color: #fdfeff;
-      }
-    }
-
-    .app {
-      .appInfo-col {
-        h4 {
-          color: #fdfeff;
-        }
-
-        p {
-          color: #fdfeff;
-        }
-      }
-    }
-
-    .no-apps {
-      color: #fdfeff;
     }
   }
 }

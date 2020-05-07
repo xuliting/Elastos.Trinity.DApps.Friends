@@ -38,7 +38,7 @@ export class FriendsService {
   private _didDoc: DID;
   private _didDocs: DID[] = [];
 
-  private _friend: Friend = {
+  public _friend: Friend = {
     id: null,
     name: null,
     gender: null,
@@ -67,6 +67,7 @@ export class FriendsService {
 
   public firstVisit = false;
   public friendsChecked = false;
+  public addingFriend = false;
 
   getFriend(id: string) {
     return {...this._friends.find(friend => friend.id === id)};

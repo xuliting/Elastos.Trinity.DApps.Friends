@@ -42,11 +42,11 @@ export class FriendsPage implements OnInit {
   ionViewWillEnter() {
     titleBarManager.setTitle(this.translate.instant('contacts'));
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
+    this.getActiveSlide();
   }
 
   ionViewDidEnter() {
     appManager.setVisible("show");
-    this.getActiveSlide();
   }
 
   async getActiveSlide() {

@@ -1,5 +1,4 @@
 .container {
-  background: #fdfeff;
   min-height: 100%;
   padding: 30px 35px;
 
@@ -26,7 +25,6 @@
       font-size: 16px;
       font-weight: 500;
       text-align: center;
-      color: #161740;
     };
   }
 
@@ -70,50 +68,17 @@
       .letter {
         font-size: 11px;
         font-weight: 700;
-        color: #161740;
       }
     }
   }
 }
 
 .darkContainer {
-  background: #191a2f;
-
-  .msg-container {
-    p {
-      color: #fdfeff;
-    };
-  }
-
   ion-list {
     background: #191a2f;
 
     ion-item {
       --background: #191a2f;
     }
-
-    .first-col {
-      .letter {
-        color: #fdfeff;
-      }
-    }
   }
 }
-
-/* .footer {
-  position: fixed;
-  z-index: 1;
-  height: 18%;
-  bottom: 5px;
-  right: 5px;
-  left: 5px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: space-between;
-
-  did-button {
-    width: 100%;
-  }
-}
-
- */

@@ -1,5 +1,4 @@
 .container {
-  background: #fdfeff;
   min-height: 100%;
   padding: 30px 35px;
 
@@ -34,21 +33,12 @@
       margin: 0;
       font-size: 12px;
       font-weight: 600;
-      color: #161740;
     };
   }
 }
 
 .darkContainer {
-  background: #191a2f;
-
   ion-input {
     background: #464660;
-  }
-
-  .msg-container {
-    p {
-      color: #fdfeff;
-    };
   }
 }

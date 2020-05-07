@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f0f1ff;
   padding: 24px;
   min-height: 100%;
 
@@ -36,7 +35,6 @@
         font-size: 22px;
         font-weight: 600;
         text-align: center;
-        color: #161740;
       }
     }
 
@@ -81,9 +79,6 @@
 }
 
 .darkContainer {
-  // background: #161740;
-  background: #191a2f;
-
   .profile-container {
     background: #72748e;
 
@@ -96,7 +91,6 @@
 
     .message {
       background: #393A48;
-      // opacity: 0.5;
 
       p {
         color: #fdfeff;
@@ -106,7 +100,6 @@
     .btn-row {
       .btn {
         background: #393A48;
-        // opacity: 0.5;
 
         ion-label {
           color: #fdfeff;

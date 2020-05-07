@@ -49,6 +49,7 @@ export class ConfirmPage implements OnInit {
   }
 
   addFriend() {
+    this.friendsService.addingFriend = true;
     this.friendsService.addFriend();
     this.router.navigate(['friends']);
   }

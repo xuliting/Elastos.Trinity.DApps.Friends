@@ -22,10 +22,6 @@
       height: 80px;
     }
 
-    ion-title, p {
-      color: #161740 !important;
-    }
-
     ion-title {
       padding-top: 15px;
       padding-bottom: 10px;
@@ -122,7 +118,6 @@
       .letter {
         font-size: 11px;
         font-weight: 700;
-        color: #161740;
       }
     }
   }
@@ -132,10 +127,6 @@
   }
 
   .onboard-msg {
-    ion-title, p {
-      color: #161740 !important;
-    }
-
     ion-title {
       padding: 21px 0px;
       font-size: 28px;
@@ -166,12 +157,6 @@
 }
 
 .darkContainer {
-  ion-slide, .slide-content, .no-contacts {
-    ion-title, p {
-      color: #fdfeff !important;
-    }
-  }
-
   ion-segment {
     .active {
       border-bottom: 2.7px solid #fdfeff !important;
@@ -184,17 +169,5 @@
 
   ion-list {
     background: #191a2f;
-
-    .first-col {
-      .letter {
-        color: #fdfeff;
-      }
-    }
-  }
-
-  .onboard-msg {
-    ion-title, p {
-      color: #fdfeff !important;
-    }
   }
 }
