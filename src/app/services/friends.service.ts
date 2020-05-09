@@ -548,6 +548,10 @@ export class FriendsService {
       alertName = friend.id;
     }
 
+    // Delete from the contact notifier
+    console.log("Deleting friend from the contact notifier database");
+    contactNotifier.removeContact(friend.id);
+
     /**
     * If contact was deleted from slides, change active slide to next index of array
     * If contact of next index doesn't exist, change active slide to previous index
