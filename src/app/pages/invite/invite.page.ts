@@ -39,7 +39,10 @@ export class InvitePage implements OnInit {
       }
       if (params.friendsFiltered) {
         this.isFilter = true;
-        this.sortContacts();
+        this.sortContacts(this.isFilter);
+      } else {
+        this.isFilter = false;
+        this.sortContacts(this.isFilter);
       }
     });
     console.log('Is single invite?', this.isSingleInvite);
@@ -53,19 +56,37 @@ export class InvitePage implements OnInit {
   ionViewDidEnter() {
   }
 
-  sortContacts() {
-    this.letters = [];
-    this.friendsService.filteredFriends.map((friend) => {
-      if(!friend.name && !this.letters.includes('No Name')) {
-        this.letters.push('No Name');
-      };
-      if(friend.name && !this.letters.includes(friend.name[0].toUpperCase())) {
-        this.letters.push(friend.name[0].toUpperCase());
-      }
-    });
+  getFriends() {
+    return this.friendsService._friends.filter((friend) => friend.id !== 'did:elastos');
+  }
 
-    this.letters = this.letters.sort((a, b) => a > b ? 1 : -1);
-    console.log('Letter groups', this.letters);
+  sortContacts(isFilter: boolean) {
+    this.letters = [];
+    if(isFilter) {
+      this.friendsService.filteredFriends.map((friend) => {
+        if(!friend.name && !this.letters.includes('No Name')) {
+          this.letters.push('No Name');
+        };
+        if(friend.name && !this.letters.includes(friend.name[0].toUpperCase())) {
+          this.letters.push(friend.name[0].toUpperCase());
+        }
+      });
+
+      this.letters = this.letters.sort((a, b) => a > b ? 1 : -1);
+      console.log('Letter groups', this.letters);
+    } else {
+      this.friendsService._friends.map((friend) => {
+        if(!friend.name && !this.letters.includes('No Name')) {
+          this.letters.push('No Name');
+        };
+        if(friend.id !== 'did:elastos' && friend.name && !this.letters.includes(friend.name[0].toUpperCase())) {
+          this.letters.push(friend.name[0].toUpperCase());
+        }
+      });
+
+      this.letters = this.letters.sort((a, b) => a > b ? 1 : -1);
+      console.log('Letter groups', this.letters);
+    }
   }
 
   // If pick-friend intent is single invite, disable checkboxes if a friend is picked //

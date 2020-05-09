@@ -581,8 +581,8 @@ export class FriendsService {
   async getFriends(isSingleInvite: boolean) {
     await this.getStoredDIDs().then((friends: Friend[]) => {
       console.log('My friends', friends);
-
-      if (friends.length > 0) {
+      let realFriends = friends.filter((friend) => friend.id !== 'did:elastos');
+      if (realFriends.length > 0) {
         let props: NavigationExtras = {
           queryParams: {
             singleInvite: isSingleInvite
@@ -590,7 +590,7 @@ export class FriendsService {
         }
         this.router.navigate(['/invite'], props);
       } else {
-        return;
+        this.alertNoFriends('You don\'t have any friends to invite!');
       }
     });
   }
@@ -598,33 +598,32 @@ export class FriendsService {
   async getFilteredFriends(isSingleInvite: boolean, ret) {
     await this.getStoredDIDs().then((friends: Friend[]) => {
       console.log('My friends', friends);
-
       if(friends.length > 0) {
-          console.log('Intent requesting friends with app', ret.from);
-          this.filteredFriends = [];
-          this._friends.map((friend) => {
-            friend.applicationProfileCredentials.map((appCreds) => {
-              if(appCreds.apppackage === ret.from) {
-                this.filteredFriends.push(friend);
-              }
-              // For Testing Purposes
-              /* if(appCreds.apppackage === 'org.elastos.trinity.dapp.diddemo') {
-                this.filteredFriends.push(friend);
-              } */
-            });
-          });
-
-          if(this.filteredFriends.length > 0) {
-            let props: NavigationExtras = {
-              queryParams: {
-                singleInvite: isSingleInvite,
-                friendsFiltered: true
-              }
+        console.log('Intent requesting friends with app', ret.from);
+        this.filteredFriends = [];
+        this._friends.map((friend) => {
+          friend.applicationProfileCredentials.map((appCreds) => {
+            if(friend.id !== 'did:elastos' && appCreds.apppackage === ret.from) {
+              this.filteredFriends.push(friend);
             }
-            this.router.navigate(['/invite'], props);
-          } else {
-            this.alertNoFriends('You don\'t have any friends with this app!');
+            // For Testing Purposes
+            /* if(appCreds.apppackage === 'org.elastos.trinity.dapp.diddemo') {
+              this.filteredFriends.push(friend);
+            } */
+          });
+        });
+
+        if(this.filteredFriends.length > 0) {
+          let props: NavigationExtras = {
+            queryParams: {
+              singleInvite: isSingleInvite,
+              friendsFiltered: true
+            }
           }
+          this.router.navigate(['/invite'], props);
+        } else {
+          this.alertNoFriends('You don\'t have any friends with this app!');
+        }
       } else {
         return;
       }
