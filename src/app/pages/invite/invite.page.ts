@@ -54,6 +54,7 @@ export class InvitePage implements OnInit {
   }
 
   ionViewDidEnter() {
+    appManager.setVisible("show");
   }
 
   getFriends() {
