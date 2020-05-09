@@ -32,10 +32,9 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.friendsService.init();
-
-      this.splashScreen.hide();
       this.navController.navigateRoot("/friends");
+      this.friendsService.init();
+      this.splashScreen.hide();
 
       // this.splash();
 

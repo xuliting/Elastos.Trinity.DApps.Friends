@@ -245,11 +245,7 @@ export class FriendsService {
         break;
       case MessageType.INTERNAL:
         if (msg.message == "navback") {
-          if(this._friends.length === 0) {
-            this.router.navigate(['friends']);
-          } else {
-            this.navController.back();
-          }
+          this.navController.back();
         }
         break;
     }
@@ -271,6 +267,12 @@ export class FriendsService {
         console.log('addfriend intent', ret);
         this.zone.run(() => {
           this.addFriendByIntent(ret.params.did);
+        });
+        break;
+      case "viewfriend":
+        console.log('viewfriend intent', ret);
+        this.zone.run(() => {
+          this.viewFriend(ret.params.did);
         });
         break;
       case "pickfriend":
@@ -571,6 +573,18 @@ export class FriendsService {
         friend.note = customNote;
         this.storageService.setFriends(this._friends);
         this.sortContacts();
+      }
+    });
+  }
+
+  /******************************** View Friend Intent  ********************************/
+  async viewFriend(did: string) {
+    await this.getStoredDIDs().then((friends: Friend[]) => {
+      let friend = friends.find((_friend) => _friend.id === did);
+      if(friend) {
+        this.router.navigate(['/friends/', friend.id]);
+      } else {
+        this.resolveDIDDocument(did, false);
       }
     });
   }

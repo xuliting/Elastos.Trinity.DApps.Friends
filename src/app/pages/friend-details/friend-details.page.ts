@@ -63,6 +63,7 @@ export class FriendDetailsPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    appManager.setVisible("show");
   }
 
   ionViewDidLeave() {
