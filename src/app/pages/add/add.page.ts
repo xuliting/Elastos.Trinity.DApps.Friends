@@ -47,12 +47,7 @@ export class AddPage implements OnInit {
   }
 
   scanDID() {
-    appManager.sendIntent("scanqrcode", {}, {}, (res) => {
-      console.log("Got scan result", res);
-      this.friendsService.addFriendByIntent(res.result.scannedContent, null);
-    }, (err: any)=>{
-      console.error(err);
-    })
+    this.friendsService.openScanner();
   }
 
   /* pasteDID() {

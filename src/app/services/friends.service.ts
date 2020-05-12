@@ -724,7 +724,43 @@ export class FriendsService {
   openScanner() {
     appManager.sendIntent("scanqrcode", {}, {}, (res) => {
       console.log("Got scan result", res);
-      this.addFriendByIntent(res.result.scannedContent);
+
+      // Scanned content could contain different things:
+      // - A did: did:elastos:xxxx
+      // - A add friend url: https://scheme.elastos.org/addfriend?did=xxx[&carrier=xxx]
+      // - Something that we don't know
+      let scannedContentHandled = false
+      if (res && res.result && res.result.scannedContent) {
+        let scannedContent = res.result.scannedContent;
+
+        if (scannedContent.indexOf("did:") == 0) {
+          // We've scanned a DID string. Add friend, without carrier address support
+          console.log("Scanned content is a DID string");
+          this.addFriendByIntent(scannedContent, null);
+          scannedContentHandled = true;
+        }
+        else if (scannedContent.indexOf("http") == 0) {
+          console.log("Scanned content is a URL");
+          // Probably a url - try to parse it and see if we can handle it
+          let scannedUrl = new URL(scannedContent);
+          console.log(scannedUrl);
+          
+          if (scannedUrl) {
+            if (scannedUrl.pathname == "/addfriend") {
+              let did = scannedUrl.searchParams.get("did");
+              let carrierAddress = scannedUrl.searchParams.get("carrier");
+
+              this.addFriendByIntent(did, carrierAddress);
+              scannedContentHandled = true;
+            }
+          }
+        }
+      }
+
+      if (!scannedContentHandled) {
+        // TODO: say something to user
+      }
+
     }, (err: any) => {
       console.error(err);
     })
