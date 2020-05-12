@@ -354,7 +354,7 @@ export class FriendsService {
         } */
       }, (err: any) => {
         console.error("DIDDocument resolving error", err);
-        this.router.navigate(['/friends']);
+        this.router.navigate(['friends']);
         this.didResolveErr(err.message);
         resolve(false);
       });
