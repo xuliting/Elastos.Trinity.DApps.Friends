@@ -96,7 +96,16 @@ export class FriendsService {
     this.getStoredDIDs();
     this.theme.getTheme();
 
-    // Load app manager only on real device, not in desktop browser - beware: ionic 4 bug with "desktop" or "android"/"ios"
+    appManager.hasPendingIntent((intent: Boolean) => {
+      if(intent) {
+        console.log('Pending intent', intent);
+        appManager.setIntentListener(this.onReceiveIntent);
+      } else {
+        console.log('No pending intent, routing to home page', intent);
+        this.navController.navigateRoot("/friends");
+      }
+    });
+
     if (this.platform.platforms().indexOf("cordova") >= 0) {
       console.log("Listening to intent events");
       appManager.setListener((msg) => {
@@ -345,6 +354,7 @@ export class FriendsService {
         } */
       }, (err: any) => {
         console.error("DIDDocument resolving error", err);
+        this.router.navigate(['/friends']);
         this.didResolveErr(err.message);
         resolve(false);
       });
@@ -582,7 +592,7 @@ export class FriendsService {
     await this.getStoredDIDs().then((friends: Friend[]) => {
       let friend = friends.find((_friend) => _friend.id === did);
       if(friend) {
-        this.router.navigate(['/friends/', friend.id]);
+        this.router.navigate(['friends/', friend.id]);
       } else {
         this.resolveDIDDocument(did, false);
       }
@@ -604,6 +614,7 @@ export class FriendsService {
         }
         this.router.navigate(['/invite'], props);
       } else {
+        this.router.navigate(['/friends']);
         this.alertNoFriends('You don\'t have any friends to invite!');
       }
     });
@@ -636,6 +647,7 @@ export class FriendsService {
           }
           this.router.navigate(['/invite'], props);
         } else {
+          this.router.navigate(['/friends']);
           this.alertNoFriends('You don\'t have any friends with this app!');
         }
       } else {
