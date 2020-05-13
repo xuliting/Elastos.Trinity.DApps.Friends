@@ -695,10 +695,9 @@ export class FriendsService {
         "pickfriend",
         { friends: _friends },
         managerService.handledIntentId,
-        (res: any) => {},
-        (err: any) => {}
+        (res: any) => {appManager.close();},
+        (err: any) => {console.log('sendIntentResponse failed: ', err)}
       );
-      appManager.close();
     } else {
       this.genericToast('Please select some friends before inviting');
     }
