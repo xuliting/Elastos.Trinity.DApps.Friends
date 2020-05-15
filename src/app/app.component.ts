@@ -18,13 +18,10 @@ export class AppComponent {
   @ViewChild(IonRouterOutlet, {static: true}) routerOutlet: IonRouterOutlet;
 
   constructor(
-    private navController: NavController,
     private modalController: ModalController,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private friendsService: FriendsService,
-    private router: Router
   ) {
     this.initializeApp();
   }
@@ -32,7 +29,6 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.friendsService.init();
       this.splashScreen.hide();
 
       // this.splash();

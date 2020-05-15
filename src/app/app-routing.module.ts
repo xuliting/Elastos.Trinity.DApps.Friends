@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { InitPage } from './pages/init/init.page';
 
 const routes: Routes = [
+  { path: '', component: InitPage },
   { path: 'friends', loadChildren: './pages/friends/friends.module#FriendsPageModule' },
   { path: 'add', loadChildren: './pages/add/add.module#AddPageModule' },
   { path: 'confirm', loadChildren: './pages/confirm/confirm.module#ConfirmPageModule' },
