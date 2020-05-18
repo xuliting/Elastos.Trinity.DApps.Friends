@@ -6,7 +6,7 @@ export const fr = {
   'add-a-contact2': 'Add a contact by clicking the add icon below',
   'favorites': 'Favoris',
   'all-contacts': 'Les contacts',
-  'starter-contact': 'This is your starter contact. Click on it to see the profile and see what Capsules they have. Add real contacts by the add icon above',
+  'starter-contact': 'Ceci est un contact de départ. Touchez pour voir le profil et les capsules qu\'il utilise. Ajoutez de vrais contacts via le bouton plus ci dessous.',
 
   // Friend-Details Pg
   'contact-profile': "Profil du contact",
@@ -25,25 +25,25 @@ export const fr = {
   // Add Pg
   'open-scanner': 'Ouvrir le scanner QR',
   'enter-did': 'Ou saisissez une identité',
-  'enter-identity-placeholder': ' Enter Identity',
-  'add-contact-prompt': 'Add contacts by manually entering an Identity or open a QR Scanner and scan an Identity QR Code',
+  'enter-identity-placeholder': ' Saisissiez un identifiant DID',
+  'add-contact-prompt': 'Ajoutez des contacts manuellement à partir de leur identifiant ou en scanner leur QR code.',
 
   // Confirm Pg
   'do-you-want-to-add': 'Voulez-vous ajouter cette personne à vos contacts?',
-  'confirm-contact': 'Confirmer le contact',
+  'confirm-contact': 'Confirmer l\'ajout',
 
   // Customize Pg
   'customize-contact': 'Personnaliser le contact',
   'name': 'Nom',
-  'save-changes': 'Save Changes',
+  'save-changes': 'Enregistrer',
 
   // Invite Pg
   'invite-contact': 'Inviter un contact',
   'invite-contacts': 'Inviter des contacts',
 
   // Options
-  'share': 'Share',
-  'favorite': 'Préféré',
+  'share': 'Partager',
+  'favorite': 'Favori',
 
   // No-Friends Warning
   'no-contacts-header': "Vous n'avez aucun contact!",
