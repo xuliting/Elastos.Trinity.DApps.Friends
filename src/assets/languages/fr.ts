@@ -5,7 +5,7 @@ export const fr = {
   'add-a-contact': "Ajouter un contact en cliquant sur l'icône d'ajout ci-dessus'",
   'add-a-contact2': 'Add a contact by clicking the add icon below',
   'favorites': 'Favoris',
-  'all-contacts': 'Les contacts',
+  'all-contacts': 'Contacts',
   'starter-contact': 'Ceci est un contact de départ. Touchez pour voir le profil et les capsules qu\'il utilise. Ajoutez de vrais contacts via le bouton plus ci dessous.',
 
   // Friend-Details Pg
