@@ -41,7 +41,11 @@ export class ConfirmPage implements OnInit {
 
   ionViewWillEnter() {
     titleBarManager.setTitle(this.translate.instant('confirm-contact'));
-    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
+    this.friendsService.setTitleBarBackKeyShown(true);
+  }
+
+  ionViewWillLeave() {
+    this.friendsService.setTitleBarBackKeyShown(false);
   }
 
   ionViewDidEnter() {

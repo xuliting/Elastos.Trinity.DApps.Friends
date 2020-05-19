@@ -36,7 +36,11 @@ export class AddPage implements OnInit {
 
   ionViewWillEnter() {
     titleBarManager.setTitle(this.translate.instant('add-contact'));
-    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
+    this.friendsService.setTitleBarBackKeyShown(true);
+  }
+
+  ionViewWillLeave() {
+    this.friendsService.setTitleBarBackKeyShown(false);
   }
 
   ionViewDidEnter() {

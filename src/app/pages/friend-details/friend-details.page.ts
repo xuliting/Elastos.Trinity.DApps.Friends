@@ -59,14 +59,15 @@ export class FriendDetailsPage implements OnInit {
 
   ionViewWillEnter() {
     titleBarManager.setTitle(this.translate.instant('contact-profile'));
-    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
+    this.friendsService.setTitleBarBackKeyShown(true);
   }
 
   ionViewDidEnter() {
     appManager.setVisible("show");
   }
 
-  ionViewDidLeave() {
+  ionViewWillLeave() {
+    this.friendsService.setTitleBarBackKeyShown(false);
   }
 
   /* From the app credentials, build a list of displayable items onced its fetched from the app store */

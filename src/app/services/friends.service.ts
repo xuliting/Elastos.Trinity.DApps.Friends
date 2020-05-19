@@ -16,6 +16,7 @@ import { OptionsComponent } from '../components/options/options.component';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let didManager: DIDPlugin.DIDManager;
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 let managerService: any;
 
@@ -114,6 +115,23 @@ export class FriendsService {
       appManager.setIntentListener(
         this.onReceiveIntent
       );
+      titleBarManager.setOnItemClickedListener((menuIcon)=>{
+        if (menuIcon.key == "back") {
+            this.navController.back();
+        }
+      });
+    }
+  }
+
+  setTitleBarBackKeyShown(show: boolean) {
+    if (show) {
+        titleBarManager.setIcon(TitleBarPlugin.TitleBarIconSlot.INNER_LEFT, {
+            key: "back",
+            iconPath: TitleBarPlugin.BuiltInIcon.BACK
+        });
+    }
+    else {
+        titleBarManager.setIcon(TitleBarPlugin.TitleBarIconSlot.INNER_LEFT, null);
     }
   }
 
@@ -252,11 +270,11 @@ export class FriendsService {
           });
         }
         break;
-      case MessageType.INTERNAL:
-        if (msg.message == "navback") {
-          this.navController.back();
-        }
-        break;
+      // case MessageType.INTERNAL:
+      //   if (msg.message == "navback") {
+      //     this.navController.back();
+      //   }
+      //   break;
     }
   }
 
