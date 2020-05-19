@@ -364,12 +364,12 @@ export class FriendsService {
         if (didDocument && updatingFriends) {
           this.updateFriends(didDocument);
         }
-    /*     else if (!didDocument && updatingFriends) {
+        else if (!didDocument && updatingFriends) {
           return;
         } else {
           this.didResolveErr("Sorry, we can't find your friend on chain. Did he make his DID profile public ?");
           resolve(false);
-        } */
+        }
       }, (err: any) => {
         console.error("DIDDocument resolving error", err);
         this.router.navigate(['friends']);
