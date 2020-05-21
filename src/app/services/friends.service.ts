@@ -115,7 +115,7 @@ export class FriendsService {
       appManager.setIntentListener(
         this.onReceiveIntent
       );
-      titleBarManager.setOnItemClickedListener((menuIcon)=>{
+      titleBarManager.addOnItemClickedListener((menuIcon)=>{
         if (menuIcon.key == "back") {
             this.navController.back();
         }
@@ -270,11 +270,6 @@ export class FriendsService {
           });
         }
         break;
-      // case MessageType.INTERNAL:
-      //   if (msg.message == "navback") {
-      //     this.navController.back();
-      //   }
-      //   break;
     }
   }
 
