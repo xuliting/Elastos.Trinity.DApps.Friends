@@ -79,14 +79,16 @@
 
 .delete {
   --height: 302px;
-
   ion-backdrop {
     opacity: 0.1 !important;
   }
 
   .popover-wrapper{
     .popover-content {
-      width: 85vw;
+      width: 80vw !important;
     }
   }
 }
+
+
+
