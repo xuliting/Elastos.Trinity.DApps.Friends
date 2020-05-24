@@ -1,6 +1,11 @@
 .container {
   padding: 40px 0 80px;
 
+  .profile-img {
+    border-radius: 100%;
+    border: 1px solid #6d74ef;
+  }
+
   ion-slide {
     width: 80px;
     height: 80px;

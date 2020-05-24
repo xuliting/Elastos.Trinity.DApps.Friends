@@ -1,7 +1,7 @@
 <ion-content>
-  <ion-grid class="container" [class.darkContainer]="theme.darkMode">
+  <ion-grid class="container" [class.blur]="friendsService.popup" [class.darkContainer]="theme.darkMode">
     <div class="header">
-      <ion-img src="/assets/images/default-contact.svg"></ion-img>
+      <ion-img class="profile-img" src="/assets/images/default-contact.svg"></ion-img>
       <ion-title mode='md' *ngIf="friend.name">
         {{ friend.name }}
       </ion-title>

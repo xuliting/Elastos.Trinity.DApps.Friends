@@ -69,6 +69,7 @@ export class FriendsService {
   public firstVisit = false;
   public friendsChecked = false;
   public addingFriend = false;
+  public popup = false;
 
   getFriend(id: string) {
     return {...this._friends.find(friend => friend.id === id)};
@@ -544,6 +545,7 @@ export class FriendsService {
 
   /******************************** Delete Friend ********************************/
   async deleteWarning(friend: Friend) {
+    this.popup = true;
     const popover = await this.popoverController.create({
       mode: 'ios',
       cssClass: 'delete',
@@ -551,6 +553,9 @@ export class FriendsService {
       componentProps: {
         friend: friend
       }
+    });
+    popover.onWillDismiss().then(() => {
+      this.popup = false;
     });
     return await popover.present();
   }
