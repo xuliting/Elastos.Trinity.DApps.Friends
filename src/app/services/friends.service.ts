@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, AlertController, NavController, PopoverController } from '@ionic/angular';
+import { Platform, AlertController, NavController, PopoverController, Events } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
@@ -87,15 +87,16 @@ export class FriendsService {
     public translate: TranslateService,
     private theme: ThemeService,
     private storageService: StorageService,
+    private events: Events
   ) {
     managerService = this;
   }
 
   /******************************** Initial Render  ********************************/
-  init() {
+  async init() {
     this.getVisit();
     this.getLanguage();
-    this.getStoredDIDs();
+    await this.getStoredDIDs();
     this.theme.getTheme();
 
     appManager.hasPendingIntent((intent: Boolean) => {
@@ -281,15 +282,19 @@ export class FriendsService {
     switch (ret.action) {
       case "handlescannedcontent_did":
         console.log('handlescannedcontent_did intent', ret);
-        this.zone.run(() => {
-          this.addFriendByIntent(ret.params.data);
+        this.zone.run(async () => {
+          await this.navigateToFriendsList({
+            addFriend: ret.params.data
+          });
         });
         this.sendEmptyIntentRes();
         break;
       case "addfriend":
         console.log('addfriend intent', ret);
-        this.zone.run(() => {
-          this.addFriendByIntent(ret.params.did);
+        this.zone.run(async () => {
+          await this.navigateToFriendsList({
+            addFriend: ret.params.did
+          });
         });
         break;
       case "viewfriend":
@@ -334,6 +339,12 @@ export class FriendsService {
     }
   }
 
+  private async navigateToFriendsList(params: any) {
+    console.log("Navigating to friends list screen");
+    await this.navController.navigateRoot('friends');
+    this.events.publish("handleaddfriend", params);
+  }
+
   /******************************** Resolve DID  ********************************/
   addFriendByIntent(did: string) {
     console.log('Received friend by intent', did);
@@ -348,7 +359,7 @@ export class FriendsService {
    * is where we can retrieve public app profile information for a "user" (DID).
    */
   resolveDIDDocument(didString: DIDPlugin.DIDString, updatingFriends: boolean): Promise<Boolean> {
-    console.log('DID string', didString);
+    console.log('Resolving DID document for DID string ', didString, 'Updating friends='+updatingFriends);
     return new Promise((resolve, reject) => {
       didManager.resolveDidDocument(didString, true, (didDocument: DIDPlugin.DIDDocument) => {
         console.log("DIDDocument resolved for DID " + didString, didDocument);

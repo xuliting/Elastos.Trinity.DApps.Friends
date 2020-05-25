@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, Events } from '@ionic/angular';
 
 import { FriendsService } from 'src/app/services/friends.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
 import { Friend } from 'src/app/models/friends.model';
+import { Router, ActivatedRoute } from '@angular/router';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -33,19 +34,33 @@ export class FriendsPage implements OnInit {
   constructor(
     public translate: TranslateService,
     public theme: ThemeService,
+    private route: ActivatedRoute,
     public friendsService: FriendsService,
-  ) { }
+    private router: Router,
+    private events: Events
+  ) { 
+  }
 
   ngOnInit() {
+    // Handle special commands such as "add a friend"
+    this.events.subscribe("handleaddfriend", (params)=>{
+      let friendToAdd = params.addFriend;
+      if (friendToAdd) {
+        this.friendsService.addFriendByIntent(friendToAdd);
+      }
+    })
   }
 
   ionViewWillEnter() {
+    console.log("Friends list screen will enter");
     titleBarManager.setTitle(this.translate.instant('contacts'));
-    this.getActiveSlide();
+
+    appManager.setVisible("show");
   }
 
   ionViewDidEnter() {
-    appManager.setVisible("show");
+    console.log("Friends list screen did enter");
+    this.getActiveSlide();
   }
 
   async getActiveSlide() {
