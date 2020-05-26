@@ -16,8 +16,11 @@ declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 })
 export class InvitePage implements OnInit {
 
+  // Params
   isFilter: boolean = false;
   isSingleInvite: boolean = false;
+  intent: string = ''
+
   filteredFriends: Friend[];
   letters: string[] = [];
 
@@ -44,9 +47,13 @@ export class InvitePage implements OnInit {
         this.isFilter = false;
         this.sortContacts(this.isFilter);
       }
+      if(params.intent) {
+        this.intent = params.intent;
+      }
     });
     console.log('Is single invite?', this.isSingleInvite);
     console.log('Friends filtered?', this.isFilter);
+    console.log('Intent', this.intent);
   }
 
   ionViewWillEnter() {

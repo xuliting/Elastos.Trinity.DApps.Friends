@@ -53,6 +53,9 @@
         },
         {
           "action": "viewfriend"
+        },
+        {
+          "action": "share"
         }
     ]
 }

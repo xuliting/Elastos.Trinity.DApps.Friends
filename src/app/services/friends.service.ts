@@ -303,6 +303,12 @@ export class FriendsService {
           this.viewFriend(ret.params.did);
         });
         break;
+      case "share":
+        console.log('share intent', ret);
+        this.zone.run(() => {
+          this.getFriends(false, 'share');
+        });
+        break;
       case "pickfriend":
         console.log('pickfriend intent', ret);
         this.zone.run(() => {
@@ -313,12 +319,12 @@ export class FriendsService {
             params.hasOwnProperty('singleSelection') && params.singleSelection === true && !params.hasOwnProperty('filter'))
           {
             console.log('pickfriend intent is single selection without filter');
-            this.getFriends(true);
+            this.getFriends(true, 'pickfriend');
           }
           // Multiple Invite, No Filter
           if(params.hasOwnProperty('singleSelection') && params.singleSelection === false && !params.hasOwnProperty('filter')) {
             console.log('pickfriend intent is multiple selection without filter');
-            this.getFriends(false);
+            this.getFriends(false, 'pickfriend');
           }
           // Single Invite, With Filter
           if(
@@ -631,20 +637,21 @@ export class FriendsService {
   /******************************** Pick Friend Intent  ********************************/
 
   // Wait for storage before handling intent
-  async getFriends(isSingleInvite: boolean) {
+  async getFriends(isSingleInvite: boolean, intent: string) {
     await this.getStoredDIDs().then((friends: Friend[]) => {
       console.log('My friends', friends);
       let realFriends = friends.filter((friend) => friend.id !== 'did:elastos');
       if (realFriends.length > 0) {
         let props: NavigationExtras = {
           queryParams: {
-            singleInvite: isSingleInvite
+            singleInvite: isSingleInvite,
+            intent: intent
           }
         }
         this.router.navigate(['/invite'], props);
       } else {
         this.router.navigate(['/friends']);
-        this.alertNoFriends('You don\'t have any friends to invite!');
+        this.alertNoFriends('You don\'t have any contacts!');
       }
     });
   }
@@ -671,13 +678,14 @@ export class FriendsService {
           let props: NavigationExtras = {
             queryParams: {
               singleInvite: isSingleInvite,
-              friendsFiltered: true
+              friendsFiltered: true,
+              intent: 'pickfriend'
             }
           }
           this.router.navigate(['/invite'], props);
         } else {
           this.router.navigate(['/friends']);
-          this.alertNoFriends('You don\'t have any friends with this app!');
+          this.alertNoFriends('You don\'t have any contacts with this app!');
         }
       } else {
         return;
@@ -686,7 +694,7 @@ export class FriendsService {
   }
 
   // Send intent response after selecting friends from pick-friend pg
-  inviteFriends(isFilter: boolean) {
+  inviteFriends(isFilter: boolean, intent: string) {
     console.log('Invited filtered friends?', isFilter);
     let friends = [];
 
@@ -715,13 +723,13 @@ export class FriendsService {
     });
 
     console.log('Invited friends', friends);
-    this.sendIntentRes(friends);
+    this.sendIntentRes(friends, intent);
   }
 
-  sendIntentRes(_friends) {
+  sendIntentRes(_friends: any, intent: string) {
     if(_friends.length > 0) {
       appManager.sendIntentResponse(
-        "pickfriend",
+        intent,
         { friends: _friends },
         managerService.handledIntentId,
         (res: any) => {appManager.close();},
