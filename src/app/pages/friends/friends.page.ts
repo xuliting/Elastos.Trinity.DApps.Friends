@@ -38,7 +38,7 @@ export class FriendsPage implements OnInit {
     public friendsService: FriendsService,
     private router: Router,
     private events: Events
-  ) { 
+  ) {
   }
 
   ngOnInit() {
@@ -54,6 +54,10 @@ export class FriendsPage implements OnInit {
   ionViewWillEnter() {
     console.log("Friends list screen will enter");
     titleBarManager.setTitle(this.translate.instant('contacts'));
+    titleBarManager.setIcon(TitleBarPlugin.TitleBarIconSlot.OUTER_RIGHT, {
+      key: "add",
+      iconPath:  TitleBarPlugin.BuiltInIcon.ADD
+    });
 
     appManager.setVisible("show");
   }

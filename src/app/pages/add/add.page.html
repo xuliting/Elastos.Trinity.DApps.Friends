@@ -15,7 +15,7 @@
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-padding-bottom ion-padding-end">
-    <ion-fab-button (click)="scanDID()">
+    <ion-fab-button (click)="friendsService.scanDID()">
       <ion-img *ngIf="theme.darkMode" src="/assets/images/darkmode/scan.svg"></ion-img>
       <ion-img *ngIf="!theme.darkMode" src="/assets/images/scan.svg"></ion-img>
     </ion-fab-button>

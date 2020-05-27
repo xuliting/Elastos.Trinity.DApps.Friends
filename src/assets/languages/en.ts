@@ -6,7 +6,7 @@ export const en = {
   'add-a-contact2': 'Add a contact by clicking the add icon below',
   'favorites': 'Favorites',
   'all-contacts': 'All Contacts',
-  'starter-contact': 'This is your starter contact. Click on it to see the profile and see what Capsules they have. Add real contacts by the add icon above',
+  'starter-contact': 'This is your starter contact. Click on it to see their profile and Capsules. Add real contacts by the add icon above',
 
   // Friend-Details Pg
   'contact-profile': "Contact's Profile",

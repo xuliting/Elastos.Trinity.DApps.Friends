@@ -117,11 +117,22 @@ export class FriendsService {
       appManager.setIntentListener(
         this.onReceiveIntent
       );
-      titleBarManager.addOnItemClickedListener((menuIcon)=>{
+      titleBarManager.addOnItemClickedListener((menuIcon) => {
         if (menuIcon.key == "back") {
             this.navController.back();
         }
+        this.onTitleBarItemClicked(menuIcon);
       });
+    }
+  }
+
+  onTitleBarItemClicked(icon: TitleBarPlugin.TitleBarIcon) {
+    switch (icon.key) {
+      case 'add':
+        this.router.navigate(['/add']);
+        break;
+      case 'scan':
+        this.scanDID();
     }
   }
 
@@ -847,6 +858,15 @@ export class FriendsService {
 
   startApp(id) {
     appManager.start(id);
+  }
+
+  scanDID() {
+    appManager.sendIntent("scanqrcode", {}, {}, (res) => {
+      console.log("Got scan result", res);
+      this.addFriendByIntent(res.result.scannedContent);
+    }, (err: any)=>{
+      console.error(err);
+    })
   }
 
   /******************************** Alerts ********************************/

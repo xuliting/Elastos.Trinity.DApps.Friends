@@ -22,7 +22,7 @@ export class AddPage implements OnInit {
   didResolved: boolean = true;
 
   constructor(
-    private friendsService: FriendsService,
+    public friendsService: FriendsService,
     private toastController: ToastController,
     public translate: TranslateService,
     public theme: ThemeService
@@ -36,6 +36,10 @@ export class AddPage implements OnInit {
 
   ionViewWillEnter() {
     titleBarManager.setTitle(this.translate.instant('add-contact'));
+    titleBarManager.setIcon(TitleBarPlugin.TitleBarIconSlot.OUTER_RIGHT, {
+      key: "scan",
+      iconPath: TitleBarPlugin.BuiltInIcon.SCAN
+    });
     this.friendsService.setTitleBarBackKeyShown(true);
   }
 
@@ -48,15 +52,6 @@ export class AddPage implements OnInit {
     setTimeout(() => {
       this.input.setFocus();
     }, 200);
-  }
-
-  scanDID() {
-    appManager.sendIntent("scanqrcode", {}, {}, (res) => {
-      console.log("Got scan result", res);
-      this.friendsService.addFriendByIntent(res.result.scannedContent);
-    }, (err: any)=>{
-      console.error(err);
-    })
   }
 
   /* pasteDID() {
