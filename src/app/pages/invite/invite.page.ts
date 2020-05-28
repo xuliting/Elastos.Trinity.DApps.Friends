@@ -57,11 +57,11 @@ export class InvitePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    appManager.setVisible("show");
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.CLOSE);
   }
 
   ionViewDidEnter() {
-    appManager.setVisible("show");
   }
 
   getFriends() {
