@@ -25,8 +25,8 @@ export const fr = {
   // Add Pg
   'open-scanner': 'Ouvrir le scanner QR',
   'enter-did': 'Ou saisissez une identité',
-  'enter-identity-placeholder': ' Saisissiez un identifiant DID',
-  'add-contact-prompt': 'Ajoutez des contacts manuellement à partir de leur identifiant ou en scanner leur QR code.',
+  'enter-identity-placeholder': ' Saisissez un identifiant DID',
+  'add-contact-prompt': 'Ajoutez des contacts manuellement à partir de leur identifiant ou en scannant leur QR code.',
 
   // Confirm Pg
   'do-you-want-to-add': 'Voulez-vous ajouter cette personne à vos contacts?',
@@ -50,8 +50,8 @@ export const fr = {
 
   // Delete-Friend-Warning
   'delete-contact': 'Effacer le contact',
-  'delete-msg': 'Le contact sera supprimé',
-  'delete-msg2': 'Vous pourrez toujours ajouter à nouveau ce contact à votre liste',
+  'delete-msg': 'Le contact sera supprimé.',
+  'delete-msg2': 'Vous pourrez toujours ajouter à nouveau ce contact à votre liste plus tard.',
   'are-you-sure': 'Etes-vous sûr(e)?',
 
   // Buttons
